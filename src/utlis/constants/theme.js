@@ -26,6 +26,9 @@ export const appTheme = {
          secondBlue: '#346EFB',
       },
    },
+   typography: {
+      fontFamily: ['Manrope', 'Poppins'],
+   },
 }
 
 export const theme = createTheme(appTheme)
