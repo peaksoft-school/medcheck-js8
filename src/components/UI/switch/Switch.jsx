@@ -4,7 +4,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 
-const SwitchApp = ({ checked }) => {
+const SwitchApp = ({ checked, onChange, ...rest }) => {
    return (
       <FormGroup>
          <FormControlLabel
@@ -13,6 +13,8 @@ const SwitchApp = ({ checked }) => {
                   sx={{ m: 1 }}
                   defaultChecked={false}
                   checked={checked}
+                  onChange={onChange}
+                  {...rest}
                />
             }
          />
