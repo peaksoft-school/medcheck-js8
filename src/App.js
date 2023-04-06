@@ -1,11 +1,4 @@
-import { SelectUi } from './components/UI/Select'
-
 function App() {
-   return (
-      <div>
-         Med Check
-         <SelectUi />
-      </div>
-   )
+   return <div>Med Check</div>
 }
 export default App
