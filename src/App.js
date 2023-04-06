@@ -1,4 +1,4 @@
 function App() {
-   return <div>peaksoft</div>
+   return <div>Peaksoft</div>
 }
 export default App
