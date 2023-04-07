@@ -1,4 +1,10 @@
+import Input from './components/UI/input/Input'
+
 function App() {
-   return <div>Peaksoft</div>
+   return (
+      <div>
+         <Input />
+      </div>
+   )
 }
 export default App
