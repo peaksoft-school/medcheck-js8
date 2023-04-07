@@ -1,24 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { FormControl, Select } from '@mui/material'
 import styled from '@emotion/styled'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-export const SelectUi = (props) => {
-   const [name, setName] = useState('')
-
-   const { items, label } = props
-
-   const handleChange = (event) => {
-      setName(event.target.value)
-   }
-
+export const SelectUi = ({ items, label, value, onChange }) => {
    return (
       <FormControl fullWidth>
          <SelectMui
-            value={name}
+            value={value}
             label={label}
-            onChange={handleChange}
+            onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
          >
             {items &&
