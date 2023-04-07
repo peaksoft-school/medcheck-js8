@@ -1,4 +1,10 @@
+import Footer from './components/footer/Footer'
+
 function App() {
-   return <div>Med Check</div>
+   return (
+      <div>
+         <Footer />
+      </div>
+   )
 }
 export default App
