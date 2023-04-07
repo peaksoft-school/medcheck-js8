@@ -2,38 +2,38 @@ import React, { useState } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import { FormControl, Select } from '@mui/material'
 import styled from '@emotion/styled'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { ExpandMore } from '@mui/icons-material'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-const names = ['Bob', 'Tom', 'Aidai']
+export const SelectUi = (props) => {
+   const [name, setName] = useState('')
 
-export const SelectUi = () => {
-   const [personName, setPersonName] = useState('')
+   const { items, label } = props
 
    const handleChange = (event) => {
-      setPersonName(event.target.value)
+      setName(event.target.value)
    }
 
    return (
       <FormControl fullWidth>
          <SelectMui
-            value={personName}
-            label=""
+            value={name}
+            label={label}
             onChange={handleChange}
-            IconComponent={ExpandMore}
+            IconComponent={KeyboardArrowDownIcon}
          >
-            {names.map((name) => (
-               <MenuItem key={name} value={name}>
-                  {name}
-               </MenuItem>
-            ))}
+            {items &&
+               items.map((item) => (
+                  <MenuItem key={item.id} value={item.title}>
+                     {item.title}
+                  </MenuItem>
+               ))}
          </SelectMui>
       </FormControl>
    )
 }
 
 const SelectMui = styled(Select)(() => ({
-   width: '490px',
+   maxWidth: '100%',
    height: '38px',
    border: '1px solid #D9D9D9',
    borderRadius: '6px',
