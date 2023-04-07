@@ -1,5 +1,11 @@
+import Input from './components/UI/input/Input'
+
 function App() {
-   return <div>Med Check</div>
+   return (
+      <div>
+         <Input />
+      </div>
+   )
 }
 
 export default App
