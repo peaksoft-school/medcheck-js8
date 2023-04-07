@@ -2,13 +2,18 @@ import { styled } from '@mui/material'
 import React from 'react'
 import { ReactComponent as SearchIcon } from '../../assets/icons/SearchIcon.svg'
 
-const SearchInput = ({ onChange, value, placeholder, ...rest }) => {
+const SearchInput = ({
+   onChange,
+   value,
+   placeholder = 'Поиск по сайту',
+   ...rest
+}) => {
    return (
       <ContainerSearhInputStyled>
          <InputStyled
             onChange={onChange}
             value={value}
-            placeholder="Поиск по сайту"
+            placeholder={placeholder}
             {...rest}
          />
          <SearchIcon />
