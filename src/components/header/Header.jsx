@@ -1,25 +1,43 @@
-import {
-   AppBar,
-   Button,
-   Divider,
-   Grid,
-   Menu,
-   MenuItem,
-   Popover,
-   TextField,
-   Typography,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Menu, MenuItem, Grid, IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import GeoPoint from '../../assets/icons/GeoPoint.svg'
 import Timer from '../../assets/icons/Timer.svg'
-import InstagramIcon from '../../assets/icons/InstagramIcon.svg'
-import TelegramIcon from '../../assets/icons/TelegramIcon.svg'
-import WhatsappIcon from '../../assets/icons/WhatsappIcon.svg'
-import TelephoneIcon from '../../assets/icons/PhoneIcon.svg'
+import { ReactComponent as InstagramIcon } from '../../assets/icons/InstagramIcon.svg'
+import { ReactComponent as TelegramIcon } from '../../assets/icons/TelegramIcon.svg'
+import { ReactComponent as WhatsappIcon } from '../../assets/icons/WhatsappIcon.svg'
+import { ReactComponent as TelephoneIcon } from '../../assets/icons/PhoneIcon.svg'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/ProfileIcon.svg'
 import MainIcon from '../../assets/icons/MainIcon.svg'
 import MedcheckIcon from '../../assets/icons/MedCheckIcon.svg'
+import {
+   HeaderStyled,
+   AddressTitle,
+   Box,
+   ContactsBox,
+   Container,
+   ContainedButtonStyled,
+   DataContainer,
+   GeoIconStyled,
+   IconBox,
+   InfoBox,
+   Line,
+   TimeIconStyled,
+   OutlinedButtonStyled,
+   SearchInputStyled,
+   ProfileBox,
+   ProfileButtonStyled,
+   PhoneBox,
+   TimeTitle,
+   SecondBox,
+   NumberTitle1,
+   NumberTitle2,
+   MainIconStyled,
+   MedcheckIconStyled,
+   PopoverStyled,
+   ServiceButtonStyled,
+   StyledHeaderGlobalContainer,
+   StyledPhoneIconButton,
+} from './header-styled'
 
 const services = [
    {
@@ -54,6 +72,8 @@ const services = [
       name: 'Нейрохирургия',
       id: '8',
    },
+]
+const data = [
    {
       name: 'Онкология',
       id: '9',
@@ -86,6 +106,8 @@ const services = [
       name: 'Ревмотология',
       id: '16',
    },
+]
+const info = [
    {
       name: 'Терапия',
       id: '17',
@@ -133,11 +155,12 @@ const Header = () => {
    }
 
    const openPopover = Boolean(popover)
+   const id = openPopover ? 'simple-popover' : undefined
 
    return (
       <HeaderStyled position="static">
-         <Grid>
-            <Contaianer>
+         <StyledHeaderGlobalContainer>
+            <Container>
                <Grid>
                   <Box>
                      <GeoIconStyled src={GeoPoint} alt="geopoint" />
@@ -156,19 +179,33 @@ const Header = () => {
                <SearchInputStyled placeholder="Поиск по сайту" />
                <ContactsBox>
                   <IconBox>
-                     <img src={InstagramIcon} alt="instagram" />
-                     <img src={TelegramIcon} alt="telegram" />
-                     <img src={WhatsappIcon} alt="whatsapp" />
+                     <IconButton>
+                        <a href="/">
+                           <InstagramIcon />
+                        </a>
+                     </IconButton>
+                     <IconButton>
+                        <a href="/">
+                           <TelegramIcon />
+                        </a>
+                     </IconButton>
+                     <IconButton>
+                        <a href="/">
+                           <WhatsappIcon />
+                        </a>
+                     </IconButton>
                   </IconBox>
                   <PhoneBox>
-                     <img src={TelephoneIcon} alt="phone" />
+                     <StyledPhoneIconButton>
+                        <TelephoneIcon />
+                     </StyledPhoneIconButton>
                      <Grid>
-                        <NumberTitle>
+                        <NumberTitle1>
                            <span>+996(800) 000 000</span>
-                        </NumberTitle>
-                        <NumberTitle>
+                        </NumberTitle1>
+                        <NumberTitle2>
                            <span>+996(505) 000 000</span>
-                        </NumberTitle>
+                        </NumberTitle2>
                      </Grid>
                      <ProfileBox>
                         <ProfileButtonStyled
@@ -197,7 +234,7 @@ const Header = () => {
                      </ProfileBox>
                   </PhoneBox>
                </ContactsBox>
-            </Contaianer>
+            </Container>
 
             <Line />
 
@@ -208,41 +245,51 @@ const Header = () => {
                </Grid>
                <InfoBox>
                   <li>О клинике</li>
-                  <Typography
-                     aria-owns={openPopover ? 'mouse-over-popover' : undefined}
-                     aria-haspopup="true"
-                     onMouseEnter={handlePopoverOpen}
-                     onMouseLeave={handlePopoverClose}
+                  <ServiceButtonStyled
+                     aria-describedby={id}
+                     onMouseOver={handlePopoverOpen}
                   >
                      Услуги
-                  </Typography>
-
+                  </ServiceButtonStyled>
                   <PopoverStyled
-                     id="mouse-over-popover"
-                     sx={{
-                        pointerEvents: 'none',
-                     }}
+                     id={id}
                      open={openPopover}
-                     disablePortal
-                     popover={popover}
+                     anchorEl={popover}
+                     onClose={handlePopoverClose}
                      anchorOrigin={{
                         vertical: 'bottom',
                         horizontal: 'left',
                      }}
-                     transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                     }}
-                     onClose={handlePopoverClose}
                      disableRestoreFocus
                   >
-                     <div>
-                        {services.map((service) => (
-                           <p key={service.id}>{service.name}</p>
-                        ))}
-                     </div>
+                     <DataContainer>
+                        <div>
+                           {services.map((service) => (
+                              <div key={service.id}>
+                                 <a href="/">{service.name}</a>
+                              </div>
+                           ))}
+                        </div>
+                        <div>
+                           {data.map((el) => {
+                              return (
+                                 <div key={el.id}>
+                                    <a href="/">{el.name}</a>
+                                 </div>
+                              )
+                           })}
+                        </div>
+                        <div>
+                           {info.map((el) => {
+                              return (
+                                 <div key={el.id}>
+                                    <a href="/">{el.name}</a>
+                                 </div>
+                              )
+                           })}
+                        </div>
+                     </DataContainer>
                   </PopoverStyled>
-
                   <li>Врачи</li>
                   <li>Прайс</li>
                   <li>Контакты</li>
@@ -252,247 +299,13 @@ const Header = () => {
                      получить результаты
                   </OutlinedButtonStyled>
                   <ContainedButtonStyled variant="contained">
-                     запись онлайн{' '}
+                     запись онлайн
                   </ContainedButtonStyled>
                </Grid>
             </SecondBox>
-         </Grid>
+         </StyledHeaderGlobalContainer>
       </HeaderStyled>
    )
 }
 
 export default Header
-const HeaderStyled = styled(AppBar)(() => ({
-   '&': {
-      background: '#FFFFFF',
-      width: '100%',
-      height: '181px',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '0 80px',
-   },
-}))
-
-const Box = styled(Grid)(() => ({
-   '&': {
-      display: 'flex',
-      gap: '12.25px',
-      margin: '17px 0 0 10px',
-   },
-}))
-const ProfileButtonStyled = styled(Button)(() => ({
-   '&': {
-      width: '28px',
-      padding: '0px',
-      display: 'flex',
-      justifyContent: 'end',
-   },
-}))
-const SecondBox = styled(Grid)(() => ({
-   '&': {
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-   },
-}))
-
-const Contaianer = styled(Grid)(() => ({
-   '&': {
-      width: '1200px',
-      display: 'flex',
-      justifyContent: 'space-between',
-   },
-}))
-
-const IconBox = styled(Grid)(() => ({
-   '&': {
-      display: 'flex',
-      gap: '10px',
-      marginRight: '30px',
-   },
-}))
-const ContactsBox = styled(Grid)(() => ({
-   '&': {
-      display: 'flex',
-   },
-}))
-const PhoneBox = styled(Grid)(() => ({
-   '&': {
-      display: 'flex',
-      gap: '8.5px',
-      alignItems: 'center',
-      img: {
-         width: '17.19px',
-         height: '17.19px',
-         alignSelf: 'start',
-         marginTop: '22px',
-      },
-      p: {
-         width: '147px',
-         height: '22px',
-         fontFamily: 'Manrope',
-         fontWeight: '400',
-         fontSize: '16px',
-         lineHeight: '22px',
-         marginTop: '4px',
-      },
-   },
-}))
-const GeoIconStyled = styled('img')(() => ({
-   '&': {
-      width: '8.75px',
-      height: '14px',
-   },
-}))
-const TimeIconStyled = styled('img')(() => ({
-   '&': {
-      width: '14px',
-      height: '14px',
-   },
-}))
-const SearchInputStyled = styled(TextField)(() => ({
-   '&': {
-      width: '367px',
-      padding: '8px 18px',
-      margin: '14px 60px 0 60px',
-      color: '#716B6B',
-   },
-   fieldset: {
-      borderRadius: '50px',
-      background: '#F3F1F1',
-   },
-}))
-const AddressTitle = styled('p')(() => ({
-   '&': {
-      width: '263px',
-      height: '16px',
-      fontFamily: 'Manrope',
-      fontWeight: '400',
-      fontSize: '16px',
-      lineHeight: '16px',
-      color: '#000000',
-   },
-}))
-const TimeTitle = styled('p')(() => ({
-   '&': {
-      width: '156px',
-      height: '16px',
-      fontFamily: 'Manrope',
-      fontWeight: '500',
-      fontSize: '16px',
-      lineHeight: '16px',
-      color: '#000000',
-      span: {
-         color: '#009344',
-      },
-   },
-}))
-const NumberTitle = styled('p')(() => ({
-   '&': {
-      width: '100px',
-      height: '22px',
-      fontFamily: 'Manrope',
-      fontWeight: '400',
-      fontSize: '16px',
-      lineHeight: '22px',
-      color: '#000000',
-   },
-}))
-const ProfileBox = styled(Grid)(() => ({
-   '&': {
-      marginTop: '8px',
-   },
-}))
-const Line = styled(Divider)(() => ({
-   '&': {
-      marginTop: '8px',
-      width: '100%',
-      border: '1px solid #D9D9D9',
-   },
-}))
-const MainIconStyled = styled('img')(() => ({
-   '&': {
-      width: '67.45px',
-      height: '73.16px',
-      margin: '8px 12px 5px 0',
-   },
-}))
-const MedcheckIconStyled = styled('img')(() => ({
-   '&': {
-      width: '136px',
-      height: '27px',
-      fontFamily: 'Montserrat',
-      fontWeight: '600',
-      fontSize: '22px',
-      lineHeight: '27px',
-      marginBottom: '25px',
-   },
-}))
-const InfoBox = styled('ul')(() => ({
-   '&': {
-      display: 'flex',
-      gap: '36px',
-      listStyle: 'none',
-      fontFamily: 'Manrope',
-      fontWeight: '500',
-      fontSize: '16px',
-      lineHeight: '22px',
-      color: '#222222',
-      margin: '0 auto',
-   },
-}))
-
-const OutlinedButtonStyled = styled(Button)(() => ({
-   '&': {
-      borderRadius: '24px',
-      padding: '12px 20px',
-      border: '1px solid #048741',
-      color: '#048741',
-      fontWeight: '500',
-      fontSize: '14px',
-      lineHeight: '19px',
-      fontFamily: 'Manrope',
-   },
-}))
-const ContainedButtonStyled = styled(Button)(() => ({
-   '&': {
-      borderRadius: '24px',
-      padding: '12px 20px',
-      color: '#FFFFFF',
-      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
-      fontWeight: '500',
-      fontSize: '14px',
-      lineHeight: '19px',
-      fontFamily: 'Manrope',
-      marginLeft: '16px',
-   },
-}))
-
-const PopoverStyled = styled(Popover)(() => ({
-   '&': {
-      position: 'absolute',
-      left: '31.9rem',
-      top: '-18px',
-      width: '600px',
-      margin: '0',
-      div: {
-         width: '600px',
-         height: '352px',
-         display: 'flex',
-         overflow: 'hidden',
-         flexWrap: 'wrap',
-         padding: '30px',
-         gap: '15px',
-      },
-      p: {
-         fontFamily: 'Manrope',
-         fontStyle: 'normal',
-         fontWeight: '400',
-         fontSize: '14px',
-         // paddingLeft: '41px',
-         lineHeight: '19px',
-      },
-   },
-}))
