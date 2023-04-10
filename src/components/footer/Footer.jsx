@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import medCheck from '../../assets/icons/Vector.svg'
-import medChecks from '../../assets/icons/MedCheck.svg'
+import MedcheckLogo from '../../assets/icons/MedcheckLogo.svg'
+import MedCheck from '../../assets/icons/MedCheck.svg'
 import GeoPoint from '../../assets/icons/GeoPoint.svg'
-import AntDesign from '../../assets/icons/Clock.svg'
-import Vector from '../../assets/icons/Vector (1).svg'
-import Picto from '../../assets/icons/picto.svg'
-import Instagram from '../../assets/icons/Component 5.svg'
-import Twitter from '../../assets/icons/Component 4.svg'
-import WhatsApp from '../../assets/icons/Component 3.svg'
+import Clock from '../../assets/icons/Clock.svg'
+import Phone from '../../assets/icons/Phone.svg'
+import Email from '../../assets/icons/email.svg'
+import Instagram from '../../assets/icons/Instagram.svg'
+import Telegram from '../../assets/icons/Telegram.svg'
+import WhatsApp from '../../assets/icons/WhatsApp.svg'
 
 function Footer() {
    return (
@@ -16,8 +16,8 @@ function Footer() {
          <FooterContainer>
             <Container1>
                <MedIcons>
-                  <Img1 src={medCheck} alt="medcheck" />
-                  <Img2 src={medChecks} alt="medchecks" />
+                  <img src={MedcheckLogo} alt="medcheckLogoА" />
+                  <img className="medcheck" src={MedCheck} alt="medchecks" />
                </MedIcons>
                <TextContent>
                   <div>Медицинская клиника «MedCheck»</div>
@@ -34,17 +34,17 @@ function Footer() {
                   <img src={GeoPoint} alt="antDesign" />
                   <span>106452, г. Бишкек, Гражданская 119</span>
                </LocationContent>
-               <DateTime style={{ display: 'flex', alignItems: 'center' }}>
-                  <img src={AntDesign} alt="antDesign" />
+               <DateTime>
+                  <img src={Clock} alt="clock" />
                   <span>пн-сб 08:00 до 18:00</span>
                </DateTime>
                <ContactContent>
-                  <img src={Vector} alt="vector" />
+                  <img src={Phone} alt="phone" />
                   <span>+996(800) 000 000</span>
                   <div>+996(505) 000 000</div>
                </ContactContent>
                <SiteContent>
-                  <img src={Picto} alt="picto" />
+                  <img src={Email} alt="email" />
                   <span>medchek.kg</span>
                </SiteContent>
             </Container2>
@@ -52,9 +52,15 @@ function Footer() {
                <Container3>
                   <p>Мы в социальных сетях:</p>
 
-                  <img src={Instagram} alt="instagram" />
-                  <img src={Twitter} alt="twitter" />
-                  <img src={WhatsApp} alt="whatsapp" />
+                  <a href="/">
+                     <img src={Instagram} alt="instagram" />
+                  </a>
+                  <a href="/">
+                     <img src={Telegram} alt="telegram" />
+                  </a>
+                  <a href="/">
+                     <img src={WhatsApp} alt="whatsapp" />
+                  </a>
                </Container3>
             </div>
          </FooterContainer>
@@ -85,7 +91,7 @@ const MainContainer = styled('div')(() => ({
    fontFamily: 'Manrope',
 
    '& hr': {
-      width: '1200px',
+      width: '78%',
       marginLeft: '120px',
       marginTop: '48px',
    },
@@ -117,18 +123,10 @@ const MedIcons = styled('div')(() => ({
    width: '237px',
    height: '79px',
    marginBottom: '28px',
-}))
-
-const Img1 = styled('img')(() => ({
-   width: '72px',
-   height: '79px',
-   marginRight: '13px',
-}))
-
-const Img2 = styled('img')(() => ({
-   width: '151px',
-   height: '29px',
-   marginBottom: '25px',
+   '& .medcheck': {
+      marginLeft: '13px',
+      marginBottom: '25px',
+   },
 }))
 
 const TextContent = styled('div')(() => ({
@@ -158,6 +156,10 @@ const Container2 = styled('div')(() => ({
    flexDirection: 'column',
    '& span': {
       fontFamily: 'Manrope',
+      fontSize: '16px',
+      color: '#FFFFFF',
+      lineHeight: '21px',
+      fontWeight: 500,
    },
 }))
 
@@ -170,29 +172,41 @@ const LocationContent = styled('div')(() => ({
       marginLeft: '4px',
       marginRight: '12px',
    },
+   '& span': {
+      color: '#CCCCCC',
+      fontFamily: 'Manrope',
+      fontSize: '16px',
+      lineHeight: '16px',
+      fontWeight: 400,
+   },
 }))
 
 const ContactContent = styled('div')(() => ({
    width: '293px',
    height: '48px',
    marginTop: '20px',
-   color: '#CCCCCC',
    '& span': {
       marginLeft: '8px',
+      color: '#CCCCCC',
    },
    '& div': {
       marginLeft: '32px',
       marginTop: '4px',
+      color: '#CCCCCC',
    },
 }))
 
 const DateTime = styled('div')(() => ({
+   display: 'flex',
+   alignItems: 'center',
    marginTop: '4px',
    marginRight: '6px',
-   color: '#CCCCCC',
    '& img': {
       marginRight: '8px',
       marginTop: '4px',
+   },
+   '& span': {
+      color: '#CCCCCC',
    },
 }))
 
