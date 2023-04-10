@@ -1,11 +1,4 @@
-import Footer from './components/footer/Footer'
-
 function App() {
-   return (
-      <div>
-         PeakSoft
-         <Footer />
-      </div>
-   )
+   return <div>peaksoft</div>
 }
 export default App
