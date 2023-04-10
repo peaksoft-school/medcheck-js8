@@ -24,7 +24,6 @@
       "react-hooks/rules-of-hooks": "error",
       "react/function-component-definition": "off",
       "react/prop-types": "off",
-
       "max-len": [
          "error",
          {

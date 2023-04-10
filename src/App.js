@@ -1,4 +1,4 @@
 function App() {
-   ;<div>Med Check</div>
+   return <div>Med Check</div>
 }
 export default App
