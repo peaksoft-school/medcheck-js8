@@ -107,7 +107,6 @@ export const SearchInputStyled = styled(TextField)(() => ({
    '&': {
       width: '367px',
       padding: '8px 20px',
-      color: '#716B6B',
    },
    fieldset: {
       borderRadius: '50px',
@@ -155,12 +154,7 @@ export const NumberTitle2 = styled('p')(() => ({
       color: '#000000',
    },
 }))
-export const ProfileBox = styled(Grid)(() => ({
-   '&': {
-      width: '42px',
-      marginTop: '8px',
-   },
-}))
+
 export const Line = styled(Divider)(() => ({
    '&': {
       marginTop: '8px',
@@ -197,6 +191,7 @@ export const InfoBox = styled('ul')(() => ({
       lineHeight: '22px',
       color: '#222222',
       margin: '0 auto',
+      cursor: 'pointer',
    },
 }))
 
@@ -253,6 +248,7 @@ export const ServiceButtonStyled = styled('button')(() => ({
       lineHeight: '22px',
       background: 'none',
       border: 'none',
+      cursor: 'pointer',
    },
 }))
 
@@ -269,5 +265,12 @@ export const DataContainer = styled('div')(() => ({
          textDecoration: 'none',
          color: '#222222',
       },
+   },
+}))
+
+export const ProfileBox = styled(Grid)(() => ({
+   '&': {
+      width: '42px',
+      marginTop: '8px',
    },
 }))
