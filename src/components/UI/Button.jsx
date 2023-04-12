@@ -24,7 +24,6 @@ const ButtonStyled = styled(ReusableButton)(() => ({
       fontSize: '12px',
       color: '#FFFFFF',
       fontWeight: '600',
-      width: '191px',
       background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%);',
       borderRadius: '10px',
       letterSpacing: ' 0.03em',
