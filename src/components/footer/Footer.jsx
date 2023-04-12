@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import MedcheckLogo from '../../assets/icons/MedcheckLogo.svg'
-import MedCheck from '../../assets/icons/MedCheck.svg'
-import GeoPoint from '../../assets/icons/GeoPoint.svg'
-import Clock from '../../assets/icons/Clock.svg'
-import Phone from '../../assets/icons/Phone.svg'
-import Email from '../../assets/icons/email.svg'
-import Instagram from '../../assets/icons/Instagram.svg'
-import Telegram from '../../assets/icons/Telegram.svg'
-import WhatsApp from '../../assets/icons/WhatsApp.svg'
+import medcheckLogo from '../../assets/icons/medcheckLogo.svg'
+import medCheck from '../../assets/icons/medCheck.svg'
+import geoPoint from '../../assets/icons/geoPoint.svg'
+import clock from '../../assets/icons/clock.svg'
+import phone from '../../assets/icons/phone.svg'
+import email from '../../assets/icons/email.svg'
+import instagram from '../../assets/icons/instagram.svg'
+import telegram from '../../assets/icons/telegram.svg'
+import whatsApp from '../../assets/icons/whatsApp.svg'
 
 function Footer() {
    return (
@@ -16,8 +16,8 @@ function Footer() {
          <FooterContainer>
             <Container1>
                <MedIcons>
-                  <img src={MedcheckLogo} alt="medcheckLogoА" />
-                  <img className="medcheck" src={MedCheck} alt="medchecks" />
+                  <img src={medcheckLogo} alt="medcheckLogoА" />
+                  <img className="medcheck" src={medCheck} alt="medchecks" />
                </MedIcons>
                <TextContent>
                   <div>Медицинская клиника «MedCheck»</div>
@@ -31,20 +31,20 @@ function Footer() {
             <Container2>
                <span>Контактная информация</span>
                <LocationContent>
-                  <img src={GeoPoint} alt="antDesign" />
+                  <img src={geoPoint} alt="antDesign" />
                   <span>106452, г. Бишкек, Гражданская 119</span>
                </LocationContent>
                <DateTime>
-                  <img src={Clock} alt="clock" />
+                  <img src={clock} alt="clock" />
                   <span>пн-сб 08:00 до 18:00</span>
                </DateTime>
                <ContactContent>
-                  <img src={Phone} alt="phone" />
+                  <img src={phone} alt="phone" />
                   <span>+996(800) 000 000</span>
                   <div>+996(505) 000 000</div>
                </ContactContent>
                <SiteContent>
-                  <img src={Email} alt="email" />
+                  <img src={email} alt="email" />
                   <span>medchek.kg</span>
                </SiteContent>
             </Container2>
@@ -53,13 +53,13 @@ function Footer() {
                   <p>Мы в социальных сетях:</p>
 
                   <a href="/">
-                     <img src={Instagram} alt="instagram" />
+                     <img src={instagram} alt="instagram" />
                   </a>
                   <a href="/">
-                     <img src={Telegram} alt="telegram" />
+                     <img src={telegram} alt="telegram" />
                   </a>
                   <a href="/">
-                     <img src={WhatsApp} alt="whatsapp" />
+                     <img src={whatsApp} alt="whatsapp" />
                   </a>
                </Container3>
             </div>
