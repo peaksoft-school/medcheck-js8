@@ -277,6 +277,8 @@ export const DataContainer = styledMui('div')(() => ({
    '&': {
       display: 'flex',
       justifyContent: 'space-between',
+      paddingLeft: '20px',
+      gap: '50px',
       div: {
          display: 'flex',
          flexDirection: 'column',
