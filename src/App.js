@@ -1,11 +1,5 @@
-import Header from './components/header/Header'
-
 function App() {
-   return (
-      <div>
-         <Header />
-      </div>
-   )
+   return <div>Medcheck</div>
 }
 
 export default App
