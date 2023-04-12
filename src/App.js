@@ -1,9 +1,9 @@
-import Input from './components/UI/input/Input'
+import Header from './components/header/Header'
 
 function App() {
    return (
       <div>
-         <Input />
+         <Header />
       </div>
    )
 }
