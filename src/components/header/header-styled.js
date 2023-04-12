@@ -1,13 +1,13 @@
 import { styled as styledMui } from '@mui/material/styles'
 import {
    AppBar,
-   Button,
    Divider,
    Grid,
    IconButton,
    MenuItem,
    Popover,
 } from '@mui/material'
+import Button from '../UI/Button'
 
 export const HeaderStyled = styledMui(AppBar)(() => ({
    '&': {
