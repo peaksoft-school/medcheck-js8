@@ -1,4 +1,4 @@
-import { Grid, IconButton, Menu, MenuItem } from '@mui/material'
+import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useState } from 'react'
 import GeoPoint from '../../assets/icons/GeoPoint.svg'
 import Timer from '../../assets/icons/Timer.svg'
@@ -16,14 +16,12 @@ import {
    ContactsBox,
    Container,
    ContainedButtonStyled,
-   DataContainer,
    GeoIconStyled,
    IconBox,
    InfoBox,
    Line,
    TimeIconStyled,
    OutlinedButtonStyled,
-   SearchInputStyled,
    PhoneBox,
    TimeTitle,
    SecondBox,
@@ -31,13 +29,15 @@ import {
    NumberTitle2,
    MainIconStyled,
    MedcheckIconStyled,
-   PopoverStyled,
-   ServiceButtonStyled,
    StyledHeaderGlobalContainer,
    StyledPhoneIconButton,
    ProfileButtonStyled,
    ProfileBox,
+   MenuItemStyled,
+   SearchInputBox,
 } from './header-styled'
+import Dropdown from '../UI/Dropdown'
+import SearchInput from '../UI/SeacrchInput'
 
 const services = [
    {
@@ -136,7 +136,6 @@ const info = [
 
 const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
-   const [popover, setPopover] = useState(null)
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -145,17 +144,6 @@ const Header = () => {
    const handleClose = () => {
       setAnchorEl(null)
    }
-
-   const handlePopoverOpen = (event) => {
-      setPopover(event.currentTarget)
-   }
-
-   const handlePopoverClose = () => {
-      setPopover(null)
-   }
-
-   const openPopover = Boolean(popover)
-   const id = openPopover ? 'simple-popover' : undefined
 
    return (
       <HeaderStyled position="static">
@@ -176,7 +164,9 @@ const Header = () => {
                      </TimeTitle>
                   </Box>
                </Grid>
-               <SearchInputStyled placeholder="Поиск по сайту" />
+               <SearchInputBox>
+                  <SearchInput />
+               </SearchInputBox>
                <ContactsBox>
                   <IconBox>
                      <IconButton>
@@ -226,10 +216,12 @@ const Header = () => {
                               'aria-labelledby': 'basic-button',
                            }}
                         >
-                           <MenuItem onClick={handleClose}>Войти</MenuItem>
-                           <MenuItem onClick={handleClose}>
+                           <MenuItemStyled onClick={handleClose}>
+                              Войти
+                           </MenuItemStyled>
+                           <MenuItemStyled onClick={handleClose}>
                               Регистрация
-                           </MenuItem>
+                           </MenuItemStyled>
                         </Menu>
                      </ProfileBox>
                   </PhoneBox>
@@ -245,51 +237,9 @@ const Header = () => {
                </Grid>
                <InfoBox>
                   <li>О клинике</li>
-                  <ServiceButtonStyled
-                     aria-describedby={id}
-                     onMouseOver={handlePopoverOpen}
-                  >
+                  <Dropdown services={services} data={data} info={info}>
                      Услуги
-                  </ServiceButtonStyled>
-                  <PopoverStyled
-                     id={id}
-                     open={openPopover}
-                     anchorEl={popover}
-                     onClose={handlePopoverClose}
-                     anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                     }}
-                     disableRestoreFocus
-                  >
-                     <DataContainer>
-                        <div>
-                           {services.map((service) => (
-                              <div key={service.id}>
-                                 <a href="/">{service.name}</a>
-                              </div>
-                           ))}
-                        </div>
-                        <div>
-                           {data.map((el) => {
-                              return (
-                                 <div key={el.id}>
-                                    <a href="/">{el.name}</a>
-                                 </div>
-                              )
-                           })}
-                        </div>
-                        <div>
-                           {info.map((el) => {
-                              return (
-                                 <div key={el.id}>
-                                    <a href="/">{el.name}</a>
-                                 </div>
-                              )
-                           })}
-                        </div>
-                     </DataContainer>
-                  </PopoverStyled>
+                  </Dropdown>
                   <li>Врачи</li>
                   <li>Прайс</li>
                   <li>Контакты</li>

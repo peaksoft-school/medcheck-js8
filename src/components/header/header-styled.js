@@ -1,15 +1,15 @@
-import { styled } from '@mui/material/styles'
+import { styled as styledMui } from '@mui/material/styles'
 import {
    AppBar,
    Button,
    Divider,
    Grid,
    IconButton,
+   MenuItem,
    Popover,
-   TextField,
 } from '@mui/material'
 
-export const HeaderStyled = styled(AppBar)(() => ({
+export const HeaderStyled = styledMui(AppBar)(() => ({
    '&': {
       background: '#FFFFFF',
       width: '100%',
@@ -20,17 +20,17 @@ export const HeaderStyled = styled(AppBar)(() => ({
       margin: '0 auto',
    },
 }))
-export const StyledHeaderGlobalContainer = styled(Grid)({
+export const StyledHeaderGlobalContainer = styledMui(Grid)({
    margin: '0 auto',
    padding: '510x 120px 10px 120px',
    maxWidth: '100%',
 })
 
-export const StyledPhoneIconButton = styled(IconButton)({
-   marginTop: '-15px',
+export const StyledPhoneIconButton = styledMui(IconButton)({
+   marginTop: '-11px',
 })
 
-export const Box = styled(Grid)(() => ({
+export const Box = styledMui(Grid)(() => ({
    '&': {
       display: 'flex',
       gap: '12.25px',
@@ -38,15 +38,33 @@ export const Box = styled(Grid)(() => ({
    },
 }))
 
-export const ProfileButtonStyled = styled(Button)(() => ({
+export const ProfileButtonStyled = styledMui(Button)(() => ({
    '&': {
       width: '28px',
       padding: '0px',
       display: 'flex',
       justifyContent: 'center',
+      background: 'none',
+   },
+   '&:hover': {
+      background: 'none',
    },
 }))
-export const SecondBox = styled(Grid)(() => ({
+export const MenuItemStyled = styledMui(MenuItem)(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      fontSize: '16px',
+      lineHeight: '22px',
+   },
+   '&:active': {
+      color: '#048741',
+   },
+   '&:hover': {
+      color: '#048741',
+   },
+}))
+export const SecondBox = styledMui(Grid)(() => ({
    '&': {
       display: 'flex',
       justifyContent: 'space-around',
@@ -54,7 +72,7 @@ export const SecondBox = styled(Grid)(() => ({
    },
 }))
 
-export const Container = styled(Grid)(() => ({
+export const Container = styledMui(Grid)(() => ({
    '&': {
       width: '100%',
       display: 'flex',
@@ -62,20 +80,19 @@ export const Container = styled(Grid)(() => ({
    },
 }))
 
-export const IconBox = styled(Grid)(() => ({
+export const IconBox = styledMui(Grid)(() => ({
    '&': {
       display: 'flex',
       marginRight: '30px',
-      justifyContent: 'center',
-      alignItems: 'center',
+      alignItems: 'end',
    },
 }))
-export const ContactsBox = styled(Grid)(() => ({
+export const ContactsBox = styledMui(Grid)(() => ({
    '&': {
       display: 'flex',
    },
 }))
-export const PhoneBox = styled(Grid)(() => ({
+export const PhoneBox = styledMui(Grid)(() => ({
    '&': {
       display: 'flex',
       gap: '8.5px',
@@ -91,39 +108,38 @@ export const PhoneBox = styled(Grid)(() => ({
       },
    },
 }))
-export const GeoIconStyled = styled('img')(() => ({
+export const GeoIconStyled = styledMui('img')(() => ({
    '&': {
       width: '8.75px',
       height: '14px',
    },
 }))
-export const TimeIconStyled = styled('img')(() => ({
+export const TimeIconStyled = styledMui('img')(() => ({
    '&': {
       width: '14px',
       height: '14px',
    },
 }))
-export const SearchInputStyled = styled(TextField)(() => ({
+
+export const SearchInputBox = styledMui('div')(() => ({
    '&': {
       width: '367px',
       padding: '8px 20px',
-   },
-   fieldset: {
-      borderRadius: '50px',
-      background: '#F3F1F1',
+      display: 'flex',
+      alignItems: 'end',
    },
 }))
-export const AddressTitle = styled('p')(() => ({
+export const AddressTitle = styledMui('p')(() => ({
    '&': {
-      width: '263px',
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '16px',
       lineHeight: '16px',
       color: '#000000',
+      width: '270px',
    },
 }))
-export const TimeTitle = styled('p')(() => ({
+export const TimeTitle = styledMui('p')(() => ({
    '&': {
       fontFamily: 'Manrope',
       fontWeight: '500',
@@ -135,17 +151,17 @@ export const TimeTitle = styled('p')(() => ({
       },
    },
 }))
-export const NumberTitle1 = styled('p')(() => ({
+export const NumberTitle1 = styledMui('p')(() => ({
    '&': {
       fontFamily: 'Manrope',
       fontWeight: '400',
       fontSize: '16px',
       lineHeight: '22px',
       color: '#000000',
-      marginTop: '-8px',
+      marginTop: '-3px',
    },
 }))
-export const NumberTitle2 = styled('p')(() => ({
+export const NumberTitle2 = styledMui('p')(() => ({
    '&': {
       fontFamily: 'Manrope',
       fontWeight: '400',
@@ -155,21 +171,21 @@ export const NumberTitle2 = styled('p')(() => ({
    },
 }))
 
-export const Line = styled(Divider)(() => ({
+export const Line = styledMui(Divider)(() => ({
    '&': {
       marginTop: '8px',
       width: '100%',
       border: '1px solid #D9D9D9',
    },
 }))
-export const MainIconStyled = styled('img')(() => ({
+export const MainIconStyled = styledMui('img')(() => ({
    '&': {
       width: '67.45px',
       height: '73.16px',
       margin: '8px 12px 5px 0',
    },
 }))
-export const MedcheckIconStyled = styled('img')(() => ({
+export const MedcheckIconStyled = styledMui('img')(() => ({
    '&': {
       width: '136px',
       height: '27px',
@@ -180,7 +196,7 @@ export const MedcheckIconStyled = styled('img')(() => ({
       marginBottom: '25px',
    },
 }))
-export const InfoBox = styled('ul')(() => ({
+export const InfoBox = styledMui('ul')(() => ({
    '&': {
       display: 'flex',
       gap: '36px',
@@ -195,7 +211,7 @@ export const InfoBox = styled('ul')(() => ({
    },
 }))
 
-export const OutlinedButtonStyled = styled(Button)(() => ({
+export const OutlinedButtonStyled = styledMui(Button)(() => ({
    '&': {
       borderRadius: '24px',
       padding: '12px 20px',
@@ -205,9 +221,15 @@ export const OutlinedButtonStyled = styled(Button)(() => ({
       fontSize: '14px',
       lineHeight: '19px',
       fontFamily: 'Manrope',
+      background: 'none',
+   },
+   '&:hover': {
+      background: 'none',
+      border: '1px solid #048741',
+      color: '#048741',
    },
 }))
-export const ContainedButtonStyled = styled(Button)(() => ({
+export const ContainedButtonStyled = styledMui(Button)(() => ({
    '&': {
       borderRadius: '24px',
       padding: '12px 20px',
@@ -221,7 +243,7 @@ export const ContainedButtonStyled = styled(Button)(() => ({
    },
 }))
 
-export const PopoverStyled = styled(Popover)(() => ({
+export const PopoverStyled = styledMui(Popover)(() => ({
    '&': {
       position: 'absolute',
       top: '13px',
@@ -231,15 +253,14 @@ export const PopoverStyled = styled(Popover)(() => ({
          width: '560px',
          padding: '10px 30px 30px 30px ',
          div: {
-            width: '100px',
+            width: '100%',
             margin: 0,
             padding: 0,
-            gap: '102px',
          },
       },
    },
 }))
-export const ServiceButtonStyled = styled('button')(() => ({
+export const ServiceButtonStyled = styledMui('button')(() => ({
    '&': {
       color: '#222222',
       fontFamily: 'Manrope',
@@ -252,9 +273,15 @@ export const ServiceButtonStyled = styled('button')(() => ({
    },
 }))
 
-export const DataContainer = styled('div')(() => ({
+export const DataContainer = styledMui('div')(() => ({
    '&': {
       display: 'flex',
+      justifyContent: 'space-between',
+      div: {
+         display: 'flex',
+         flexDirection: 'column',
+         alignItems: 'start',
+      },
       a: {
          display: 'inline-block',
          fontFamily: 'Manrope',
@@ -268,7 +295,7 @@ export const DataContainer = styled('div')(() => ({
    },
 }))
 
-export const ProfileBox = styled(Grid)(() => ({
+export const ProfileBox = styledMui(Grid)(() => ({
    '&': {
       width: '42px',
       marginTop: '8px',
