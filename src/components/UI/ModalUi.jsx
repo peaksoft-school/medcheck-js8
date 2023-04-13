@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 
 export const ModalUi = (props) => {
-   const { open, onClose } = props
+   const { open, onClose, children } = props
    return (
       <StyledModalDialog open={open} onClose={onClose}>
          <StyledModal>
@@ -36,6 +36,7 @@ export const ModalUi = (props) => {
                {/* this could be the main text */}
             </DialogTitle>
             <DialogContent>
+               {children}
                <DialogContentText id="alert-dialog-content" />
                <StyledContentText>
                   {/* this could be content text */}
