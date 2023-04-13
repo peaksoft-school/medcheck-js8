@@ -1,10 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { styled } from '@mui/material'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-function Toast({ type, message }) {
+function Toast(type, message) {
    const toastConfig = {
       position: 'top-right',
       autoClose: 4000,
@@ -12,7 +12,7 @@ function Toast({ type, message }) {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: true,
+      progress: false,
    }
    const notify = () => {
       toast[type](
@@ -24,11 +24,10 @@ function Toast({ type, message }) {
       )
    }
 
-   useEffect(() => {
-      notify()
-   }, [type, message])
-
-   return <Toastify />
+   return {
+      notify,
+      toast: <Toastify />,
+   }
 }
 
 export default Toast
