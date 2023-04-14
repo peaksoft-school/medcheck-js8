@@ -4,7 +4,7 @@ import React from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-function Toast(type, message) {
+function useToast(type, message) {
    const toastConfig = {
       position: 'top-right',
       autoClose: 4000,
@@ -30,7 +30,7 @@ function Toast(type, message) {
    }
 }
 
-export default Toast
+export default useToast
 
 const Toastify = styled(ToastContainer)(() => ({
    '&': {
