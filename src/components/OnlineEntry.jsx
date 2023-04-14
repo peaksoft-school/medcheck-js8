@@ -64,9 +64,7 @@ const OnlineEntry = () => {
          ),
       },
       {
-         header: (
-            <Grid>{check && <TrashIcon style={{ marginLeft: '10px' }} />}</Grid>
-         ),
+         header: <Grid>{check && <TrashIcon />}</Grid>,
          key: 'delete',
       },
       {
