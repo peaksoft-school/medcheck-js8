@@ -19,16 +19,11 @@
       "react/jsx-props-no-spreading": "off",
       "react/react-in-jsx-scope": "off",
       "import/prefer-default-export": "off",
-      "react/prop-types": "off",
       "no-shadow": "off",
       "react-hooks/exhaustive-deps": "off",
       "react-hooks/rules-of-hooks": "error",
       "react/function-component-definition": "off",
       "react/prop-types": "off",
-<<<<<<< HEAD
-      "react/button-has-type": "off",
-=======
->>>>>>> d8ad67db5ba4f4189ba0f4b3db4e8b1cf9123d32
       "max-len": [
          "error",
          {
