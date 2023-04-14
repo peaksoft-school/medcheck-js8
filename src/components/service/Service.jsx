@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import { MED_SERVICE } from '../../utlis/services/img_service'
 import Sellect from '../UI/select/Sellect'
 import CardApplication from '../card/CardApplication'
+import Footer from '../footer/Footer'
 
 function Service() {
    return (
@@ -39,6 +40,7 @@ function Service() {
             <Sellect />
          </SelectContent>
          <CardApplication />
+         <Footer />
       </div>
    )
 }
