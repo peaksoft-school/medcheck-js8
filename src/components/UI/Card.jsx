@@ -1,5 +1,6 @@
 import React from 'react'
 import { CardContent, styled } from '@mui/material'
+import Button from './Button'
 
 const DoctorCard = ({ image, fullName, profession }) => {
    return (
@@ -10,7 +11,7 @@ const DoctorCard = ({ image, fullName, profession }) => {
          <CardContentStyled>
             <FullNameStyled>{fullName}</FullNameStyled>
             <ProfessionalStyled>{profession}</ProfessionalStyled>
-            <StyledButton>Записаться на прием</StyledButton>
+            <StyledButton variant="outlined">Записаться на прием</StyledButton>
          </CardContentStyled>
       </>
    )
@@ -40,7 +41,6 @@ const FullNameStyled = styled('h3')({
 })
 
 const ProfessionalStyled = styled('p')({
-   fontWeight: 500,
    fontSize: '16px',
    lineHeight: '22px',
    color: ' #959595',
@@ -53,20 +53,24 @@ const CardContentStyled = styled(CardContent)({
 const IMG = styled('img')({
    display: 'flex',
    alignItems: 'flex-start',
+   width: '100%',
+   height: '100%',
 })
 
-const StyledButton = styled('button')({
-   color: '#029847',
-   border: '1px solid #029847',
-   background: 'none',
-   borderRadius: '10px',
-   padding: '10px 20px',
-   fontStyle: 'normal',
-   fontSize: '16px',
-   lineHeight: '22px',
+const StyledButton = styled(Button)({
+   '&': {
+      color: '#029847',
+      border: '1px solid #029847',
+      background: 'none',
+      borderRadius: '10px',
+      padding: '10px 20px',
+      fontStyle: 'normal',
+      fontSize: '16px',
+      lineHeight: '22px',
+   },
    '&:hover': {
-      border: 'none',
-
+      // border: 'none',
+      fontFamily: 'Manrope',
       color: '#FFFFFF',
       background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
    },
