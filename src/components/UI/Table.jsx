@@ -80,7 +80,7 @@ const PaperStyled = styled(Paper)`
    margin: 0 auto;
    height: 100vh;
 `
-const TableHeaderStyled = styled('p')`
+const TableHeaderStyled = styled('h3')`
    font-family: 'Manrope';
    font-style: normal;
    font-weight: 600;

@@ -1,9 +1,7 @@
 export const item = [
    {
       id: '1',
-      checkbox: '',
-      delete: '',
-      name: 'Шарапат',
+      name: 'Александра',
       telNumber: '+996 707 123 456',
       mail: 'saadat@gmail.com',
       serviceSelection: 'Окулист',
@@ -21,7 +19,7 @@ export const item = [
    },
    {
       id: '3',
-      name: 'Шарапат',
+      name: 'Рустам',
       telNumber: '+996 707 123 456',
       mail: 'saadat@gmail.com',
       serviceSelection: 'Окулист',

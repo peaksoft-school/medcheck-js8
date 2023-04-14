@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, IconButton } from '@mui/material'
 import AppTable from './UI/Table'
 import { item } from '../utlis/constants/commons'
@@ -6,42 +6,72 @@ import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
 import CheckboxApp from './UI/checkbox/Checkbox'
 
 const OnlineEntry = () => {
-   const [isChecked, setIsChecked] = useState(false)
+   const [patients, setPatients] = useState([])
+   const [check, setCheck] = useState(false)
 
-   const handleCheckBoxChangeHandler = (event) => {
-      setIsChecked(event.target.checked)
+   useEffect(() => {
+      setPatients(item)
+   }, [])
+
+   const checkBoxChangeHandler = (e) => {
+      const { id, checked } = e.target
+      if (id === 'allSelect') {
+         const tempPatient = patients.map((patient) => {
+            return { ...patient, isChecked: checked }
+         })
+         setCheck((prev) => !prev)
+         setPatients(tempPatient)
+      } else {
+         const tempPatient = patients.map((patient) =>
+            patient.id === id ? { ...patient, isChecked: checked } : patient
+         )
+         setPatients(tempPatient)
+
+         if (
+            (tempPatient.find((patient) => patient.isChecked === false) &&
+               tempPatient.find((patient) => patient.isChecked === true)) ||
+            tempPatient.find((patient) => patient.isChecked === true)
+         ) {
+            setCheck(true)
+         } else {
+            setCheck(false)
+         }
+      }
    }
-   const handleDeleteClick = () => {}
+
    const column = [
       {
-         header: <CheckboxApp style={{ display: 'flex' }} />,
+         header: (
+            <CheckboxApp
+               style={{ display: 'flex' }}
+               id="allSelect"
+               checked={
+                  patients.filter((patient) => patient?.isChecked !== true)
+                     .length < 1
+               }
+               onChange={checkBoxChangeHandler}
+            />
+         ),
          key: 'checkbox',
-         render: () => (
+         render: (patient) => (
             <Grid>
-               <IconButton
-                  checked={isChecked}
-                  onChange={handleCheckBoxChangeHandler}
-               >
-                  <CheckboxApp />
-               </IconButton>
+               <CheckboxApp
+                  id={patient.id}
+                  checked={patient.isChecked || false}
+                  onChange={checkBoxChangeHandler}
+               />
             </Grid>
          ),
       },
       {
-         header: <TrashIcon style={{ marginLeft: '10px' }} />,
-         key: 'delete',
-         render: () => (
-            <Grid>
-               <IconButton onClick={handleDeleteClick}>
-                  {isChecked && <TrashIcon />}
-               </IconButton>
-            </Grid>
+         header: (
+            <Grid>{check && <TrashIcon style={{ marginLeft: '10px' }} />}</Grid>
          ),
+         key: 'delete',
       },
       {
          header: '№',
          key: 'id',
-         time: 'id',
          index: true,
       },
       {
@@ -96,7 +126,7 @@ const OnlineEntry = () => {
 
    return (
       <div>
-         <AppTable rows={item} columns={column} />
+         <AppTable rows={patients} columns={column} />
       </div>
    )
 }
