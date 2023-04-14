@@ -1,7 +1,7 @@
 import React from 'react'
 import { CardContent, styled } from '@mui/material'
 
-const CardApp = ({ image, fullName, profession }) => {
+const DoctorCard = ({ image, fullName, profession }) => {
    return (
       <>
          <Container>
@@ -16,7 +16,7 @@ const CardApp = ({ image, fullName, profession }) => {
    )
 }
 
-export default CardApp
+export default DoctorCard
 
 const Container = styled('div')({
    width: '319px',
@@ -28,20 +28,18 @@ const Container = styled('div')({
    justifyContent: 'center',
    alignItems: 'flex-end',
    borderRadius: '4px',
-})
-
-const FullNameStyled = styled('h3')({
    fontFamily: 'Manrope',
    fontStyle: 'normal',
    fontWeight: '500',
+})
+
+const FullNameStyled = styled('h3')({
    fontSize: '18px',
    lineHeight: '25px',
    color: '#222222',
 })
 
 const ProfessionalStyled = styled('p')({
-   fontFamily: 'Manrope',
-   fontStyle: 'normal',
    fontWeight: 500,
    fontSize: '16px',
    lineHeight: '22px',
@@ -63,9 +61,7 @@ const StyledButton = styled('button')({
    background: 'none',
    borderRadius: '10px',
    padding: '10px 20px',
-   fontFamily: 'Manrope',
    fontStyle: 'normal',
-   fontWeight: 500,
    fontSize: '16px',
    lineHeight: '22px',
    '&:hover': {
