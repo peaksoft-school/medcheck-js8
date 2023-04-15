@@ -170,13 +170,13 @@ const StyledSlider = styled(Slider)({
    },
    '& .slick-next': {
       position: 'absolute',
-      top: '289px',
+      top: '309px',
       zIndex: '8',
       left: '470px',
    },
    '& .slick-prev': {
       position: 'absolute',
-      top: '289px',
+      top: '310px',
       zIndex: '8',
       left: '273px',
    },

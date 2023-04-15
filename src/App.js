@@ -1,11 +1,4 @@
-import { FeedbackSlider } from './components/feedback-slider/FeedbackSlider'
-
 function App() {
-   return (
-      <>
-         <div>Med Check</div>
-         <FeedbackSlider />
-      </>
-   )
+   return <div>Med Check</div>
 }
 export default App
