@@ -84,7 +84,7 @@ export const FeedbackSlider = () => {
                            <Rating value={item.rating} readOnly />
                         </Wrapper>
                      </Div>
-                     <p>{item.review}</p>
+                     <TitleStyled>{item.review}</TitleStyled>
                   </Container>
                )
             })}
@@ -120,6 +120,13 @@ const Div = styled('div')({
    display: 'flex',
    gap: '14px',
    paddingBottom: '20px',
+})
+
+const TitleStyled = styled('p')({
+   fontFamily: 'Manrope',
+   weight: 300,
+   size: '16px',
+   lineHeight: '21.86px',
 })
 
 const StyledSlider = styled(Slider)({
