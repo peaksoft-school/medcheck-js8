@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { Grid, IconButton } from '@mui/material'
+import styled from '@emotion/styled'
 import AppTable from './UI/Table'
 import { item } from '../utlis/constants/commons'
 import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
@@ -142,7 +143,12 @@ const OnlineEntry = ({ processedData }) => {
          {
             header: 'Дата и время',
             key: 'date',
-            time: 'time',
+            render: (patient) => (
+               <DateAndTimeStyled style={{ textAlign: 'center' }}>
+                  <p>{patient.date}</p>
+                  <p>{patient.time}</p>
+               </DateAndTimeStyled>
+            ),
          },
          {
             header: 'Обработан',
@@ -181,3 +187,8 @@ const OnlineEntry = ({ processedData }) => {
 }
 
 export default OnlineEntry
+const DateAndTimeStyled = styled(Grid)`
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+`
