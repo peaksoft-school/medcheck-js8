@@ -7,6 +7,8 @@ export const item = [
       serviceSelection: 'Окулист',
       changeSpecialist: 'Манак Елена',
       date: '12.01.2023 15:00',
+      isChecked: false,
+      processedChecked: false,
    },
    {
       id: '2',
@@ -16,6 +18,8 @@ export const item = [
       serviceSelection: 'Окулист',
       changeSpecialist: 'Манак Елена',
       date: '12.01.2023 15:00',
+      isChecked: false,
+      processedChecked: false,
    },
    {
       id: '3',
@@ -25,5 +29,18 @@ export const item = [
       serviceSelection: 'Окулист',
       changeSpecialist: 'Манак Елена',
       date: '12.01.2023 15:00',
+      isChecked: false,
+      processedChecked: false,
+   },
+   {
+      id: '4',
+      name: 'Гулчапчап',
+      telNumber: '+996 707 123 456',
+      mail: 'saadat@gmail.com',
+      serviceSelection: 'Окулист',
+      changeSpecialist: 'Манак Елена',
+      date: '12.01.2023 15:00',
+      isChecked: false,
+      processedChecked: false,
    },
 ]

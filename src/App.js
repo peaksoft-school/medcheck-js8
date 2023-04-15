@@ -1,11 +1,5 @@
-import OnlineEntry from './components/OnlineEntry'
-
 function App() {
-   return (
-      <div>
-         <OnlineEntry />
-      </div>
-   )
+   return <div>Medcheck</div>
 }
 
 export default App
