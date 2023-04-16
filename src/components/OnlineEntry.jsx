@@ -145,8 +145,8 @@ const OnlineEntry = ({ processedData }) => {
             key: 'date',
             render: (patient) => (
                <DateAndTimeStyled style={{ textAlign: 'center' }}>
-                  <p>{patient.date}</p>
-                  <p>{patient.time}</p>
+                  <DateTitleStyled>{patient.date}</DateTitleStyled>
+                  <TimeTitleStyled>{patient.time}</TimeTitleStyled>
                </DateAndTimeStyled>
             ),
          },
@@ -191,4 +191,18 @@ const DateAndTimeStyled = styled(Grid)`
    display: flex;
    flex-direction: column;
    align-items: start;
+`
+const TimeTitleStyled = styled('p')`
+   font-family: 'Manrope';
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 22px;
+   color: #4d4e51;
+`
+const DateTitleStyled = styled('p')`
+   font-family: 'Manrope';
+   font-weight: 400;
+   font-size: 16px;
+   line-height: 22px;
+   color: #222222;
 `
