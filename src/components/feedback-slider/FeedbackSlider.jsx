@@ -72,24 +72,29 @@ export const FeedbackSlider = () => {
       prevArrow: <PreviousArrow />,
    }
    return (
-      <MainContainer>
-         <StyledSlider {...settings}>
-            {infoSlide.map((item) => {
-               return (
-                  <Container>
-                     <Div>
-                        <img key={item.id} src={item.img} alt="" />
-                        <Wrapper>
-                           <Username>{item.name}</Username>
-                           <Rating value={item.rating} readOnly />
-                        </Wrapper>
-                     </Div>
-                     <TitleStyled>{item.review}</TitleStyled>
-                  </Container>
-               )
-            })}
-         </StyledSlider>
-      </MainContainer>
+      <>
+         <StyledInfo>
+            Отзывы наших <span> пациентов</span>
+         </StyledInfo>
+         <MainContainer>
+            <StyledSlider {...settings}>
+               {infoSlide.map((item) => {
+                  return (
+                     <Container>
+                        <Div>
+                           <img key={item.id} src={item.img} alt="" />
+                           <Wrapper>
+                              <Username>{item.name}</Username>
+                              <Rating value={item.rating} readOnly />
+                           </Wrapper>
+                        </Div>
+                        <TitleStyled>{item.review}</TitleStyled>
+                     </Container>
+                  )
+               })}
+            </StyledSlider>
+         </MainContainer>
+      </>
    )
 }
 
@@ -97,6 +102,19 @@ const MainContainer = styled('div')({
    display: 'flex',
    justifyContent: 'center',
    overflow: 'hidden',
+   fontFamily: 'Manrope',
+})
+const StyledInfo = styled('h2')({
+   fontFamily: 'Manrope',
+   fontWeight: 600,
+   fontSize: '36px',
+   lineHeight: '49px',
+   color: '#222222',
+   zIndex: 6,
+   paddingLeft: '120px',
+   span: {
+      color: '#048741',
+   },
 })
 
 const Container = styled('div')({
@@ -123,7 +141,6 @@ const Div = styled('div')({
 })
 
 const TitleStyled = styled('p')({
-   fontFamily: 'Manrope',
    weight: 300,
    size: '16px',
    lineHeight: '21.86px',
@@ -135,6 +152,7 @@ const StyledSlider = styled(Slider)({
    '& .slick-track': {
       display: 'flex',
       gap: '36px',
+      marginTop: '60px',
    },
    '& .slick-list': {
       width: '782px',
@@ -149,8 +167,8 @@ const StyledSlider = styled(Slider)({
       display: 'flex',
       justifyContent: 'center',
       gap: '14px',
-      paddingTop: '43px',
-      paddingBottom: '10px',
+      paddingTop: '54px',
+      paddingBottom: '12px',
       '& .slick-active': {
          background: 'none',
          ellipse: {
@@ -170,13 +188,13 @@ const StyledSlider = styled(Slider)({
    },
    '& .slick-next': {
       position: 'absolute',
-      top: '309px',
+      top: '389px',
       zIndex: '8',
       left: '470px',
    },
    '& .slick-prev': {
       position: 'absolute',
-      top: '310px',
+      top: '389.2px',
       zIndex: '8',
       left: '273px',
    },
