@@ -4,12 +4,12 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { FormLabel, Grid, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { ReactComponent as ButtonIcon } from '../../assets/serviceIcons/ButtonIcon.svg'
-import { ReactComponent as Users } from '../../assets/serviceIcons/Users.svg'
-import { ReactComponent as Phone } from '../../assets/serviceIcons/phoneForModal.svg'
-import { ReactComponent as Women } from '../../assets/serviceIcons/Women.svg'
-import Button from '../UI/Button'
-import Input from '../UI/input/Input'
+import { ReactComponent as ButtonIcon } from '../../../assets/serviceIcons/ButtonIcon.svg'
+import { ReactComponent as Users } from '../../../assets/serviceIcons/Users.svg'
+import { ReactComponent as Phone } from '../../../assets/serviceIcons/phoneForModal.svg'
+import { ReactComponent as Women } from '../../../assets/serviceIcons/Women.svg'
+import Button from '../Button'
+import Input from '../input/Input'
 
 export default function CardApplication() {
    return (

@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import Grid from '@mui/material/Grid'
-// import { MED_SERVICE } from '../../utlis/services/img_service'
 import Sellect from '../UI/select/Sellect'
-import CardApplication from '../card/CardApplication'
+import CardApplication from '../UI/card/CardApplication'
 import Footer from '../footer/Footer'
 import Header from '../header/Header'
 

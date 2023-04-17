@@ -6,7 +6,6 @@ import {
    Typography,
 } from '@mui/material'
 import styled from '@emotion/styled'
-// import { serviceData } from '../../../utlis/services/service_data'
 import { ReactComponent as ExpandMoreIcon } from '../../../assets/serviceIcons/Указатель.svg'
 
 function Sellect({ data }) {
