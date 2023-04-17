@@ -80,9 +80,9 @@ export const FeedbackSlider = () => {
             <StyledSlider {...settings}>
                {infoSlide.map((item) => {
                   return (
-                     <Container>
+                     <Container key={item.id}>
                         <Div>
-                           <img key={item.id} src={item.img} alt="" />
+                           <img src={item.img} alt="" />
                            <Wrapper>
                               <Username>{item.name}</Username>
                               <Rating value={item.rating} readOnly />
