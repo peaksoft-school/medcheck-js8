@@ -61,6 +61,7 @@ const customPaging = () => <Pagination />
 
 export const FeedbackSlider = () => {
    const settings = {
+      autoplay: true,
       dots: true,
       infinite: true,
       speed: 500,
