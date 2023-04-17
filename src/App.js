@@ -1,11 +1,5 @@
-import AppointmentTable from './components/UI/AppointmentTable'
-
 function App() {
-   return (
-      <div>
-         <AppointmentTable />
-      </div>
-   )
+   return <div>MedCheck</div>
 }
 
 export default App
