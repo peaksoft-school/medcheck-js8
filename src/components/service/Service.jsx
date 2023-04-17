@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import Grid from '@mui/material/Grid'
-import { MED_SERVICE } from '../../utlis/services/img_service'
+// import { MED_SERVICE } from '../../utlis/services/img_service'
 import Sellect from '../UI/select/Sellect'
 import CardApplication from '../card/CardApplication'
 import Footer from '../footer/Footer'
 import Header from '../header/Header'
 
-function Service() {
+function Service({ data }) {
    return (
       <div>
          <Header />
@@ -21,7 +21,7 @@ function Service() {
             <span className="our_service"> услуги</span>
          </ServiceStyle>
          <GridContainer container>
-            {MED_SERVICE.map((el) => {
+            {data.map((el) => {
                return (
                   <Grid item xs={6} key={el.id}>
                      <div className="grid">

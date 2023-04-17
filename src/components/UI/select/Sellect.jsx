@@ -6,10 +6,10 @@ import {
    Typography,
 } from '@mui/material'
 import styled from '@emotion/styled'
-import { serviceData } from '../../../utlis/services/service_data'
+// import { serviceData } from '../../../utlis/services/service_data'
 import { ReactComponent as ExpandMoreIcon } from '../../../assets/serviceIcons/Указатель.svg'
 
-function Sellect() {
+function Sellect({ data }) {
    const [expanded, setExpanded] = useState()
 
    const clickHandler = (panel) => (e, isExpanded) => {
@@ -17,7 +17,7 @@ function Sellect() {
    }
    return (
       <AccordionContainer>
-         {serviceData.map((data) => (
+         {data.map((data) => (
             <AccordionStyle
                key={data.id}
                expanded={expanded === data.id}
