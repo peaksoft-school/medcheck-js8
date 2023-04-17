@@ -1,5 +1,12 @@
+import Service from './components/service/Service'
+
 function App() {
-   return <div>MedCheck</div>
+   return (
+      <div>
+         <Service />
+      </div>
+   )
+   // return <div>MedCheck</div>
 }
 
 export default App

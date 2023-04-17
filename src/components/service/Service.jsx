@@ -5,10 +5,12 @@ import { MED_SERVICE } from '../../utlis/services/img_service'
 import Sellect from '../UI/select/Sellect'
 import CardApplication from '../card/CardApplication'
 import Footer from '../footer/Footer'
+import Header from '../header/Header'
 
 function Service() {
    return (
       <div>
+         <Header />
          <Hr />
          <MainPart href="/">
             <span>Главная\</span>
@@ -50,19 +52,16 @@ export default Service
 const Hr = styled('hr')(() => ({
    width: '100%',
    height: '10px',
-   marginTop: '16px',
    marginBottom: '30px',
    background: '#DBF0E5',
 }))
 
 const MainPart = styled('a')(() => ({
    marginLeft: '120px',
-   marginBottom: '26px',
    fontFamily: ' Manrope',
    fontSize: '14px',
    fontWeight: 400,
    lineHeight: '19px',
-   letterSpacing: '0px',
    textAlign: 'left',
    color: '#959595',
    textDecoration: 'none',
@@ -77,6 +76,7 @@ const ServiceStyle = styled('div')(() => ({
    color: '#222222',
    marginLeft: '120px',
    marginBottom: '60px',
+   marginTop: '26px',
    '& .our_service': {
       color: '#048741',
    },
@@ -86,11 +86,7 @@ const GridContainer = styled(Grid)(() => ({
    width: '889px',
    height: '1252px',
    marginLeft: '120px',
-   color: '#4D4E51',
-   fontFamily: 'Manrope',
-   fontSize: '18px',
-   fontWeight: 500,
-   lineHeight: '24px',
+
    marginBottom: '120px',
    '& .grid': {
       display: 'flex',
@@ -102,6 +98,13 @@ const GridContainer = styled(Grid)(() => ({
       ':hover': {
          background:
             'radial-gradient(43.84% 43.84% at 50.16% 55.3%, #FDFDFD 0%, #E4E7EE 100%)',
+      },
+      '& a': {
+         color: '#4D4E51',
+         fontFamily: 'Manrope',
+         fontSize: '18px',
+         fontWeight: 500,
+         lineHeight: '24px',
       },
    },
    '& .img': {
@@ -125,6 +128,7 @@ const SelectContent = styled('div')(() => ({
       marginLeft: '120px',
       top: '1760px',
       borderRadius: 'nullpx',
+      marginBottom: '34px',
       color: '#222222',
    },
    '& .info': {
@@ -137,7 +141,6 @@ const SelectContent = styled('div')(() => ({
       letterSpacing: '0em',
       textAlign: 'left',
       marginLeft: '120px',
-      marginTop: '34px',
       marginBottom: '16px',
    },
 }))
