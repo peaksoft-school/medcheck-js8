@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from '@emotion/styled'
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as BackVector } from '../../assets/icons/Vector (3).svg'
 
 export const DoctorDetailsPage = (props) => {
    const {
@@ -13,68 +15,43 @@ export const DoctorDetailsPage = (props) => {
    } = props
    return (
       <Container>
-         <h1
-            style={{ fontSize: '36px', fontWeight: 600, lineHeight: '49.18px' }}
-         >
+         <StyledNameMain>
             {/* this should be the doctor's name */}
             {doctorName}
-         </h1>
+         </StyledNameMain>
 
-         <p
-            style={{
-               width: '664px',
-               padding: '24px 80px 0 0',
-               fontSize: '18px',
-               fontWeight: 400,
-               lineHeight: '25px',
-            }}
-         >
+         <StyledMainText>
             Попасть в команду медицинской клиники «Medical Clinic» могут только
             лучшие специалисты с многолетней практикой и доказанным опытом.
-         </p>
-         <p
-            style={{
-               width: '852px',
-               padding: '20px 90px 20px 0',
-               fontSize: '18px',
-               fontWeight: 400,
-               lineHeight: '25px',
-            }}
-         >
+         </StyledMainText>
+         <StyledSecondText>
             Мы развиваемся, учимся и оттачиваем мастерство, стажируемся в
             ведущих университетах Европы, чтобы еще на шаг стать ближе к
             совершенству.
-         </p>
+         </StyledSecondText>
          <StyledDoctorBlock>
             <StyledDoctorImg>
                {/* there will be a photo */}
                <img src={doctorImg} alt="врач" />
             </StyledDoctorImg>
             <StyledDoctorCard>
-               <h2 style={{ color: '#009344' }}> {doctorName} </h2>
-               <div style={{ display: 'flex', marginTop: '20px' }}>
-                  <p style={{ color: '#58595B', fontWeight: 400 }}>
-                     Отделение:
-                  </p>
-                  <p style={{ color: '#222222', fontWeight: 500 }}>
+               <h2> {doctorName} </h2>
+               <StyledDepartmentDoctor>
+                  <StyledText>Отделение: </StyledText>
+                  <StyledTextLast>
+                     Хирург
                      {/* there will be a section */}
                      {department}
-                  </p>
-               </div>
-               <div
-                  style={{
-                     display: 'flex',
-                     marginBottom: '24px',
-                  }}
-               >
-                  <p style={{ color: '#58595B', fontWeight: 400 }}>
-                     Должность:
-                  </p>
-                  <p style={{ color: '#222222', fontWeight: 500 }}>
+                  </StyledTextLast>
+               </StyledDepartmentDoctor>
+               <StyledDepartmentDoctor>
+                  <StyledText>Должность: </StyledText>
+                  <StyledTextLast>
+                     Главный врач
                      {/* there will be a position */}
                      {positionWork}
-                  </p>
-               </div>
+                  </StyledTextLast>
+               </StyledDepartmentDoctor>
                {/* button will be here */}
                Записаться на прием
             </StyledDoctorCard>
@@ -85,18 +62,20 @@ export const DoctorDetailsPage = (props) => {
             <li>
                <b>{mainTodoName}</b>
                <ul>
-                  <li>{secondaryTodo}</li>
+                  <li>{secondaryTodo} </li>
                </ul>
             </li>
          </StyledDoctorTodo>
+         <StyledNavlink to="/">
+            <BackVector /> Список сотрудников
+         </StyledNavlink>
       </Container>
    )
 }
 
 const StyledDoctorImg = styled.div`
-   width: 319px;
-   height: 349px;
-   padding: 14px 20px;
+   height: 100%;
+   padding: 14px 20px 0px;
    border-radius: 4px;
    background: radial-gradient(
       43.84% 43.84% at 50.16% 55.3%,
@@ -116,22 +95,64 @@ const StyledDoctorCard = styled.div`
    margin-left: 60px;
    margin-top: 100px;
 
-   p {
-      font-size: 18px;
-      line-height: 27px;
-      color: '#58595B';
+   h2 {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 500;
+      color: #009344;
+      margin-bottom: 15px;
    }
 `
 
 const Container = styled.div`
-   width: 852px;
+   width: 85%;
    margin-left: 120px;
    margin-top: 26px;
    margin-bottom: 40px;
 `
 
+const StyledNameMain = styled.h1`
+   font-size: 36px;
+   font-weight: 600;
+   line-height: 49.18px;
+`
+const StyledMainText = styled.p`
+   width: 80%;
+   padding: 24px 80px 0 0;
+   font-size: 18px;
+   font-weight: 400;
+   line-height: 25px;
+`
+const StyledSecondText = styled.p`
+   width: 85%;
+   padding: 20px 90px 20px 0;
+   font-size: 18px;
+   font-weight: 400;
+   line-height: 25px;
+`
+const StyledText = styled.p`
+   font-size: 18px;
+   font-weight: 400;
+   line-height: 25px;
+   color: #58595b;
+`
+const StyledTextLast = styled.p`
+   font-size: 18px;
+   font-weight: 500;
+   line-height: 27px;
+   color: #222222;
+`
+
+const StyledDepartmentDoctor = styled.div`
+   display: flex;
+
+   :last-child {
+      margin-bottom: 34px;
+   }
+`
+
 const StyledDoctorTodo = styled.ul`
-   width: 852px;
+   width: 65%px;
    font-size: 16px;
    line-height: 25.6px;
    font-family: 'Manrope';
@@ -139,7 +160,7 @@ const StyledDoctorTodo = styled.ul`
    list-style: none;
 
    li:first-of-type li {
-      width: 852px;
+      width: 65%px;
       font-size: 16px;
       line-height: 25.6px;
       font-weight: 400;
@@ -150,7 +171,7 @@ const StyledDoctorTodo = styled.ul`
    }
 
    li {
-      width: 852px;
+      width: 65%px;
       font-size: 16px;
       line-height: 25.6px;
       font-weight: 400;
@@ -159,3 +180,10 @@ const StyledDoctorTodo = styled.ul`
       list-style: none;
    }
 `
+const StyledNavlink = styled(NavLink)(() => ({
+   color: '#009344',
+   fontSize: '16px',
+   fontWeight: 500,
+   lineHeight: '22px',
+   textDecoration: 'none',
+}))
