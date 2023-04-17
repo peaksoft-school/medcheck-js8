@@ -1,6 +1,6 @@
 import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useState } from 'react'
-import GeoPoint from '../../assets/icons/GeoPoint.svg'
+import GeoPoint from '../../assets/icons/geoPoint.svg'
 import Timer from '../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../assets/icons/ProfileIcon.svg'
 import { ReactComponent as InstagramIcon } from '../../assets/icons/InstagramIcon.svg'
