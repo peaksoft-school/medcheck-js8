@@ -152,25 +152,22 @@ const TitleBox = styled('span')(() => ({
 }))
 const DateAndTimeBox = styled('span')(() => ({
    '&': {
+      fontWeight: 400,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'start',
+      fontSize: '16px',
+      lineHeight: '22px',
    },
 }))
 
 const DateTitleStyled = styled('span')(() => ({
    '&': {
-      fontWeight: 400,
-      fontSize: '16px',
-      lineHeight: '22px',
       color: '#222222',
    },
 }))
 const TimeTitleStyled = styled('span')(() => ({
    '&': {
-      fontWeight: 400,
-      fontSize: '16px',
-      lineHeight: '22px',
       color: '#4d4e51',
    },
 }))
