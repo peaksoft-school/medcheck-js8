@@ -48,3 +48,33 @@ export const item = [
       processedChecked: false,
    },
 ]
+
+export const appointmentData = [
+   {
+      id: '2',
+      img: 'https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/profile-photos-4.jpg',
+      changeSpecialist: 'Манак Елена',
+      serviceSelection: 'Окулист',
+      date: '12.01.2023',
+      time: '15:00',
+      status: 'Cancelled',
+   },
+   {
+      id: '3',
+      img: 'https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/profile-photos-4.jpg',
+      changeSpecialist: 'Манак Елена',
+      serviceSelection: 'Окулист',
+      date: '12.01.2023',
+      time: '15:00',
+      status: 'Confirmed',
+   },
+   {
+      id: '4',
+      img: 'https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/profile-photos-4.jpg',
+      changeSpecialist: 'Манак Елена',
+      serviceSelection: 'Окулист',
+      date: '12.01.2023',
+      time: '15:00',
+      status: 'Completed',
+   },
+]
