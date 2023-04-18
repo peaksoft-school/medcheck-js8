@@ -3,6 +3,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as BackVector } from '../../assets/icons/Vector (3).svg'
+import { Button } from '../UI/Button'
 
 export const DoctorDetailsPage = (props) => {
    const {
@@ -66,7 +67,7 @@ export const DoctorDetailsPage = (props) => {
                </ul>
             </li>
          </StyledDoctorTodo>
-         <StyledNavlink to="/">
+         <StyledNavlink to="b" element={Button}>
             <BackVector /> Список сотрудников
          </StyledNavlink>
       </Container>
@@ -96,7 +97,7 @@ const StyledDoctorCard = styled.div`
    margin-top: 100px;
 
    h2 {
-      font-size: 24px;
+      font-size: 1.5rem;
       line-height: 32px;
       font-weight: 500;
       color: #009344;
@@ -112,32 +113,32 @@ const Container = styled.div`
 `
 
 const StyledNameMain = styled.h1`
-   font-size: 36px;
+   font-size: 2.25rem;
    font-weight: 600;
    line-height: 49.18px;
 `
 const StyledMainText = styled.p`
    width: 80%;
    padding: 24px 80px 0 0;
-   font-size: 18px;
+   font-size: 1.13rem;
    font-weight: 400;
    line-height: 25px;
 `
 const StyledSecondText = styled.p`
    width: 85%;
    padding: 20px 90px 20px 0;
-   font-size: 18px;
+   font-size: 1.13rem;
    font-weight: 400;
    line-height: 25px;
 `
 const StyledText = styled.p`
-   font-size: 18px;
+   font-size: 1.13rem;
    font-weight: 400;
    line-height: 25px;
    color: #58595b;
 `
 const StyledTextLast = styled.p`
-   font-size: 18px;
+   font-size: 1.13rem;
    font-weight: 500;
    line-height: 27px;
    color: #222222;
@@ -152,16 +153,16 @@ const StyledDepartmentDoctor = styled.div`
 `
 
 const StyledDoctorTodo = styled.ul`
-   width: 65%px;
-   font-size: 16px;
+   width: 65%;
+   font-size: 1rem;
    line-height: 25.6px;
    font-family: 'Manrope';
    color: #222222;
    list-style: none;
 
    li:first-of-type li {
-      width: 65%px;
-      font-size: 16px;
+      width: 65%;
+      font-size: 1rem;
       line-height: 25.6px;
       font-weight: 400;
       font-family: 'Manrope';
@@ -171,8 +172,8 @@ const StyledDoctorTodo = styled.ul`
    }
 
    li {
-      width: 65%px;
-      font-size: 16px;
+      width: 65%;
+      font-size: 1rem;
       line-height: 25.6px;
       font-weight: 400;
       font-family: 'Manrope';
@@ -182,7 +183,7 @@ const StyledDoctorTodo = styled.ul`
 `
 const StyledNavlink = styled(NavLink)(() => ({
    color: '#009344',
-   fontSize: '16px',
+   fontSize: '1rem',
    fontWeight: 500,
    lineHeight: '22px',
    textDecoration: 'none',
