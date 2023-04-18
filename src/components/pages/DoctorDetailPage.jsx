@@ -3,7 +3,6 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as BackVector } from '../../assets/icons/Vector (3).svg'
-import { Button } from '../UI/Button'
 
 export const DoctorDetailsPage = (props) => {
    const {
@@ -67,7 +66,7 @@ export const DoctorDetailsPage = (props) => {
                </ul>
             </li>
          </StyledDoctorTodo>
-         <StyledNavlink to="b" element={Button}>
+         <StyledNavlink to="b">
             <BackVector /> Список сотрудников
          </StyledNavlink>
       </Container>
