@@ -64,6 +64,7 @@ export const MenuItemStyled = styledMui(MenuItem)(() => ({
 }))
 export const SecondBox = styledMui(Grid)(() => ({
    '&': {
+      width: '85vw',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
