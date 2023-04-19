@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import medcheckLogo from '../../assets/icons/medcheckLogo.svg'
-import medCheck from '../../assets/icons/medCheck.svg'
-import geoPoint from '../../assets/icons/geoPoint.svg'
-import clock from '../../assets/icons/clock.svg'
-import phone from '../../assets/icons/phone.svg'
+import medcheckLogo from '../../assets/icons/MedcheckLogo.svg'
+import medCheck from '../../assets/icons/MedCheck.svg'
+import geoPoint from '../../assets/icons/GeoPoint.svg'
+import clock from '../../assets/icons/Clock.svg'
+import phone from '../../assets/icons/Phone.svg'
 import email from '../../assets/icons/email.svg'
-import instagram from '../../assets/icons/instagram.svg'
-import telegram from '../../assets/icons/telegram.svg'
-import whatsApp from '../../assets/icons/whatsApp.svg'
+import instagram from '../../assets/icons/Instagram.svg'
+import telegram from '../../assets/icons/Telegram.svg'
+import whatsApp from '../../assets/icons/WhatsApp.svg'
 
 function Footer() {
    return (
@@ -67,7 +67,7 @@ function Footer() {
          <div>
             <DataContent>
                <a href="/">
-                  <li>Оклинике</li>
+                  <li>О клинике</li>
                </a>
                <a href="/">
                   <li>Услуги</li>
@@ -259,7 +259,8 @@ const DataContent = styled('ul')(() => ({
    color: '#CCCCCC',
    marginTop: '78px',
    marginLeft: '460px',
-   '& li': {
+
+   '& a': {
       textDecoration: 'none',
       cursor: 'pointer',
       color: ' #CCCCCC',
