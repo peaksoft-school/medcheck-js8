@@ -9,21 +9,8 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
-import { appointmentData } from '../../utlis/constants/commons'
 
-const AppointmentTable = () => {
-   const getStatusTitleChangeHandler = (statusTitle) => {
-      if (statusTitle === 'Cancelled') {
-         return 'Отменён'
-      }
-      if (statusTitle === 'Confirmed') {
-         return 'Подтверждён'
-      }
-      if (statusTitle === 'Completed') {
-         return 'Завершён'
-      }
-      return null
-   }
+const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
    return (
       <Grid>
          <PaperStyled>
