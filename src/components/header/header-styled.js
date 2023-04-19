@@ -17,13 +17,11 @@ export const HeaderStyled = styledMui(AppBar)(() => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      margin: '0 auto',
    },
 }))
 export const StyledHeaderGlobalContainer = styledMui(Grid)({
+   maxWidth: '95vw',
    margin: '0 auto',
-   padding: '510x 120px 10px 120px',
-   maxWidth: '100%',
 })
 
 export const StyledPhoneIconButton = styledMui(IconButton)({
@@ -69,12 +67,13 @@ export const SecondBox = styledMui(Grid)(() => ({
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
+      width: '85vw',
    },
 }))
 
 export const Container = styledMui(Grid)(() => ({
    '&': {
-      width: '100%',
+      width: '85vw',
       display: 'flex',
       justifyContent: 'space-between',
    },

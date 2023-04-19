@@ -24,7 +24,7 @@ function ServiceBox({ data }) {
 export default ServiceBox
 
 const GridContainer = styled(Grid)(() => ({
-   width: '889px',
+   width: '90vw',
    height: '1252px',
    marginLeft: '120px',
 
