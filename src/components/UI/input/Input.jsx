@@ -27,9 +27,7 @@ const StyledInput = styled(TextField)`
    fieldset {
       border-radius: 8px;
       padding: 10px 8px 10px 16px;
-      height: 42px;
    }
-   width: 30%;
    input:hover {
       border-radius: 8px;
       border: 1px solid #959595;
