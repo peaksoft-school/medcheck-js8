@@ -1,4 +1,10 @@
+import AppRoutes from './routes/Routes'
+
 function App() {
-   return <div>MedCheck</div>
+   return (
+      <div>
+         <AppRoutes />
+      </div>
+   )
 }
 export default App

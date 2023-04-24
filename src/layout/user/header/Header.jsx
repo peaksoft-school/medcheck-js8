@@ -1,14 +1,14 @@
 import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useState } from 'react'
-import GeoPoint from '../../assets/icons/GeoPoint.svg'
-import Timer from '../../assets/icons/Timer.svg'
-import { ReactComponent as ProfileIcon } from '../../assets/icons/ProfileIcon.svg'
-import { ReactComponent as InstagramIcon } from '../../assets/icons/InstagramIcon.svg'
-import { ReactComponent as TelegramIcon } from '../../assets/icons/TelegramIcon.svg'
-import { ReactComponent as WhatsappIcon } from '../../assets/icons/WhatsappIcon.svg'
-import { ReactComponent as TelephoneIcon } from '../../assets/icons/PhoneIcon.svg'
-import MainIcon from '../../assets/icons/MainIcon.svg'
-import MedcheckIcon from '../../assets/icons/MedCheckIcon.svg'
+import GeoPoint from '../../../assets/icons/GeoPoint.svg'
+import Timer from '../../../assets/icons/Timer.svg'
+import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
+import { ReactComponent as InstagramIcon } from '../../../assets/icons/InstagramIcon.svg'
+import { ReactComponent as TelegramIcon } from '../../../assets/icons/TelegramIcon.svg'
+import { ReactComponent as WhatsappIcon } from '../../../assets/icons/WhatsappIcon.svg'
+import { ReactComponent as TelephoneIcon } from '../../../assets/icons/PhoneIcon.svg'
+import MainIcon from '../../../assets/icons/MainIcon.svg'
+import MedcheckIcon from '../../../assets/icons/MedCheckIcon.svg'
 import {
    HeaderStyled,
    AddressTitle,
@@ -36,8 +36,8 @@ import {
    MenuItemStyled,
    SearchInputBox,
 } from './header-styled'
-import Dropdown from '../UI/Dropdown'
-import SearchInput from '../UI/SeacrchInput'
+import Dropdown from '../../../components/UI/Dropdown'
+import SearchInput from '../../../components/UI/SeacrchInput'
 
 const services = [
    {

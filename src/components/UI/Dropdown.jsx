@@ -3,7 +3,7 @@ import {
    DataContainer,
    PopoverStyled,
    ServiceButtonStyled,
-} from '../header/header-styled'
+} from '../../layout/user/header/header-styled'
 
 const Dropdown = ({ children, services, data, info }) => {
    const [popover, setPopover] = useState(null)
