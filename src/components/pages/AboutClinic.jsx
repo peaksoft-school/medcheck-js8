@@ -56,9 +56,14 @@ export const AboutClinic = () => {
 const StyledAboutText = styled.div`
    width: 58%;
    height: 156px;
-   font-size: 1rem;
-   font-weight: 400;
-   line-height: 26px;
+
+   p {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 26px;
+      font-family: 'Manrope';
+      color: #4d4e51;
+   }
 
    & svg {
       margin-left: 90%;

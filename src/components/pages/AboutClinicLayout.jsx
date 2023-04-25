@@ -71,6 +71,12 @@ const StyledAboutSecondText = styled.div`
 
    & p {
       margin-top: 16px;
+      font-size: 1 rem;
+      line-height: 26px;
+      font-weight: 400;
+      font-family: 'Manrope';
+      font-style: normal;
+      color: #4d4e51;
    }
 `
 const StyledMainBlock = styled.div`
@@ -146,7 +152,7 @@ const StyledNavlink = styled(NavLink)(() => ({
    textDecoration: 'none',
 
    '& :first-of-type': {
-      marginTop: '130px',
+      marginTop: '110px',
    },
 }))
 
