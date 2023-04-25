@@ -5,6 +5,10 @@ import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
 import UserLayout from '../layout/user/UserLayout'
 import NotFoundPage from '../pages/NotFoundPage'
+import AboutClinic from '../pages/AboutClinicPage'
+import ServiceBox from '../components/UI/servicebox/ServiceCard'
+import ServiceInnerPage from '../pages/ServiceInnerPage'
+import GetResults from '../pages/GetResults'
 
 const AppRoutes = () => {
    const role = 'GUEST'
@@ -41,7 +45,7 @@ const AppRoutes = () => {
                   <ProtectedRoute
                      isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
                      fallbackPath="/admin/online-appointment"
-                     component={() => <p>About Page</p>}
+                     component={AboutClinic}
                   />
                }
             />
@@ -51,7 +55,7 @@ const AppRoutes = () => {
                   <ProtectedRoute
                      isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
                      fallbackPath="/admin/online-appointment"
-                     component={() => <p>Service Page</p>}
+                     component={ServiceBox}
                   />
                }
             />
@@ -82,6 +86,26 @@ const AppRoutes = () => {
                      isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
                      fallbackPath="/admin/online-appointment"
                      component={() => <p>Contacts Page</p>}
+                  />
+               }
+            />
+            <Route
+               path="getResults"
+               element={
+                  <ProtectedRoute
+                     isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
+                     fallbackPath="/admin/online-appointment"
+                     component={GetResults}
+                  />
+               }
+            />
+            <Route
+               path="service/:id/details"
+               element={
+                  <ProtectedRoute
+                     isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
+                     fallbackPath="/admin/online-appointment"
+                     component={ServiceInnerPage}
                   />
                }
             />

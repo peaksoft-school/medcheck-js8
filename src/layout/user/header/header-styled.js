@@ -7,6 +7,7 @@ import {
    MenuItem,
    Popover,
 } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 import Button from '../../../components/UI/Button'
 
 export const HeaderStyled = styledMui(AppBar)(() => ({
@@ -64,6 +65,7 @@ export const MenuItemStyled = styledMui(MenuItem)(() => ({
       color: '#048741',
    },
 }))
+
 export const SecondBox = styledMui(Grid)(() => ({
    '&': {
       width: '85vw',
@@ -225,9 +227,12 @@ export const OutlinedButtonStyled = styledMui(Button)(() => ({
       background: 'none',
    },
    '&:hover': {
-      background: 'none',
-      border: '1px solid #048741',
-      color: '#048741',
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
+   },
+   '&:active': {
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
    },
 }))
 export const ContainedButtonStyled = styledMui(Button)(() => ({
@@ -241,6 +246,16 @@ export const ContainedButtonStyled = styledMui(Button)(() => ({
       lineHeight: '19px',
       fontFamily: 'Manrope',
       marginLeft: '16px',
+   },
+   '&:hover': {
+      border: '1px solid #048741',
+      color: '#048741',
+      background: 'none',
+   },
+   '&:active': {
+      border: '1px solid #048741',
+      color: '#048741',
+      background: 'none',
    },
 }))
 
@@ -265,7 +280,7 @@ export const ServiceButtonStyled = styledMui('button')(() => ({
    '&': {
       color: '#222222',
       fontFamily: 'Manrope',
-      fontWeight: '500',
+      fontWeight: '400',
       fontSize: '16px',
       lineHeight: '22px',
       background: 'none',
@@ -285,16 +300,6 @@ export const DataContainer = styledMui('div')(() => ({
          flexDirection: 'column',
          alignItems: 'start',
       },
-      a: {
-         display: 'inline-block',
-         fontFamily: 'Manrope',
-         fontWeight: '400',
-         fontSize: '14px',
-         lineHeight: '19px',
-         marginTop: '20px',
-         textDecoration: 'none',
-         color: '#222222',
-      },
    },
 }))
 
@@ -302,5 +307,33 @@ export const ProfileBox = styledMui(Grid)(() => ({
    '&': {
       width: '42px',
       marginTop: '8px',
+   },
+}))
+export const NavlinkStyled = styledMui(NavLink)(() => ({
+   '&': {
+      display: 'inline-block',
+      fontFamily: 'Manrope',
+      fontWeight: '400',
+      fontSize: '16px',
+      lineHeight: '19px',
+      marginTop: '20px',
+      textDecoration: 'none',
+      color: '#222222',
+   },
+}))
+export const NavlinkStyle = styledMui(NavLink)(() => ({
+   '&': {
+      textDecoration: 'none',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      fontSize: '16px',
+      lineHeight: '22px',
+      color: '#222222',
+   },
+   '&:active': {
+      color: '#048741',
+   },
+   '&:hover': {
+      color: '#048741',
    },
 }))

@@ -1,5 +1,6 @@
 import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import GeoPoint from '../../../assets/icons/GeoPoint.svg'
 import Timer from '../../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
@@ -33,13 +34,15 @@ import {
    StyledPhoneIconButton,
    ProfileButtonStyled,
    ProfileBox,
-   MenuItemStyled,
    SearchInputBox,
+   MenuItemStyled,
+   NavlinkStyle,
+   NavlinkStyled,
 } from './header-styled'
 import Dropdown from '../../../components/UI/Dropdown'
 import SearchInput from '../../../components/UI/SeacrchInput'
 
-const services = [
+export const services = [
    {
       name: 'Анестезиология',
       id: '1',
@@ -73,7 +76,7 @@ const services = [
       id: '8',
    },
 ]
-const data = [
+export const data = [
    {
       name: 'Онкология',
       id: '9',
@@ -107,7 +110,7 @@ const data = [
       id: '16',
    },
 ]
-const info = [
+export const info = [
    {
       name: 'Терапия',
       id: '17',
@@ -135,7 +138,10 @@ const info = [
 ]
 
 const Header = () => {
+   const navigate = useNavigate()
    const [anchorEl, setAnchorEl] = useState(null)
+
+   const userRole = 'GUEST'
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -145,6 +151,12 @@ const Header = () => {
       setAnchorEl(null)
    }
 
+   const navigateResultHandler = () => {
+      navigate('/getResults')
+   }
+   const navigateOnlineAppointmentHandler = () => {
+      navigate('/onlineAppointment')
+   }
    return (
       <HeaderStyled position="static">
          <StyledHeaderGlobalContainer>
@@ -170,19 +182,19 @@ const Header = () => {
                <ContactsBox>
                   <IconBox>
                      <IconButton>
-                        <a href="/">
+                        <NavLink to="https://www.instagram.com/peaksoft.house/">
                            <InstagramIcon />
-                        </a>
+                        </NavLink>
                      </IconButton>
                      <IconButton>
-                        <a href="/">
+                        <NavLink to="https://web.telegram.org/z/">
                            <TelegramIcon />
-                        </a>
+                        </NavLink>
                      </IconButton>
                      <IconButton>
-                        <a href="/">
+                        <NavLink to="https://www.whatsapp.com/?lang=ru">
                            <WhatsappIcon />
-                        </a>
+                        </NavLink>
                      </IconButton>
                   </IconBox>
                   <PhoneBox>
@@ -216,12 +228,38 @@ const Header = () => {
                               'aria-labelledby': 'basic-button',
                            }}
                         >
-                           <MenuItemStyled onClick={handleClose}>
-                              Войти
-                           </MenuItemStyled>
-                           <MenuItemStyled onClick={handleClose}>
-                              Регистрация
-                           </MenuItemStyled>
+                           {userRole === 'GUEST' ? (
+                              <>
+                                 <NavlinkStyle to="/">
+                                    <MenuItemStyled onClick={handleClose}>
+                                       Войти
+                                    </MenuItemStyled>
+                                 </NavlinkStyle>
+                                 <NavlinkStyle to="/">
+                                    <MenuItemStyled onClick={handleClose}>
+                                       Регистрация
+                                    </MenuItemStyled>
+                                 </NavlinkStyle>
+                              </>
+                           ) : (
+                              <>
+                                 <NavlinkStyle to="/">
+                                    <MenuItemStyled onClick={handleClose}>
+                                       Мои записи
+                                    </MenuItemStyled>
+                                 </NavlinkStyle>
+                                 <NavlinkStyle to="/">
+                                    <MenuItemStyled onClick={handleClose}>
+                                       Профиль
+                                    </MenuItemStyled>
+                                 </NavlinkStyle>
+                                 <NavlinkStyle to="/">
+                                    <MenuItemStyled onClick={handleClose}>
+                                       Выйти
+                                    </MenuItemStyled>
+                                 </NavlinkStyle>
+                              </>
+                           )}
                         </Menu>
                      </ProfileBox>
                   </PhoneBox>
@@ -232,23 +270,36 @@ const Header = () => {
 
             <SecondBox>
                <Grid>
-                  <MainIconStyled src={MainIcon} alt="mainIcon" />
-                  <MedcheckIconStyled src={MedcheckIcon} alt="MedcheckIcon" />
+                  <NavlinkStyled to="/">
+                     <MainIconStyled src={MainIcon} alt="mainIcon" />
+                     <MedcheckIconStyled
+                        src={MedcheckIcon}
+                        alt="MedcheckIcon"
+                     />
+                  </NavlinkStyled>
                </Grid>
                <InfoBox>
-                  <li>О клинике</li>
-                  <Dropdown services={services} data={data} info={info}>
-                     Услуги
-                  </Dropdown>
-                  <li>Врачи</li>
-                  <li>Прайс</li>
-                  <li>Контакты</li>
+                  <NavlinkStyled to="about">О клинике</NavlinkStyled>
+                  <NavlinkStyled to="service">
+                     <Dropdown services={services} data={data} info={info}>
+                        Услуги
+                     </Dropdown>
+                  </NavlinkStyled>
+                  <NavlinkStyled to="doctors">Врачи</NavlinkStyled>
+                  <NavlinkStyled to="price">Прайс</NavlinkStyled>
+                  <NavlinkStyled to="contacts">Контакты</NavlinkStyled>
                </InfoBox>
                <Grid>
-                  <OutlinedButtonStyled variant="oultined">
+                  <OutlinedButtonStyled
+                     variant="oultined"
+                     onClick={navigateResultHandler}
+                  >
                      получить результаты
                   </OutlinedButtonStyled>
-                  <ContainedButtonStyled variant="contained">
+                  <ContainedButtonStyled
+                     variant="contained"
+                     onClick={navigateOnlineAppointmentHandler}
+                  >
                      запись онлайн
                   </ContainedButtonStyled>
                </Grid>

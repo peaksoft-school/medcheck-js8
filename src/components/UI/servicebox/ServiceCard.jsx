@@ -1,17 +1,19 @@
 import React from 'react'
 import Grid from '@mui/material/Grid'
 import styled from '@emotion/styled'
+import { NavLink } from 'react-router-dom'
+import { MED_SERVICE } from '../../../utlis/services/img_service'
 
-function ServiceBox({ data }) {
+function ServiceBox() {
    return (
       <div>
          <GridContainer container>
-            {data.map((el) => {
+            {MED_SERVICE.map((el) => {
                return (
                   <Grid item xs={6} key={el.id}>
                      <div className="grid">
                         <span className="img">{el.img}</span>
-                        <a href="/">{el.title}</a>
+                        <NavLink to={`${el.id}/details/`}>{el.title}</NavLink>
                      </div>
                   </Grid>
                )

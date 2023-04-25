@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { NavLink } from 'react-router-dom'
 import medcheckLogo from '../../assets/icons/MedcheckLogo.svg'
 import medCheck from '../../assets/icons/MedCheck.svg'
 import geoPoint from '../../assets/icons/GeoPoint.svg'
@@ -16,8 +17,10 @@ function Footer() {
          <FooterContainer>
             <Container1>
                <MedIcons>
-                  <img src={medcheckLogo} alt="medcheckLogoА" />
-                  <img className="medcheck" src={medCheck} alt="medchecks" />
+                  <NavLink to="/">
+                     <img src={medcheckLogo} alt="medcheckLogoА" />
+                     <img className="medcheck" src={medCheck} alt="medchecks" />
+                  </NavLink>
                </MedIcons>
                <TextContent>
                   <div>Медицинская клиника «MedCheck»</div>
@@ -52,38 +55,38 @@ function Footer() {
                <Container3>
                   <p>Мы в социальных сетях:</p>
 
-                  <a href="/">
+                  <NavLink to="https://www.instagram.com/peaksoft.house/">
                      <img src={instagram} alt="instagram" />
-                  </a>
-                  <a href="/">
+                  </NavLink>
+                  <NavLink to="https://web.telegram.org/z/">
                      <img src={telegram} alt="telegram" />
-                  </a>
-                  <a href="/">
+                  </NavLink>
+                  <NavLink to="https://www.whatsapp.com/?lang=ru">
                      <img src={whatsApp} alt="whatsapp" />
-                  </a>
+                  </NavLink>
                </Container3>
             </div>
          </FooterContainer>
          <div>
             <DataContent>
-               <a href="/">
+               <NavLink to="about">
                   <li>Оклинике</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="service">
                   <li>Услуги</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="doctors">
                   <li>Врачи</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="price">
                   <li>Прайс</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="reviews">
                   <li>Отзывы</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="contacts">
                   <li>Контакты</li>
-               </a>
+               </NavLink>
             </DataContent>
             <hr />
             <footer>

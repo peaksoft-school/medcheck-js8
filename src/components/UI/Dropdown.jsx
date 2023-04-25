@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {
    DataContainer,
+   NavlinkStyled,
    PopoverStyled,
    ServiceButtonStyled,
 } from '../../layout/user/header/header-styled'
@@ -41,7 +42,9 @@ const Dropdown = ({ children, services, data, info }) => {
                <div>
                   {services.map((service) => (
                      <div key={service.id}>
-                        <a href="/">{service.name}</a>
+                        <NavlinkStyled to={`service/${service.id}/details`}>
+                           {service.name}
+                        </NavlinkStyled>
                      </div>
                   ))}
                </div>
@@ -49,7 +52,9 @@ const Dropdown = ({ children, services, data, info }) => {
                   {data.map((el) => {
                      return (
                         <div key={el.id}>
-                           <a href="/">{el.name}</a>
+                           <NavlinkStyled to={`service/${el.id}/details`}>
+                              {el.name}
+                           </NavlinkStyled>
                         </div>
                      )
                   })}
@@ -58,7 +63,9 @@ const Dropdown = ({ children, services, data, info }) => {
                   {info.map((el) => {
                      return (
                         <div key={el.id}>
-                           <a href="/">{el.name}</a>
+                           <NavlinkStyled to={`service/${el.id}/details`}>
+                              {el.name}
+                           </NavlinkStyled>
                         </div>
                      )
                   })}
