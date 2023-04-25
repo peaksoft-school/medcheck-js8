@@ -19,7 +19,7 @@ export default function CardApplication() {
                <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
                <DialogContent>
                   <DialogContentTextStyled>
-                     Оставьте свой номер и наши специалисты свяжутся с Вами{' '}
+                     Оставьте свой номер и наши специалисты свяжутся с Вами
                      <br /> в ближайшее время
                   </DialogContentTextStyled>
                   <InputBoxStyled>

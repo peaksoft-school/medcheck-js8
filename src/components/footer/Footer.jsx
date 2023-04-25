@@ -67,7 +67,7 @@ function Footer() {
          <div>
             <DataContent>
                <a href="/">
-                  <li>Оклинике</li>
+                  <li>О клинике</li>
                </a>
                <a href="/">
                   <li>Услуги</li>
@@ -259,7 +259,8 @@ const DataContent = styled('ul')(() => ({
    color: '#CCCCCC',
    marginTop: '78px',
    marginLeft: '460px',
-   '& li': {
+
+   '& a': {
       textDecoration: 'none',
       cursor: 'pointer',
       color: ' #CCCCCC',
