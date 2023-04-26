@@ -21,11 +21,9 @@ mainApi.interceptors.response.use(
       return response
    },
    function (error) {
-      // when the token dies it is thrown into signout
-
-      //   if (error.response.status === 401) {
-      //      store.dispatch(signOut())
-      //   }
+      if (error.response && error.response.status === 401) {
+         throw new Error('401 unauthorized')
+      }
       return Promise.reject(error)
    }
 )
