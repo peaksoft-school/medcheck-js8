@@ -1,12 +1,12 @@
 import React from 'react'
 // import { useParams } from 'react-router'
 
-const ServiceInnerPage = () => {
+const ServiceDetails = () => {
    // const { id } = useParams()
    // const currentService = data.find((service) => service.id === id)
    return (
       <div>
-         ServiceInnerPage
+         <h1>Service Details Page</h1>
          {/* {currentService.map((item) => (
             <div key={item.id}>
                <h1>{item.title}</h1>
@@ -17,4 +17,4 @@ const ServiceInnerPage = () => {
    )
 }
 
-export default ServiceInnerPage
+export default ServiceDetails

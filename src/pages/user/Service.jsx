@@ -2,9 +2,9 @@ import React from 'react'
 import Grid from '@mui/material/Grid'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
-import { MED_SERVICE } from '../../../utlis/services/img_service'
+import { MED_SERVICE } from '../../utlis/services/img_service'
 
-function ServiceBox() {
+function Service() {
    return (
       <div>
          <GridContainer container>
@@ -23,7 +23,7 @@ function ServiceBox() {
    )
 }
 
-export default ServiceBox
+export default Service
 
 const GridContainer = styled(Grid)(() => ({
    width: '889px',

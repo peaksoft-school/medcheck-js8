@@ -1,7 +1,7 @@
 import React from 'react'
 
 const GetResults = () => {
-   return <div>GetResults</div>
+   return <h1>GetResults Page</h1>
 }
 
 export default GetResults

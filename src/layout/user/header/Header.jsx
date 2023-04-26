@@ -141,7 +141,7 @@ const Header = () => {
    const navigate = useNavigate()
    const [anchorEl, setAnchorEl] = useState(null)
 
-   const userRole = 'GUEST'
+   const userRole = 'USER'
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -243,12 +243,12 @@ const Header = () => {
                               </>
                            ) : (
                               <>
-                                 <NavlinkStyle to="/">
+                                 <NavlinkStyle to="/myApplications">
                                     <MenuItemStyled onClick={handleClose}>
                                        Мои записи
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                                 <NavlinkStyle to="/">
+                                 <NavlinkStyle to="/profile">
                                     <MenuItemStyled onClick={handleClose}>
                                        Профиль
                                     </MenuItemStyled>
