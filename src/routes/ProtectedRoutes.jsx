@@ -6,7 +6,7 @@ export const ProtectedRoute = ({
    isAllowed,
 }) => {
    if (!isAllowed) {
-      return <Navigate to={fallbackPath} />
+      return <Navigate replace to={fallbackPath} />
    }
    return <Component />
 }
