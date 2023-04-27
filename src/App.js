@@ -5,14 +5,14 @@ import Header from './components/header/Header'
 // import Service from './components/service/Service'
 // import CardApplication from './components/UI/card/CardApplication'
 // import { FeedbackSlider } from './components/feedback-slider/FeedbackSlider'
-import { AboutClinic } from './components/pages/AboutClinic'
+// import { AboutClinic } from './components/pages/AboutClinic'
 
 function App() {
    return (
       <div>
          <BrowserRouter>
             <Header />
-            <AboutClinic />
+            {/* <AboutClinic /> */}
             {/* <FeedbackSlider /> */}
             {/* <CardApplication /> */}
             {/* <Service /> */}
