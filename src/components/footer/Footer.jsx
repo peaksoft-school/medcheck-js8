@@ -101,9 +101,10 @@ const MainContainer = styled('div')(() => ({
    height: '494px',
    backgroundColor: '#212529',
    fontFamily: 'Manrope',
+   marginTop: '120px',
 
    '& hr': {
-      width: '78%',
+      width: '87%',
       marginLeft: '120px',
       marginTop: '48px',
    },
@@ -121,14 +122,15 @@ const MainContainer = styled('div')(() => ({
 const FooterContainer = styled('div')(() => ({
    color: 'white',
    display: 'flex',
+   justifyContent: 'space-around',
 }))
 
 const Container1 = styled('div')(() => ({
    width: '461px',
    height: '126px',
    marginTop: '68px',
-   marginLeft: '120px',
-   marginRight: '130px',
+   marginLeft: '30px',
+   // marginRight: '130px',
 }))
 
 const MedIcons = styled('div')(() => ({
@@ -237,7 +239,7 @@ const Container3 = styled('div')(() => ({
    width: '186px',
    height: '65px',
    marginTop: '68px',
-   marginLeft: '130px',
+   marginLeft: '20px',
    fontFamily: 'Manrope',
    '& p': {
       marginBottom: '20px',
@@ -257,8 +259,8 @@ const DataContent = styled('ul')(() => ({
    listStyle: 'none',
    display: 'flex',
    color: '#CCCCCC',
-   marginTop: '78px',
-   marginLeft: '460px',
+   margin: '78px auto',
+   justifyContent: 'center',
 
    '& a': {
       textDecoration: 'none',
