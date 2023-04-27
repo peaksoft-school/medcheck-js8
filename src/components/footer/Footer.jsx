@@ -262,7 +262,8 @@ const DataContent = styled('ul')(() => ({
    color: '#CCCCCC',
    marginTop: '78px',
    marginLeft: '460px',
-   '& li': {
+
+   '& a': {
       textDecoration: 'none',
       cursor: 'pointer',
       color: ' #CCCCCC',

@@ -22,8 +22,8 @@ export const HeaderStyled = styledMui(AppBar)(() => ({
    },
 }))
 export const StyledHeaderGlobalContainer = styledMui(Grid)({
-   margin: '0 auto',
-   padding: '510x 120px 10px 120px',
+   margin: '0 auto 0 120px',
+   padding: '10px 0px ',
    maxWidth: '100%',
 })
 
