@@ -29,7 +29,7 @@ const Header = () => {
             </LogoBox>
             <InfoBox>
                <NavLinkStyled
-                  to="online-appointment"
+                  to="appointment"
                   style={({ isActive }) => ({
                      color: isActive ? 'black' : '#707070',
                      borderBottom: isActive && '2px solid #048741',

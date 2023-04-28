@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
-import Header from '../../components/admin-header/Header'
-import Button from '../../components/UI/Button'
 import SearchInput from '../../components/UI/SeacrchInput'
 import { item } from '../../utlis/constants/commons'
 import AppTable from '../../components/UI/Table'
@@ -163,11 +161,9 @@ const Application = ({ processedData }) => {
 
    return (
       <div>
-         <Header />
          <MainContainer>
             <BoxTitleAndButton>
                <Title>Заявки</Title>
-               <ButtonStyled>export to Excel</ButtonStyled>
             </BoxTitleAndButton>
             <SearchInputBox>
                <SearchInput placeholder="Поиск" />
@@ -195,11 +191,7 @@ const BoxTitleAndButton = styled('div')(() => ({
       justifyContent: 'space-between',
    },
 }))
-const ButtonStyled = styled(Button)(() => ({
-   '&': {
-      padding: '14px 32.5px',
-   },
-}))
+
 const SearchInputBox = styled('div')(() => ({
    '&': {
       width: '600px',

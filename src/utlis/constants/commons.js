@@ -1,3 +1,9 @@
+export const UserRoles = {
+   GUEST: 'GUEST',
+   USER: 'USER',
+   ADMIN: 'ADMIN',
+}
+
 export const item = [
    {
       id: '1',
