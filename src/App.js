@@ -1,23 +1,25 @@
 import { BrowserRouter } from 'react-router-dom'
-import Footer from './components/footer/Footer'
-import Header from './components/header/Header'
+import MyNotes from './layout/myNotes/MyNotes'
+// import Footer from './components/footer/Footer'
+// import Header from './components/header/Header'
 // import { DoctorDetailsPage } from './components/pages/DoctorDetailPage'
 // import Service from './components/service/Service'
 // import CardApplication from './components/UI/card/CardApplication'
 // import { FeedbackSlider } from './components/feedback-slider/FeedbackSlider'
-import { AboutClinic } from './components/pages/AboutClinic'
+// import { AboutClinic } from './components/pages/AboutClinic'
 
 function App() {
    return (
       <div>
          <BrowserRouter>
-            <Header />
-            <AboutClinic />
+            <MyNotes />
+            {/* <Header /> */}
+            {/* <AboutClinic /> */}
             {/* <FeedbackSlider /> */}
             {/* <CardApplication /> */}
             {/* <Service /> */}
             {/* <DoctorDetailsPage /> */}
-            <Footer />
+            {/* <Footer /> */}
          </BrowserRouter>
       </div>
    )
