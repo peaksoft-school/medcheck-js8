@@ -6,7 +6,7 @@ import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import Input from '../UI/input/Input'
 import Button from '../UI/Button'
 
-const PasswordModal = () => {
+const ForgetPassword = () => {
    const {
       register,
       handleSubmit,
@@ -27,19 +27,19 @@ const PasswordModal = () => {
          <CloseIcon className="closeIcon" />
          <FormLabel className="topic">забыли пароль?</FormLabel>
          <p>Вам будет отправлена ссылка для сброса пароля</p>
-         {errors.email && <p>{errors.email?.message}</p>}
-
          <Input
             placeholder="Введите ваш Email"
             className="inputStyle"
+            error={errors.email}
             {...register('email', {
-               required: 'pole ne zapolneno',
+               required: 'поле не заполнено',
                pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'invalid email address',
+                  message: 'Неверный формат электронной почты',
                },
             })}
          />
+         {errors.email && <p className="message">{errors.email?.message}</p>}
          <Button className="buttonStyle" type="submit">
             ОТПРАВИТЬ
          </Button>
@@ -50,7 +50,7 @@ const PasswordModal = () => {
    )
 }
 
-export default PasswordModal
+export default ForgetPassword
 
 const FormControlStyled = styled('form')(() => ({
    height: '361px',
@@ -82,9 +82,7 @@ const FormControlStyled = styled('form')(() => ({
       width: '414px',
       marginLeft: '40px',
       borderRadius: ' 10px',
-      '&:hover': {
-         border: '1px solid #D9D9D9',
-      },
+      border: '1px solid #D9D9D9',
    },
    '& .buttonStyle': {
       height: '52px',
@@ -103,5 +101,10 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '215px',
       color: '#959595',
       textDecoration: 'none',
+   },
+   '& .message': {
+      color: 'red',
+      marginLeft: '40px',
+      marginTop: '10px',
    },
 }))

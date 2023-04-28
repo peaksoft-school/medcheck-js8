@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FormLabel, InputAdornment } from '@mui/material'
+import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import Input from '../UI/input/Input'
 import Button from '../UI/Button'
-import { ReactComponent as Show } from '../../assets/login/Password.svg'
+import { ReactComponent as Show } from '../../assets/login/Vector (3).svg'
+import { ReactComponent as ShowOff } from '../../assets/login/Password.svg'
 
 const ChangePassword = () => {
+   const [showPassword, setShowPassword] = useState(false)
+   const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const {
       register,
       handleSubmit,
@@ -22,47 +25,75 @@ const ChangePassword = () => {
    function onSubmit(values) {
       console.log('will come values', values)
    }
-
+   const showPasswordHandle = () => {
+      setShowPassword(!showPassword)
+   }
+   const clickHandle = (e) => {
+      e.preventDefault()
+   }
+   const showPasswordHandler = () => {
+      setShowPasswordCopy(!showPasswordCopy)
+   }
+   const clickHandler = (e) => {
+      e.preventDefault()
+   }
    return (
       <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
          <CloseIcon className="closeIcon" />
          <FormLabel className="topic">смена пароля</FormLabel>
          <p>Вам будет отправлена ссылка для сброса пароля</p>
-         {errors.email && <p>{errors.email?.message}</p>}
-         {errors.password && <p>{errors.password?.message}</p>}
          <Input
             placeholder="Введите новый пароль"
             className="inputStyle"
+            error={errors.password}
             {...register('password', {
-               required: 'pole ne zapolneno',
-               maxLength: { value: 15, message: 'mnogo detalei' },
-               minLength: { value: 5, message: 'malo detalei' },
+               required: 'поле не заполнено',
+               maxLength: { value: 15, message: 'слишком много деталей' },
+               minLength: { value: 5, message: 'слишком мало деталей' },
             })}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
                endAdornment: (
                   <InputAdornment position="end">
-                     <Show />
+                     <IconButton
+                        onClick={showPasswordHandle}
+                        onMouseDown={clickHandle}
+                     >
+                        {showPassword ? <ShowOff /> : <Show />}
+                     </IconButton>
                   </InputAdornment>
                ),
             }}
          />
-         {errors.copyPassword && <p>{errors.copyPassword?.message}</p>}
+         {errors.password && (
+            <p className="message">{errors.password?.message}</p>
+         )}
          <Input
             placeholder="Повторите пароль"
             className="inputStyle"
+            error={errors.copyPassword}
             {...register('copyPassword', {
-               required: 'pole ne zapolneno',
-               maxLength: { value: 15, message: 'mnogo detalei' },
-               minLength: { value: 5, message: 'malo detalei' },
+               required: 'поле не заполнено',
+               maxLength: { value: 15, message: 'слишком много деталей' },
+               minLength: { value: 5, message: 'слишком мало деталей' },
             })}
+            type={showPasswordCopy ? 'text' : 'password'}
             InputProps={{
                endAdornment: (
                   <InputAdornment position="end">
-                     <Show />
+                     <IconButton
+                        onClick={showPasswordHandler}
+                        onMouseDown={clickHandler}
+                     >
+                        {showPasswordCopy ? <ShowOff /> : <Show />}
+                     </IconButton>
                   </InputAdornment>
                ),
             }}
          />
+         {errors.copyPassword && (
+            <p className="message">{errors.copyPassword?.message}</p>
+         )}
          <Button className="buttonStyle" type="submit">
             подтвердить
          </Button>
@@ -73,7 +104,7 @@ const ChangePassword = () => {
 export default ChangePassword
 
 const FormControlStyled = styled('form')(() => ({
-   height: '361px',
+   height: '400px',
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
@@ -103,9 +134,7 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '40px',
       borderRadius: ' 10px',
       marginBottom: '10px',
-      '&:hover': {
-         border: '1px solid #D9D9D9',
-      },
+      border: '1px solid #D9D9D9',
    },
    '& .buttonStyle': {
       height: '47px',
@@ -114,5 +143,10 @@ const FormControlStyled = styled('form')(() => ({
       marginTop: '10px',
       borderRadius: ' 10px',
       fontSize: '14px',
+   },
+   '& .message': {
+      color: 'red',
+      marginLeft: '50px',
+      marginTop: '-5px',
    },
 }))

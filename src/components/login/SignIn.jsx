@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FormLabel, InputAdornment } from '@mui/material'
+import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import Input from '../UI/input/Input'
 import Button from '../UI/Button'
-import { ReactComponent as Show } from '../../assets/login/Password.svg'
+import { ReactComponent as Show } from '../../assets/login/Vector (3).svg'
+import { ReactComponent as ShowOff } from '../../assets/login/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/login/image 90.svg'
 
 const SignIn = () => {
+   const [showPassword, setShowPassword] = useState(false)
+
    const {
       register,
       handleSubmit,
@@ -22,7 +25,13 @@ const SignIn = () => {
    })
 
    function onSubmit(values) {
-      console.log('will come values', values)
+      console.log(('will come values', values))
+   }
+   const showPasswordHandle = () => {
+      setShowPassword(!showPassword)
+   }
+   const clickHanlder = (e) => {
+      e.preventDefault()
    }
 
    return (
@@ -32,32 +41,42 @@ const SignIn = () => {
          <Input
             placeholder="Логин"
             className="inputStyle"
+            error={errors.email}
             {...register('email', {
-               required: 'pole ne zapolneno',
+               required: 'поле не заполнено',
                pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'invalid email address',
+                  message: 'Неверный формат электронной почты',
                },
             })}
          />
-         {errors.email && <p>{errors.email?.message}</p>}
+         {errors.email && <p className="message">{errors.email?.message}</p>}
          <Input
             placeholder="Пароль"
             className="inputStyle"
+            error={errors.password}
             {...register('password', {
-               required: 'pole ne zapolneno',
-               maxLength: { value: 15, message: 'mnogo detalei' },
-               minLength: { value: 5, message: 'malo detalei' },
+               required: 'поле не заполнено',
+               maxLength: { value: 15, message: 'слишком много деталей' },
+               minLength: { value: 5, message: 'слишком мало деталей' },
             })}
+            type={showPassword ? 'text' : 'password'}
             InputProps={{
                endAdornment: (
                   <InputAdornment position="end">
-                     <Show />
+                     <IconButton
+                        onClick={showPasswordHandle}
+                        onMouseDown={clickHanlder}
+                     >
+                        {showPassword ? <ShowOff /> : <Show />}
+                     </IconButton>
                   </InputAdornment>
                ),
             }}
          />
-         {errors.password && <p>{errors.password?.message}</p>}
+         {errors.password && (
+            <p className="message">{errors.password?.message}</p>
+         )}
 
          <Button className="buttonStyle" type="submit">
             ВОЙТИ
@@ -109,6 +128,7 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '60px',
       marginTop: ' 14px',
       borderRadius: ' 10px',
+      border: '1px solid #D9D9D9',
    },
    '& .buttonStyle': {
       height: '52px',
@@ -160,6 +180,10 @@ const FormControlStyled = styled('form')(() => ({
       textDecoration: 'none',
       color: '#222222',
       marginLeft: '15px',
+   },
+   '& .message': {
+      color: 'red',
+      marginLeft: '60px',
    },
 }))
 
