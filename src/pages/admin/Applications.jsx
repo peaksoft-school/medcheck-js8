@@ -211,5 +211,6 @@ const Title = styled('p')(() => ({
       fontWeight: 500,
       fontSize: '22px',
       lineHeight: '26px',
+      marginBottom: '34px',
    },
 }))
