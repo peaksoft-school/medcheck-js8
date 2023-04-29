@@ -26,7 +26,7 @@ import MyApplications from '../pages/user/personal-account/myApplications/MyAppl
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
 
 const AppRoutes = () => {
-   const role = 'USER'
+   const role = 'ADMIN'
 
    const isAllowed = (roles) => {
       return roles.includes(role)
