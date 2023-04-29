@@ -2,6 +2,7 @@ import React from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink, useParams } from 'react-router-dom'
 import { appointmentData } from '../../../../utlis/constants/commons'
+import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/formatDate'
 
 const infoCustomer = [
    {
@@ -21,19 +22,6 @@ const infoCustomer = [
 const MyApplicationDetails = () => {
    const { id } = useParams()
    const detailsCustomerID = appointmentData.find((elem) => elem.id === id)
-
-   const getStatusTitleChangeHandler = (statusTitle) => {
-      if (statusTitle === 'Cancelled') {
-         return 'Отменён'
-      }
-      if (statusTitle === 'Confirmed') {
-         return 'Подтверждён'
-      }
-      if (statusTitle === 'Completed') {
-         return 'Завершён'
-      }
-      return null
-   }
 
    return (
       <StyledMyNotesContainer>

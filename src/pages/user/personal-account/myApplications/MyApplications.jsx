@@ -4,23 +4,13 @@ import { NavLink } from 'react-router-dom'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
 import { appointmentData } from '../../../../utlis/constants/commons'
+import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/formatDate'
 
 const MyApplications = () => {
-   const [data, setData] = useState(appointmentData)
-   const getStatusTitleChangeHandler = (statusTitle) => {
-      if (statusTitle === 'Cancelled') {
-         return 'Отменён'
-      }
-      if (statusTitle === 'Confirmed') {
-         return 'Подтверждён'
-      }
-      if (statusTitle === 'Completed') {
-         return 'Завершён'
-      }
-      return null
-   }
+   const [patients, setPatients] = useState(appointmentData)
+
    const deleteorder = () => {
-      setData([])
+      setPatients([])
    }
    return (
       <StyledMyNotesContainer>
@@ -40,11 +30,11 @@ const MyApplications = () => {
                gap: '5rem',
             }}
          >
-            {data.length !== 0 && (
+            {patients.length !== 0 && (
                <>
                   {' '}
                   <AppointmentTable
-                     appointmentData={data}
+                     appointmentData={patients}
                      getStatusTitleChangeHandler={getStatusTitleChangeHandler}
                   />
                   <DeleteContainer>
@@ -76,8 +66,6 @@ const StyledNavLink = styled(NavLink)({
 })
 
 const Container = styled(Breadcrumbs)({
-   fontFamily: 'Manrope',
-   fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '14px',
    lineHeight: '19px',
@@ -94,7 +82,6 @@ const DeleteContainer = styled('div')({
 })
 
 const DeleteTitle = styled('p')({
-   fontFamily: 'Manrope',
    fontSize: '14px',
    color: '#222222',
    cursor: 'pointer',
