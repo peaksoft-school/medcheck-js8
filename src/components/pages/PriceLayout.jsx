@@ -6,7 +6,7 @@ import {
    Typography,
 } from '@mui/material'
 import styled from '@emotion/styled'
-import expandMoreIcon from '../../assets/icons/Указатель .png'
+import expandMoreIcon from '../../assets/serviceIcons/Указатель.svg'
 import { ReactComponent as RectangleIcon } from '../../assets/icons/Rectangle 30 .svg'
 
 export const PriceLayout = ({ data }) => {

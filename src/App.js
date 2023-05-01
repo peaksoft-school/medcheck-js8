@@ -6,6 +6,7 @@ import Header from './components/header/Header'
 import CardApplication from './components/UI/card/CardApplication'
 import { FeedbackSlider } from './components/feedback-slider/FeedbackSlider'
 import { AboutClinicLayout } from './components/pages/AboutClinicLayout'
+import AppRoutes from './routes/Routes'
 
 function App() {
    return (
@@ -19,6 +20,7 @@ function App() {
             {/* <DoctorDetailsPage /> */}
             <Footer />
          </BrowserRouter>
+         <AppRoutes />
       </div>
    )
 }

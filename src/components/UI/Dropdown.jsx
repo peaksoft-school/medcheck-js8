@@ -46,22 +46,18 @@ const Dropdown = ({ children, services, data, info }) => {
                   ))}
                </div>
                <div>
-                  {data.map((el) => {
-                     return (
-                        <div key={el.id}>
-                           <a href="/">{el.name}</a>
-                        </div>
-                     )
-                  })}
+                  {data.map((service) => (
+                     <div key={service.id}>
+                        <a href="/">{service.name}</a>
+                     </div>
+                  ))}
                </div>
                <div>
-                  {info.map((el) => {
-                     return (
-                        <div key={el.id}>
-                           <a href="/">{el.name}</a>
-                        </div>
-                     )
-                  })}
+                  {info.map((service) => (
+                     <div key={service.id}>
+                        <a href="/">{service.name}</a>
+                     </div>
+                  ))}
                </div>
             </DataContainer>
          </PopoverStyled>
