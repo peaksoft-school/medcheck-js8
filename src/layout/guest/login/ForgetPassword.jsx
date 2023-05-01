@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
@@ -9,6 +9,8 @@ import Button from '../../../components/UI/Button'
 import { ModalUi } from '../../../components/UI/ModalUi'
 
 const ForgetPassword = () => {
+   const [modal, setModal] = useState(false)
+
    const {
       register,
       handleSubmit,
@@ -23,9 +25,11 @@ const ForgetPassword = () => {
    function onSubmit(values) {
       console.log('will come values', values)
    }
-
+   const closeModalHandler = () => {
+      setModal(false)
+   }
    return (
-      <ModalUi>
+      <ModalUi open={modal} onClose={closeModalHandler}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
             <CloseIcon className="closeIcon" />
             <FormLabel className="topic">забыли пароль?</FormLabel>

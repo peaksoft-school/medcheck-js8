@@ -14,6 +14,8 @@ import { ModalUi } from '../../../components/UI/ModalUi'
 const SignUp = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
+   const [modal, setModal] = useState(false)
+
    const {
       register,
       handleSubmit,
@@ -45,8 +47,11 @@ const SignUp = () => {
       e.preventDefault()
    }
 
+   const closeModalHandler = () => {
+      setModal(false)
+   }
    return (
-      <ModalUi>
+      <ModalUi open={modal} onClose={closeModalHandler}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
             <CloseIcon className="closeIcon" />
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
