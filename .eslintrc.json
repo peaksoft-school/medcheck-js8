@@ -25,6 +25,7 @@
       "react/function-component-definition": "off",
       "react/prop-types": "off",
       "import/no-extraneous-dependencies": "off",
+      "no-param-reassign":"off",
       "max-len": [
          "error",
          {
