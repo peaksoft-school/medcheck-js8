@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react'
+import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
-import styled from '@emotion/styled'
-import AppTable from './UI/Table'
-import { item } from '../utlis/constants/commons'
-import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
-import CheckboxApp from './UI/checkbox/Checkbox'
+import SearchInput from '../../components/UI/SeacrchInput'
+import { item } from '../../utlis/constants/commons'
+import AppTable from '../../components/UI/Table'
+import CheckboxApp from '../../components/UI/checkbox/Checkbox'
+import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
 
-const OnlineEntry = ({ processedData }) => {
+const Application = ({ processedData }) => {
    const [patients, setPatients] = useState(item)
    const [check, setCheck] = useState(false)
 
@@ -40,7 +41,6 @@ const OnlineEntry = ({ processedData }) => {
          }
       }
    }
-
    const checkedALlDeleteHandler = () => {
       const checkedIds = patients.reduce((patientId, patient) => {
          if (patient.isChecked) {
@@ -54,7 +54,6 @@ const OnlineEntry = ({ processedData }) => {
       }))
       setPatients(nullablePatients)
       setCheck(false)
-
       // there should be a request:
       console.log(checkedIds)
    }
@@ -78,7 +77,6 @@ const OnlineEntry = ({ processedData }) => {
       )
       setPatients(checkDeleteEl)
    }
-
    const allCheckedValue =
       patients.length > 0 && patients.every((patient) => patient.isChecked)
 
@@ -87,7 +85,6 @@ const OnlineEntry = ({ processedData }) => {
          {
             header: (
                <CheckboxApp
-                  style={{ display: 'flex' }}
                   id="allSelect"
                   checked={allCheckedValue}
                   onChange={checkBoxChangeHandler}
@@ -122,41 +119,22 @@ const OnlineEntry = ({ processedData }) => {
             index: true,
          },
          {
-            header: 'Имя и фамилия',
+            header: 'Имя',
             key: 'name',
+         },
+         {
+            header: 'Дата',
+            key: 'date',
          },
          {
             header: 'Номер телефона',
             key: 'telNumber',
          },
-
-         {
-            header: 'Почта',
-            key: 'mail',
-         },
-         {
-            header: 'Выбор услуги',
-            key: 'serviceSelection',
-         },
-         {
-            header: 'Выбор специалиста',
-            key: 'changeSpecialist',
-         },
-         {
-            header: 'Дата и время',
-            key: 'date',
-            render: (patient) => (
-               <DateAndTimeStyled style={{ textAlign: 'center' }}>
-                  <DateTitleStyled>{patient.date}</DateTitleStyled>
-                  <TimeTitleStyled>{patient.time}</TimeTitleStyled>
-               </DateAndTimeStyled>
-            ),
-         },
          {
             header: 'Обработан',
             key: 'processed',
             render: (patient) => (
-               <Grid style={{ textAlign: 'center' }}>
+               <Grid style={{ textAlign: 'start' }}>
                   <IconButton>
                      <CheckboxApp
                         checked={patient.processedChecked}
@@ -183,28 +161,56 @@ const OnlineEntry = ({ processedData }) => {
 
    return (
       <div>
-         <AppTable rows={patients} columns={column} />
+         <MainContainer>
+            <BoxTitleAndButton>
+               <Title>Заявки</Title>
+            </BoxTitleAndButton>
+            <SearchInputBox>
+               <SearchInput placeholder="Поиск" />
+            </SearchInputBox>
+            <div>
+               <AppTable columns={column} rows={patients} />
+            </div>
+         </MainContainer>
       </div>
    )
 }
 
-export default OnlineEntry
-const DateAndTimeStyled = styled(Grid)`
-   display: flex;
-   flex-direction: column;
-   align-items: start;
-`
-const TimeTitleStyled = styled('p')`
-   font-family: 'Manrope';
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 22px;
-   color: #4d4e51;
-`
-const DateTitleStyled = styled('p')`
-   font-family: 'Manrope';
-   font-weight: 400;
-   font-size: 16px;
-   line-height: 22px;
-   color: #222222;
-`
+export default Application
+const MainContainer = styled('div')(() => ({
+   '&': {
+      width: '100%',
+      height: '100vh',
+      background: 'rgba(245, 245, 245, 0.61)',
+      padding: '30px 70px',
+   },
+}))
+const BoxTitleAndButton = styled('div')(() => ({
+   '&': {
+      display: 'flex',
+      justifyContent: 'space-between',
+   },
+}))
+
+const SearchInputBox = styled('div')(() => ({
+   '&': {
+      width: '600px',
+      marginBottom: '20px',
+
+      div: {
+         background: '#FFFFFF',
+      },
+      input: {
+         background: '#FFFFFF',
+      },
+   },
+}))
+const Title = styled('p')(() => ({
+   '&': {
+      fontFamily: 'Work Sans',
+      fontWeight: 500,
+      fontSize: '22px',
+      lineHeight: '26px',
+      marginBottom: '34px',
+   },
+}))
