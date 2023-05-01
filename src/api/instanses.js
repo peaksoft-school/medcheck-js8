@@ -1,5 +1,6 @@
 /* eslint-disable func-names */
 import axios from 'axios'
+import { store } from '../redux/store'
 
 export const mainApi = axios.create({
    baseURL: 'http://ec2-3-76-219-110.eu-central-1.compute.amazonaws.com',
@@ -8,7 +9,7 @@ mainApi.interceptors.request.use(
    function (config) {
       // add a token in the headers
 
-      // config.headers.set('Authorization', store.getState().auth.token)
+      config.headers.set('Authorization', store.getState().auth.token)
       return config
    },
    function (error) {
