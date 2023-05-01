@@ -100,6 +100,7 @@ function Footer() {
 export default Footer
 
 const MainContainer = styled('div')(() => ({
+   marginTop: '120px',
    width: '100%',
    height: '494px',
    backgroundColor: '#212529',
