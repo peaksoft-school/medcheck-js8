@@ -2,7 +2,7 @@ import React from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink, useParams } from 'react-router-dom'
 import { appointmentData } from '../../../../utlis/constants/commons'
-import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/formatDate'
+import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
 
 const infoCustomer = [
    {

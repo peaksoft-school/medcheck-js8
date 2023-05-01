@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
 import { appointmentData } from '../../../../utlis/constants/commons'
-import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/formatDate'
+import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
 
 const MyApplications = () => {
    const [patients, setPatients] = useState(appointmentData)
