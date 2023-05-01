@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+import React from 'react'
+
+const Routes = () => {
+   return <div>Routes</div>
+}
+
+export default Routes
+=======
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -97,3 +106,4 @@ const AppRoutes = () => {
 }
 
 export default AppRoutes
+>>>>>>> 750dc0ffd9275a09d625e487e77307b8918c38b2
