@@ -2,9 +2,11 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
-import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
-import Input from '../UI/input/Input'
-import Button from '../UI/Button'
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
+import Input from '../../../components/UI/input/Input'
+import Button from '../../../components/UI/Button'
+import { ModalUi } from '../../../components/UI/ModalUi'
 
 const ForgetPassword = () => {
    const {
@@ -23,30 +25,32 @@ const ForgetPassword = () => {
    }
 
    return (
-      <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-         <CloseIcon className="closeIcon" />
-         <FormLabel className="topic">забыли пароль?</FormLabel>
-         <p>Вам будет отправлена ссылка для сброса пароля</p>
-         <Input
-            placeholder="Введите ваш Email"
-            className="inputStyle"
-            error={errors.email}
-            {...register('email', {
-               required: 'поле не заполнено',
-               pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Неверный формат электронной почты',
-               },
-            })}
-         />
-         {errors.email && <p className="message">{errors.email?.message}</p>}
-         <Button className="buttonStyle" type="submit">
-            ОТПРАВИТЬ
-         </Button>
-         <a className="password" href="/">
-            ОТМЕНИТЬ
-         </a>
-      </FormControlStyled>
+      <ModalUi>
+         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
+            <CloseIcon className="closeIcon" />
+            <FormLabel className="topic">забыли пароль?</FormLabel>
+            <p>Вам будет отправлена ссылка для сброса пароля</p>
+            <Input
+               placeholder="Введите ваш Email"
+               className="inputStyle"
+               error={errors.email}
+               {...register('email', {
+                  required: 'поле не заполнено',
+                  pattern: {
+                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                     message: 'Неверный формат электронной почты',
+                  },
+               })}
+            />
+            {errors.email && <p className="message">{errors.email?.message}</p>}
+            <Button className="buttonStyle" type="submit">
+               ОТПРАВИТЬ
+            </Button>
+            <NavLink className="password" to="/">
+               ОТМЕНИТЬ
+            </NavLink>
+         </FormControlStyled>
+      </ModalUi>
    )
 }
 

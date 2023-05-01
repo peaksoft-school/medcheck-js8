@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
-import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
-import Input from '../UI/input/Input'
-import Button from '../UI/Button'
-import { ReactComponent as Show } from '../../assets/login/Vector (3).svg'
-import { ReactComponent as ShowOff } from '../../assets/login/Password.svg'
-import { ReactComponent as GoogleIcon } from '../../assets/login/image 90.svg'
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
+import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
+import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
+import { ReactComponent as GoogleIcon } from '../../../assets/login/image 90.svg'
+import Input from '../../../components/UI/input/Input'
+import Button from '../../../components/UI/Button'
+import { ModalUi } from '../../../components/UI/ModalUi'
 
 const SignIn = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -35,69 +37,71 @@ const SignIn = () => {
    }
 
    return (
-      <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-         <CloseIcon className="closeIcon" />
-         <FormLabel className="topic">ВОЙТИ</FormLabel>
-         <Input
-            placeholder="Логин"
-            className="inputStyle"
-            error={errors.email}
-            {...register('email', {
-               required: 'поле не заполнено',
-               pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Неверный формат электронной почты',
-               },
-            })}
-         />
-         {errors.email && <p className="message">{errors.email?.message}</p>}
-         <Input
-            placeholder="Пароль"
-            className="inputStyle"
-            error={errors.password}
-            {...register('password', {
-               required: 'поле не заполнено',
-               maxLength: { value: 15, message: 'слишком много деталей' },
-               minLength: { value: 5, message: 'слишком мало деталей' },
-            })}
-            type={showPassword ? 'text' : 'password'}
-            InputProps={{
-               endAdornment: (
-                  <InputAdornment position="end">
-                     <IconButton
-                        onClick={showPasswordHandle}
-                        onMouseDown={clickHanlder}
-                     >
-                        {showPassword ? <ShowOff /> : <Show />}
-                     </IconButton>
-                  </InputAdornment>
-               ),
-            }}
-         />
-         {errors.password && (
-            <p className="message">{errors.password?.message}</p>
-         )}
+      <ModalUi>
+         <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
+            <CloseIcon className="closeIcon" />
+            <FormLabel className="topic">ВОЙТИ</FormLabel>
+            <Input
+               placeholder="Логин"
+               className="inputStyle"
+               error={errors.email}
+               {...register('email', {
+                  required: 'поле не заполнено',
+                  pattern: {
+                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                     message: 'Неверный формат электронной почты',
+                  },
+               })}
+            />
+            {errors.email && <p className="message">{errors.email?.message}</p>}
+            <Input
+               placeholder="Пароль"
+               className="inputStyle"
+               error={errors.password}
+               {...register('password', {
+                  required: 'поле не заполнено',
+                  maxLength: { value: 15, message: 'слишком много деталей' },
+                  minLength: { value: 5, message: 'слишком мало деталей' },
+               })}
+               type={showPassword ? 'text' : 'password'}
+               InputProps={{
+                  endAdornment: (
+                     <InputAdornment position="end">
+                        <IconButton
+                           onClick={showPasswordHandle}
+                           onMouseDown={clickHanlder}
+                        >
+                           {showPassword ? <ShowOff /> : <Show />}
+                        </IconButton>
+                     </InputAdornment>
+                  ),
+               }}
+            />
+            {errors.password && (
+               <p className="message">{errors.password?.message}</p>
+            )}
 
-         <Button className="buttonStyle" type="submit">
-            ВОЙТИ
-         </Button>
-         <a className="password" href="/">
-            ЗАБЫЛИ ПАРОЛЬ ?
-         </a>
-         <Line>
-            <hr className="lineFirst" />
-            <span>или</span>
-            <hr className="lineSecond" />
-         </Line>
-         <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
-            <a href="/" className="google">
-               Продолжить с Google
-            </a>
-         </Button>
-         <a className="register" href="/">
-            <span>Нет аккаунта?</span> Зарегистрироваться
-         </a>
-      </FormControlStyled>
+            <Button className="buttonStyle" type="submit">
+               ВОЙТИ
+            </Button>
+            <NavLink className="password" to="/">
+               ЗАБЫЛИ ПАРОЛЬ ?
+            </NavLink>
+            <Line>
+               <hr className="lineFirst" />
+               <span>или</span>
+               <hr className="lineSecond" />
+            </Line>
+            <Button className="buttonGoogle" startIcon={<GoogleIcon />}>
+               <NavLink to="/" className="google">
+                  Продолжить с Google
+               </NavLink>
+            </Button>
+            <NavLink className="register" to="/">
+               <span>Нет аккаунта?</span> Зарегистрироваться
+            </NavLink>
+         </FormControlStyled>
+      </ModalUi>
    )
 }
 
