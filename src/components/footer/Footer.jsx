@@ -105,7 +105,6 @@ const MainContainer = styled('div')(() => ({
    height: '494px',
    backgroundColor: '#212529',
    fontFamily: 'Manrope',
-   marginTop: '120px',
 
    '& hr': {
       width: '87%',
