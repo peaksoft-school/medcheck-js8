@@ -8,7 +8,7 @@ import {
 import styled from '@emotion/styled'
 import { ReactComponent as ExpandMoreIcon } from '../../../assets/serviceIcons/Указатель.svg'
 
-function Sellect({ data }) {
+function Sellect({ data = [] }) {
    const [expanded, setExpanded] = useState()
 
    const clickHandler = (panel) => (e, isExpanded) => {

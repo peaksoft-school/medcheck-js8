@@ -1,21 +1,19 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import building from '../../assets/images/Rectangle 387.png'
-import conference from '../../assets/images/Rectangle 388.png'
-import doctors from '../../assets/images/Rectangle 389.png'
-import consilium from '../../assets/images/Rectangle 390.png'
-import { ReactComponent as ForwardVector } from '../../assets/icons/Vector (4).svg'
+import building from '../assets/images/Rectangle 387.png'
+import conference from '../assets/images/Rectangle 388.png'
+import doctors from '../assets/images/Rectangle 389.png'
+import consilium from '../assets/images/Rectangle 390.png'
+import { ReactComponent as ForwardVector } from '../assets/icons/Vector (4).svg'
+import Button from './UI/Button'
 
-const textOwn = ` "MedCheck"`
-
-export const AboutClinicLayout = () => {
+const AboutClinicPart = ({ place }) => {
    return (
       <Container>
          <StyledTitleText>
             О нашей клинике
-            <span style={{ color: '#048741' }}>{textOwn} </span>
+            <span style={{ color: '#048741' }}>MedCheck</span>
          </StyledTitleText>
          <StyledMainBlock>
             <StyledAboutSecondText>
@@ -42,10 +40,13 @@ export const AboutClinicLayout = () => {
                   внедряя и развивая передовые методы лечения для сохранения
                   здоровья наших пациентов.
                </p>
-
-               <StyledNavlink to="/" element={Button}>
-                  Читать подробнее о клинике <ForwardVector />
-               </StyledNavlink>
+               {place === 'main' ? (
+                  <StyledNavlink to="/about">
+                     Читать подробнее o клинике <ForwardVector />
+                  </StyledNavlink>
+               ) : (
+                  <StyledButton>Записаться на консультацию</StyledButton>
+               )}
             </StyledAboutSecondText>
             <StyledImageBlock>
                <StyledBuildingImG src={building} alt="" />
@@ -61,8 +62,13 @@ export const AboutClinicLayout = () => {
    )
 }
 
+export default AboutClinicPart
 const StyledAboutSecondText = styled.div`
    width: 51%;
+   height: 544px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
    font-size: 1rem;
    font-style: normal;
    font-weight: 400;
@@ -80,6 +86,7 @@ const StyledAboutSecondText = styled.div`
    }
 `
 const StyledMainBlock = styled.div`
+   height: '544px';
    display: flex;
    flex-direction: row;
 `
@@ -156,12 +163,28 @@ const StyledNavlink = styled(NavLink)(() => ({
    },
 }))
 
-// const StyledButton = styled(Button)(() => ({
-//   color: '#029847;',
-//   border: '1px solid #029847;',
-//   marginTop: '26px ',
-
-//   ':hover': {
-//      border: '2px solid #029847;',
-//   },
-// }))
+const StyledButton = styled(Button)(() => ({
+   '&': {
+      alignSelf: 'start',
+      marginTop: '30px',
+      borderRadius: '10px',
+      padding: '10px 20px',
+      border: '1px solid #048741',
+      color: '#048741',
+      fontWeight: '500',
+      fontSize: '14px',
+      lineHeight: '19px',
+      fontFamily: 'Manrope',
+      background: '#fff',
+      transition: '0.5s',
+      cursor: 'pointer',
+   },
+   '&:hover': {
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
+   },
+   '&:active': {
+      background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
+      color: '#FFFFFF',
+   },
+}))
