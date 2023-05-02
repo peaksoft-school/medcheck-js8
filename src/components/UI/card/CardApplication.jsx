@@ -4,14 +4,36 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { FormLabel, Grid, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
 import { ReactComponent as ButtonIcon } from '../../../assets/serviceIcons/ButtonIcon.svg'
 import { ReactComponent as Users } from '../../../assets/serviceIcons/Users.svg'
 import { ReactComponent as Phone } from '../../../assets/serviceIcons/phoneForModal.svg'
 import { ReactComponent as Women } from '../../../assets/serviceIcons/Women.svg'
 import Button from '../Button'
 import Input from '../input/Input'
+import { postDatas } from '../../../redux/reducers/card/card.thunk'
 
 export default function CardApplication() {
+   const dispatch = useDispatch()
+   const [name, setName] = useState('')
+   const [number, setNumber] = useState('')
+
+   const nameChangeHandler = (e) => {
+      setName(e.target.value)
+   }
+   const numberChangeHandler = (e) => {
+      setNumber(e.target.value)
+   }
+
+   const submitHandler = () => {
+      const data = {
+         name,
+         phoneNumber: number,
+      }
+      dispatch(postDatas(data))
+   }
+
    return (
       <div>
          <ModalContainer>
@@ -31,6 +53,8 @@ export default function CardApplication() {
                            type="email"
                            variant="outlined"
                            placeholder="Введите имя"
+                           onChange={nameChangeHandler}
+                           value={name}
                            InputProps={{
                               startAdornment: (
                                  <InputAdornment position="start">
@@ -47,9 +71,11 @@ export default function CardApplication() {
                         <TextFieldStyled
                            id="name"
                            margin="dense"
-                           type="email"
+                           type="text"
                            variant="outlined"
                            placeholder="+996 (___) __-__-__"
+                           onChange={numberChangeHandler}
+                           value={number}
                            InputProps={{
                               startAdornment: (
                                  <InputAdornment position="start">
@@ -61,7 +87,7 @@ export default function CardApplication() {
                      </div>
                   </InputBoxStyled>
                </DialogContent>
-               <ButtonBox variant="outlined">
+               <ButtonBox variant="outlined" onClick={submitHandler}>
                   <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
                </ButtonBox>
             </div>
