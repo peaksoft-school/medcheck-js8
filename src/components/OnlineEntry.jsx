@@ -15,7 +15,7 @@ const OnlineEntry = ({ processedData }) => {
          const tempPatient = patients.map((patient) => {
             return { ...patient, isChecked: checked }
          })
-         setCheck((prev) => !prev)
+         setCheck(checked)
          setPatients(tempPatient)
       } else {
          const tempPatient = patients.map((patient) =>
@@ -53,6 +53,8 @@ const OnlineEntry = ({ processedData }) => {
          isChecked: false,
       }))
       setPatients(nullablePatients)
+      setCheck(false)
+
       // there should be a request:
       console.log(checkedIds)
    }

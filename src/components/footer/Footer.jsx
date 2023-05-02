@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { NavLink } from 'react-router-dom'
 import medcheckLogo from '../../assets/icons/MedcheckLogo.svg'
 import medCheck from '../../assets/icons/MedCheck.svg'
 import geoPoint from '../../assets/icons/GeoPoint.svg'
@@ -16,8 +17,10 @@ function Footer() {
          <FooterContainer>
             <Container1>
                <MedIcons>
-                  <img src={medcheckLogo} alt="medcheckLogoА" />
-                  <img className="medcheck" src={medCheck} alt="medchecks" />
+                  <NavLink to="/">
+                     <img src={medcheckLogo} alt="medcheckLogoА" />
+                     <img className="medcheck" src={medCheck} alt="medchecks" />
+                  </NavLink>
                </MedIcons>
                <TextContent>
                   <div>Медицинская клиника «MedCheck»</div>
@@ -52,38 +55,38 @@ function Footer() {
                <Container3>
                   <p>Мы в социальных сетях:</p>
 
-                  <a href="/">
+                  <NavLink to="https://www.instagram.com/peaksoft.house/">
                      <img src={instagram} alt="instagram" />
-                  </a>
-                  <a href="/">
+                  </NavLink>
+                  <NavLink to="https://web.telegram.org/z/">
                      <img src={telegram} alt="telegram" />
-                  </a>
-                  <a href="/">
+                  </NavLink>
+                  <NavLink to="https://www.whatsapp.com/?lang=ru">
                      <img src={whatsApp} alt="whatsapp" />
-                  </a>
+                  </NavLink>
                </Container3>
             </div>
          </FooterContainer>
          <div>
             <DataContent>
-               <a href="/">
+               <NavLink to="about">
                   <li>Оклинике</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="service">
                   <li>Услуги</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="doctors">
                   <li>Врачи</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="price">
                   <li>Прайс</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="reviews">
                   <li>Отзывы</li>
-               </a>
-               <a href="/">
+               </NavLink>
+               <NavLink to="contacts">
                   <li>Контакты</li>
-               </a>
+               </NavLink>
             </DataContent>
             <hr />
             <footer>
@@ -101,9 +104,10 @@ const MainContainer = styled('div')(() => ({
    height: '494px',
    backgroundColor: '#212529',
    fontFamily: 'Manrope',
+   marginTop: '120px',
 
    '& hr': {
-      width: '78%',
+      width: '87%',
       marginLeft: '120px',
       marginTop: '48px',
    },
@@ -121,14 +125,15 @@ const MainContainer = styled('div')(() => ({
 const FooterContainer = styled('div')(() => ({
    color: 'white',
    display: 'flex',
+   justifyContent: 'space-around',
 }))
 
 const Container1 = styled('div')(() => ({
    width: '461px',
    height: '126px',
    marginTop: '68px',
-   marginLeft: '120px',
-   marginRight: '130px',
+   marginLeft: '30px',
+   // marginRight: '130px',
 }))
 
 const MedIcons = styled('div')(() => ({
@@ -237,7 +242,7 @@ const Container3 = styled('div')(() => ({
    width: '186px',
    height: '65px',
    marginTop: '68px',
-   marginLeft: '130px',
+   marginLeft: '20px',
    fontFamily: 'Manrope',
    '& p': {
       marginBottom: '20px',
@@ -257,9 +262,10 @@ const DataContent = styled('ul')(() => ({
    listStyle: 'none',
    display: 'flex',
    color: '#CCCCCC',
-   marginTop: '78px',
-   marginLeft: '460px',
-   '& li': {
+   margin: '78px auto',
+   justifyContent: 'center',
+
+   '& a': {
       textDecoration: 'none',
       cursor: 'pointer',
       color: ' #CCCCCC',

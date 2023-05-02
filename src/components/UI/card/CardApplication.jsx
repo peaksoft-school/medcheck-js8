@@ -32,6 +32,8 @@ export default function CardApplication() {
          phoneNumber: number,
       }
       dispatch(postDatas(data))
+         .unwrap()
+         .catch((e) => console.log(e))
    }
 
    return (
@@ -41,7 +43,7 @@ export default function CardApplication() {
                <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
                <DialogContent>
                   <DialogContentTextStyled>
-                     Оставьте свой номер и наши специалисты свяжутся с Вами{' '}
+                     Оставьте свой номер и наши специалисты свяжутся с Вами
                      <br /> в ближайшее время
                   </DialogContentTextStyled>
                   <InputBoxStyled>
@@ -50,7 +52,7 @@ export default function CardApplication() {
                         <TextFieldStyled
                            margin="dense"
                            id="name"
-                           type="email"
+                           type="text"
                            variant="outlined"
                            placeholder="Введите имя"
                            onChange={nameChangeHandler}
