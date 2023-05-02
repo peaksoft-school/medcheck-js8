@@ -6,7 +6,7 @@ import { UserRoles } from '../utlis/constants/commons'
 import UserLayout from '../layout/user/UserLayout'
 import NotFoundPage from '../pages/NotFoundPage'
 import AboutClinic from '../pages/user/AboutClinic'
-import ServiceBox from '../pages/user/Service'
+import Service from '../pages/user/Service'
 import GetResults from '../pages/user/GetResults'
 import ServiceDetails from '../pages/user/ServiceDetails'
 import Doctors from '../pages/user/Doctors'
@@ -26,7 +26,7 @@ import MyApplications from '../pages/user/personal-account/myApplications/MyAppl
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
 
 const AppRoutes = () => {
-   const role = 'ADMIN'
+   const role = 'USER'
 
    const isAllowed = (roles) => {
       return roles.includes(role)
@@ -53,7 +53,7 @@ const AppRoutes = () => {
          <Route path="/" element={getUserPage(UserLayout)}>
             <Route index element={getUserPage(Main)} />
             <Route path="about" element={getUserPage(AboutClinic)} />
-            <Route path="service" element={getUserPage(ServiceBox)} />
+            <Route path="service" element={getUserPage(Service)} />
             <Route
                path="service/:id/details"
                element={getUserPage(ServiceDetails)}

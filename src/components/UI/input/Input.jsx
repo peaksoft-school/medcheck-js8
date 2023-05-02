@@ -27,17 +27,18 @@ const StyledInput = styled(TextField)`
    fieldset {
       border-radius: 8px;
       padding: 10px 8px 10px 16px;
+      border: 1x solid #d9d9d9;
    }
-   input:hover {
+   :hover {
       border-radius: 8px;
-      border: 1px solid #959595;
+      border: 1x solid #959595;
    }
-   input:active {
+   :active {
       border-radius: 8px;
       border: 1px solid #048741;
    }
-   input:invalid {
+   :invalid {
       border-radius: 8px;
-      border: 1px solid #f91515;
+      border: 5px solid #f91515;
    }
 `

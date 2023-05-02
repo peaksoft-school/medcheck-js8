@@ -9,8 +9,10 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
+   const navigate = useNavigate()
    return (
       <Grid>
          <PaperStyled>
@@ -32,6 +34,9 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
                               <IconStyled
                                  src={patient.img}
                                  alt="patientImage"
+                                 onClick={() => {
+                                    navigate(`${patient.id}/details`)
+                                 }}
                               />
 
                               <TitleBox>
