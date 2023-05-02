@@ -1,15 +1,45 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
 import SearchInput from '../../components/UI/SeacrchInput'
-import { item } from '../../utlis/constants/commons'
 import AppTable from '../../components/UI/Table'
 import CheckboxApp from '../../components/UI/checkbox/Checkbox'
 import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
+import { getApplication } from '../../redux/reducers/applications/applications.thunk'
+import { getGlobalSearch } from '../../redux/reducers/search/search.thunk'
 
 const Application = ({ processedData }) => {
-   const [patients, setPatients] = useState(item)
+   const dispatch = useDispatch()
+
+   const { application } = useSelector((state) => state.application)
+   const [patients, setPatients] = useState(application)
    const [check, setCheck] = useState(false)
+   const [search, setSearch] = useState('')
+   const [filteredItems, setFilteredItems] = useState([])
+
+   useEffect(() => {
+      setPatients(application)
+   }, [application])
+
+   useEffect(() => {
+      dispatch(getApplication())
+   }, [])
+
+   useEffect(() => {
+      const filteredItems = patients.filter((patient) => {
+         const lowerCaseName = patient.name.toLowerCase()
+         const lowerCaseInputValue = search.toLowerCase()
+         return lowerCaseName.includes(lowerCaseInputValue)
+      })
+
+      setFilteredItems(filteredItems)
+   }, [patients, search, check])
+   const searchChangeHandler = (event) => {
+      const inputValue = event.target.value
+      setSearch(inputValue)
+      dispatch(getGlobalSearch())
+   }
 
    const checkBoxChangeHandler = ({ target: { id, checked } }) => {
       if (id === 'allSelect') {
@@ -20,17 +50,19 @@ const Application = ({ processedData }) => {
          setPatients(tempPatient)
       } else {
          const tempPatient = patients.map((patient) =>
-            patient.id === id ? { ...patient, isChecked: checked } : patient
+            patient.id.toString() === id
+               ? { ...patient, isChecked: checked }
+               : patient
          )
          setPatients(tempPatient)
 
-         const isTempPatientUnchecked = tempPatient.find(
-            (patient) => patient.isChecked === false
-         )
          const isTempPatientChecked = tempPatient.find(
             (patient) => patient.isChecked === true
          )
 
+         const isTempPatientUnchecked = tempPatient.find(
+            (patient) => patient.isChecked === false
+         )
          if (
             (isTempPatientUnchecked && isTempPatientChecked) ||
             isTempPatientChecked
@@ -39,9 +71,14 @@ const Application = ({ processedData }) => {
          } else {
             setCheck(false)
          }
+
+         const filteredItems = tempPatient.filter((patient) =>
+            patient.name.toLowerCase().includes(search.toLowerCase())
+         )
+         setFilteredItems(filteredItems)
       }
    }
-   const checkedALlDeleteHandler = () => {
+   const checkedAllDeleteHandler = () => {
       const checkedIds = patients.reduce((patientId, patient) => {
          if (patient.isChecked) {
             patientId.push(parseInt(patient.id, 10))
@@ -67,8 +104,9 @@ const Application = ({ processedData }) => {
               }
             : item
       )
-      setPatients(checkPatient)
+
       processedData(patients)
+      setPatients(checkPatient)
    }
 
    const checkedDeleteHandler = () => {
@@ -94,7 +132,7 @@ const Application = ({ processedData }) => {
             render: (patient) => (
                <Grid>
                   <CheckboxApp
-                     id={patient.id}
+                     id={patient.id.toString()}
                      checked={patient.isChecked || false}
                      onChange={checkBoxChangeHandler}
                   />
@@ -105,7 +143,7 @@ const Application = ({ processedData }) => {
             header: (
                <Grid>
                   {check && (
-                     <IconButton onClick={checkedALlDeleteHandler}>
+                     <IconButton onClick={checkedAllDeleteHandler}>
                         <TrashIcon />
                      </IconButton>
                   )}
@@ -128,7 +166,7 @@ const Application = ({ processedData }) => {
          },
          {
             header: 'Номер телефона',
-            key: 'telNumber',
+            key: 'phoneNumber',
          },
          {
             header: 'Обработан',
@@ -166,10 +204,17 @@ const Application = ({ processedData }) => {
                <Title>Заявки</Title>
             </BoxTitleAndButton>
             <SearchInputBox>
-               <SearchInput placeholder="Поиск" />
+               <SearchInput
+                  placeholder="Поиск"
+                  onChange={searchChangeHandler}
+                  value={search}
+               />
             </SearchInputBox>
             <div>
-               <AppTable columns={column} rows={patients} />
+               <AppTable
+                  columns={column}
+                  rows={filteredItems.length > 0 ? filteredItems : patients}
+               />
             </div>
          </MainContainer>
       </div>

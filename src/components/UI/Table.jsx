@@ -39,7 +39,7 @@ const AppTable = ({ rows, columns }) => {
                   <TableBody>
                      {rows.map((row, rowIndex) => {
                         return (
-                           <TableRow key={row.id}>
+                           <TableRow key={row.id.toString()}>
                               {columns.map((column) => {
                                  if (column.render) {
                                     return (
