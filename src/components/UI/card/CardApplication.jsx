@@ -13,11 +13,13 @@ import { ReactComponent as Women } from '../../../assets/serviceIcons/Women.svg'
 import Button from '../Button'
 import Input from '../input/Input'
 import { postDatas } from '../../../redux/reducers/card/card.thunk'
+import useToast from '../../../hooks/useToast'
 
 export default function CardApplication() {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
+   const { ToastContainer, notifyCall } = useToast()
 
    const nameChangeHandler = (e) => {
       setName(e.target.value)
@@ -27,17 +29,26 @@ export default function CardApplication() {
    }
 
    const submitHandler = () => {
-      const data = {
-         name,
-         phoneNumber: number,
+      try {
+         if (name.length >= 2 && number.length === 13) {
+            const patientData = {
+               name,
+               phoneNumber: number,
+            }
+            dispatch(postDatas(patientData))
+            notifyCall('success', 'The data has successfully sent!')
+         } else {
+            notifyCall('error', 'This is error message')
+         }
+      } catch (error) {
+         console.error(error)
+         notifyCall('error', 'This is error message')
       }
-      dispatch(postDatas(data))
-         .unwrap()
-         .catch((e) => console.log(e))
    }
 
    return (
       <div>
+         {ToastContainer}
          <ModalContainer>
             <div className="container">
                <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
