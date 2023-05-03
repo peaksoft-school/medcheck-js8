@@ -14,6 +14,9 @@ export const cardSlice = createSlice({
       builder.addCase(postDatas.rejected, (state, action) => {
          state.error = action.payload
       })
+      builder.addCase(postDatas.pending, (state) => {
+         state.isLoading = true
+      })
    },
 })
 export const authActions = cardSlice.actions
