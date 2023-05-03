@@ -1,9 +1,11 @@
-import AppRoutes from './routes/Routes'
+import AddSpecialist from './pages/admin/specialists/AddSpecialist'
+// import AppRoutes from './routes/Routes'
 
 function App() {
    return (
       <div>
-         <AppRoutes />
+         {/* <AppRoutes /> */}
+         <AddSpecialist />
       </div>
    )
 }

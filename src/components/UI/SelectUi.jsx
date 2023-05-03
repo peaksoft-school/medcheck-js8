@@ -4,6 +4,14 @@ import { FormControl, Select } from '@mui/material'
 import styled from '@emotion/styled'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
+// const menuProps = {
+//    PaperProps: {
+//       style: {
+//          maxHeight: 150,
+//       },
+//    },
+// }
+
 export const SelectUi = ({ items, label, value, onChange }) => {
    return (
       <FormControl fullWidth>
@@ -12,6 +20,7 @@ export const SelectUi = ({ items, label, value, onChange }) => {
             label={label}
             onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
+            // MenuProps={menuProps}
          >
             {items &&
                items.map((item) => (
