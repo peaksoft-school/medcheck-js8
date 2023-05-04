@@ -2,21 +2,28 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+import { useDebounce } from 'use-debounce'
 import SearchInput from '../../components/UI/SeacrchInput'
 import AppTable from '../../components/UI/Table'
 import CheckboxApp from '../../components/UI/checkbox/Checkbox'
 import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
-import { getApplication } from '../../redux/reducers/applications/applications.thunk'
-import { getGlobalSearch } from '../../redux/reducers/search/search.thunk'
+import {
+   deleteAllChecked,
+   deleteChecked,
+   getApplication,
+   getGlobalSearch,
+} from '../../redux/reducers/applications/applications.thunk'
 
-const Application = ({ processedData }) => {
+const Application = () => {
    const dispatch = useDispatch()
 
    const { application } = useSelector((state) => state.application)
    const [patients, setPatients] = useState(application)
    const [check, setCheck] = useState(false)
-   const [search, setSearch] = useState('')
-   const [filteredItems, setFilteredItems] = useState([])
+   const [searchParams, setSearchParams] = useSearchParams()
+   const [inputVal, setInputVal] = useState('')
+   const [debouncedQuery] = useDebounce(inputVal, 400)
 
    useEffect(() => {
       setPatients(application)
@@ -27,18 +34,14 @@ const Application = ({ processedData }) => {
    }, [])
 
    useEffect(() => {
-      const filteredItems = patients.filter((patient) => {
-         const lowerCaseName = patient.name.toLowerCase()
-         const lowerCaseInputValue = search.toLowerCase()
-         return lowerCaseName.includes(lowerCaseInputValue)
-      })
+      searchParams.set('word', inputVal)
+      setSearchParams(searchParams)
+      const test = searchParams.get('word').toString()
+      dispatch(getGlobalSearch(test))
+   }, [debouncedQuery])
 
-      setFilteredItems(filteredItems)
-   }, [patients, search, check])
    const searchChangeHandler = (event) => {
-      const inputValue = event.target.value
-      setSearch(inputValue)
-      dispatch(getGlobalSearch())
+      setInputVal(event.target.value)
    }
 
    const checkBoxChangeHandler = ({ target: { id, checked } }) => {
@@ -71,11 +74,6 @@ const Application = ({ processedData }) => {
          } else {
             setCheck(false)
          }
-
-         const filteredItems = tempPatient.filter((patient) =>
-            patient.name.toLowerCase().includes(search.toLowerCase())
-         )
-         setFilteredItems(filteredItems)
       }
    }
    const checkedAllDeleteHandler = () => {
@@ -93,6 +91,7 @@ const Application = ({ processedData }) => {
       setCheck(false)
       // there should be a request:
       console.log(checkedIds)
+      dispatch(deleteAllChecked(checkedIds))
    }
 
    const checkedProcessedHandler = (id) => {
@@ -105,16 +104,19 @@ const Application = ({ processedData }) => {
             : item
       )
 
-      processedData(patients)
+      // processedData(patients)
       setPatients(checkPatient)
    }
 
-   const checkedDeleteHandler = () => {
-      const checkDeleteEl = patients.filter(
-         (patient) => !patient.processedChecked
-      )
-      setPatients(checkDeleteEl)
+   const checkedDeleteHandler = (id) => {
+      // const checkDeleteEl = patients.filter(
+      //    (patient) => !patient.processedChecked
+      // )
+      // setPatients(checkDeleteEl)
+      console.log(id)
+      dispatch(deleteChecked(id))
    }
+
    const allCheckedValue =
       patients.length > 0 && patients.every((patient) => patient.isChecked)
 
@@ -173,6 +175,7 @@ const Application = ({ processedData }) => {
             key: 'processed',
             render: (patient) => (
                <Grid style={{ textAlign: 'start' }}>
+                  {console.log(patient)}
                   <IconButton>
                      <CheckboxApp
                         checked={patient.processedChecked}
@@ -207,14 +210,11 @@ const Application = ({ processedData }) => {
                <SearchInput
                   placeholder="Поиск"
                   onChange={searchChangeHandler}
-                  value={search}
+                  value={inputVal}
                />
             </SearchInputBox>
             <div>
-               <AppTable
-                  columns={column}
-                  rows={filteredItems.length > 0 ? filteredItems : patients}
-               />
+               <AppTable columns={column} rows={patients} />
             </div>
          </MainContainer>
       </div>

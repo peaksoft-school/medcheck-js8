@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getApplication } from './applications.thunk'
+import {
+   deleteChecked,
+   getApplication,
+   getGlobalSearch,
+} from './applications.thunk'
 
 const initialState = {
    application: [],
@@ -12,8 +16,8 @@ export const applicationSlice = createSlice({
    initialState,
    reducers: {},
    extraReducers: (builder) => {
-      builder.addCase(getApplication.fulfilled, (state, { payload }) => {
-         state.application = payload
+      builder.addCase(getApplication.fulfilled, (state, action) => {
+         state.application = action.payload
          state.isLoading = false
          state.error = ''
       })
@@ -24,6 +28,31 @@ export const applicationSlice = createSlice({
       builder.addCase(getApplication.rejected, (state, action) => {
          state.isLoading = false
          state.error = action.error
+      })
+      builder.addCase(getGlobalSearch.fulfilled, (state, action) => {
+         state.application = action.payload
+         state.isLoading = false
+         state.error = ''
+      })
+      builder.addCase(getGlobalSearch.pending, (state) => {
+         state.isLoading = true
+         state.error = ''
+      })
+      builder.addCase(getGlobalSearch.rejected, (state, action) => {
+         state.isLoading = false
+         state.error = action.error
+      })
+      builder.addCase(deleteChecked.pending, (state) => {
+         state.isLoading = true
+      })
+      builder.addCase(deleteChecked.fulfilled, (state, action) => {
+         state.isLoading = false
+         state.application = action.payload
+         state.error = ''
+      })
+      builder.addCase(deleteChecked.rejected, (state, action) => {
+         state.isLoading = false
+         state.error = action.payload
       })
    },
 })
