@@ -90,7 +90,6 @@ const Application = () => {
       setPatients(nullablePatients)
       setCheck(false)
       // there should be a request:
-      console.log(checkedIds)
       dispatch(deleteAllChecked(checkedIds))
    }
 

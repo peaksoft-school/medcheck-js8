@@ -47,9 +47,9 @@ export const deleteChecked = createAsyncThunk(
 )
 export const deleteAllChecked = createAsyncThunk(
    'allChecked/allDeleteChecked',
-   async (_, { rejectWithValue, dispatch }) => {
+   async (id, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await deleteAllCheckedRequest()
+         const { data } = await deleteAllCheckedRequest(id)
          dispatch(getApplication())
          return data
       } catch (error) {

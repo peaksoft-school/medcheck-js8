@@ -9,11 +9,11 @@ export const getSearchRequest = (name) => {
 }
 export const deleteCheckedRequest = (id) => {
    return mainApi.delete(`/api/applications`, {
-      params: {
-         id: Number(id),
-      },
+      data: [id],
    })
 }
-export const deleteAllCheckedRequest = () => {
-   return mainApi.delete(`/api/applications/delete-all`)
+export const deleteAllCheckedRequest = (id) => {
+   return mainApi.delete(`/api/applications`, {
+      data: id,
+   })
 }
