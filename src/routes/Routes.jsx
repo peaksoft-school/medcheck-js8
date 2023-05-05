@@ -15,7 +15,7 @@ import Price from '../pages/user/Price'
 import Contacts from '../pages/user/Contacts'
 import Main from '../pages/user/Main'
 import AdminLayout from '../layout/admin/Index'
-// import Appointment from '../pages/admin/Appointment'
+import Appointment from '../pages/admin/Appointment'
 import Applications from '../pages/admin/Applications'
 import Specialists from '../pages/admin/Specialists'
 import Patients from '../pages/admin/Patients'
@@ -67,14 +67,14 @@ const AppRoutes = () => {
             <Route path="contacts" element={getUserPage(Contacts)} />
             <Route path="getResults" element={getUserPage(GetResults)} />
             <Route path="profile" element={getUserPage(ProfileLayout)}>
-               {/* <Route
+               <Route
                   path="personal-data"
                   element={getUserPage(PersonalData)}
                />
                <Route
                   path="change-password"
                   element={getUserPage(ChangePassword)}
-               /> */}
+               />
             </Route>
             <Route
                path="myApplications"
@@ -86,18 +86,7 @@ const AppRoutes = () => {
             />
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
-            <Route path="appointment" element={getAdminPage(ProfileLayout)}>
-               <Route
-                  path="personal-data"
-                  element={getAdminPage(PersonalData)}
-               />
-               <Route
-                  path="change-password"
-                  element={getAdminPage(ChangePassword)}
-               />
-            </Route>
-            {/*  здесь надо вернуть до исходного кода */}
-            {/* <Route path="applications" element={getAdminPage(Appointment)} /> */}
+            <Route path="appoi" element={getAdminPage(Appointment)} />
             <Route path="applications" element={getAdminPage(Applications)} />
             <Route path="specialists" element={getAdminPage(Specialists)} />
             <Route path="patients" element={getAdminPage(Patients)} />
