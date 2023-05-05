@@ -74,7 +74,7 @@ const AppTable = ({ rows, columns, boolean = true }) => {
                      <TableBody>
                         {rows.map((row, rowIndex) => {
                            return (
-                              <StyledTableCell key={row.id.toString()}>
+                              <StyledTableRow key={row.id.toString()}>
                                  {columns.map((column) => {
                                     if (column.render) {
                                        return (
@@ -97,7 +97,7 @@ const AppTable = ({ rows, columns, boolean = true }) => {
                                        </TableCell>
                                     )
                                  })}
-                              </StyledTableCell>
+                              </StyledTableRow>
                            )
                         })}
                      </TableBody>
@@ -111,7 +111,7 @@ const AppTable = ({ rows, columns, boolean = true }) => {
 
 export default AppTable
 
-const StyledTableCell = muiStyle(TableRow)(({ theme }) => ({
+const StyledTableRow = muiStyle(TableRow)(({ theme }) => ({
    '&:nth-of-type(even)': {
       backgroundColor: theme.palette.primary.backgroundAdmin,
    },

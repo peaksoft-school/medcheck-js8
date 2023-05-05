@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { mainApi } from './instanses'
 
 export const getApplicatonRequest = () => {

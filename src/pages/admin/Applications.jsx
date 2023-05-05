@@ -99,7 +99,7 @@ const Application = () => {
          item.id === id
             ? {
                  ...item,
-                 processedChecked: !item.processedChecked,
+                 processedChecked: !item.processedChecked || false,
               }
             : item
       )
@@ -109,11 +109,6 @@ const Application = () => {
    }
 
    const checkedDeleteHandler = (id) => {
-      // const checkDeleteEl = patients.filter(
-      //    (patient) => !patient.processedChecked
-      // )
-      // setPatients(checkDeleteEl)
-      console.log(id)
       dispatch(deleteChecked(id))
    }
 
@@ -175,10 +170,9 @@ const Application = () => {
             key: 'processed',
             render: (patient) => (
                <Grid style={{ textAlign: 'start' }}>
-                  {console.log(patient)}
                   <IconButton>
                      <CheckboxApp
-                        checked={patient.processedChecked}
+                        checked={patient.processedChecked || false}
                         onChange={() => checkedProcessedHandler(patient.id)}
                      />
                   </IconButton>

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/no-cycle
 import {
    deleteChecked,
    getApplication,
@@ -45,9 +46,8 @@ export const applicationSlice = createSlice({
       builder.addCase(deleteChecked.pending, (state) => {
          state.isLoading = true
       })
-      builder.addCase(deleteChecked.fulfilled, (state, action) => {
+      builder.addCase(deleteChecked.fulfilled, (state) => {
          state.isLoading = false
-         state.application = action.payload
          state.error = ''
       })
       builder.addCase(deleteChecked.rejected, (state, action) => {

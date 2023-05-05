@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+// eslint-disable-next-line import/no-cycle
 import {
    deleteAllCheckedRequest,
    deleteCheckedRequest,
@@ -34,10 +35,10 @@ export const getGlobalSearch = createAsyncThunk(
 )
 export const deleteChecked = createAsyncThunk(
    'checked/deleteChecked',
-   async (id, { rejectWithValue }) => {
-      console.log('delete', id)
+   async (id, { rejectWithValue, dispatch }) => {
       try {
          const { data } = await deleteCheckedRequest(id)
+         dispatch(getApplication())
          return data
       } catch (error) {
          return rejectWithValue(error)
@@ -46,10 +47,10 @@ export const deleteChecked = createAsyncThunk(
 )
 export const deleteAllChecked = createAsyncThunk(
    'allChecked/allDeleteChecked',
-   async (id, { rejectWithValue }) => {
-      console.log('alldelete', id)
+   async (_, { rejectWithValue, dispatch }) => {
       try {
-         const { data } = await deleteAllCheckedRequest(id)
+         const { data } = await deleteAllCheckedRequest()
+         dispatch(getApplication())
          return data
       } catch (error) {
          return rejectWithValue(error)
