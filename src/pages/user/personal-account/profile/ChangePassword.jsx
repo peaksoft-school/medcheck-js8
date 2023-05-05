@@ -84,84 +84,96 @@ const ChangePassword = () => {
                   <p className="message">{errors.password?.message}</p>
                )}
             </div>
-            <StyledInputLabel htmlFor="new_password">
-               Новый пароль
-            </StyledInputLabel>
-            <FormControl variant="outlined">
-               <Input
-                  placeholder="Введите новый пароль"
-                  id="new_password"
-                  className="inputStyle"
-                  error={errors.newPassword}
-                  {...register('newPassword', {
-                     required: 'поле не заполнено',
-                     maxLength: {
-                        value: 15,
-                        message: 'слишком много деталей',
-                     },
-                     minLength: {
-                        value: 5,
-                        message: 'слишком мало деталей',
-                     },
-                  })}
-                  type={showPasswordNew ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton
-                              onClick={handleClickshowPasswordCopy}
-                              onMouseDown={clickHandler}
-                           >
-                              {showPasswordNew ? (
-                                 <VisibilityOff />
-                              ) : (
-                                 <Visibility />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
-               {errors.newPassword && (
-                  <p className="message">{errors.newPassword?.message}</p>
-               )}
-            </FormControl>
-            <StyledInputLabel htmlFor="confirm_password">
-               Подтвердить новый пароль
-            </StyledInputLabel>
-            <FormControl variant="outlined">
-               <Input
-                  className="inputStyle"
-                  placeholder="Подтвердите пароль"
-                  id="confirm_password"
-                  error={errors.confirmPassword}
-                  {...register('confirmPassword', {
-                     required: 'пароль не совпадает',
-                     maxLength: { value: 15, message: 'слишком много деталей' },
-                     minLength: { value: 5, message: 'слишком мало деталей' },
-                  })}
-                  type={showPasswordConfirm ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton
-                              onClick={handleClickshowPasswordConfirm}
-                              onMouseDown={clickHandler}
-                           >
-                              {showPasswordConfirm ? (
-                                 <VisibilityOff />
-                              ) : (
-                                 <Visibility />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
-               {errors.confirmPassword && (
-                  <p className="message">{errors.confirmPassword?.message}</p>
-               )}
-            </FormControl>
+            <div>
+               <StyledInputLabel htmlFor="new_password">
+                  Новый пароль
+               </StyledInputLabel>
+               <FormControl variant="outlined">
+                  <Input
+                     placeholder="Введите новый пароль"
+                     id="new_password"
+                     className="inputStyle"
+                     error={errors.newPassword}
+                     {...register('newPassword', {
+                        required: 'поле не заполнено',
+                        maxLength: {
+                           value: 15,
+                           message: 'слишком много деталей',
+                        },
+                        minLength: {
+                           value: 5,
+                           message: 'слишком мало деталей',
+                        },
+                     })}
+                     type={showPasswordNew ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton
+                                 onClick={handleClickshowPasswordCopy}
+                                 onMouseDown={clickHandler}
+                              >
+                                 {showPasswordNew ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
+                  {errors.newPassword && (
+                     <p className="message">{errors.newPassword?.message}</p>
+                  )}
+               </FormControl>
+            </div>
+            <div>
+               <StyledInputLabel htmlFor="confirm_password">
+                  Подтвердить новый пароль
+               </StyledInputLabel>
+               <FormControl variant="outlined">
+                  <Input
+                     className="inputStyle"
+                     placeholder="Подтвердите пароль"
+                     id="confirm_password"
+                     error={errors.confirmPassword}
+                     {...register('confirmPassword', {
+                        required: 'пароль не совпадает',
+                        maxLength: {
+                           value: 15,
+                           message: 'слишком много деталей',
+                        },
+                        minLength: {
+                           value: 5,
+                           message: 'слишком мало деталей',
+                        },
+                     })}
+                     type={showPasswordConfirm ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton
+                                 onClick={handleClickshowPasswordConfirm}
+                                 onMouseDown={clickHandler}
+                              >
+                                 {showPasswordConfirm ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
+                  {errors.confirmPassword && (
+                     <p className="message">
+                        {errors.confirmPassword?.message}
+                     </p>
+                  )}
+               </FormControl>
+            </div>
          </StyledForm>
          <StyledBoxButton>
             <StyledButton type="submit" variant="contained">

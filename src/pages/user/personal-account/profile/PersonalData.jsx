@@ -102,8 +102,8 @@ const StyledBox = styled(Box)(() => ({
    display: 'flex',
    justifyContent: 'start',
    gap: '30px',
+
    '& div': {
-      display: 'inline-box',
       width: '100%',
       marginBottom: '5px',
    },
