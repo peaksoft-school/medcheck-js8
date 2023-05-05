@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled, FormControl, InputLabel, Box } from '@mui/material'
+import { styled, FormControl, InputLabel } from '@mui/material'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
 
@@ -11,42 +11,54 @@ const PersonalData = () => {
    return (
       <Container onSubmit={clickHandler} noValidate autoComplete="off">
          <StyledTitleText>Ваши личные данные</StyledTitleText>
-         <StyledBox>
+         <StyledForm>
             <div>
                <StyledInputLabel htmlFor="name">Имя</StyledInputLabel>
-               <FormControl variant="outlined">
+               <FormControl>
                   <StyledInput
+                     variant="outlined"
                      type="text"
                      label=""
                      id="name"
-                     variant="outlined"
                   />
                </FormControl>
 
                <StyledInputLabel htmlFor="email">E-mail</StyledInputLabel>
-               <FormControl variant="outlined">
+
+               <FormControl>
                   <StyledInput
+                     variant="outlined"
                      type="email"
                      label=""
                      id="email"
-                     variant="outlined"
                   />
                </FormControl>
             </div>
             <div>
                <StyledInputLabel htmlFor="lastName">Фамилия</StyledInputLabel>
-               <FormControl variant="outlined">
-                  <StyledInput type="text" label="" id="lastName" />
+
+               <FormControl>
+                  <StyledInput
+                     variant="outlined"
+                     type="text"
+                     label=""
+                     id="lastName"
+                  />
                </FormControl>
 
                <StyledInputLabel htmlFor="phoneNumber">
                   Телефон
                </StyledInputLabel>
-               <FormControl variant="outlined">
-                  <StyledInput type="number" label="" id="phoneNumber" />
+               <FormControl>
+                  <StyledInput
+                     variant="outlined"
+                     type="number"
+                     label=""
+                     id="phoneNumber"
+                  />
                </FormControl>
             </div>
-         </StyledBox>
+         </StyledForm>
          <StyledBoxButton>
             <StyledButton type="submit" variant="contained">
                Назад
@@ -76,39 +88,44 @@ const StyledTitleText = styled('h1')`
    margin-bottom: 20px;
    letter-spacing: 0.2px;
 `
-
-const StyledInput = styled(Input)`
-   fieldset {
-      border-radius: 8px;
-      padding: 10px 8px 10px 16px;
-   }
-   input:hover {
-      border-radius: 8px;
-   }
-   input:focus {
-      border-radius: 8px;
-      border: 3px solid #959595;
-   }
-   input:active {
-      border-radius: 8px;
-      border: 3px solid #048741;
-   }
-   input:invalid {
-      border-radius: 8px;
-      border: 3px solid #f91515;
-   }
-`
-const StyledBox = styled(Box)(() => ({
-   display: 'flex',
-   justifyContent: 'start',
-   gap: '30px',
-
-   '& div': {
+const StyledForm = styled('div')(() => ({
+   '& ': {
       width: '100%',
+      display: 'flex',
+      justifyContent: 'start',
+      gap: '30px',
       marginBottom: '5px',
+   },
+   '& div ': {
+      width: '100%',
+      borderRadius: ' 8px',
    },
 }))
 
+const StyledInput = styled(Input)(() => ({
+   '& ': {
+      width: '100%',
+      borderRadius: '8px',
+      border: '1px solid #c5c5c5',
+      margin: '4px 5px 26px 2px ',
+   },
+   '& :hover': {
+      borderRadius: '8px',
+      border: '1px  #83edf5',
+   },
+   ' &:focus': {
+      borderRadius: '8px',
+      border: '1px solid #959595',
+   },
+   '&:active': {
+      borderRadius: '8px',
+      border: '1px solid #048741',
+   },
+   '& :invalid': {
+      borderRadius: '8px',
+      border: '2px solid #f91515',
+   },
+}))
 const StyledBoxButton = styled('div')`
    width: 100%;
    display: flex;
