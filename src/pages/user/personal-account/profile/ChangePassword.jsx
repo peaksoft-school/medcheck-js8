@@ -45,47 +45,48 @@ const ChangePassword = () => {
    }
 
    return (
-      <Container>
+      <Container onSubmit={handleSubmit(onSubmit)}>
          <StyledTitleText>Смена пароля </StyledTitleText>
-         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <InputLabel htmlFor="old_password">
-               <h4>Старый пароль</h4>
-            </InputLabel>
-            <FormControl variant="outlined">
-               <Input
-                  id="old_password"
-                  placeholder="Введите ваш пароль"
-                  className="inputStyle"
-                  error={errors.password}
-                  {...register('password', {
-                     required: 'введите старый пароль',
-                  })}
-                  type={showPassword ? 'text' : 'password'}
-                  InputProps={{
-                     endAdornment: (
-                        <InputAdornment position="end">
-                           <IconButton
-                              onClick={handleClickShowPassword}
-                              onMouseDown={clickHandler}
-                           >
-                              {showPassword ? (
-                                 <VisibilityOff />
-                              ) : (
-                                 <Visibility />
-                              )}
-                           </IconButton>
-                        </InputAdornment>
-                     ),
-                  }}
-               />
-            </FormControl>
-            {errors.password && (
-               <p className="message">{errors.password?.message}</p>
-            )}
-
-            <InputLabel htmlFor="new_password">
-               <h4>Новый пароль</h4>
-            </InputLabel>
+         <StyledForm>
+            <div>
+               <StyledInputLabel htmlFor="old_password">
+                  Старый пароль
+               </StyledInputLabel>
+               <FormControl variant="outlined">
+                  <Input
+                     id="old_password"
+                     placeholder="Введите ваш пароль"
+                     className="inputStyle"
+                     error={errors.password}
+                     {...register('password', {
+                        required: 'введите старый пароль',
+                     })}
+                     type={showPassword ? 'text' : 'password'}
+                     InputProps={{
+                        endAdornment: (
+                           <InputAdornment position="end">
+                              <IconButton
+                                 onClick={handleClickShowPassword}
+                                 onMouseDown={clickHandler}
+                              >
+                                 {showPassword ? (
+                                    <VisibilityOff />
+                                 ) : (
+                                    <Visibility />
+                                 )}
+                              </IconButton>
+                           </InputAdornment>
+                        ),
+                     }}
+                  />
+               </FormControl>
+               {errors.password && (
+                  <p className="message">{errors.password?.message}</p>
+               )}
+            </div>
+            <StyledInputLabel htmlFor="new_password">
+               Новый пароль
+            </StyledInputLabel>
             <FormControl variant="outlined">
                <Input
                   placeholder="Введите новый пароль"
@@ -94,8 +95,14 @@ const ChangePassword = () => {
                   error={errors.newPassword}
                   {...register('newPassword', {
                      required: 'поле не заполнено',
-                     maxLength: { value: 15, message: 'слишком много деталей' },
-                     minLength: { value: 5, message: 'слишком мало деталей' },
+                     maxLength: {
+                        value: 15,
+                        message: 'слишком много деталей',
+                     },
+                     minLength: {
+                        value: 5,
+                        message: 'слишком мало деталей',
+                     },
                   })}
                   type={showPasswordNew ? 'text' : 'password'}
                   InputProps={{
@@ -119,9 +126,9 @@ const ChangePassword = () => {
                   <p className="message">{errors.newPassword?.message}</p>
                )}
             </FormControl>
-            <InputLabel htmlFor="confirm_password">
-               <h4>Подтвердить новый пароль</h4>
-            </InputLabel>
+            <StyledInputLabel htmlFor="confirm_password">
+               Подтвердить новый пароль
+            </StyledInputLabel>
             <FormControl variant="outlined">
                <Input
                   className="inputStyle"
@@ -151,26 +158,26 @@ const ChangePassword = () => {
                      ),
                   }}
                />
+               {errors.confirmPassword && (
+                  <p className="message">{errors.confirmPassword?.message}</p>
+               )}
             </FormControl>
-            {errors.confirmPassword && (
-               <p className="message">{errors.confirmPassword?.message}</p>
-            )}
-            <StyledBoxButton>
-               <StyledButton type="submit" variant="contained">
-                  Назад
-               </StyledButton>
-               <Button type="submit" variant="outlined">
-                  Подтвердить
-               </Button>
-            </StyledBoxButton>
          </StyledForm>
+         <StyledBoxButton>
+            <StyledButton type="submit" variant="contained">
+               Назад
+            </StyledButton>
+            <Button type="submit" variant="outlined">
+               Подтвердить
+            </Button>
+         </StyledBoxButton>
       </Container>
    )
 }
 
 export default ChangePassword
 
-const Container = styled('div')`
+const Container = styled('form')`
    width: 90%;
    margin-top: 26px;
    margin-bottom: 40px;
@@ -186,17 +193,10 @@ const StyledTitleText = styled('h1')`
    letter-spacing: 0.2px;
 `
 
-const StyledForm = styled('form')(() => ({
+const StyledForm = styled('div')(() => ({
    '& ': {
       width: '100%',
       marginBottom: '5px',
-   },
-   '& h4': {
-      fontSize: '1rem',
-      color: '#464444',
-      fontFamily: 'Manrope',
-      fontWeight: 400,
-      lineHeight: '19px',
    },
    '& p': {
       fontSize: '1rem',
@@ -210,26 +210,29 @@ const StyledForm = styled('form')(() => ({
       width: '180%',
       marginLeft: '2px',
       borderRadius: ' 8px',
-      marginBottom: '16px',
-      border: '2px solid #D9D9D9',
+      marginBottom: '22px',
+      border: '1px solid #D9D9D9',
+
+      '& input:hover': {
+         width: '180%',
+         border: '1px #ffffff',
+      },
+      '& input:active': {
+         width: '180%',
+      },
    },
-   '& div input:hover': {
-      width: '180%',
-      border: '2px #ffffff',
-   },
-   '& input:active': {
-      width: '180%',
-      border: '2px solid #D9D9D9',
-   },
+
    '& .message': {
-      color: 'red',
-      marginLeft: '50px',
-      marginTop: '-5px',
+      color: '#f13131',
+      fontSize: '0.75rem',
+      marginLeft: '10px',
+      marginTop: '-24px',
    },
 }))
 
 const StyledBoxButton = styled('div')`
    max-width: 60%;
+   min-width: 50%;
    display: flex;
    justify-content: start;
    margin-top: 26px;
@@ -264,5 +267,15 @@ const StyledButton = styled(Button)(() => ({
    '&:disabled': {
       background: '#D3D3D3',
       color: '#FFFF',
+   },
+}))
+
+const StyledInputLabel = styled(InputLabel)(() => ({
+   '&': {
+      fontSize: '1rem',
+      color: '#464444',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '19px',
    },
 }))

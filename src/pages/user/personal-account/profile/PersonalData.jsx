@@ -4,44 +4,56 @@ import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
 
 const PersonalData = () => {
+   const clickHandler = (event) => {
+      event.preventDefault()
+   }
+
    return (
-      <Container>
+      <Container onSubmit={clickHandler} noValidate autoComplete="off">
          <StyledTitleText>Ваши личные данные</StyledTitleText>
-         <StyledBox component="form" noValidate autoComplete="off">
+         <StyledBox>
             <div>
-               <InputLabel htmlFor="name">
-                  <p>Имя</p>
-               </InputLabel>
+               <StyledInputLabel htmlFor="name">Имя</StyledInputLabel>
                <FormControl variant="outlined">
-                  <StyledInput label="" id="name" variant="outlined" />
+                  <StyledInput
+                     type="text"
+                     label=""
+                     id="name"
+                     variant="outlined"
+                  />
                </FormControl>
 
-               <InputLabel htmlFor="email">
-                  <p>E-mail</p>
-               </InputLabel>
+               <StyledInputLabel htmlFor="email">E-mail</StyledInputLabel>
                <FormControl variant="outlined">
-                  <StyledInput label="" id="email" variant="outlined" />
+                  <StyledInput
+                     type="email"
+                     label=""
+                     id="email"
+                     variant="outlined"
+                  />
                </FormControl>
             </div>
             <div>
-               <InputLabel htmlFor="lastName">
-                  <p>Фамилия</p>
-               </InputLabel>
+               <StyledInputLabel htmlFor="lastName">Фамилия</StyledInputLabel>
                <FormControl variant="outlined">
-                  <StyledInput label="" id="lastName" />
+                  <StyledInput type="text" label="" id="lastName" />
                </FormControl>
 
-               <InputLabel htmlFor="phoneNumber">
-                  <p>Телефон</p>
-               </InputLabel>
+               <StyledInputLabel htmlFor="phoneNumber">
+                  Телефон
+               </StyledInputLabel>
                <FormControl variant="outlined">
-                  <StyledInput label="" id="phoneNumber" />
+                  <StyledInput type="number" label="" id="phoneNumber" />
                </FormControl>
             </div>
          </StyledBox>
          <StyledBoxButton>
-            <StyledButton variant="contained">Назад</StyledButton>
-            <Button variant="outlined"> Редактировать </Button>
+            <StyledButton type="submit" variant="contained">
+               Назад
+            </StyledButton>
+            <Button type="submit" variant="outlined">
+               Редактировать
+            </Button>
          </StyledBoxButton>
       </Container>
    )
@@ -49,7 +61,7 @@ const PersonalData = () => {
 
 export default PersonalData
 
-const Container = styled('div')`
+const Container = styled('form')`
    width: 90%;
    margin-top: 26px;
    margin-bottom: 40px;
@@ -95,13 +107,6 @@ const StyledBox = styled(Box)(() => ({
       width: '100%',
       marginBottom: '5px',
    },
-   '& p': {
-      fontSize: '1rem',
-      color: '#464444',
-      fontFamily: 'Manrope',
-      fontWeight: 400,
-      lineHeight: '19px',
-   },
 }))
 
 const StyledBoxButton = styled('div')`
@@ -117,6 +122,15 @@ const StyledBoxButton = styled('div')`
    }
 `
 
+const StyledInputLabel = styled(InputLabel)(() => ({
+   '&': {
+      fontSize: '1rem',
+      color: '#464444',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '19px',
+   },
+}))
 const StyledButton = styled(Button)(() => ({
    '&': {
       fontFamily: 'Manrope,sans-serif',

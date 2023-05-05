@@ -86,7 +86,7 @@ const AppRoutes = () => {
             />
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
-            <Route path="appointment" element={getAdminPage(Appointment)} />
+            <Route path="appoi" element={getAdminPage(Appointment)} />
             <Route path="applications" element={getAdminPage(Applications)} />
             <Route path="specialists" element={getAdminPage(Specialists)} />
             <Route path="patients" element={getAdminPage(Patients)} />
