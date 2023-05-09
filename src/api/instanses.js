@@ -8,7 +8,7 @@ export const mainApi = axios.create({
 mainApi.interceptors.request.use(
    function (config) {
       const token =
-         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODMyOTEwNDQsImV4cCI6MTY4MzI5MjQ4NH0.u9GcfX8AMcCYYHNBYV8c7WqYTC3nSgCzpFiV0hCDi8I'
+         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODM2MzA3NjUsImV4cCI6MTY4MzYzMjIwNX0.PWjOrAaVhKteu5eb5H_ZhCBE3lSr198Hfqg4TijMMR0'
       config.headers.Authorization = `Bearer ${token}`
 
       return config

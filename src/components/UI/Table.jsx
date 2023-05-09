@@ -14,7 +14,7 @@ import {
 
 import React from 'react'
 
-const AppTable = ({ rows, columns, boolean = true }) => {
+const AppTable = ({ rows, columns, tableCellStyle = true }) => {
    return (
       <Grid>
          <PaperStyled>
@@ -39,7 +39,7 @@ const AppTable = ({ rows, columns, boolean = true }) => {
                         ))}
                      </TableRow>
                   </TableHead>
-                  {boolean ? (
+                  {tableCellStyle ? (
                      <TableBody>
                         {rows.map((row, rowIndex) => {
                            return (
