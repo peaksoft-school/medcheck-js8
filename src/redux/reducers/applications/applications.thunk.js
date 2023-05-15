@@ -4,14 +4,13 @@ import {
    deleteAllCheckedRequest,
    deleteCheckedRequest,
    getApplicatonRequest,
-   getSearchRequest,
 } from '../../../api/applicationsService'
 
 export const getApplication = createAsyncThunk(
    'application/getApplication',
-   async (_, { rejectWithValue }) => {
+   async (searchValue, { rejectWithValue }) => {
       try {
-         const { data } = await getApplicatonRequest()
+         const { data } = await getApplicatonRequest(searchValue)
 
          return data
       } catch (error) {
@@ -19,20 +18,7 @@ export const getApplication = createAsyncThunk(
       }
    }
 )
-export const getGlobalSearch = createAsyncThunk(
-   'search/getSearch',
-   async (name, { rejectWithValue }) => {
-      try {
-         const { data } = await getSearchRequest(name)
-         return data
-      } catch (error) {
-         if (error.response && error.response.data) {
-            return rejectWithValue(error.response.data)
-         }
-         return rejectWithValue(error.message)
-      }
-   }
-)
+
 export const deleteChecked = createAsyncThunk(
    'checked/deleteChecked',
    async (id, { rejectWithValue, dispatch }) => {

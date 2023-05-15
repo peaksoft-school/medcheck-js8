@@ -4,7 +4,6 @@ import {
    deleteAllChecked,
    deleteChecked,
    getApplication,
-   getGlobalSearch,
 } from './applications.thunk'
 
 const initialState = {
@@ -28,19 +27,6 @@ export const applicationSlice = createSlice({
          state.error = ''
       })
       builder.addCase(getApplication.rejected, (state, action) => {
-         state.isLoading = false
-         state.error = action.error
-      })
-      builder.addCase(getGlobalSearch.fulfilled, (state, action) => {
-         state.application = action.payload
-         state.isLoading = false
-         state.error = ''
-      })
-      builder.addCase(getGlobalSearch.pending, (state) => {
-         state.isLoading = true
-         state.error = ''
-      })
-      builder.addCase(getGlobalSearch.rejected, (state, action) => {
          state.isLoading = false
          state.error = action.error
       })

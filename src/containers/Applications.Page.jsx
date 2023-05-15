@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import SearchInput from '../components/UI/SeacrchInput'
 import AppTable from '../components/UI/Table'
@@ -12,10 +11,7 @@ import {
    deleteAllChecked,
    deleteChecked,
 } from '../redux/reducers/applications/applications.thunk'
-import {
-   getApplicatonRequest,
-   getSearchRequest,
-} from '../api/applicationsService'
+import { getApplicatonRequest } from '../api/applicationsService'
 
 const ApplicationsPage = () => {
    const dispatch = useDispatch()
@@ -23,7 +19,6 @@ const ApplicationsPage = () => {
    const { application } = useSelector((state) => state.application)
    const [patients, setPatients] = useState([])
    const [check, setCheck] = useState(false)
-   const [searchParams, setSearchParams] = useSearchParams()
    const [inputVal, setInputVal] = useState('')
    const [debouncedQuery] = useDebounce(inputVal, 400)
 
@@ -34,10 +29,7 @@ const ApplicationsPage = () => {
    const getData = async () => {
       try {
          if (debouncedQuery) {
-            searchParams.set('word', debouncedQuery)
-            setSearchParams(searchParams)
-            const updatedTest = searchParams.get('word').toString()
-            const { data } = await getSearchRequest(updatedTest)
+            const { data } = await getApplicatonRequest(inputVal)
             setPatients(data)
          } else {
             const { data } = await getApplicatonRequest()
