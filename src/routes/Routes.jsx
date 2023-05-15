@@ -23,7 +23,7 @@ import PersonalData from '../pages/user/personal-account/profile/PersonalData'
 import ChangePassword from '../pages/user/personal-account/profile/ChangePassword'
 import MyApplications from '../pages/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
-import ApplicationsPage from '../containers/Application.Page'
+import ApplicationsPage from '../containers/Applications.Page'
 
 const AppRoutes = () => {
    const role = 'ADMIN'
