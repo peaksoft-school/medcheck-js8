@@ -17,7 +17,7 @@ import {
    getSearchRequest,
 } from '../api/applicationsService'
 
-const Application = () => {
+const ApplicationsPage = () => {
    const dispatch = useDispatch()
 
    const { application } = useSelector((state) => state.application)
@@ -31,37 +31,24 @@ const Application = () => {
       setPatients(application)
    }, [application])
 
-   const getApplicationData = async () => {
+   const getData = async () => {
       try {
-         const { data } = await getApplicatonRequest()
-         setPatients(data)
-      } catch (error) {
-         console.log(error)
-      }
-   }
-
-   useEffect(() => {
-      getApplicationData()
-   }, [])
-
-   const getSearchData = async () => {
-      try {
-         if (inputVal) {
-            searchParams.set('word', inputVal)
+         if (debouncedQuery) {
+            searchParams.set('word', debouncedQuery)
             setSearchParams(searchParams)
             const updatedTest = searchParams.get('word').toString()
             const { data } = await getSearchRequest(updatedTest)
             setPatients(data)
          } else {
-            setSearchParams({})
+            const { data } = await getApplicatonRequest()
+            setPatients(data)
          }
       } catch (error) {
          console.log(error)
       }
    }
-
    useEffect(() => {
-      getSearchData()
+      getData()
    }, [inputVal, debouncedQuery])
 
    const searchChangeHandler = (event) => {
@@ -113,7 +100,6 @@ const Application = () => {
       }))
       setPatients(nullablePatients)
       setCheck(false)
-      // there should be a request:
       dispatch(deleteAllChecked(checkedIds))
    }
 
@@ -127,7 +113,6 @@ const Application = () => {
             : item
       )
 
-      // processedData(patients)
       setPatients(checkPatient)
    }
 
@@ -238,7 +223,7 @@ const Application = () => {
    )
 }
 
-export default Application
+export default ApplicationsPage
 const MainContainer = styled('div')(() => ({
    '&': {
       width: '100%',
