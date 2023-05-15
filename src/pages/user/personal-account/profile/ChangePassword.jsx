@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
 import {
    styled,
    FormControl,
@@ -7,6 +6,7 @@ import {
    InputAdornment,
    IconButton,
 } from '@mui/material'
+import { useFormAction } from 'react-router-dom'
 import { ReactComponent as VisibilityOff } from '../../../../assets/icons/VisibilityOff.svg'
 import { ReactComponent as Visibility } from '../../../../assets/icons/Visibility.svg'
 import Button from '../../../../components/UI/Button'
@@ -21,7 +21,7 @@ const ChangePassword = () => {
       register,
       handleSubmit,
       formState: { errors },
-   } = useForm({
+   } = useFormAction({
       mode: 'all',
       defaultValues: {
          password: '',
