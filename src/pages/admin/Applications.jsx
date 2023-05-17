@@ -1,51 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { useDebounce } from 'use-debounce'
-import SearchInput from '../components/UI/SeacrchInput'
-import AppTable from '../components/UI/Table'
-import CheckboxApp from '../components/UI/checkbox/Checkbox'
-import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
-import {
-   deleteAllChecked,
-   deleteChecked,
-} from '../redux/reducers/applications/applications.thunk'
-import { getApplicatonRequest } from '../api/applicationsService'
+import SearchInput from '../../components/UI/SeacrchInput'
+import { item } from '../../utlis/constants/commons'
+import AppTable from '../../components/UI/Table'
+import CheckboxApp from '../../components/UI/checkbox/Checkbox'
+import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
 
-const ApplicationsPage = () => {
-   const dispatch = useDispatch()
-
-   const { application } = useSelector((state) => state.application)
-   const [patients, setPatients] = useState([])
+const Application = ({ processedData }) => {
+   const [patients, setPatients] = useState(item)
    const [check, setCheck] = useState(false)
-   const [inputVal, setInputVal] = useState('')
-   const [debouncedQuery] = useDebounce(inputVal, 400)
-
-   useEffect(() => {
-      setPatients(application)
-   }, [application])
-
-   const getData = async () => {
-      try {
-         if (debouncedQuery) {
-            const { data } = await getApplicatonRequest(inputVal)
-            setPatients(data)
-         } else {
-            const { data } = await getApplicatonRequest()
-            setPatients(data)
-         }
-      } catch (error) {
-         console.log(error)
-      }
-   }
-   useEffect(() => {
-      getData()
-   }, [inputVal, debouncedQuery])
-
-   const searchChangeHandler = (event) => {
-      setInputVal(event.target.value)
-   }
 
    const checkBoxChangeHandler = ({ target: { id, checked } }) => {
       if (id === 'allSelect') {
@@ -56,19 +20,17 @@ const ApplicationsPage = () => {
          setPatients(tempPatient)
       } else {
          const tempPatient = patients.map((patient) =>
-            patient.id.toString() === id
-               ? { ...patient, isChecked: checked }
-               : patient
+            patient.id === id ? { ...patient, isChecked: checked } : patient
          )
          setPatients(tempPatient)
-
-         const isTempPatientChecked = tempPatient.find(
-            (patient) => patient.isChecked === true
-         )
 
          const isTempPatientUnchecked = tempPatient.find(
             (patient) => patient.isChecked === false
          )
+         const isTempPatientChecked = tempPatient.find(
+            (patient) => patient.isChecked === true
+         )
+
          if (
             (isTempPatientUnchecked && isTempPatientChecked) ||
             isTempPatientChecked
@@ -79,7 +41,7 @@ const ApplicationsPage = () => {
          }
       }
    }
-   const checkedAllDeleteHandler = () => {
+   const checkedALlDeleteHandler = () => {
       const checkedIds = patients.reduce((patientId, patient) => {
          if (patient.isChecked) {
             patientId.push(parseInt(patient.id, 10))
@@ -92,7 +54,8 @@ const ApplicationsPage = () => {
       }))
       setPatients(nullablePatients)
       setCheck(false)
-      dispatch(deleteAllChecked(checkedIds))
+      // there should be a request:
+      console.log(checkedIds)
    }
 
    const checkedProcessedHandler = (id) => {
@@ -100,18 +63,20 @@ const ApplicationsPage = () => {
          item.id === id
             ? {
                  ...item,
-                 processedChecked: !item.processedChecked || false,
+                 processedChecked: !item.processedChecked,
               }
             : item
       )
-
       setPatients(checkPatient)
+      processedData(patients)
    }
 
-   const checkedDeleteHandler = (id) => {
-      dispatch(deleteChecked(id))
+   const checkedDeleteHandler = () => {
+      const checkDeleteEl = patients.filter(
+         (patient) => !patient.processedChecked
+      )
+      setPatients(checkDeleteEl)
    }
-
    const allCheckedValue =
       patients.length > 0 && patients.every((patient) => patient.isChecked)
 
@@ -129,7 +94,7 @@ const ApplicationsPage = () => {
             render: (patient) => (
                <Grid>
                   <CheckboxApp
-                     id={patient.id.toString()}
+                     id={patient.id}
                      checked={patient.isChecked || false}
                      onChange={checkBoxChangeHandler}
                   />
@@ -140,7 +105,7 @@ const ApplicationsPage = () => {
             header: (
                <Grid>
                   {check && (
-                     <IconButton onClick={checkedAllDeleteHandler}>
+                     <IconButton onClick={checkedALlDeleteHandler}>
                         <TrashIcon />
                      </IconButton>
                   )}
@@ -163,7 +128,7 @@ const ApplicationsPage = () => {
          },
          {
             header: 'Номер телефона',
-            key: 'phoneNumber',
+            key: 'telNumber',
          },
          {
             header: 'Обработан',
@@ -172,7 +137,7 @@ const ApplicationsPage = () => {
                <Grid style={{ textAlign: 'start' }}>
                   <IconButton>
                      <CheckboxApp
-                        checked={patient.processedChecked || false}
+                        checked={patient.processedChecked}
                         onChange={() => checkedProcessedHandler(patient.id)}
                      />
                   </IconButton>
@@ -201,11 +166,7 @@ const ApplicationsPage = () => {
                <Title>Заявки</Title>
             </BoxTitleAndButton>
             <SearchInputBox>
-               <SearchInput
-                  placeholder="Поиск"
-                  onChange={searchChangeHandler}
-                  value={inputVal}
-               />
+               <SearchInput placeholder="Поиск" />
             </SearchInputBox>
             <div>
                <AppTable columns={column} rows={patients} />
@@ -215,7 +176,7 @@ const ApplicationsPage = () => {
    )
 }
 
-export default ApplicationsPage
+export default Application
 const MainContainer = styled('div')(() => ({
    '&': {
       width: '100%',
