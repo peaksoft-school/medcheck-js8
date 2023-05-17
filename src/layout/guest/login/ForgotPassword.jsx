@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
 import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
-import { ModalUi } from '../../../components/UI/ModalUi'
+import BasicModal from '../../../components/UI/ModalUi'
+import { forgotPassword } from '../../../redux/reducers/auth/auth.thunk'
 
-const ForgetPassword = () => {
-   const [modal, setModal] = useState(false)
+const ForgotPassword = ({ open, onClose }) => {
+   const dispatch = useDispatch()
 
    const {
       register,
@@ -23,15 +25,13 @@ const ForgetPassword = () => {
    })
 
    function onSubmit(values) {
-      console.log('will come values', values)
+      dispatch(forgotPassword(values))
    }
-   const closeModalHandler = () => {
-      setModal(false)
-   }
+
    return (
-      <ModalUi open={modal} onClose={closeModalHandler}>
+      <BasicModal open={open} onClose={onClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" />
+            <CloseIcon className="closeIcon" onClick={onClose} />
             <FormLabel className="topic">забыли пароль?</FormLabel>
             <p>Вам будет отправлена ссылка для сброса пароля</p>
             <Input
@@ -54,18 +54,17 @@ const ForgetPassword = () => {
                ОТМЕНИТЬ
             </NavLink>
          </FormControlStyled>
-      </ModalUi>
+      </BasicModal>
    )
 }
 
-export default ForgetPassword
+export default ForgotPassword
 
 const FormControlStyled = styled('form')(() => ({
    height: '361px',
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
-   marginLeft: ' 35%',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
@@ -85,6 +84,7 @@ const FormControlStyled = styled('form')(() => ({
    '& .closeIcon': {
       marginLeft: '450px',
       marginTop: '19px',
+      cursor: 'pointer',
    },
    '& .inputStyle': {
       width: '414px',

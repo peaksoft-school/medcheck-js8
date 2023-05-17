@@ -3,7 +3,7 @@ import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://ec2-52-57-150-68.eu-central-1.compute.amazonaws.com',
+   baseURL: 'http://ec2-52-59-249-63.eu-central-1.compute.amazonaws.com',
 })
 mainApi.interceptors.request.use(
    function (config) {

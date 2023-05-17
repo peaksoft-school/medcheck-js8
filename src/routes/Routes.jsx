@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
 import UserLayout from '../layout/user/UserLayout'
@@ -26,7 +27,7 @@ import MyApplications from '../pages/user/personal-account/myApplications/MyAppl
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
 
 const AppRoutes = () => {
-   const role = 'USER'
+   const role = useSelector((state) => state.auth.role)
 
    const isAllowed = (roles) => {
       return roles.includes(role)
@@ -34,7 +35,7 @@ const AppRoutes = () => {
 
    const getUserPage = (component) => (
       <ProtectedRoute
-         isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
+         isAllowed={isAllowed([UserRoles.GUEST, UserRoles.PATIENT])}
          fallbackPath="/admin/appointment"
          component={component}
       />
