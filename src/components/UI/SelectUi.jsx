@@ -4,15 +4,22 @@ import { FormControl, Select } from '@mui/material'
 import styled from '@emotion/styled'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-// const menuProps = {
-//    PaperProps: {
-//       style: {
-//          maxHeight: 150,
-//       },
-//    },
-// }
+const menuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: 150,
+      },
+   },
+}
 
-export const SelectUi = ({ items, label, value, onChange }) => {
+export const SelectUi = ({
+   items,
+   label,
+   value,
+   onChange,
+   placeholder,
+   ...rest
+}) => {
    return (
       <FormControl fullWidth>
          <SelectMui
@@ -20,11 +27,17 @@ export const SelectUi = ({ items, label, value, onChange }) => {
             label={label}
             onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
-            // MenuProps={menuProps}
+            inputProps={{ 'aria-label': 'Without label' }}
+            MenuProps={menuProps}
+            displayEmpty
+            {...rest}
          >
+            <MenuItem disabled value="" style={{ display: 'none' }}>
+               {placeholder}
+            </MenuItem>
             {items &&
                items.map((item) => (
-                  <MenuItem key={item.id} value={item.title}>
+                  <MenuItem key={item.id} value={item.id}>
                      {item.title}
                   </MenuItem>
                ))}

@@ -43,7 +43,14 @@ const AppTable = ({ rows, columns }) => {
                               {columns.map((column) => {
                                  if (column.render) {
                                     return (
-                                       <TableCell key={column.key}>
+                                       <TableCell
+                                          key={column.key}
+                                          style={{
+                                             color: row.isActive
+                                                ? '#222'
+                                                : '#b9b3b3',
+                                          }}
+                                       >
                                           {column.render(row)}
                                        </TableCell>
                                     )
@@ -55,6 +62,11 @@ const AppTable = ({ rows, columns }) => {
                                     <TableCell
                                        key={`row-${column.key}`}
                                        align={column.align}
+                                       style={{
+                                          color: row.isActive
+                                             ? '#222'
+                                             : '#b9b3b3',
+                                       }}
                                     >
                                        <TableBodyTitleStyled>
                                           {value}
@@ -78,7 +90,7 @@ const PaperStyled = styled(Paper)`
    width: 100%;
    overflow: hidden;
    margin: 0 auto;
-   height: 100vh;
+   /* height: 100vh; */
 `
 const TableHeaderStyled = styled('h3')`
    font-family: 'Manrope';

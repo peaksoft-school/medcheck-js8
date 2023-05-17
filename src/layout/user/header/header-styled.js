@@ -18,13 +18,11 @@ export const HeaderStyled = styledMui(AppBar)(() => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      margin: '0 auto',
    },
 }))
 export const StyledHeaderGlobalContainer = styledMui(Grid)({
-   margin: '0 auto 0 120px',
-   padding: '10px 0px ',
-   maxWidth: '100%',
+   maxWidth: '95vw',
+   margin: '0 auto',
 })
 
 export const StyledPhoneIconButton = styledMui(IconButton)({

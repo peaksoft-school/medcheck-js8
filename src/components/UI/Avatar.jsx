@@ -1,11 +1,10 @@
 import styled from '@emotion/styled'
 import { Avatar, IconButton, Stack } from '@mui/material'
-import { useUploadAvatar } from '../../hooks/uploadAvatar'
+// import { useUploadAvatar } from '../../hooks/uploadAvatar'
 import { ReactComponent as AddPhoto } from '../../assets/icons/AddPhoto.svg'
 
-const AvatarUpload = ({ photo, ...rest }) => {
-   const [avatarUrl, handleAvatarChange] = useUploadAvatar()
-   photo(avatarUrl)
+const AvatarUpload = ({ photo, onChange, ...rest }) => {
+   // const [avatarUrl, handleAvatarChange] = useUploadAvatar()
    return (
       <IconButton
          {...rest}
@@ -13,15 +12,10 @@ const AvatarUpload = ({ photo, ...rest }) => {
          aria-label="upload picture"
          component="label"
       >
-         <input
-            hidden
-            accept="image/*"
-            type="file"
-            onChange={handleAvatarChange}
-         />
+         <input hidden accept="image/*" type="file" onChange={onChange} />
          <Stack direction="row" spacing={2}>
             <AvatarGroupStyle sx={{ bgcolor: '#E2E4E8' }} variant="rounded">
-               <img src={avatarUrl} alt="" />
+               <img src={photo} alt="" />
                <AddPhoto />
             </AvatarGroupStyle>
          </Stack>
