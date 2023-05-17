@@ -17,7 +17,6 @@ import Contacts from '../pages/user/Contacts'
 import Main from '../pages/user/Main'
 import AdminLayout from '../layout/admin/Index'
 import Appointment from '../pages/admin/Appointment'
-import Applications from '../pages/admin/Applications'
 import Specialists from '../pages/admin/Specialists'
 import Patients from '../pages/admin/Patients'
 import ProfileLayout from '../pages/user/personal-account/profile/ProfileLayout'
@@ -25,6 +24,7 @@ import PersonalData from '../pages/user/personal-account/profile/PersonalData'
 import ChangePassword from '../pages/user/personal-account/profile/ChangePassword'
 import MyApplications from '../pages/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
+import ApplicationsPage from '../containers/Applications.Page'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)
@@ -88,7 +88,10 @@ const AppRoutes = () => {
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)} />
-            <Route path="applications" element={getAdminPage(Applications)} />
+            <Route
+               path="applications"
+               element={getAdminPage(ApplicationsPage)}
+            />
             <Route path="specialists" element={getAdminPage(Specialists)} />
             <Route path="patients" element={getAdminPage(Patients)} />
          </Route>

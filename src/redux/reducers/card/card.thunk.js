@@ -3,12 +3,12 @@ import { postApplication } from '../../../api/apllicationsService'
 
 export const postDatas = createAsyncThunk(
    'card/postDatas',
-   async (data, { rejectWithValue }) => {
+   async (patientData, { rejectWithValue }) => {
       try {
-         await postApplication(data)
+         const { data } = await postApplication(patientData)
+         return data
       } catch (error) {
          return rejectWithValue(error)
       }
-      return data
    }
 )
