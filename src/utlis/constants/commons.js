@@ -1,9 +1,12 @@
 export const UserRoles = {
    GUEST: 'GUEST',
-   USER: 'USER',
+   PATIENT: 'PATIENT',
    ADMIN: 'ADMIN',
 }
 
+export const STORAGE_KEYS = {
+   AUTH: 'AUTH',
+}
 export const item = [
    {
       id: '1',
