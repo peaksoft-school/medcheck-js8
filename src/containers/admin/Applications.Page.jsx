@@ -3,15 +3,15 @@ import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
-import SearchInput from '../components/UI/SeacrchInput'
-import AppTable from '../components/UI/Table'
-import CheckboxApp from '../components/UI/checkbox/Checkbox'
-import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
+import SearchInput from '../../components/UI/SeacrchInput'
+import AppTable from '../../components/UI/Table'
+import CheckboxApp from '../../components/UI/checkbox/Checkbox'
+import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
 import {
    deleteAllChecked,
    deleteChecked,
-} from '../redux/reducers/applications/applications.thunk'
-import { getApplicatonRequest } from '../api/applicationsService'
+} from '../../redux/reducers/applications/applications.thunk'
+import { getApplicatonRequest } from '../../api/applicationsService'
 
 const ApplicationsPage = () => {
    const dispatch = useDispatch()
