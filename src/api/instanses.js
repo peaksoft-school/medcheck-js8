@@ -25,6 +25,7 @@ mainApi.interceptors.request.use(
       return Promise.reject(error)
    }
 )
+
 mainApi.interceptors.response.use(
    function (response) {
       return response
