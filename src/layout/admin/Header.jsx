@@ -3,11 +3,15 @@ import { styled } from '@mui/material/styles'
 
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import MainIcon from '../../assets/icons/MainIcon.svg'
 import MedcheckIcon from '../../assets/icons/MedCheckIcon.svg'
 import { ReactComponent as IdminHeaderBtnIcon } from '../../assets/icons/AdmiHeaderBtnIcon.svg'
+import { signOut } from '../../redux/reducers/auth/auth.thunk'
 
 const Header = () => {
+   const dispatch = useDispatch()
+
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -16,6 +20,12 @@ const Header = () => {
    const handleClose = () => {
       setAnchorEl(null)
    }
+
+   const signOutHandler = () => {
+      dispatch(signOut())
+      handleClose()
+   }
+
    return (
       <AppBarStyled position="static">
          <Container>
@@ -87,11 +97,9 @@ const Header = () => {
                      'aria-labelledby': 'basic-button',
                   }}
                >
-                  <MenuItemStyled onClick={handleClose}>Profile</MenuItemStyled>
-                  <MenuItemStyled onClick={handleClose}>
-                     My account
+                  <MenuItemStyled onClick={signOutHandler}>
+                     Выйти
                   </MenuItemStyled>
-                  <MenuItemStyled onClick={handleClose}>Logout</MenuItemStyled>
                </Menu>
             </div>
          </Container>
