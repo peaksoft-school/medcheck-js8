@@ -34,7 +34,6 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
    })
    function onSubmit(values) {
       dispatch(signUp(values))
-      console.log(values)
    }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)

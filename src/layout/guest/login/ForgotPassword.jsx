@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form'
 import { FormLabel } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
 import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import BasicModal from '../../../components/UI/ModalUi'
-import { forgotPassword } from '../../../redux/reducers/auth/auth.thunk'
+// import { forgotPassword } from '../../../redux/reducers/auth/auth.thunk'
 
 const ForgotPassword = ({ open, onClose }) => {
-   const dispatch = useDispatch()
+   // const dispatch = useDispatch()
 
    const {
       register,
@@ -25,7 +25,8 @@ const ForgotPassword = ({ open, onClose }) => {
    })
 
    function onSubmit(values) {
-      dispatch(forgotPassword(values))
+      // dispatch(forgotPassword(values))
+      console.log(values)
    }
 
    return (
