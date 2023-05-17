@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import authService from '../../../api/authService'
 import { STORAGE_KEYS } from '../../../utlis/constants/commons'
+import { signInRequest, signUpRequest } from '../../../api/authService'
 
 export const signIn = createAsyncThunk(
    'auth/signIn',
    async (userData, { rejecWithValue }) => {
       try {
-         const { data } = await authService.signIn(userData)
+         const { data } = await signInRequest(userData)
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
          return data
       } catch (error) {
@@ -19,7 +19,7 @@ export const signUp = createAsyncThunk(
    'auth/signUp',
    async (userData, { rejecWithValue }) => {
       try {
-         const { data } = await authService.signUp(userData)
+         const { data } = await signUpRequest(userData)
 
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
          return data
