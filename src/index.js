@@ -4,20 +4,20 @@ import './index.css'
 import { ThemeProvider } from '@mui/material'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import { store } from './redux/store'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { theme } from './utlis/constants/theme'
-import { store } from './redux/store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-   <BrowserRouter>
-      <Provider store={store}>
-         <ThemeProvider theme={theme}>
+   <ThemeProvider theme={theme}>
+      <BrowserRouter>
+         <Provider store={store}>
             <App />
-         </ThemeProvider>
-      </Provider>
-   </BrowserRouter>
+         </Provider>
+      </BrowserRouter>
+   </ThemeProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

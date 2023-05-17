@@ -1,85 +1,30 @@
 import * as React from 'react'
-import {
-   styled,
-   Dialog,
-   DialogActions,
-   DialogContent,
-   DialogContentText,
-   DialogTitle,
-} from '@mui/material'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
 
-export const ModalUi = (props) => {
-   const { open, onClose, children } = props
-   return (
-      <StyledModalDialog open={open} onClose={onClose}>
-         <StyledModal>
-            <DialogTitle
-               sx={{
-                  fontSize: '36px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  fontFamily: 'Manrope',
-               }}
-               id="alert-dialog-title"
-            >
-               {/* this could be the title text */}
-            </DialogTitle>
-            <DialogTitle
-               sx={{
-                  fontSize: '28px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  fontFamily: 'Manrope',
-               }}
-               id="alert-dialog-main"
-            >
-               {/* this could be the main text */}
-            </DialogTitle>
-            <DialogContent>
-               {children}
-               <DialogContentText id="alert-dialog-content" />
-               <StyledContentText>
-                  {/* this could be content text */}
-               </StyledContentText>
-            </DialogContent>
-            <StyledForm>{/* there could be input forms here */}</StyledForm>
-            <DialogActions>{/* there might be a button here */}</DialogActions>
-         </StyledModal>
-      </StyledModalDialog>
-   )
+const style = {
+   position: 'absolute',
+   top: '50%',
+   left: '50%',
+   transform: 'translate(-50%, -50%)',
+   minWidth: '400px',
+   bgcolor: 'background.paper',
+   border: 'none',
+   // boxShadow: 24,
+   // p: 4,
 }
 
-const StyledModalDialog = styled(Dialog)(() => ({
-   boxSizing: 'border-box',
-   background: '#04030343',
-   fontFamily: 'Manrope',
-
-   '& .MuiDialog-paper': {
-      borderRadius: '16px',
-      maxWidth: '659px',
-      minWidth: '303px',
-      minHeight: '284px',
-      maxHeight: '468px',
-      background: '#EBF2FC',
-   },
-}))
-
-const StyledContentText = styled('div')(() => ({
-   fontFamily: 'Manrope',
-   fontSize: '18px',
-   display: 'flex',
-   justifyContent: 'center',
-}))
-
-const StyledModal = styled('div')(() => ({
-   maxWidth: '100%',
-   background: '#EBF2FC',
-   boxSizing: 'border-box',
-   padding: '50px 40px 70px 40px',
-   borderRadius: '20px',
-}))
-
-const StyledForm = styled('div')(() => ({
-   display: 'flex',
-   gap: '20px',
-}))
+export default function BasicModal({ children, open, onClose }) {
+   return (
+      <div>
+         <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+         >
+            <Box sx={style}>{children}</Box>
+         </Modal>
+      </div>
+   )
+}

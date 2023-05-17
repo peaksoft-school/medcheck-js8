@@ -1,5 +1,6 @@
 /* eslint-disable func-names */
 import axios from 'axios'
+import { store } from '../redux/store'
 
 const BASE_URL = 'http://ec2-52-59-249-63.eu-central-1.compute.amazonaws.com'
 
@@ -9,17 +10,18 @@ export const mainApi = axios.create({
 
 mainApi.interceptors.request.use(
    function (config) {
-      const updateConfig = { ...config }
-      const token =
-         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODQzMzM1NzcsImV4cCI6MTY4NDMzNTAxN30.myTxYJcqHPdI0zoQlxSJwYUXNHtkj-jqeP6ivB9cAvw'
-      updateConfig.headers.Authorization = `Bearer ${token}`
-      return updateConfig
+      const { token } = store.getState().auth
+      if (token) {
+         config.headers.Authorization = `Bearer ${token}`
+      }
+      return config
    },
 
    function (error) {
       return Promise.reject(error)
    }
 )
+
 mainApi.interceptors.response.use(
    function (response) {
       return response
