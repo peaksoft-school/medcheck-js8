@@ -25,7 +25,6 @@ const ApplicationsPage = () => {
    useEffect(() => {
       setPatients(application)
    }, [application])
-
    const getData = async () => {
       try {
          if (debouncedQuery) {

@@ -1,5 +1,7 @@
 /* eslint-disable func-names */
+
 import axios from 'axios'
+import { store } from '../redux/store'
 
 export const mainApi = axios.create({
    baseURL: 'http://ec2-52-59-249-63.eu-central-1.compute.amazonaws.com',
@@ -7,9 +9,14 @@ export const mainApi = axios.create({
 
 mainApi.interceptors.request.use(
    function (config) {
-      const token =
-         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODQxNjY2ODEsImV4cCI6MTY4NDE2ODEyMX0.ZuY4FtXyR4BphdZoO2yXCSY40v9d1d2jo6wVVlFlyGg'
-      config.headers.Authorization = `Bearer ${token}`
+      const { token } = store.getState().auth
+
+      if (token) {
+         config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${token}`,
+         }
+      }
 
       return config
    },
