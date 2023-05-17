@@ -1,6 +1,4 @@
 import styled from '@emotion/styled'
-import { styled as muiStyle } from '@mui/material/styles'
-
 import {
    Grid,
    Paper,
@@ -11,10 +9,9 @@ import {
    TableHead,
    TableRow,
 } from '@mui/material'
-
 import React from 'react'
 
-const AppTable = ({ rows, columns, tableCellStyle = true }) => {
+const AppTable = ({ rows, columns }) => {
    return (
       <Grid>
          <PaperStyled>
@@ -39,69 +36,36 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                         ))}
                      </TableRow>
                   </TableHead>
-                  {tableCellStyle ? (
-                     <TableBody>
-                        {rows.map((row, rowIndex) => {
-                           return (
-                              <TableRow key={row.id.toString()}>
-                                 {columns.map((column) => {
-                                    if (column.render) {
-                                       return (
-                                          <TableCell key={column.key}>
-                                             {column.render(row)}
-                                          </TableCell>
-                                       )
-                                    }
-                                    const value = column.index
-                                       ? rowIndex + 1
-                                       : row[column.key]
+                  <TableBody>
+                     {rows.map((row, rowIndex) => {
+                        return (
+                           <TableRow key={row.id}>
+                              {columns.map((column) => {
+                                 if (column.render) {
                                     return (
-                                       <TableCell
-                                          key={`row-${column.key}`}
-                                          align={column.align}
-                                       >
-                                          <TableBodyTitleStyled>
-                                             {value}
-                                          </TableBodyTitleStyled>
+                                       <TableCell key={column.key}>
+                                          {column.render(row)}
                                        </TableCell>
                                     )
-                                 })}
-                              </TableRow>
-                           )
-                        })}
-                     </TableBody>
-                  ) : (
-                     <TableBody>
-                        {rows.map((row, rowIndex) => {
-                           return (
-                              <StyledTableRow key={row.id.toString()}>
-                                 {columns.map((column) => {
-                                    if (column.render) {
-                                       return (
-                                          <TableCell key={column.key}>
-                                             {column.render(row)}
-                                          </TableCell>
-                                       )
-                                    }
-                                    const value = column.index
-                                       ? rowIndex + 1
-                                       : row[column.key]
-                                    return (
-                                       <TableCell
-                                          key={`row-${column.key}`}
-                                          align={column.align}
-                                       >
-                                          <TableBodyTitleStyled>
-                                             {value}
-                                          </TableBodyTitleStyled>
-                                       </TableCell>
-                                    )
-                                 })}
-                              </StyledTableRow>
-                           )
-                        })}
-                     </TableBody>
-                  )}
+                                 }
+                                 const value = column.index
+                                    ? rowIndex + 1
+                                    : row[column.key]
+                                 return (
+                                    <TableCell
+                                       key={`row-${column.key}`}
+                                       align={column.align}
+                                    >
+                                       <TableBodyTitleStyled>
+                                          {value}
+                                       </TableBodyTitleStyled>
+                                    </TableCell>
+                                 )
+                              })}
+                           </TableRow>
+                        )
+                     })}
+                  </TableBody>
                </Table>
             </TableContainer>
          </PaperStyled>
@@ -110,12 +74,6 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
 }
 
 export default AppTable
-
-const StyledTableRow = muiStyle(TableRow)(({ theme }) => ({
-   '&:nth-of-type(even)': {
-      backgroundColor: theme.palette.primary.backgroundAdmin,
-   },
-}))
 const PaperStyled = styled(Paper)`
    width: 100%;
    overflow: hidden;
