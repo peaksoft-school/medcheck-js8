@@ -9,19 +9,19 @@ import { useFormik } from 'formik'
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SelectUi } from '../../../components/UI/SelectUi'
-import { ReactComponent as B } from '../../../assets/icons/B.svg'
-import { ReactComponent as U } from '../../../assets/icons/U.svg'
-import { ReactComponent as I } from '../../../assets/icons/I.svg'
-import { ReactComponent as List } from '../../../assets/icons/List.svg'
-import { ReactComponent as Num } from '../../../assets/icons/Num.svg'
-import Button from '../../../components/UI/Button'
-import AvatarUpload from '../../../components/UI/Avatar'
-import { department } from '../../../utlis/services/department'
+import { SelectUi } from '../../components/UI/SelectUi'
+import { ReactComponent as B } from '../../assets/icons/B.svg'
+import { ReactComponent as U } from '../../assets/icons/U.svg'
+import { ReactComponent as I } from '../../assets/icons/I.svg'
+import { ReactComponent as List } from '../../assets/icons/List.svg'
+import { ReactComponent as Num } from '../../assets/icons/Num.svg'
+import Button from '../../components/UI/Button'
+import AvatarUpload from '../../components/UI/Avatar'
+import { department } from '../../utlis/services/department'
 import {
    imageSpecialistService,
    postSpecialistsService,
-} from '../../../api/specialistService'
+} from '../../api/specialistService'
 import {
    AddContainer,
    InputStyled,
@@ -32,7 +32,7 @@ import {
    Wrapper,
    Container,
 } from './specialist-style'
-import { addSpecialistSchema } from '../../../utlis/helpers/general'
+import { addSpecialistSchema } from '../../utlis/helpers/general'
 
 const AddSpecialist = () => {
    const navigate = useNavigate()
@@ -85,7 +85,6 @@ const AddSpecialist = () => {
             image: photo,
             lastName: values.lastName,
             position: values.position,
-            name: values.department,
          }
 
          postSpecialist(dataSpecialist)

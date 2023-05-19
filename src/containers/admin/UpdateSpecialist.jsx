@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { InputLabel, Stack } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 import styled from '@emotion/styled'
-import { SelectUi } from '../../../components/UI/SelectUi'
+import { SelectUi } from '../../components/UI/SelectUi'
 import {
    Container,
    InputStyled,
@@ -12,14 +12,14 @@ import {
    TitlePhoto,
    Wrapper,
 } from './specialist-style'
-import { department } from '../../../utlis/services/department'
-import Button from '../../../components/UI/Button'
-import AvatarUpload from '../../../components/UI/Avatar'
+import { department } from '../../utlis/services/department'
+import Button from '../../components/UI/Button'
+import AvatarUpload from '../../components/UI/Avatar'
 import {
    getOneSpecialistService,
    imageSpecialistService,
    updateSpecialistService,
-} from '../../../api/specialistService'
+} from '../../api/specialistService'
 
 const UpdateSpecialist = () => {
    const navigate = useNavigate()

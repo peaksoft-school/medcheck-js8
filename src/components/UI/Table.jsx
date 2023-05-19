@@ -47,7 +47,14 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                  {columns.map((column) => {
                                     if (column.render) {
                                        return (
-                                          <TableCell key={column.key}>
+                                          <TableCell
+                                             key={column.key}
+                                             style={{
+                                                color: row.isActive
+                                                   ? ''
+                                                   : '#C9C9C9',
+                                             }}
+                                          >
                                              {column.render(row)}
                                           </TableCell>
                                        )
@@ -59,6 +66,11 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                        <TableCell
                                           key={`row-${column.key}`}
                                           align={column.align}
+                                          style={{
+                                             color: row.isActive
+                                                ? ''
+                                                : '#C9C9C9',
+                                          }}
                                        >
                                           <TableBodyTitleStyled>
                                              {value}
@@ -74,7 +86,12 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                      <TableBody>
                         {rows.map((row, rowIndex) => {
                            return (
-                              <StyledTableRow key={row.id.toString()}>
+                              <StyledTableRow
+                                 key={row.id.toString()}
+                                 style={{
+                                    color: row.isActive ? '' : '#C9C9C9',
+                                 }}
+                              >
                                  {columns.map((column) => {
                                     if (column.render) {
                                        return (

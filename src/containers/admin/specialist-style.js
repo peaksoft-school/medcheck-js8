@@ -2,7 +2,7 @@ import { Breadcrumbs, TextareaAutosize } from '@mui/material'
 import styled from '@emotion/styled'
 import { styled as muiStyled } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
-import Input from '../../../components/UI/input/Input'
+import Input from '../../components/UI/input/Input'
 
 export const MainContainer = muiStyled('div')(() => ({
    '&': {
