@@ -229,7 +229,7 @@ const Header = () => {
                            }}
                         >
                            {userRole === 'GUEST' ? (
-                              <>
+                              <div>
                                  <NavlinkStyle to="/">
                                     <MenuItemStyled onClick={handleClose}>
                                        Войти
@@ -240,9 +240,9 @@ const Header = () => {
                                        Регистрация
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                              </>
+                              </div>
                            ) : (
-                              <>
+                              <div>
                                  <NavlinkStyle to="/myApplications">
                                     <MenuItemStyled onClick={handleClose}>
                                        Мои записи
@@ -258,7 +258,7 @@ const Header = () => {
                                        Выйти
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                              </>
+                              </div>
                            )}
                         </Menu>
                      </ProfileBox>

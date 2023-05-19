@@ -29,19 +29,25 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
                <TableBody>
                   {appointmentData.map((patient) => (
                      <TableRow key={patient.id}>
-                        <TableCell component="th">
+                        <TableCell
+                           component="th"
+                           onClick={() => {
+                              navigate(`${patient.id}/details`)
+                           }}
+                        >
                            <Box>
                               <IconStyled
                                  src={patient.img}
                                  alt="patientImage"
-                                 onClick={() => {
-                                    navigate(`${patient.id}/details`)
-                                 }}
                               />
 
                               <TitleBox>
                                  <ChangeSpecialistTitleStyled>
                                     {patient.changeSpecialist}
+
+                                    <a href={patient.webUrl}>
+                                       {patient.webTitle}
+                                    </a>
                                  </ChangeSpecialistTitleStyled>
                                  <ServiceSelectionTitleStyled>
                                     {patient.serviceSelection}

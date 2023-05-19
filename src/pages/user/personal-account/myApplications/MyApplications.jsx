@@ -1,13 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
-import { appointmentData } from '../../../../utlis/constants/commons'
+// import { appointmentData } from '../../../../utlis/constants/commons'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
+import { getUserAppointmentRequest } from '../../../../api/appointmentService'
 
 const MyApplications = () => {
-   const [patients, setPatients] = useState(appointmentData)
+   const [patients, setPatients] = useState([])
+   console.log('🚀 ~ patients:', patients)
+
+   const fetchPatients = async () => {
+      try {
+         const { data } = await getUserAppointmentRequest()
+         console.log('🚀 ~ data:', data)
+
+         setPatients(data.response.results)
+      } catch (error) {
+         console.log(error)
+      }
+   }
+
+   useEffect(() => {
+      fetchPatients()
+   }, [])
 
    const deleteorder = () => {
       setPatients([])
@@ -32,7 +49,6 @@ const MyApplications = () => {
          >
             {patients.length !== 0 && (
                <>
-                  {' '}
                   <AppointmentTable
                      appointmentData={patients}
                      getStatusTitleChangeHandler={getStatusTitleChangeHandler}
@@ -40,7 +56,7 @@ const MyApplications = () => {
                   <DeleteContainer>
                      <Deletelist />
                      <DeleteTitle onClick={deleteorder}>
-                        Очистить список заказов{' '}
+                        Очистить список заказов
                      </DeleteTitle>
                   </DeleteContainer>
                </>
