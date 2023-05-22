@@ -12,11 +12,14 @@ import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import BasicModal from '../../../components/UI/ModalUi'
 import { signUp } from '../../../redux/reducers/auth/auth.thunk'
+import useToast from '../../../hooks/useToast'
 
 const SignUp = ({ open, onClose, openSignInHandler }) => {
    const dispatch = useDispatch()
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
+   const { notify } = useToast()
+
    const {
       register,
       handleSubmit,
@@ -33,7 +36,8 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
       },
    })
    function onSubmit(values) {
-      dispatch(signUp(values))
+      dispatch(signUp({ values, notify }))
+      onClose()
    }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)

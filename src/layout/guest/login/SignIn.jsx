@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link, NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
@@ -12,10 +12,14 @@ import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import BasicModal from '../../../components/UI/ModalUi'
 import { signIn } from '../../../redux/reducers/auth/auth.thunk'
+import useToast from '../../../hooks/useToast'
+import Spiner from '../../../components/UI/Spiner'
 
 const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
    const dispatch = useDispatch()
+   const { isAuthorized, isLoading } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
+   const { notify } = useToast()
 
    const {
       register,
@@ -29,9 +33,14 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
       },
    })
 
+   useEffect(() => {
+      if (isAuthorized) {
+         onClose()
+      }
+   }, [isAuthorized])
+
    function onSubmit(values) {
-      dispatch(signIn(values))
-      onClose()
+      dispatch(signIn({ values, notify }))
    }
 
    const showPasswordHandle = () => {
@@ -96,10 +105,14 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
             {errors.password && (
                <p className="message">{errors.password?.message}</p>
             )}
+            {isLoading ? (
+               <Spiner />
+            ) : (
+               <Button className="buttonStyle" type="submit">
+                  ВОЙТИ
+               </Button>
+            )}
 
-            <Button className="buttonStyle" type="submit">
-               ВОЙТИ
-            </Button>
             <NavLink
                className="password"
                to="/"
