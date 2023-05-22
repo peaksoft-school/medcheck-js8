@@ -3,15 +3,17 @@ import { styled } from '@mui/material/styles'
 import { Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
-import SearchInput from '../components/UI/SeacrchInput'
-import AppTable from '../components/UI/Table'
-import CheckboxApp from '../components/UI/checkbox/Checkbox'
-import { ReactComponent as TrashIcon } from '../assets/icons/TrashTable.svg'
+import SearchInput from '../../components/UI/SeacrchInput'
+import AppTable from '../../components/UI/Table'
+import CheckboxApp from '../../components/UI/checkbox/Checkbox'
+import { ReactComponent as TrashIcon } from '../../assets/icons/TrashTable.svg'
 import {
    deleteAllChecked,
    deleteChecked,
-} from '../redux/reducers/applications/applications.thunk'
-import { getApplicatonRequest } from '../api/applicationsService'
+} from '../../redux/reducers/applications/applications.thunk'
+import { getApplicatonRequest } from '../../api/applicationsService'
+import Button from '../../components/UI/Button'
+import BasicModal from '../../components/UI/ModalUi'
 
 const ApplicationsPage = () => {
    const dispatch = useDispatch()
@@ -21,10 +23,13 @@ const ApplicationsPage = () => {
    const [check, setCheck] = useState(false)
    const [inputVal, setInputVal] = useState('')
    const [debouncedQuery] = useDebounce(inputVal, 400)
+   const [isModalOpen, setIsModalOpen] = useState(false)
+   const [confirmationPatient, setConfirmationPatient] = useState({})
 
    useEffect(() => {
       setPatients(application)
    }, [application])
+
    const getData = async () => {
       try {
          if (debouncedQuery) {
@@ -38,6 +43,7 @@ const ApplicationsPage = () => {
          console.log(error)
       }
    }
+
    useEffect(() => {
       getData()
    }, [inputVal, debouncedQuery])
@@ -48,9 +54,10 @@ const ApplicationsPage = () => {
 
    const checkBoxChangeHandler = ({ target: { id, checked } }) => {
       if (id === 'allSelect') {
-         const tempPatient = patients.map((patient) => {
-            return { ...patient, isChecked: checked }
-         })
+         const tempPatient = patients.map((patient) => ({
+            ...patient,
+            isChecked: checked,
+         }))
          setCheck(checked)
          setPatients(tempPatient)
       } else {
@@ -59,25 +66,17 @@ const ApplicationsPage = () => {
                ? { ...patient, isChecked: checked }
                : patient
          )
+         setConfirmationPatient([id])
          setPatients(tempPatient)
 
-         const isTempPatientChecked = tempPatient.find(
+         const isTempPatientChecked = tempPatient.some(
             (patient) => patient.isChecked === true
          )
 
-         const isTempPatientUnchecked = tempPatient.find(
-            (patient) => patient.isChecked === false
-         )
-         if (
-            (isTempPatientUnchecked && isTempPatientChecked) ||
-            isTempPatientChecked
-         ) {
-            setCheck(true)
-         } else {
-            setCheck(false)
-         }
+         setCheck(isTempPatientChecked)
       }
    }
+
    const checkedAllDeleteHandler = () => {
       const checkedIds = patients.reduce((patientId, patient) => {
          if (patient.isChecked) {
@@ -89,9 +88,11 @@ const ApplicationsPage = () => {
          ...patient,
          isChecked: false,
       }))
+
       setPatients(nullablePatients)
       setCheck(false)
       dispatch(deleteAllChecked(checkedIds))
+      setIsModalOpen(false)
    }
 
    const checkedProcessedHandler = (id) => {
@@ -103,12 +104,21 @@ const ApplicationsPage = () => {
               }
             : item
       )
-
       setPatients(checkPatient)
    }
 
-   const checkedDeleteHandler = (id) => {
+   const openModal = (patient) => {
+      setConfirmationPatient(patient)
+      setIsModalOpen(true)
+   }
+
+   const confirmDeleteHandler = (id) => {
       dispatch(deleteChecked(id))
+      setIsModalOpen(false)
+   }
+
+   const closeModal = () => {
+      setIsModalOpen(false)
    }
 
    const allCheckedValue =
@@ -139,7 +149,7 @@ const ApplicationsPage = () => {
             header: (
                <Grid>
                   {check && (
-                     <IconButton onClick={checkedAllDeleteHandler}>
+                     <IconButton onClick={openModal}>
                         <TrashIcon />
                      </IconButton>
                   )}
@@ -183,7 +193,10 @@ const ApplicationsPage = () => {
             key: 'action',
             render: (patient) => (
                <Grid style={{ textAlign: 'center' }}>
-                  <IconButton onClick={() => checkedDeleteHandler(patient.id)}>
+                  <IconButton
+                     onClick={() => openModal(patient)}
+                     disabled={!patient.processedChecked}
+                  >
                      <TrashIcon />
                   </IconButton>
                </Grid>
@@ -209,12 +222,61 @@ const ApplicationsPage = () => {
             <div>
                <AppTable columns={column} rows={patients} />
             </div>
+            <StyleModal open={isModalOpen} onClose={closeModal}>
+               <ModalBoxStyle>
+                  <ModalTitleStyle>
+                     {patients.filter(
+                        (patient) =>
+                           patient.isChecked || patient.processedChecked
+                     ).length === 1 ? (
+                        <>
+                           Вы уверены, что хотите удалить запись{' '}
+                           <span>
+                              {
+                                 patients.find(
+                                    (patient) =>
+                                       patient.isChecked ||
+                                       patient.processedChecked
+                                 )?.name
+                              }
+                              ?
+                           </span>
+                        </>
+                     ) : (
+                        'Вы уверены, что хотите удалить все записи?'
+                     )}
+                  </ModalTitleStyle>
+                  <CancelButtonStyled onClick={closeModal}>
+                     Отменить
+                  </CancelButtonStyled>
+                  {patients.filter((patient) => patient.processedChecked)
+                     .length === 1 ? (
+                     <DeleteButtonStyled
+                        onClick={() =>
+                           confirmDeleteHandler(confirmationPatient.id)
+                        }
+                     >
+                        Удалить
+                     </DeleteButtonStyled>
+                  ) : (
+                     <DeleteButtonStyled onClick={checkedAllDeleteHandler}>
+                        Удалить
+                     </DeleteButtonStyled>
+                  )}
+               </ModalBoxStyle>
+            </StyleModal>
          </MainContainer>
       </div>
    )
 }
 
 export default ApplicationsPage
+
+const StyleModal = styled(BasicModal)(() => ({
+   '& .MuiBox-root': {
+      borderRadius: '10px',
+   },
+}))
 const MainContainer = styled('div')(() => ({
    '&': {
       width: '100%',
@@ -250,5 +312,56 @@ const Title = styled('p')(() => ({
       fontSize: '22px',
       lineHeight: '26px',
       marginBottom: '34px',
+   },
+}))
+const ModalBoxStyle = styled('div')(() => ({
+   '&': {
+      textAlign: 'center',
+      padding: '24px 48px',
+      borderRadius: '10px',
+   },
+}))
+
+const DeleteButtonStyled = styled(Button)(() => ({
+   '&': {
+      padding: '10px 20px',
+   },
+}))
+const CancelButtonStyled = styled(Button)(() => ({
+   '&': {
+      padding: '10px 20px',
+      background: 'none',
+      border: '1px solid #959595',
+      color: '#959595',
+      marginRight: '18px',
+   },
+
+   '&:hover': {
+      background: '#959595',
+      border: '1px solid #ffff',
+      color: '#ffff',
+   },
+   '&:active': {
+      background: '#959595',
+      border: '1px solid #ffff',
+      color: '#ffff',
+   },
+   '&:disabled': {
+      background: '#D3D3D3',
+      color: '#FFFF',
+   },
+}))
+const ModalTitleStyle = styled('p')(() => ({
+   '&': {
+      width: '364px',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      fontSize: '18px',
+      lineHeight: '25px',
+      marginBottom: '20px',
+      span: {
+         color: '#22222',
+         fontWeight: 700,
+      },
    },
 }))
