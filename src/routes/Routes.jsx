@@ -66,7 +66,6 @@ const AppRoutes = () => {
             />
             <Route path="price" element={getUserPage(Price)} />
             <Route path="contacts" element={getUserPage(Contacts)} />
-            <Route path="getResults" element={getUserPage(GetResults)} />
             <Route path="profile" element={getUserPage(ProfileLayout)}>
                <Route
                   path="personal-data"
@@ -86,6 +85,8 @@ const AppRoutes = () => {
                element={getUserPage(MyApplicationDetails)}
             />
          </Route>
+         <Route path="getResults" element={getUserPage(GetResults)} />
+
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)} />
             <Route
