@@ -1,10 +1,13 @@
 /* eslint-disable func-names */
+
 import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://ec2-52-58-184-19.eu-central-1.compute.amazonaws.com',
-})
+ feature/applications
+   baseURL: 'http://medcheck.peaksoftprojects.com',
+
+
 
 mainApi.interceptors.request.use(
    function (config) {

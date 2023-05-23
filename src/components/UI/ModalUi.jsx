@@ -14,13 +14,16 @@ const style = {
    // p: 4,
 }
 
-export default function BasicModal({ children, open, onClose }) {
+export default function BasicModal({ children, open, onClose, ...rest }) {
    return (
       <Modal
          open={open}
          onClose={onClose}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
+ feature/applications
+         {...rest}
+
       >
          <Box sx={style}>{children}</Box>
       </Modal>
