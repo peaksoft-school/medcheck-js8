@@ -14,7 +14,7 @@ function useToast() {
       draggable: true,
       progress: false,
    }
-   const notifyCall = (type, message) => {
+   const notify = (type, message) => {
       toast[type](
          <StyledSnackbar>
             <SnackbarStatus type={type} />
@@ -25,7 +25,7 @@ function useToast() {
    }
 
    return {
-      notifyCall,
+      notify,
       ToastContainer: <Toastify />,
    }
 }

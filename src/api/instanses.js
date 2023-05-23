@@ -4,8 +4,10 @@ import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
+ feature/applications
    baseURL: 'http://medcheck.peaksoftprojects.com',
-})
+
+
 
 mainApi.interceptors.request.use(
    function (config) {

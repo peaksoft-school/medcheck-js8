@@ -21,7 +21,9 @@ export default function BasicModal({ children, open, onClose, ...rest }) {
          onClose={onClose}
          aria-labelledby="modal-modal-title"
          aria-describedby="modal-modal-description"
+ feature/applications
          {...rest}
+
       >
          <Box sx={style}>{children}</Box>
       </Modal>

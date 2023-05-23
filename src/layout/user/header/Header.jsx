@@ -47,6 +47,7 @@ import { UserRoles } from '../../../utlis/constants/commons'
 import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
+import useToast from '../../../hooks/useToast'
 
 export const services = [
    {
@@ -147,27 +148,30 @@ const Header = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [anchorEl, setAnchorEl] = useState(null)
-   // const [signInModal, setSignInModal] = useState(false)
-   // const [signUpModal, setSignUpModal] = useState(false)
-   // const [forgotPassword, setForgotPassword] = useState(false)
 
+   const handleClose = () => {
+      setAnchorEl(null)
+   }
    const [searchParams, setSearchParams] = useSearchParams()
    const { openModal } = Object.fromEntries(searchParams)
    const onCloseModal = () => setSearchParams({})
-   const openSignInModal = () => setSearchParams({ openModal: 'sign-in' })
-   const openSignUpModal = () => setSearchParams({ openModal: 'sign-up' })
+   const openSignInModal = () => {
+      setSearchParams({ openModal: 'sign-in' })
+      handleClose()
+   }
+   const openSignUpModal = () => {
+      setSearchParams({ openModal: 'sign-up' })
+      handleClose()
+   }
    const openForgotModal = () =>
-      setSearchParams({ openModal: 'forgot-password' })
+      setSearchParams({ openModal: 'forgot-password' })()
    // const openResetModal = () => setSearchParams({ openModal: 'reset-password' })
-
    const role = useSelector((state) => state.auth.role)
+   const { notify } = useToast()
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget)
-   }
-   const handleClose = () => {
-      setAnchorEl(null)
    }
 
    const navigateResultHandler = () => {
@@ -177,32 +181,8 @@ const Header = () => {
       navigate('/onlineAppointment')
    }
 
-   // const openSignInHandler = () => {
-   //    setSignInModal(true)
-   //    handleClose()
-   // }
-
-   // const closeSignInHandler = () => {
-   //    setSignInModal(false)
-   // }
-
-   // const openSignUpHandler = () => {
-   //    setSignUpModal(true)
-   // }
-
-   // const closeSignUpHandler = () => {
-   //    setSignUpModal(false)
-   // }
-
-   // const openForgotPassword = () => {
-   //    setForgotPassword(true)
-   // }
-   // const closeForgotPassword = () => {
-   //    setForgotPassword(false)
-   // }
-
    const signOutHandler = () => {
-      dispatch(signOut())
+      dispatch(signOut(notify))
       handleClose()
    }
 
@@ -214,14 +194,12 @@ const Header = () => {
                   open={openModal === 'sign-in'}
                   onClose={onCloseModal}
                   openSignUpHandler={openSignUpModal}
-                  // closeSignInHandler={closeSignInHandler}
                   openForgotPassword={openForgotModal}
                />
                <SignUp
                   open={openModal === 'sign-up'}
                   onClose={onCloseModal}
                   openSignInHandler={openSignInModal}
-                  // closeSignUpHandler={closeSignUpHandler}
                />
                <ForgotPassword
                   open={openModal === 'forgot-password'}
