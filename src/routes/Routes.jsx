@@ -25,6 +25,8 @@ import ChangePassword from '../containers/user/personal-account/profile/ChangePa
 import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../containers/user/personal-account/myApplications/MyApplicationDetails'
 import ApplicationsPage from '../containers/admin/Applications.Page'
+import SchedulePage from '../containers/admin/Schedule.Page'
+import OnlineEntry from '../components/OnlineEntry'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)
@@ -87,7 +89,14 @@ const AppRoutes = () => {
             />
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
-            <Route path="appointment" element={getAdminPage(Appointment)} />
+            <Route path="appointment" element={getAdminPage(Appointment)}>
+               <Route
+                  path="online-appointment"
+                  element={getAdminPage(OnlineEntry)}
+               />
+               <Route path="schedule" element={getAdminPage(SchedulePage)} />
+            </Route>
+
             <Route
                path="applications"
                element={getAdminPage(ApplicationsPage)}
