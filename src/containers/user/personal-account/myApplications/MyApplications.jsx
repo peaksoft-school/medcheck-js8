@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
 // import { appointmentData } from '../../../../utlis/constants/commons'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
 import { getUserAppointmentRequest } from '../../../../api/appointmentService'
+import { deleteAllUser } from '../../../../redux/reducers/appointment/appointment.thunk'
 
 const MyApplications = () => {
+   const dispatch = useDispatch()
+   const appointment = useSelector((state) => state.appointment)
+   // console.log('🚀 ~ appointment:', appointment)
+
    const [patients, setPatients] = useState([])
-   console.log('🚀 ~ patients:', patients)
+   // console.log('🚀 ~ patients:', patients)
+
+   useEffect(() => {
+      setPatients(appointment)
+   }, [appointment])
 
    const fetchPatients = async () => {
       try {
          const { data } = await getUserAppointmentRequest()
-         console.log('🚀 ~ data:', data)
+         // console.log('🚀 ~ data:', data)
 
          setPatients(data.response.results)
       } catch (error) {
@@ -26,7 +36,8 @@ const MyApplications = () => {
       fetchPatients()
    }, [])
 
-   const deleteorder = () => {
+   const deleteOrder = () => {
+      dispatch(deleteAllUser())
       setPatients([])
    }
    return (
@@ -55,7 +66,7 @@ const MyApplications = () => {
                   />
                   <DeleteContainer>
                      <Deletelist />
-                     <DeleteTitle onClick={deleteorder}>
+                     <DeleteTitle onClick={deleteOrder}>
                         Очистить список заказов
                      </DeleteTitle>
                   </DeleteContainer>

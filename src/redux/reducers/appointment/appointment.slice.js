@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAppointment } from './appointment.thunk'
+import { deleteAllUser, getAppointment } from './appointment.thunk'
 
 const initialState = {
    appointment: [],
@@ -21,9 +21,20 @@ export const appointmentSlice = createSlice({
          state.isLoading = true
          state.error = ''
       })
-      builder.addCase(getAppointment.rejected, (state, { payload }) => {
+      builder.addCase(getAppointment.rejected, (state, action) => {
          state.isLoading = false
-         state.error = payload.error
+         state.error = action.payload
+      })
+      builder.addCase(deleteAllUser.fulfilled, (state) => {
+         state.isLoading = false
+         state.error = ''
+      })
+      builder.addCase(deleteAllUser.pending, (state) => {
+         state.isLoading = true
+      })
+      builder.addCase(deleteAllUser.rejected, (state, action) => {
+         state.isLoading = false
+         state.error = action.payload
       })
    },
 })

@@ -1,6 +1,7 @@
 import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import GeoPoint from '../../../assets/icons/GeoPoint.svg'
 import Timer from '../../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
@@ -41,6 +42,11 @@ import {
 } from './header-styled'
 import Dropdown from '../../../components/UI/Dropdown'
 import SearchInput from '../../../components/UI/SeacrchInput'
+import SignIn from '../../guest/login/SignIn'
+import { UserRoles } from '../../../utlis/constants/commons'
+import { signOut } from '../../../redux/reducers/auth/auth.thunk'
+import SignUp from '../../guest/login/SignUp'
+import ForgotPassword from '../../guest/login/ForgotPassword'
 
 export const services = [
    {
@@ -138,10 +144,23 @@ export const info = [
 ]
 
 const Header = () => {
+   const dispatch = useDispatch()
    const navigate = useNavigate()
    const [anchorEl, setAnchorEl] = useState(null)
+   // const [signInModal, setSignInModal] = useState(false)
+   // const [signUpModal, setSignUpModal] = useState(false)
+   // const [forgotPassword, setForgotPassword] = useState(false)
 
-   const userRole = 'USER'
+   const [searchParams, setSearchParams] = useSearchParams()
+   const { openModal } = Object.fromEntries(searchParams)
+   const onCloseModal = () => setSearchParams({})
+   const openSignInModal = () => setSearchParams({ openModal: 'sign-in' })
+   const openSignUpModal = () => setSearchParams({ openModal: 'sign-up' })
+   const openForgotModal = () =>
+      setSearchParams({ openModal: 'forgot-password' })
+   // const openResetModal = () => setSearchParams({ openModal: 'reset-password' })
+
+   const role = useSelector((state) => state.auth.role)
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -157,10 +176,57 @@ const Header = () => {
    const navigateOnlineAppointmentHandler = () => {
       navigate('/onlineAppointment')
    }
+
+   // const openSignInHandler = () => {
+   //    setSignInModal(true)
+   //    handleClose()
+   // }
+
+   // const closeSignInHandler = () => {
+   //    setSignInModal(false)
+   // }
+
+   // const openSignUpHandler = () => {
+   //    setSignUpModal(true)
+   // }
+
+   // const closeSignUpHandler = () => {
+   //    setSignUpModal(false)
+   // }
+
+   // const openForgotPassword = () => {
+   //    setForgotPassword(true)
+   // }
+   // const closeForgotPassword = () => {
+   //    setForgotPassword(false)
+   // }
+
+   const signOutHandler = () => {
+      dispatch(signOut())
+      handleClose()
+   }
+
    return (
       <HeaderStyled position="static">
          <StyledHeaderGlobalContainer>
             <Container>
+               <SignIn
+                  open={openModal === 'sign-in'}
+                  onClose={onCloseModal}
+                  openSignUpHandler={openSignUpModal}
+                  // closeSignInHandler={closeSignInHandler}
+                  openForgotPassword={openForgotModal}
+               />
+               <SignUp
+                  open={openModal === 'sign-up'}
+                  onClose={onCloseModal}
+                  openSignInHandler={openSignInModal}
+                  // closeSignUpHandler={closeSignUpHandler}
+               />
+               <ForgotPassword
+                  open={openModal === 'forgot-password'}
+                  onClose={onCloseModal}
+               />
                <Grid>
                   <Box>
                      <GeoIconStyled src={GeoPoint} alt="geopoint" />
@@ -228,21 +294,17 @@ const Header = () => {
                               'aria-labelledby': 'basic-button',
                            }}
                         >
-                           {userRole === 'GUEST' ? (
-                              <div>
-                                 <NavlinkStyle to="/">
-                                    <MenuItemStyled onClick={handleClose}>
-                                       Войти
-                                    </MenuItemStyled>
-                                 </NavlinkStyle>
-                                 <NavlinkStyle to="/">
-                                    <MenuItemStyled onClick={handleClose}>
-                                       Регистрация
-                                    </MenuItemStyled>
-                                 </NavlinkStyle>
-                              </div>
+                           {role === UserRoles.GUEST ? (
+                              <Grid>
+                                 <MenuItemStyled onClick={openSignInModal}>
+                                    Войти
+                                 </MenuItemStyled>
+                                 <MenuItemStyled onClick={openSignUpModal}>
+                                    Регистрация
+                                 </MenuItemStyled>
+                              </Grid>
                            ) : (
-                              <div>
+                              <Grid>
                                  <NavlinkStyle to="/myApplications">
                                     <MenuItemStyled onClick={handleClose}>
                                        Мои записи
@@ -254,11 +316,11 @@ const Header = () => {
                                     </MenuItemStyled>
                                  </NavlinkStyle>
                                  <NavlinkStyle to="/">
-                                    <MenuItemStyled onClick={handleClose}>
+                                    <MenuItemStyled onClick={signOutHandler}>
                                        Выйти
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                              </div>
+                              </Grid>
                            )}
                         </Menu>
                      </ProfileBox>

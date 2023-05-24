@@ -1,14 +1,16 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable func-names */
+
 import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://ec2-52-58-184-19.eu-central-1.compute.amazonaws.com',
+   baseURL: 'http://medcheck.peaksoftprojects.com',
 })
 mainApi.interceptors.request.use(
    function (config) {
       const { token } = store.getState().auth
+
       if (token) {
          config.headers.Authorization = `Bearer ${token}`
       }
@@ -18,6 +20,7 @@ mainApi.interceptors.request.use(
       return Promise.reject(error)
    }
 )
+
 mainApi.interceptors.response.use(
    function (response) {
       return response

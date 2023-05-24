@@ -2,18 +2,20 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg'
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../../assets/login/image 90.svg'
 import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
-import { ModalUi } from '../../../components/UI/ModalUi'
+import BasicModal from '../../../components/UI/ModalUi'
+import { signIn } from '../../../redux/reducers/auth/auth.thunk'
 
-const SignIn = () => {
+const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
+   const dispatch = useDispatch()
    const [showPassword, setShowPassword] = useState(false)
-   const [modal, setModal] = useState(false)
 
    const {
       register,
@@ -28,23 +30,32 @@ const SignIn = () => {
    })
 
    function onSubmit(values) {
-      console.log(('will come values', values))
+      dispatch(signIn(values))
+      onClose()
    }
+
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
    }
+
    const clickHanlder = (e) => {
       e.preventDefault()
    }
 
-   const closeModalHandler = () => {
-      setModal(false)
+   const navigateToSignUp = (e) => {
+      e.preventDefault()
+      openSignUpHandler()
+   }
+
+   const navigateToForgotPassword = (e) => {
+      e.preventDefault()
+      openForgotPassword()
    }
 
    return (
-      <ModalUi open={modal} onClose={closeModalHandler}>
+      <BasicModal open={open} onClose={onClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" />
+            <CloseIcon className="closeIcon" onClick={onClose} />
             <FormLabel className="topic">ВОЙТИ</FormLabel>
             <Input
                placeholder="Логин"
@@ -89,7 +100,11 @@ const SignIn = () => {
             <Button className="buttonStyle" type="submit">
                ВОЙТИ
             </Button>
-            <NavLink className="password" to="/">
+            <NavLink
+               className="password"
+               to="/"
+               onClick={navigateToForgotPassword}
+            >
                ЗАБЫЛИ ПАРОЛЬ ?
             </NavLink>
             <Line>
@@ -102,11 +117,14 @@ const SignIn = () => {
                   Продолжить с Google
                </NavLink>
             </Button>
-            <NavLink className="register" to="/">
-               <span>Нет аккаунта?</span> Зарегистрироваться
-            </NavLink>
-         </FormControlStyled>
-      </ModalUi>
+            <div className="register">
+               <span>Нет аккаунта? </span>
+               <Link to="/" onClick={navigateToSignUp}>
+                  Зарегистрироваться
+               </Link>
+            </div>
+         </FormControlStyled>{' '}
+      </BasicModal>
    )
 }
 
@@ -117,7 +135,7 @@ const FormControlStyled = styled('form')(() => ({
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
-   marginLeft: ' 35%',
+   // marginLeft: ' 35%',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
@@ -131,6 +149,7 @@ const FormControlStyled = styled('form')(() => ({
    '& .closeIcon': {
       marginLeft: '450px',
       marginTop: '19px',
+      cursor: 'pointer',
    },
    '& .inputStyle': {
       width: '390px',
