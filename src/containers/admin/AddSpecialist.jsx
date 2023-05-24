@@ -38,6 +38,7 @@ const AddSpecialist = () => {
    const navigate = useNavigate()
    const [selected, setSelected] = useState('')
    const [photo, setPhoto] = useState('')
+   const [imgUrl, setImgUrl] = useState('')
    const handleSelection = (event, newSelected) => {
       setSelected(newSelected)
    }
@@ -49,24 +50,38 @@ const AddSpecialist = () => {
       const image = e.target.files[0]
       const formData = new FormData()
       formData.append('file', image)
-      try {
-         const data = await imageSpecialistService(formData)
-         return setPhoto(data.data.link)
-      } catch (error) {
-         return error
+      setPhoto(formData)
+
+      if (image) {
+         const reader = new FileReader()
+         reader.onload = () => {
+            setImgUrl(reader.result)
+         }
+         reader.readAsDataURL(image)
       }
    }
 
-   const postSpecialist = async (dataSpecialist) => {
+   const postSpecialistImage = async () => {
       try {
-         await postSpecialistsService(dataSpecialist)
-         return navigate('/admin/specialists')
+         const imageResponse = await imageSpecialistService(photo)
+         const imageUrl = imageResponse.data.link
+         setImgUrl(imageUrl)
+         return imageUrl
+      } catch (error) {
+         return console.log(error)
+      }
+   }
+   const postSpecialist = async (sendData) => {
+      try {
+         const { data } = await postSpecialistsService(sendData)
+         navigate(-1)
+         return data
       } catch (error) {
          return console.log(error)
       }
    }
 
-   const { values, handleChange, handleSubmit, errors } = useFormik({
+   const { values, handleChange, handleSubmit, errors, touched } = useFormik({
       initialValues: {
          firstName: '',
          lastName: '',
@@ -77,17 +92,18 @@ const AddSpecialist = () => {
 
       validationSchema: addSpecialistSchema,
 
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
          const dataSpecialist = {
             departmentId: values.department,
             description: values.description,
             firstName: values.firstName,
-            image: photo,
             lastName: values.lastName,
             position: values.position,
          }
-
-         postSpecialist(dataSpecialist)
+         const fileResponce = photo && (await postSpecialistImage())
+         if (fileResponce) {
+            postSpecialist({ ...dataSpecialist, image: fileResponce })
+         }
       },
    })
 
@@ -106,7 +122,7 @@ const AddSpecialist = () => {
             <Wrapper>
                <div style={{ paddingRight: '40px' }}>
                   <TitlePhoto>
-                     <AvatarUpload onChange={imgChangeHandler} photo={photo} />
+                     <AvatarUpload onChange={imgChangeHandler} photo={imgUrl} />
                      <p>
                         Нажмите для добавления <br /> фотографии
                      </p>
@@ -117,8 +133,7 @@ const AddSpecialist = () => {
                   <form onSubmit={handleSubmit}>
                      <FormContainer>
                         <Div>
-                           <InputLabel htmlFor="firstName">Имя</InputLabel>
-
+                           <InputLabel htmlFor="firstName">Имя</InputLabel>{' '}
                            <InputStyled
                               placeholder="Напишите имя"
                               style={{ marginBottom: '20px' }}
@@ -126,8 +141,9 @@ const AddSpecialist = () => {
                               onChange={handleChange}
                               value={values.firstName}
                            />
-                           <StyledSpan>{errors.firstName}</StyledSpan>
-
+                           {touched.firstName && errors.firstName && (
+                              <StyledSpan>{errors.firstName}</StyledSpan>
+                           )}
                            <InputLabel>Отделение</InputLabel>
                            <StyledSelect
                               items={department}
@@ -136,7 +152,9 @@ const AddSpecialist = () => {
                               placeholder="Выберите отделение"
                               name="department"
                            />
-                           <StyledSpan>{errors.department}</StyledSpan>
+                           {touched.department && errors.department && (
+                              <StyledSpan>{errors.department}</StyledSpan>
+                           )}
                         </Div>
 
                         <Div>
@@ -148,7 +166,9 @@ const AddSpecialist = () => {
                               value={values.lastName}
                               name="lastName"
                            />
-                           <StyledSpan>{errors.lastName}</StyledSpan>
+                           {touched.lastName && errors.lastName && (
+                              <StyledSpan>{errors.lastName}</StyledSpan>
+                           )}
 
                            <InputLabel htmlFor="position">Должность</InputLabel>
                            <InputStyled
@@ -157,7 +177,9 @@ const AddSpecialist = () => {
                               value={values.position}
                               name="position"
                            />
-                           <StyledSpan>{errors.position}</StyledSpan>
+                           {touched.position && errors.position && (
+                              <StyledSpan>{errors.position}</StyledSpan>
+                           )}
                         </Div>
                      </FormContainer>
                      <p>Описание</p>
@@ -208,10 +230,18 @@ const AddSpecialist = () => {
                            italic={italic}
                            underline={underline}
                         />
-                        <StyledSpan>{errors.description}</StyledSpan>
+                        {touched.description && errors.description && (
+                           <StyledSpan>{errors.description}</StyledSpan>
+                        )}
                      </div>
                      <StyledContainerButton>
-                        <StyledCancel onClick={() => {}}>Отменить</StyledCancel>
+                        <StyledCancel
+                           onClick={() => {
+                              navigate('/admin/specialists')
+                           }}
+                        >
+                           Отменить
+                        </StyledCancel>
                         <Button style={{ padding: '10px 85px' }} type="submit">
                            Добавить
                         </Button>
@@ -259,8 +289,8 @@ const Info = muiStyled('p')(() => ({
 }))
 
 const StyledSelect = styled(SelectUi)(() => ({
-   padding: '1px',
    fontSize: '14px',
+   height: '35px',
 }))
 
 const StyledCancel = styled(Button)(() => ({

@@ -1,13 +1,13 @@
-import { Breadcrumbs, TextareaAutosize } from '@mui/material'
+import { Breadcrumbs, TextField, TextareaAutosize } from '@mui/material'
 import styled from '@emotion/styled'
 import { styled as muiStyled } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
-import Input from '../../components/UI/input/Input'
+// import Input from '../../components/UI/input/Input'
 
 export const MainContainer = muiStyled('div')(() => ({
    '&': {
       width: '100%',
-      height: '100%',
+      height: '100vh',
       background: 'rgba(245, 245, 245, 0.61)',
       padding: '30px 70px',
       fontFamily: 'Manrope',
@@ -37,9 +37,17 @@ export const AddContainer = muiStyled('div')(() => ({
    },
 }))
 
-export const InputStyled = styled(Input)(() => ({
-   fieldset: {
-      border: '1px solid #909CB5',
+export const InputStyled = styled(TextField)(() => ({
+   '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+         border: '1px solid #909CB5',
+      },
+      '&:hover fieldset': {
+         borderColor: '#909CB5',
+      },
+      '&.Mui-focused fieldset': {
+         borderColor: '#909CB5',
+      },
    },
    input: {
       paddingLeft: '10px',
@@ -81,5 +89,6 @@ export const TitlePhoto = muiStyled('p')(() => ({
       color: '#909CB5',
       textAlign: 'center',
       fontSize: '12px',
+      paddingLeft: '1rem',
    },
 }))

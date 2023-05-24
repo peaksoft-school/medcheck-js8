@@ -48,6 +48,7 @@ const UpdateSpecialist = () => {
    useEffect(() => {
       getOneSpecialist(doctorId)
    }, [])
+
    useEffect(() => {
       setDoctor(oneSpecialist)
       setUpdateFirstName(oneSpecialist.firstName)
@@ -186,9 +187,14 @@ const UpdateSpecialist = () => {
                         />
                      </TextFieldDiv>
                      <StyledContainerButton>
-                        {/* <Link to="admin/specialists"> */}
-                        <StyledCancel>Назад</StyledCancel>
-                        {/* </Link> */}
+                        <StyledCancel
+                           onClick={() => {
+                              navigate('/admin/specialists')
+                           }}
+                        >
+                           Назад
+                        </StyledCancel>
+
                         <Button style={{ padding: '10px 85px' }} type="submit">
                            Редактировать
                         </Button>

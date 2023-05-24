@@ -20,6 +20,7 @@ const Specialists = () => {
    const navigate = useNavigate()
    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
    const [specisalists, setSpecialists] = useState([])
+   const [loading, setIsLoading] = useState(false)
    const [queryParams, setQueryParams] = useState({
       keyWord: null,
    })
@@ -27,7 +28,9 @@ const Specialists = () => {
 
    const getAllSpecialists = async (queryParams) => {
       try {
+         setIsLoading(true)
          const { data } = await getSpecialists(queryParams)
+         setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
          return console.log(error)
@@ -84,6 +87,8 @@ const Specialists = () => {
    useEffect(() => {
       if (debouncedSearchTerm.length !== 0) {
          searchCharacters(debouncedSearchTerm)
+      } else {
+         getAllSpecialists(queryParams)
       }
    }, [debouncedSearchTerm])
 
@@ -194,7 +199,7 @@ const Specialists = () => {
                      navigate('addSpecialist')
                   }}
                >
-                  <Plus /> Добавить специалиста
+                  <Plus /> <p>Добавить специалиста</p>
                </StyledContainerButton>
             </BoxTitleAndButton>
             <SearchInputBox>
@@ -206,7 +211,11 @@ const Specialists = () => {
                   }}
                />
             </SearchInputBox>
-            <AppTable columns={column} rows={specisalists} />
+            {loading ? (
+               <p>loading...</p>
+            ) : (
+               <AppTable columns={column} rows={specisalists} />
+            )}
          </MainContainer>
       </div>
    )
@@ -220,9 +229,7 @@ const BoxTitleAndButton = styled('div')(() => ({
       justifyContent: 'space-between',
    },
 }))
-// const TableRovw = styled(TableRow)((check) => ({
-//    backgroundColor: check ? 'black' : 'red',
-// }))
+
 const Title = styled('p')(() => ({
    '&': {
       fontFamily: 'Manrope',

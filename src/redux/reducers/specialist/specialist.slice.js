@@ -4,7 +4,7 @@ import { uploadFile } from './specialist.thunk'
 const initialState = {
    linkPhoto: '',
    error: '',
-   isLoading: '',
+   isLoading: false,
 }
 
 export const specialist = createSlice({

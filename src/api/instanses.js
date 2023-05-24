@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { store } from '../redux/store'
 
-const BASE_URL = 'http://ec2-52-58-184-19.eu-central-1.compute.amazonaws.com'
+const BASE_URL = 'http://backend.medcheck.peaksoftprojects.com/'
 
 export const mainApi = axios.create({
    baseURL: BASE_URL,
