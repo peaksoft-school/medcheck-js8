@@ -19,7 +19,8 @@ const getInitialState = () => {
       token: '',
       email: '',
       role: UserRoles.GUEST,
-      error: '',
+      isLoading: false,
+      error: null,
    }
 }
 
@@ -33,6 +34,14 @@ export const authSlice = createSlice({
          state.token = payload.token
          state.email = payload.email
          state.role = payload.role
+         state.isLoading = false
+      })
+      builder.addCase(signIn.rejected, (state, { payload }) => {
+         state.error = payload
+         state.isLoading = false
+      })
+      builder.addCase(signIn.pending, (state) => {
+         state.isLoading = true
       })
       builder.addCase(signUp.fulfilled, (state, { payload }) => {
          state.isAuthorized = true
@@ -40,11 +49,11 @@ export const authSlice = createSlice({
          state.email = payload.email
          state.role = payload.role
       })
-      builder.addCase(signIn.rejected, (state, { payload }) => {
-         state.error = payload
-      })
       builder.addCase(signUp.rejected, (state, { payload }) => {
          state.error = payload
+      })
+      builder.addCase(signUp.pending, (state) => {
+         state.isLoading = true
       })
       builder.addCase(signOut.fulfilled, (state) => {
          state.isAuthorized = false

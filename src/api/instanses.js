@@ -5,7 +5,8 @@ import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://medcheck.peaksoftprojects.com',
+   baseURL:
+      'http://backend.medcheck.peaksoftprojects.com/swagger-ui/index.html#/',
 })
 mainApi.interceptors.request.use(
    function (config) {

@@ -8,9 +8,12 @@ import MainIcon from '../../assets/icons/MainIcon.svg'
 import MedcheckIcon from '../../assets/icons/MedCheckIcon.svg'
 import { ReactComponent as IdminHeaderBtnIcon } from '../../assets/icons/AdmiHeaderBtnIcon.svg'
 import { signOut } from '../../redux/reducers/auth/auth.thunk'
+import useToast from '../../hooks/useToast'
+// import useToast from '../../hooks/useToast'
 
 const Header = () => {
    const dispatch = useDispatch()
+   const { notify } = useToast()
 
    const [anchorEl, setAnchorEl] = useState(null)
    const open = Boolean(anchorEl)
@@ -22,7 +25,7 @@ const Header = () => {
    }
 
    const signOutHandler = () => {
-      dispatch(signOut())
+      dispatch(signOut(notify))
       handleClose()
    }
 

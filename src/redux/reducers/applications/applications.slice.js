@@ -32,6 +32,7 @@ export const applicationSlice = createSlice({
       })
       builder.addCase(deleteChecked.pending, (state) => {
          state.isLoading = true
+         state.error = ''
       })
       builder.addCase(deleteChecked.fulfilled, (state) => {
          state.isLoading = false
@@ -50,7 +51,7 @@ export const applicationSlice = createSlice({
       })
       builder.addCase(deleteAllChecked.rejected, (state, action) => {
          state.isLoading = false
-         state.error = action.payload
+         state.error = action.error
       })
    },
 })
