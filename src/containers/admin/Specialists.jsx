@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Grid, IconButton, TableRow, styled } from '@mui/material'
+import {
+   CircularProgress,
+   Grid,
+   IconButton,
+   TableRow,
+   styled,
+} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import AppTable from '../../components/UI/Table'
 import SwitchApp from '../../components/UI/switch/Switch'
@@ -15,6 +21,7 @@ import {
    getSpecialists,
    postSpecialistIsActiveReq,
 } from '../../api/specialistService'
+import useToast from '../../hooks/useToast'
 
 const Specialists = () => {
    const navigate = useNavigate()
@@ -25,6 +32,7 @@ const Specialists = () => {
       keyWord: null,
    })
    const [searchTerm, setSearchTerm] = useState('')
+   const { ToastContainer, notifyCall } = useToast()
 
    const getAllSpecialists = async (queryParams) => {
       try {
@@ -33,16 +41,17 @@ const Specialists = () => {
          setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
 
    const deleteSpecialist = async ({ id }) => {
       try {
          await deleteSpecialistService(id)
+         notifyCall('success', 'успешно')
          return getAllSpecialists('')
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
 
@@ -51,7 +60,7 @@ const Specialists = () => {
          await postSpecialistIsActiveReq(id, isActive)
          return getAllSpecialists('')
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
 
@@ -127,16 +136,14 @@ const Specialists = () => {
                   >
                      <Grid sx={{ display: 'flex' }}>
                         <Img src={specialist.image} alt="img" />
-                        <div
-                           style={{ display: 'flex', flexDirection: 'column' }}
-                        >
+                        <ContainerNamesStyled>
                            <FirstNameStyled>
                               {specialist.firstName}
                            </FirstNameStyled>
                            <LastNameStyled>
                               {specialist.lastName}
                            </LastNameStyled>
-                        </div>
+                        </ContainerNamesStyled>
                      </Grid>
                   </TableRow>
                )
@@ -190,34 +197,34 @@ const Specialists = () => {
    )
 
    return (
-      <div>
-         <MainContainer>
-            <BoxTitleAndButton>
-               <Title>Специалисты</Title>
-               <StyledContainerButton
-                  onClick={() => {
-                     navigate('addSpecialist')
-                  }}
-               >
-                  <Plus /> <p>Добавить специалиста</p>
-               </StyledContainerButton>
-            </BoxTitleAndButton>
-            <SearchInputBox>
-               <SearchInput
-                  value={searchTerm}
-                  placeholder="Поиск"
-                  onChange={(e) => {
-                     setSearchTerm(e.target.value)
-                  }}
-               />
-            </SearchInputBox>
-            {loading ? (
-               <p>loading...</p>
-            ) : (
-               <AppTable columns={column} rows={specisalists} />
-            )}
-         </MainContainer>
-      </div>
+      <MainContainer>
+         {ToastContainer}
+         <BoxTitleAndButton>
+            <Title>Специалисты</Title>
+            <StyledContainerButton
+               onClick={() => {
+                  navigate('addSpecialist')
+               }}
+            >
+               <Plus /> <p>Добавить специалиста</p>
+            </StyledContainerButton>
+         </BoxTitleAndButton>
+         <SearchInputBox>
+            <SearchInput
+               value={searchTerm}
+               placeholder="Поиск"
+               onChange={(e) => {
+                  setSearchTerm(e.target.value)
+               }}
+            />
+         </SearchInputBox>
+         <useToast />
+         {loading ? (
+            <StyledCircularProgress />
+         ) : (
+            <AppTable columns={column} rows={specisalists} />
+         )}
+      </MainContainer>
    )
 }
 
@@ -284,3 +291,15 @@ const Img = styled('img')(() => ({
       borderRadius: '100px',
    },
 }))
+
+const ContainerNamesStyled = styled('div')(() => ({
+   '&': {
+      display: 'flex',
+      flexDirection: 'column',
+   },
+}))
+
+const StyledCircularProgress = styled(CircularProgress)`
+   color: green;
+   margin-left: 300px;
+`

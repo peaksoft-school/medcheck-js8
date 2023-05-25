@@ -20,10 +20,10 @@ import {
    imageSpecialistService,
    updateSpecialistService,
 } from '../../api/specialistService'
+import useToast from '../../hooks/useToast'
 
 const UpdateSpecialist = () => {
    const navigate = useNavigate()
-   // const { oneSpecialist } = useSelector((state) => state.specialist)
    const [doctor, setDoctor] = useState({})
    const { doctorId } = useParams()
    const [oneSpecialist, setOneSpecialist] = useState([])
@@ -34,6 +34,7 @@ const UpdateSpecialist = () => {
    const [updatePosition, setUpdatePosition] = useState('')
    const [updateDescription, setUpdateDescription] = useState('')
    const [updateDepartment, setUpdateDepartment] = useState('')
+   const { ToastContainer, notifyCall } = useToast()
 
    const getOneSpecialist = async (id) => {
       try {
@@ -64,7 +65,7 @@ const UpdateSpecialist = () => {
          await updateSpecialistService(putSpecialist)
          return navigate('/admin/specialists')
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
 
@@ -111,99 +112,96 @@ const UpdateSpecialist = () => {
       updateSpecialist(dataSpecialist)
    }
    return (
-      <div>
-         <MainContainer key={doctor.id}>
-            <Stack spacing={2}>
-               <Container separator="›" aria-label="breadcrumb">
-                  <StyledNavLink to="/admin/specialists">
-                     <p>Специалисты</p>
-                  </StyledNavLink>
-                  <StyledNamesContainer>
-                     <p>{doctor.firstName}</p>
-                     <p>{doctor.lastName}</p>
-                  </StyledNamesContainer>
-               </Container>
-            </Stack>
-            <StyledNamesContainer>
-               <Stylednames>{doctor.firstName}</Stylednames>
-               <Stylednames>{doctor.lastName}</Stylednames>
-            </StyledNamesContainer>
-            <UpdateContainer>
-               <Wrapper>
-                  <div style={{ paddingRight: '40px' }}>
-                     <TitlePhoto>
-                        <AvatarUpload
-                           onChange={imgChangeHandler}
-                           photo={updatePhoto}
+      <MainContainer key={doctor.id}>
+         {ToastContainer}
+         <Stack spacing={2}>
+            <Container separator="›" aria-label="breadcrumb">
+               <StyledNavLink to="/admin/specialists">
+                  <p>Специалисты</p>
+               </StyledNavLink>
+               <StyledNamesContainer>
+                  <p>{doctor.firstName}</p>
+                  <p>{doctor.lastName}</p>
+               </StyledNamesContainer>
+            </Container>
+         </Stack>
+         <StyledNamesContainer>
+            <Stylednames>{doctor.firstName}</Stylednames>
+            <Stylednames>{doctor.lastName}</Stylednames>
+         </StyledNamesContainer>
+         <UpdateContainer>
+            <Wrapper>
+               <div style={{ paddingRight: '40px' }}>
+                  <TitlePhoto>
+                     <AvatarUpload
+                        onChange={imgChangeHandler}
+                        photo={updatePhoto}
+                     />
+                     <p>Сменить фото</p>
+                  </TitlePhoto>
+               </div>
+               <form onSubmit={updateHandler}>
+                  <FormContainer>
+                     <Div>
+                        <InputLabel htmlFor="firstName">Имя</InputLabel>
+                        <InputStyled
+                           style={{ marginBottom: '20px' }}
+                           name="firstName"
+                           onChange={changeFirstName}
+                           value={updateFirstName}
                         />
-                        <p>Сменить фото</p>
-                     </TitlePhoto>
-                  </div>
-                  <form onSubmit={updateHandler}>
-                     <FormContainer>
-                        <Div>
-                           <InputLabel htmlFor="firstName">Имя</InputLabel>
-                           <InputStyled
-                              style={{ marginBottom: '20px' }}
-                              name="firstName"
-                              onChange={changeFirstName}
-                              value={updateFirstName}
-                           />
-                           <InputLabel htmlFor="lastName">Отделение</InputLabel>
-                           <StyledSelect
-                              items={department}
-                              placeholder={updateDepartment}
-                              label={doctor.name}
-                              onChange={changeDepartment}
-                           />
-                        </Div>
-                        <Div>
-                           <InputLabel htmlFor="position">Фамилия</InputLabel>
-                           <InputStyled
-                              style={{ marginBottom: '20px' }}
-                              name="position"
-                              onChange={changeLastName}
-                              value={updateLastName}
-                           />
-                           <InputLabel htmlFor="description">
-                              Должность
-                           </InputLabel>
-                           <InputStyled
-                              style={{ marginBottom: '20px' }}
-                              name="description"
-                              onChange={changeposition}
-                              value={updatePosition}
-                           />
-                        </Div>
-                     </FormContainer>
-                     <InputLabel htmlFor="description">Описание</InputLabel>
-                     <TextFieldDiv>
-                        <StyledTextField
+                        <InputLabel htmlFor="lastName">Отделение</InputLabel>
+                        <StyledSelect
+                           items={department}
+                           placeholder={updateDepartment}
+                           label={doctor.name}
+                           onChange={changeDepartment}
+                        />
+                     </Div>
+                     <Div>
+                        <InputLabel htmlFor="position">Фамилия</InputLabel>
+                        <InputStyled
+                           style={{ marginBottom: '20px' }}
+                           name="position"
+                           onChange={changeLastName}
+                           value={updateLastName}
+                        />
+                        <InputLabel htmlFor="description">Должность</InputLabel>
+                        <InputStyled
+                           style={{ marginBottom: '20px' }}
                            name="description"
-                           minRows={10}
-                           maxRows={30}
-                           value={updateDescription}
-                           onChange={changeDescription}
+                           onChange={changeposition}
+                           value={updatePosition}
                         />
-                     </TextFieldDiv>
-                     <StyledContainerButton>
-                        <StyledCancel
-                           onClick={() => {
-                              navigate('/admin/specialists')
-                           }}
-                        >
-                           Назад
-                        </StyledCancel>
+                     </Div>
+                  </FormContainer>
+                  <InputLabel htmlFor="description">Описание</InputLabel>
+                  <TextFieldDiv>
+                     <StyledTextField
+                        name="description"
+                        minRows={10}
+                        maxRows={30}
+                        value={updateDescription}
+                        onChange={changeDescription}
+                     />
+                  </TextFieldDiv>
+                  <StyledContainerButton>
+                     <StyledCancel
+                        onClick={() => {
+                           navigate('/admin/specialists')
+                        }}
+                     >
+                        Назад
+                     </StyledCancel>
 
-                        <Button style={{ padding: '10px 85px' }} type="submit">
-                           Редактировать
-                        </Button>
-                     </StyledContainerButton>
-                  </form>
-               </Wrapper>
-            </UpdateContainer>
-         </MainContainer>
-      </div>
+                     <Button style={{ padding: '10px 85px' }} type="submit">
+                        Редактировать
+                     </Button>
+                  </StyledContainerButton>
+               </form>
+            </Wrapper>
+         </UpdateContainer>
+      </MainContainer>
    )
 }
 

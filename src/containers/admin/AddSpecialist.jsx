@@ -33,12 +33,14 @@ import {
    Container,
 } from './specialist-style'
 import { addSpecialistSchema } from '../../utlis/helpers/general'
+import useToast from '../../hooks/useToast'
 
 const AddSpecialist = () => {
    const navigate = useNavigate()
    const [selected, setSelected] = useState('')
    const [photo, setPhoto] = useState('')
    const [imgUrl, setImgUrl] = useState('')
+   const { ToastContainer, notifyCall } = useToast()
    const handleSelection = (event, newSelected) => {
       setSelected(newSelected)
    }
@@ -68,7 +70,7 @@ const AddSpecialist = () => {
          setImgUrl(imageUrl)
          return imageUrl
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
    const postSpecialist = async (sendData) => {
@@ -77,7 +79,7 @@ const AddSpecialist = () => {
          navigate(-1)
          return data
       } catch (error) {
-         return console.log(error)
+         return notifyCall('error', error.response?.data.message)
       }
    }
 
@@ -109,6 +111,7 @@ const AddSpecialist = () => {
 
    return (
       <MainContainer>
+         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink to="/admin/specialists">
