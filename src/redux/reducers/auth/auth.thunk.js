@@ -4,12 +4,14 @@ import { signInRequest, signUpRequest } from '../../../api/authService'
 
 export const signIn = createAsyncThunk(
    'auth/signIn',
-   async (userData, { rejecWithValue }) => {
+   async ({ values, notify }, { rejecWithValue }) => {
       try {
-         const { data } = await signInRequest(userData)
+         const { data } = await signInRequest(values)
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
+         notify('success', 'You have successfuly signed in!')
          return data
       } catch (error) {
+         // notify('error', error.response?.data.message)
          return rejecWithValue(error.response?.data.message)
       }
    }
@@ -17,11 +19,12 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
    'auth/signUp',
-   async (userData, { rejecWithValue }) => {
+   async ({ values, notify }, { rejecWithValue }) => {
       try {
-         const { data } = await signUpRequest(userData)
+         const { data } = await signUpRequest(values)
 
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
+         notify('success', 'You have successfuly signed up!')
          return data
       } catch (error) {
          return rejecWithValue(error.response?.data.message)
@@ -42,6 +45,8 @@ export const signUp = createAsyncThunk(
 //    }
 // )
 
-export const signOut = createAsyncThunk('auth/signOut', async () => {
+export const signOut = createAsyncThunk('auth/signOut', async (notify) => {
+   notify('success', 'You have been logged out!')
+
    return localStorage.removeItem(STORAGE_KEYS.AUTH)
 })

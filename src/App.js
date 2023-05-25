@@ -1,14 +1,21 @@
-// import UpdateSpecialist from './pages/admin/specialists/UpdateSpecialist'
+
+
+import useToast from './hooks/useToast'
+
 import AppRoutes from './routes/Routes'
 
-// import Specialists from './pages/admin/specialists/Specialists'
+
 
 function App() {
+   const { ToastContainer } = useToast()
    return (
       <div>
-         {/* <Specialists /> */}
+
+
+         {ToastContainer}
+
          <AppRoutes />
-         {/* <UpdateSpecialist /> */}
+         
       </div>
    )
 }
