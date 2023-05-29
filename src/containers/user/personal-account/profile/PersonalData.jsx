@@ -1,15 +1,66 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useFormik } from 'formik'
 import { styled, FormControl, InputLabel } from '@mui/material'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
+import useToast from '../../../../hooks/useToast'
+import {
+   getDataPatiendService,
+   postDataProfileService,
+} from '../../../../api/profileService'
+import { postDataProfieValid } from '../../../../utlis/helpers/general'
 
 const PersonalData = () => {
-   const clickHandler = (event) => {
-      event.preventDefault()
+   const { ToastContainer, notifyCall } = useToast()
+
+   const postDataProfile = async (dataProfile) => {
+      try {
+         await postDataProfileService(dataProfile)
+         return console.log('post')
+      } catch (error) {
+         return notifyCall('error', error.response?.data.message)
+      }
    }
 
+   const { values, handleChange, handleSubmit, errors, touched, setValues } =
+      useFormik({
+         initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+         },
+
+         validationSchema: postDataProfieValid,
+         onSubmit: (values) => {
+            const dataProfile = {
+               firstName: values.firstName,
+               lastName: values.lastName,
+               phoneNumber: String(values.phoneNumber),
+               email: values.email,
+            }
+
+            postDataProfile(dataProfile)
+         },
+      })
+
+   async function getPatientData() {
+      try {
+         const { data } = await getDataPatiendService()
+         console.log(data, 'data')
+         return setValues(data)
+      } catch (error) {
+         return notifyCall('error', error.response?.data.message)
+      }
+   }
+
+   useEffect(() => {
+      getPatientData()
+   }, [postDataProfieValid])
+
    return (
-      <Container onSubmit={clickHandler} noValidate autoComplete="off">
+      <Container onSubmit={handleSubmit} noValidate autoComplete="off">
+         {ToastContainer}
          <StyledTitleText>Ваши личные данные</StyledTitleText>
          <StyledForm>
             <div>
@@ -20,8 +71,14 @@ const PersonalData = () => {
                      type="text"
                      label=""
                      id="name"
+                     name="firstName"
+                     onChange={handleChange}
+                     value={values.firstName}
                   />
                </FormControl>
+               {touched.firstName && errors.firstName && (
+                  <StyledSpan>{errors.firstName}</StyledSpan>
+               )}
 
                <StyledInputLabel htmlFor="email">E-mail</StyledInputLabel>
 
@@ -31,8 +88,13 @@ const PersonalData = () => {
                      type="email"
                      label=""
                      id="email"
+                     onChange={handleChange}
+                     value={values.email}
                   />
                </FormControl>
+               {touched.email && errors.email && (
+                  <StyledSpan>{errors.email}</StyledSpan>
+               )}
             </div>
             <div>
                <StyledInputLabel htmlFor="lastName">Фамилия</StyledInputLabel>
@@ -43,8 +105,13 @@ const PersonalData = () => {
                      type="text"
                      label=""
                      id="lastName"
+                     onChange={handleChange}
+                     value={values.lastName}
                   />
                </FormControl>
+               {touched.lastName && errors.lastName && (
+                  <StyledSpan>{errors.lastName}</StyledSpan>
+               )}
 
                <StyledInputLabel htmlFor="phoneNumber">
                   Телефон
@@ -52,11 +119,23 @@ const PersonalData = () => {
                <FormControl>
                   <StyledInput
                      variant="outlined"
-                     type="number"
+                     type="phone"
                      label=""
                      id="phoneNumber"
+                     onChange={handleChange}
+                     value={values.phoneNumber}
                   />
                </FormControl>
+               <StyledSpan>
+                  {errors.phoneNumber}
+                  {values.phoneNumber &&
+                     !/^\+996\d{9}$/i.test(values.phoneNumber) && (
+                        <StyledSpan>
+                           номер должен содержить <SpanStyled>+</SpanStyled> и
+                           <SpanStyled> 996</SpanStyled>
+                        </StyledSpan>
+                     )}
+               </StyledSpan>
             </div>
          </StyledForm>
          <StyledBoxButton>
@@ -173,4 +252,13 @@ const StyledButton = styled(Button)(() => ({
       background: '#D3D3D3',
       color: '#FFFF',
    },
+}))
+
+const StyledSpan = styled('span')(() => ({
+   fontSize: '12px',
+   color: 'red',
+}))
+
+const SpanStyled = styled('span')(() => ({
+   color: 'green',
 }))

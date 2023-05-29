@@ -11,11 +11,21 @@ import { ReactComponent as VisibilityOff } from '../../../../assets/icons/Visibi
 import { ReactComponent as Visibility } from '../../../../assets/icons/Visibility.svg'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
+import { postChangePassword } from '../../../../api/profileService'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+
+   const postPassword = (password) => {
+      try {
+         const { data } = postChangePassword(password)
+         return data
+      } catch (error) {
+         return console.log(error)
+      }
+   }
 
    const {
       register,
@@ -32,6 +42,11 @@ const ChangePassword = () => {
 
    function onSubmit(values) {
       console.log('will come values', values)
+      const password = {
+         oldPassword: values.password,
+         newPassword: values.newPassword,
+      }
+      postPassword(password)
    }
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
