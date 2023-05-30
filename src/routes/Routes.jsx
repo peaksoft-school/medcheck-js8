@@ -24,9 +24,11 @@ import PersonalData from '../pages/user/personal-account/profile/PersonalData'
 import ChangePassword from '../pages/user/personal-account/profile/ChangePassword'
 import MyApplications from '../pages/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
+import PatientDetails from '../pages/admin/PatientDetails'
+import PatientResult from '../pages/admin/PatientResult'
 
 const AppRoutes = () => {
-   const role = 'USER'
+   const role = 'ADMIN'
 
    const isAllowed = (roles) => {
       return roles.includes(role)
@@ -90,6 +92,14 @@ const AppRoutes = () => {
             <Route path="applications" element={getAdminPage(Applications)} />
             <Route path="specialists" element={getAdminPage(Specialists)} />
             <Route path="patients" element={getAdminPage(Patients)} />
+            <Route
+               path="patients/:id/details"
+               element={getAdminPage(PatientDetails)}
+            />
+            <Route
+               path="patients/:id/details/:id/results"
+               element={getAdminPage(PatientResult)}
+            />
          </Route>
          <Route path="*" element={<NotFoundPage />} />
       </Routes>

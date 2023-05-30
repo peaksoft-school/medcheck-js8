@@ -1,14 +1,14 @@
-/* eslint-disable func-names */
 import axios from 'axios'
+// import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://ec2-52-57-150-68.eu-central-1.compute.amazonaws.com',
+   baseURL: 'http://backend.medcheck.peaksoftprojects.com',
 })
 
 mainApi.interceptors.request.use(
    function (config) {
       const token =
-         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpc3hha0BnbWFpbC5jb20iLCJpYXQiOjE2ODMxMDI3NzIsImV4cCI6MTY4MzEwNDIxMn0.a7HNmLZFL5sx9K3zU0t8b-gdfmVyaTCKjn2cxS_KFII'
+         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODU0MzIwNzcsImV4cCI6MTY4NTQzMzUxN30.nVBSsgKGKPXuC8K8jZzon0Kfl-SSTFuKb4NkVGyKSDU'
 
       config.headers.Authorization = `Bearer ${token}`
       return config
@@ -29,3 +29,7 @@ mainApi.interceptors.response.use(
       return Promise.reject(error)
    }
 )
+
+export const getSpecialists = () => {
+   return mainApi.get('/api/doctors')
+}

@@ -56,10 +56,10 @@ const StyledModalDialog = styled(Dialog)(() => ({
 
    '& .MuiDialog-paper': {
       borderRadius: '16px',
-      maxWidth: '659px',
-      minWidth: '303px',
-      minHeight: '284px',
-      maxHeight: '468px',
+      // maxWidth: '659px',
+      // minWidth: '303px',
+      // minHeight: '284px',
+      // maxHeight: '468px',
       background: '#EBF2FC',
    },
 }))
@@ -75,7 +75,7 @@ const StyledModal = styled('div')(() => ({
    maxWidth: '100%',
    background: '#EBF2FC',
    boxSizing: 'border-box',
-   padding: '50px 40px 70px 40px',
+   // padding: '50px 40px 70px 40px',
    borderRadius: '20px',
 }))
 
