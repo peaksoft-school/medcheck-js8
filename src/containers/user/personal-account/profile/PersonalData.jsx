@@ -11,14 +11,15 @@ import {
 import { postDataProfieValid } from '../../../../utlis/helpers/general'
 
 const PersonalData = () => {
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify } = useToast()
 
    const postDataProfile = async (dataProfile) => {
       try {
          await postDataProfileService(dataProfile)
-         return console.log('post')
+
+         return notify('success', 'отправлено успешно')
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'ошибка')
       }
    }
 
@@ -50,7 +51,7 @@ const PersonalData = () => {
          console.log(data, 'data')
          return setValues(data)
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'ошибка')
       }
    }
 
