@@ -11,11 +11,27 @@ import { ReactComponent as VisibilityOff } from '../../../../assets/icons/Visibi
 import { ReactComponent as Visibility } from '../../../../assets/icons/Visibility.svg'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
+import { postChangePassword } from '../../../../api/profileService'
+import useToast from '../../../../hooks/useToast'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
+   const { ToastContainer, notify } = useToast()
+
+   const postPassword = async (password) => {
+      try {
+         const { data } = await postChangePassword(password)
+         if (data.message === 'Wrong old password.') {
+            return notify('error', 'неверный пароль')
+         }
+         notify('success', 'успешно')
+         return data
+      } catch (error) {
+         return notify('error', 'ОШИБКА')
+      }
+   }
 
    const {
       register,
@@ -31,7 +47,13 @@ const ChangePassword = () => {
    })
 
    function onSubmit(values) {
-      console.log('will come values', values)
+      // console.log('will come values', values)
+      const password = {
+         oldPassword: values.password,
+         newPassword: values.newPassword,
+      }
+
+      postPassword(password)
    }
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -46,6 +68,7 @@ const ChangePassword = () => {
 
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
+         {ToastContainer}
          <StyledTitleText>Смена пароля </StyledTitleText>
          <StyledForm>
             <div>
