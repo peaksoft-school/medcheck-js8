@@ -27,6 +27,8 @@ import MyApplicationDetails from '../containers/user/personal-account/myApplicat
 import ApplicationsPage from '../containers/admin/Applications.Page'
 import SchedulePage from '../containers/admin/Schedule.Page'
 import OnlineEntry from '../components/OnlineEntry'
+import AddSpecialist from '../containers/admin/AddSpecialist'
+import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)
@@ -103,6 +105,15 @@ const AppRoutes = () => {
                element={getAdminPage(ApplicationsPage)}
             />
             <Route path="specialists" element={getAdminPage(Specialists)} />
+            <Route
+               path="specialists/addSpecialist"
+               element={getAdminPage(AddSpecialist)}
+            />
+            <Route
+               path="specialists/:doctorId"
+               element={getAdminPage(UpdateSpecialist)}
+            />
+
             <Route path="patients" element={getAdminPage(Patients)} />
          </Route>
          <Route path="*" element={<NotFoundPage />} />

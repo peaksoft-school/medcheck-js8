@@ -27,10 +27,10 @@ export const SelectUi = ({
             label={label}
             onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
-            {...rest}
-            MenuProps={menuProps}
             inputProps={{ 'aria-label': 'Without label' }}
+            MenuProps={menuProps}
             displayEmpty
+            {...rest}
          >
             <MenuItem disabled value="" style={{ display: 'none' }}>
                {placeholder}

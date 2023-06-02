@@ -18,9 +18,11 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.7",
     "moment": "^2.29.4",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-i18next": "^12.3.1",
     "react-redux": "^8.0.5",
     "react-router": "^6.10.0",
     "react-router-dom": "^6.10.0",
@@ -29,7 +31,8 @@
     "react-time-picker": "^6.2.0",
     "react-toastify": "^9.1.2",
     "use-debounce": "^9.0.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
