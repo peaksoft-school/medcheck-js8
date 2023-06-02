@@ -49,11 +49,11 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                        return (
                                           <TableCell
                                              key={column.key}
-                                             // style={{
-                                             //    color: row.isActive
-                                             //       ? ''
-                                             //       : '#C9C9C9',
-                                             // }}
+                                             style={{
+                                                color: row.isActive
+                                                   ? ''
+                                                   : '#C9C9C9',
+                                             }}
                                           >
                                              {column.render(row)}
                                           </TableCell>
@@ -63,19 +63,15 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                        ? rowIndex + 1
                                        : row[column.key]
                                     return (
-                                       <TableCell
+                                       <StyledTableCell
                                           key={`row-${column.key}`}
                                           align={column.align}
-                                          // style={{
-                                          //    color: row.isActive
-                                          //       ? ''
-                                          //       : '#C9C9C9',
-                                          // }}
+                                          isActive={row.isActive}
                                        >
                                           <TableBodyTitleStyled>
                                              {value}
                                           </TableBodyTitleStyled>
-                                       </TableCell>
+                                       </StyledTableCell>
                                     )
                                  })}
                               </TableRow>
@@ -88,9 +84,7 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                            return (
                               <StyledTableRow
                                  key={row.id.toString()}
-                                 style={{
-                                    color: row.isActive ? '' : '#C9C9C9',
-                                 }}
+                                 isActive={row.isActive}
                               >
                                  {columns.map((column) => {
                                     if (column.render) {
@@ -128,10 +122,15 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
 
 export default AppTable
 
-const StyledTableRow = muiStyle(TableRow)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(({ isActive = true }) => ({
+   color: isActive ? '' : '#C9C9C9',
+}))
+
+const StyledTableRow = muiStyle(TableRow)(({ theme, isActive = true }) => ({
    '&:nth-of-type(even)': {
       backgroundColor: theme.palette.primary.backgroundAdmin,
    },
+   color: isActive ? '' : '#C9C9C9',
 }))
 const PaperStyled = styled(Paper)`
    width: 100%;
