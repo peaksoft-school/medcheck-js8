@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
@@ -90,6 +90,7 @@ const AppRoutes = () => {
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)}>
+               <Route index element={<Navigate to="online-appointment" />} />
                <Route
                   path="online-appointment"
                   element={getAdminPage(OnlineEntry)}

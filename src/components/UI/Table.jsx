@@ -43,7 +43,7 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                      <TableBody>
                         {rows.map((row, rowIndex) => {
                            return (
-                              <TableRow key={row.id.toString()}>
+                              <TableRow key={row.id || row.appointmentId}>
                                  {columns.map((column) => {
                                     if (column.render) {
                                        return (
@@ -120,7 +120,7 @@ const PaperStyled = styled(Paper)`
    width: 100%;
    overflow: hidden;
    margin: 0 auto;
-   height: 100vh;
+   height: 100%;
 `
 const TableHeaderStyled = styled('h3')`
    font-family: 'Manrope';

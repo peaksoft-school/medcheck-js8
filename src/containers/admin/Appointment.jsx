@@ -1,19 +1,57 @@
 import { styled } from '@mui/material/styles'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import useToast from '../../hooks/useToast'
 import Button from '../../components/UI/Button'
 import buttonPlusIcon from '../../assets/icons/ButtonPlusIcon.svg'
-import SearchInput from '../../components/UI/SeacrchInput'
+import AppointmentModal from '../../components/AppointmentModal'
+import {
+   getDepartmentRequest,
+   getDoctorRequest,
+} from '../../api/appointmentService'
 
 const Appointment = () => {
-   const { ToastContainer } = useToast()
-   // const [open, setOpen] = useState()
+   const { notify, ToastContainer } = useToast()
+   const [open, setOpen] = useState(false)
+   const [isLoading, setIsLoading] = useState(false)
+   const [patients, setPatients] = useState([])
+   const [doctors, setDoctors] = useState([])
 
+   useEffect(() => {
+      setPatients(patients)
+   }, [patients])
+
+   useEffect(() => {
+      const getDoctors = async () => {
+         try {
+            const doctorResponse = await getDoctorRequest()
+            setDoctors(doctorResponse.data)
+         } catch (error) {
+            notify('error', 'Ошибка')
+         }
+      }
+      getDoctors()
+   }, [])
+
+   const openModal = async () => {
+      setOpen(true)
+      try {
+         setIsLoading(true)
+         const departmentResponse = await getDepartmentRequest()
+         setIsLoading(false)
+         setPatients(departmentResponse.data)
+      } catch (error) {
+         notify('error', 'Ошибка')
+      }
+   }
+   const closeModal = () => {
+      setOpen(false)
+   }
    return (
       <MainContainer>
          <HeaderTitleBoxStyle>
             <p>Онлайн Запись</p>
-            <ButtonStyle>
+            <ButtonStyle onClick={openModal}>
                <span>
                   <img src={buttonPlusIcon} alt="plus" />
                </span>{' '}
@@ -41,12 +79,17 @@ const Appointment = () => {
                Расписание
             </NavLinkStyled>
          </NavLinkBox>
-         <SearchInputBox>
-            <SearchInput placeholder="Поиск" />
-         </SearchInputBox>
          <Outlet />
-
          {ToastContainer}
+
+         <AppointmentModal
+            toastContainer={ToastContainer}
+            isLoading={isLoading}
+            close={closeModal}
+            open={open}
+            departmentData={patients}
+            doctorData={doctors}
+         />
       </MainContainer>
    )
 }
@@ -83,19 +126,7 @@ const ButtonStyle = styled(Button)(() => ({
       },
    },
 }))
-const SearchInputBox = styled('div')(() => ({
-   '&': {
-      width: '600px',
-      marginBottom: '20px',
 
-      div: {
-         background: '#FFFFFF',
-      },
-      input: {
-         background: '#FFFFFF',
-      },
-   },
-}))
 const NavLinkStyled = styled(NavLink)(() => ({
    textDecoration: 'none',
    fontFamily: 'Manrope',

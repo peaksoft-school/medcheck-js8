@@ -12,7 +12,7 @@ const menuProps = {
    },
 }
 
-export const SelectUi = ({
+export const ServiceSelect = ({
    items,
    label,
    value,
@@ -36,9 +36,9 @@ export const SelectUi = ({
                {placeholder}
             </MenuItem>
             {items &&
-               items.map((item) => (
-                  <MenuItemStyle key={item.id} value={item.title}>
-                     {item.title}
+               items.map((item, index) => (
+                  <MenuItemStyle key={item.id || index} value={item.name}>
+                     {item.name}
                   </MenuItemStyle>
                ))}
          </SelectMui>
@@ -56,6 +56,7 @@ const SelectMui = styled(Select)(() => ({
    fontSize: '16px',
    lineHeight: '21.86px',
    color: '#4D4E51',
+   marginBottom: '18px',
 
    '&:hover': {
       '&& fieldset': {

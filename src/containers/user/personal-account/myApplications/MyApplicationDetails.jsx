@@ -82,7 +82,7 @@ const MyApplicationDetails = () => {
                      <Wrapper>
                         <P>Специалист</P>
                         <StyledInfoCustomer>
-                           {detailsCustomerID.changeSpecialist}
+                           {detailsCustomerID.title}
                         </StyledInfoCustomer>
                      </Wrapper>
                      <Wrapper>

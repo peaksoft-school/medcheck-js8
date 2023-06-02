@@ -1,14 +1,16 @@
 /* eslint-disable func-names */
+
 import axios from 'axios'
 import { store } from '../redux/store'
 
 export const mainApi = axios.create({
-   baseURL: 'http://medcheck.peaksoftprojects.com',
+   baseURL: 'http://backend.medcheck.peaksoftprojects.com',
 })
 
 mainApi.interceptors.request.use(
    function (config) {
       const { token } = store.getState().auth
+
       if (token) {
          config.headers.Authorization = `Bearer ${token}`
       }
