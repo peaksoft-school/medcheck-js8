@@ -49,11 +49,11 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                        return (
                                           <TableCell
                                              key={column.key}
-                                             style={{
-                                                color: row.isActive
-                                                   ? ''
-                                                   : '#C9C9C9',
-                                             }}
+                                             // style={{
+                                             //    color: row.isActive
+                                             //       ? ''
+                                             //       : '#C9C9C9',
+                                             // }}
                                           >
                                              {column.render(row)}
                                           </TableCell>
@@ -66,11 +66,11 @@ const AppTable = ({ rows, columns, tableCellStyle = true }) => {
                                        <TableCell
                                           key={`row-${column.key}`}
                                           align={column.align}
-                                          style={{
-                                             color: row.isActive
-                                                ? ''
-                                                : '#C9C9C9',
-                                          }}
+                                          // style={{
+                                          //    color: row.isActive
+                                          //       ? ''
+                                          //       : '#C9C9C9',
+                                          // }}
                                        >
                                           <TableBodyTitleStyled>
                                              {value}
