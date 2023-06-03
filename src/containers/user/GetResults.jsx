@@ -1,7 +1,7 @@
 import { styled as styledMui } from '@mui/material/styles'
 import { TextField } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useState } from 'react'
 import getResultBackgroundImage from '../../assets/images/getResultBackgroundImage.png'
 import medcheckIcon from '../../assets/icons/MedcheckLogo.svg'
 import medcheck from '../../assets/icons/MedCheckIcon.svg'
@@ -9,20 +9,20 @@ import Button from '../../components/UI/Button'
 import { getResultRequest } from '../../api/getResultService'
 
 const GetResults = () => {
-   const getResult = async () => {
+   const [resultInputValue, setResultInputValue] = useState('')
+
+   const getResultInputChangeHandler = (event) => {
+      setResultInputValue(event.target.value)
+   }
+   const getResultHandler = async () => {
       try {
-         const { data } = await getResultRequest()
+         const { data } = await getResultRequest(resultInputValue)
          console.log(data)
       } catch (error) {
          console.log(error)
       }
    }
 
-   useEffect(() => {
-      getResult()
-   }, [])
-
-   const getResultHandler = () => {}
    return (
       <BackgroundImage>
          <ImageStyle>
@@ -36,7 +36,11 @@ const GetResults = () => {
                   </NavLink>
                </LogoBox>
                <UiBox>
-                  <InputStyle placeholder="Введите номер заказа..." />
+                  <InputStyle
+                     placeholder="Введите номер заказа..."
+                     onChange={getResultInputChangeHandler}
+                     value={resultInputValue}
+                  />
                   <div>
                      <ButtonStyle
                         onClick={getResultHandler}

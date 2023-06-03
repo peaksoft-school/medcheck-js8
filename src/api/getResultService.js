@@ -1,5 +1,9 @@
 import { mainApi } from './instanses'
 
-export const getResultRequest = () => {
-   return mainApi.get('/api/results')
+export const getResultRequest = (orderNumber) => {
+   return mainApi.get('/api/results', {
+      params: {
+         orderNumber,
+      },
+   })
 }
