@@ -2,12 +2,14 @@ import React from 'react'
 import { Outlet } from 'react-router'
 import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import PersonalData from './PersonalData'
 import ChangePassword from './ChangePassword'
+import Path from '../../../../components/UI/Path'
+import PersonalData from './PersonalData'
 
 const ProfileLayout = () => {
    return (
       <Container>
+         <Path />
          <StyledTitleText>Профиль</StyledTitleText>
          <NavlinkStyle to="personal-data" element={<PersonalData />}>
             Личные данные

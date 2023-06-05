@@ -7,6 +7,8 @@ const BASE_URL = 'http://backend.medcheck.peaksoftprojects.com'
 
 export const mainApi = axios.create({
    baseURL: BASE_URL,
+
+   // baseURL: 'http://backend.medcheck.peaksoftprojects.com',
 })
 
 mainApi.interceptors.request.use(
