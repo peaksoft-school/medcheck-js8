@@ -1,5 +1,4 @@
-import axios from 'axios'
-import { mainApi } from './instanses'
+import { fileInstance, mainApi } from './instanses'
 
 export const getPatients = (searchValue) => {
    return mainApi.get('/api/patients', {
@@ -14,6 +13,6 @@ export const deletePatientService = (id) => {
 export const putPatients = (data) => {
    return mainApi.post('/api/results', data)
 }
-export const uploadFiles = () => {
-   return axios.post('http://backend.medcheck.peaksoftprojects.com/api/s3')
+export const uploadFiles = (body) => {
+   return fileInstance.post('/api/s3', body)
 }
