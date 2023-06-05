@@ -1,16 +1,20 @@
+/* eslint-disable func-names */
+
 import axios from 'axios'
-// import { store } from '../redux/store'
+import { store } from '../redux/store'
+
+const BASE_URL = 'http://backend.medcheck.peaksoftprojects.com'
 
 export const mainApi = axios.create({
-   baseURL: 'http://backend.medcheck.peaksoftprojects.com',
+   baseURL: BASE_URL,
 })
 
 mainApi.interceptors.request.use(
    function (config) {
-      const token =
-         'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2ODU0MzIwNzcsImV4cCI6MTY4NTQzMzUxN30.nVBSsgKGKPXuC8K8jZzon0Kfl-SSTFuKb4NkVGyKSDU'
-
-      config.headers.Authorization = `Bearer ${token}`
+      const { token } = store.getState().auth
+      if (token) {
+         config.headers.Authorization = `Bearer ${token}`
+      }
       return config
    },
 
@@ -18,6 +22,7 @@ mainApi.interceptors.request.use(
       return Promise.reject(error)
    }
 )
+
 mainApi.interceptors.response.use(
    function (response) {
       return response
@@ -30,6 +35,34 @@ mainApi.interceptors.response.use(
    }
 )
 
-export const getSpecialists = () => {
-   return mainApi.get('/api/doctors')
-}
+export const fileInstance = axios.create({
+   baseURL: BASE_URL,
+   headers: {
+      'Content-Type': 'multipart/form-data',
+   },
+})
+
+fileInstance.interceptors.request.use(
+   function (config) {
+      const { token } = store.getState().auth
+      if (token) {
+         config.headers.Authorization = `Bearer ${token}`
+      }
+      return config
+   },
+
+   function (error) {
+      return Promise.reject(error)
+   }
+)
+fileInstance.interceptors.response.use(
+   function (response) {
+      return response
+   },
+   function (error) {
+      if (error.response && error.response.status === 401) {
+         throw new Error('401 unauthorized')
+      }
+      return Promise.reject(error)
+   }
+)

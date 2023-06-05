@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/icons/closeIcon.svg'
-import { ReactComponent as Show } from '../../../assets/login/CloseIcon.svg'
+import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../../assets/login/image 90.svg'
 import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
-import { ModalUi } from '../../../components/UI/ModalUi'
+import BasicModal from '../../../components/UI/ModalUi'
+import { signUp } from '../../../redux/reducers/auth/auth.thunk'
+import useToast from '../../../hooks/useToast'
 
-const SignUp = () => {
+const SignUp = ({ open, onClose, openSignInHandler }) => {
+   const dispatch = useDispatch()
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
-   const [modal, setModal] = useState(false)
+   const { notify } = useToast()
 
    const {
       register,
@@ -23,16 +27,17 @@ const SignUp = () => {
    } = useForm({
       mode: 'all',
       defaultValues: {
-         name: '',
-         surname: '',
-         number: '',
+         firstName: '',
+         lastName: '',
+         phoneNumber: '',
          email: '',
          password: '',
          copyPassword: '',
       },
    })
    function onSubmit(values) {
-      console.log('will come values', values)
+      dispatch(signUp({ values, notify }))
+      onClose()
    }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -47,20 +52,22 @@ const SignUp = () => {
       e.preventDefault()
    }
 
-   const closeModalHandler = () => {
-      setModal(false)
+   const navigateToSignIn = (e) => {
+      e.preventDefault()
+      openSignInHandler()
    }
+
    return (
-      <ModalUi open={modal} onClose={closeModalHandler}>
+      <BasicModal open={open} onClose={onClose}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
-            <CloseIcon className="closeIcon" />
+            <CloseIcon className="closeIcon" onClick={onClose} />
             <FormLabel className="topic">РЕГИСТРАЦИЯ</FormLabel>
             <div className="inputContainer">
                <Input
                   placeholder="Имя"
                   className="inputStyle"
                   error={errors.name}
-                  {...register('name', {
+                  {...register('firstName', {
                      required: 'поле не заполнено',
                   })}
                />
@@ -71,7 +78,7 @@ const SignUp = () => {
                   placeholder="Фамилия"
                   className="inputStyle"
                   error={errors.surname}
-                  {...register('surname', {
+                  {...register('lastName', {
                      required: 'поле не заполнено',
                   })}
                />
@@ -82,7 +89,7 @@ const SignUp = () => {
                   placeholder="+996 (_ _ _) _ _  _ _  _ _ "
                   className="inputStyle"
                   error={errors.number}
-                  {...register('number', {
+                  {...register('phoneNumber', {
                      required: 'поле не заполнено',
                   })}
                />
@@ -133,7 +140,7 @@ const SignUp = () => {
                <Input
                   placeholder="Повторите пароль"
                   className="inputStyle"
-                  error={errors.copyPassword}
+                  error={errors.password}
                   {...register('copyPassword', {
                      required: 'поле не заполнено',
                      maxLength: { value: 15, message: 'слишком много деталей' },
@@ -170,22 +177,24 @@ const SignUp = () => {
                   Зарегистрироваться с Google
                </NavLink>
             </Button>
-            <NavLink className="register" href="/">
-               <span>У вас уже есть аккаунт?</span> Войти
-            </NavLink>
+            <div className="register">
+               <span>У вас уже есть аккаунт?</span>
+               <Link to="/" onClick={navigateToSignIn}>
+                  Войти
+               </Link>
+            </div>
          </FormControlStyled>
-      </ModalUi>
+      </BasicModal>
    )
 }
 
 export default SignUp
 
 const FormControlStyled = styled('form')(() => ({
-   height: '800px',
+   height: '700px',
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
-   marginLeft: ' 35%',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .inputContainer': {
       marginTop: '14px',
@@ -203,6 +212,7 @@ const FormControlStyled = styled('form')(() => ({
    '& .closeIcon': {
       marginLeft: '450px',
       marginTop: '19px',
+      cursor: 'pointer',
    },
    '& .inputStyle': {
       width: '414px',

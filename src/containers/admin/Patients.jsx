@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { Grid, IconButton, styled, Paper } from '@mui/material'
 import { useNavigate } from 'react-router'
+import { useDebounce } from 'use-debounce'
 import SearchInput from '../../components/UI/SeacrchInput'
 import AppTable from '../../components/UI/Table'
 import { ReactComponent as NumberIcon } from '../../assets/table/NumberIcon.svg'
@@ -11,18 +12,34 @@ import useToast from '../../hooks/useToast'
 const Patients = () => {
    const navigate = useNavigate()
    const [patients, setPatients] = useState([])
-   const { ToastContainer, notifyCall } = useToast()
+   const [inputVal, setInputVal] = useState('')
+   const [debouncedQuery] = useDebounce(inputVal, 400)
+   const { ToastContainer, notify: notifyCall } = useToast()
+
+   // eslint-disable-next-line consistent-return
    const getAllPatients = async () => {
       try {
-         const { data } = await getPatients()
-         return setPatients(data)
+         if (debouncedQuery) {
+            const { data } = await getPatients(inputVal)
+            return setPatients(data)
+         }
+         {
+            const { data } = await getPatients()
+            setPatients(data)
+         }
       } catch (error) {
          return notifyCall('error', error.response?.data.message)
       }
    }
+
    useEffect(() => {
       getAllPatients()
-   }, [])
+   }, [inputVal, debouncedQuery])
+
+   const searchChangeHandler = (event) => {
+      setInputVal(event.target.value)
+   }
+
    const deletePatient = async ({ id }) => {
       try {
          await deletePatientService(id)
@@ -32,20 +49,16 @@ const Patients = () => {
          return notifyCall('error', error.response?.data.message)
       }
    }
-   const clickHand = (patient) => {
-      console.log(patient)
-   }
    const deleteHandler = (id) => {
       deletePatient({ id })
    }
    const column = useMemo(() => [
       {
          header: <NumberIcon />,
-         key: 'id',
+         render: (patient) => <P>{patient.id}</P>,
       },
       {
          header: 'Имя и фамилия',
-         key: 'name,sname',
          render: (patient) => (
             <Grid>
                <P
@@ -61,7 +74,6 @@ const Patients = () => {
       },
       {
          header: 'Номер телефона',
-         key: 'telNumber',
          render: (patient) => (
             <Grid>
                <P
@@ -77,7 +89,6 @@ const Patients = () => {
 
       {
          header: 'Почта',
-         key: 'mail',
          render: (patient) => (
             <Grid>
                <P
@@ -92,7 +103,6 @@ const Patients = () => {
       },
       {
          header: 'Дата сдачи',
-         key: 'date',
          render: (patient) => (
             <Grid>
                <P
@@ -107,10 +117,8 @@ const Patients = () => {
       },
       {
          header: 'Действия',
-         key: 'delete',
          render: (patient) => (
             <Grid style={{ textAlign: 'center' }}>
-               {/* <IconButton> */}
                <IconButton onClick={() => deleteHandler(patient.id)}>
                   <DeleteIcon />
                </IconButton>
@@ -122,11 +130,15 @@ const Patients = () => {
       <PatientStyle>
          <p className="topic">Пациенты</p>
          <div className="search">
-            <SearchInput placeholder="Поиск" />
+            <SearchInput
+               placeholder="Поиск"
+               onChange={searchChangeHandler}
+               value={inputVal}
+            />
          </div>
          <PaperStyled>
             {ToastContainer}
-            <AppTable rows={patients} columns={column} onClick={clickHand} />
+            <AppTable key={patients.id} rows={patients} columns={column} />
          </PaperStyled>
       </PatientStyle>
    )
@@ -134,9 +146,12 @@ const Patients = () => {
 
 export default Patients
 
-const P = styled('p')({})
+const P = styled('p')({
+   color: '#222222',
+})
 const PaperStyled = styled(Paper)({
    width: '1300px',
+   height: '1374px',
    margin: 'auto',
    marginTop: '20px',
    borderRadius: '6px',

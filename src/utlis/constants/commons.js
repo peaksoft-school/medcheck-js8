@@ -1,9 +1,12 @@
 export const UserRoles = {
    GUEST: 'GUEST',
-   USER: 'USER',
+   PATIENT: 'PATIENT',
    ADMIN: 'ADMIN',
 }
 
+export const STORAGE_KEYS = {
+   AUTH: 'AUTH',
+}
 export const item = [
    {
       id: '1',
@@ -82,44 +85,5 @@ export const appointmentData = [
       date: '12.01.2023',
       time: '15:00',
       status: 'Completed',
-   },
-]
-
-export const patientData = [
-   {
-      id: '1',
-      number: 1,
-      name: 'Айназик ',
-      sname: ' Адамова',
-      telNumber: '+996 707 123 456',
-      mail: 'ainazik@gmail.com',
-      date: '-',
-   },
-   {
-      id: '2',
-      number: 2,
-      name: 'Айназик ',
-      sname: ' Бакытова',
-      telNumber: '+996 707 123 456',
-      mail: 'ainazik@gmail.com',
-      date: '-',
-   },
-   {
-      id: '3',
-      number: 3,
-      name: 'Булут ',
-      sname: ' Бакыт',
-      telNumber: '+996 707 123 456',
-      mail: 'ainazik@gmail.com',
-      date: '12.01.1985',
-   },
-   {
-      id: '4',
-      number: 4,
-      name: 'Лейла ',
-      sname: ' Асман',
-      telNumber: '+996 707 123 456',
-      mail: 'ainazik@gmail.com',
-      date: '12.12.2012',
    },
 ]

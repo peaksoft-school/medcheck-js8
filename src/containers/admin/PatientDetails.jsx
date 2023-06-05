@@ -3,9 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FormLabel, IconButton, Paper, styled } from '@mui/material'
 import { format, isValid } from 'date-fns'
 import { useDispatch } from 'react-redux'
-// import { patientData } from '../../utlis/constants/commons'
+import ModalUi from '../../components/UI/ModalUi'
 import Button from '../../components/UI/Button'
-import { ModalUi } from '../../components/UI/ModalUi'
 import { SelectUi } from '../../components/UI/SelectUi'
 import { MED_SERVICE } from '../../utlis/services/img_service'
 import Calendar from '../../components/UI/calendar/Calendar'
@@ -14,20 +13,19 @@ import { getPatients } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
 import AvatarUpload from '../../components/UI/avatar/Avatar'
 import { putDatas } from '../../redux/reducers/patient/patient.thunk'
+import { fileInstance } from '../../api/instanses'
 
 const PatientDetails = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { ToastContainer, notifyCall } = useToast()
-   // const { allPatients } = useSelector((state) => state.patient)
-   console.log(id)
+   const { ToastContainer, notify: notifyCall } = useToast()
    const [open, setOpen] = useState(false)
    const [name, setName] = useState('')
    const [patients, setPatients] = useState([])
+   // const [results, setResults] = useState([])
    const [inputDate, setInputDate] = useState('')
    const [selectedFile, setSelectedFile] = useState(null)
-   console.log(patients)
    const getAllPatients = async () => {
       try {
          const { data } = await getPatients()
@@ -39,11 +37,11 @@ const PatientDetails = () => {
    useEffect(() => {
       getAllPatients()
    }, [])
-
    const findPatient = useMemo(() => {
       return patients.find((el) => String(el.id) === id)
    }, [id, patients])
-   console.log(findPatient)
+   console.log(patients)
+
    const handleOpen = () => {
       setOpen(true)
    }
@@ -64,6 +62,10 @@ const PatientDetails = () => {
    const fileChange = (event) => {
       const formData = new FormData()
       formData.append('file', event.target.files[0])
+      fileInstance
+         .post('api/s3', formData)
+         .then((responce) => setSelectedFile(responce.data.link))
+         .catch((error) => notifyCall('error', error))
    }
 
    let date = ''
@@ -73,23 +75,20 @@ const PatientDetails = () => {
    }
    const submitHandler = () => {
       try {
-         if (name.length >= 2 && date.length >= 2) {
+         if (name && date && selectedFile) {
             const datasOfPatient = {
-               name,
-               dateOfIssue: date,
+               departmentId: name,
+               date: new Date(date),
                patientId: findPatient.id,
-               firstName: findPatient?.firstName,
-               file: formData,
+               file: selectedFile,
             }
             dispatch(putDatas(datasOfPatient))
-            console.log(datasOfPatient)
             notifyCall('success', 'The data has successfully sent!')
             navigate(`${findPatient?.id}/results`)
          } else {
             notifyCall('error', 'This is error message')
          }
       } catch (error) {
-         console.error(error)
          notifyCall('error', 'This is error message')
       }
    }

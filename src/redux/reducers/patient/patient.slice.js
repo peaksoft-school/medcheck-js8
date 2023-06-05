@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {
-   putDatas,
-   // getAllpatientsThunk,
-   // getAllpatientsResults,
-   // removePatientRequest,
-} from './patient.thunk'
+import { putDatas } from './patient.thunk'
 
-const initialState = {
-   allPatients: [],
-   error: '',
-   isLoading: '',
-   result: '',
+const initialState = () => {
+   const json = localStorage.getItem('patient')
+   if (json) {
+      const userData = JSON.parse(json)
+      return {
+         error: userData.error,
+         isLoading: userData.isLoading,
+         allDatas: userData.allDatas,
+      }
+   }
+   return { allDatas: [], error: '', isLoading: '' }
 }
 const patientSlice = createSlice({
    name: 'patient',
@@ -18,46 +19,17 @@ const patientSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder.addCase(putDatas.rejected, (state, action) => {
-         console.log(action)
-         // state.name = action.payload.name
-         // state.dateOfRes = action.payload.date
+         state.error = action.error
+         state.isLoading = false
       })
       builder.addCase(putDatas.pending, (state) => {
          state.isLoading = true
-         // state.name = action.payload.name
-         // state.dateOfRes = action.payload.date
       })
-      // builder.addCase(getAllpatientsResults.fulfilled, (state, action) => {
-      //    state.result = action.payload
-      //    state.error = ''
-      // })
-      // builder.addCase(getAllpatientsThunk.fulfilled, (state, action) => {
-      //    console.log(action)
-      //    state.allPatients = action.payload
-      //    state.isLoading = false
-      //    state.error = ''
-      // })
-
-      // builder.addCase(getAllpatientsThunk.pending, (state) => {
-      //    state.isLoading = true
-      // })
-
-      // builder.addCase(getAllpatientsThunk.rejected, (state, action) => {
-      //    state.isLoading = false
-      //    state.error = action.payload
-      // })
-      // builder.addCase(removePatientRequest.fulfilled, (state) => {
-      //    state.isLoading = false
-      //    state.error = ''
-      // })
-      // builder.addCase(removePatientRequest.pending, (state) => {
-      //    state.isLoading = true
-      // })
-      // builder.addCase(removePatientRequest.rejected, (state, action) => {
-      //    state.isLoading = false
-      //    state.error = action.payload
-      // })
+      builder.addCase(putDatas.fulfilled, (state, actions) => {
+         state.isLoading = false
+         state.allDatas = actions.payload
+      })
    },
 })
 export const patientActions = patientSlice.actions
-export default patientSlice.reducer
+export default patientSlice

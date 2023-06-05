@@ -1,34 +1,37 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
 import UserLayout from '../layout/user/UserLayout'
-import NotFoundPage from '../pages/NotFoundPage'
-import AboutClinic from '../pages/user/AboutClinic'
-import Service from '../pages/user/Service'
-import GetResults from '../pages/user/GetResults'
-import ServiceDetails from '../pages/user/ServiceDetails'
-import Doctors from '../pages/user/Doctors'
-import DoctorDetails from '../pages/user/DoctorDetails'
-import Price from '../pages/user/Price'
-import Contacts from '../pages/user/Contacts'
-import Main from '../pages/user/Main'
+import NotFoundPage from '../containers/NotFoundPage'
+import AboutClinic from '../containers/user/AboutClinic'
+import Service from '../containers/user/Service'
+import GetResults from '../containers/user/GetResults'
+import ServiceDetails from '../containers/user/ServiceDetails'
+import Doctors from '../containers/user/Doctors'
+import DoctorDetails from '../containers/user/DoctorDetails'
+import Price from '../containers/user/Price'
+import Contacts from '../containers/user/Contacts'
+import Main from '../containers/user/Main'
 import AdminLayout from '../layout/admin/Index'
-import Appointment from '../pages/admin/Appointment'
-import Applications from '../pages/admin/Applications'
-import Specialists from '../pages/admin/Specialists'
-import Patients from '../pages/admin/Patients'
-import ProfileLayout from '../pages/user/personal-account/profile/ProfileLayout'
-import PersonalData from '../pages/user/personal-account/profile/PersonalData'
-import ChangePassword from '../pages/user/personal-account/profile/ChangePassword'
-import MyApplications from '../pages/user/personal-account/myApplications/MyApplications'
-import MyApplicationDetails from '../pages/user/personal-account/myApplications/MyApplicationDetails'
-import PatientDetails from '../pages/admin/PatientDetails'
-import PatientResult from '../pages/admin/PatientResult'
+import Appointment from '../containers/admin/Appointment'
+import Specialists from '../containers/admin/Specialists'
+import Patients from '../containers/admin/Patients'
+import ProfileLayout from '../containers/user/personal-account/profile/ProfileLayout'
+import PersonalData from '../containers/user/personal-account/profile/PersonalData'
+import ChangePassword from '../containers/user/personal-account/profile/ChangePassword'
+import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
+import MyApplicationDetails from '../containers/user/personal-account/myApplications/MyApplicationDetails'
+import ApplicationsPage from '../containers/admin/Applications.Page'
+import AddSpecialist from '../containers/admin/AddSpecialist'
+import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
+import PatientResult from '../containers/admin/PatientResult'
+import PatientDetails from '../containers/admin/PatientDetails'
 
 const AppRoutes = () => {
-   const role = 'ADMIN'
+   const role = useSelector((state) => state.auth.role)
 
    const isAllowed = (roles) => {
       return roles.includes(role)
@@ -36,7 +39,7 @@ const AppRoutes = () => {
 
    const getUserPage = (component) => (
       <ProtectedRoute
-         isAllowed={isAllowed([UserRoles.GUEST, UserRoles.USER])}
+         isAllowed={isAllowed([UserRoles.GUEST, UserRoles.PATIENT])}
          fallbackPath="/admin/appointment"
          component={component}
       />
@@ -89,8 +92,20 @@ const AppRoutes = () => {
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)} />
-            <Route path="applications" element={getAdminPage(Applications)} />
+            <Route
+               path="applications"
+               element={getAdminPage(ApplicationsPage)}
+            />
             <Route path="specialists" element={getAdminPage(Specialists)} />
+            <Route
+               path="specialists/addSpecialist"
+               element={getAdminPage(AddSpecialist)}
+            />
+            <Route
+               path="specialists/:doctorId"
+               element={getAdminPage(UpdateSpecialist)}
+            />
+
             <Route path="patients" element={getAdminPage(Patients)} />
             <Route
                path="patients/:id/details"
