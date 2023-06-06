@@ -1,7 +1,10 @@
+// import html2canvas from 'html2canvas'
+// import jsPDF from 'jspdf'
 import { styled as styledMui } from '@mui/material/styles'
 import { TextField } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import ReactToPrint, { useReactToPrint } from 'react-to-print'
 import getResultBackgroundImage from '../../assets/images/getResultBackgroundImage.png'
 import medcheckIcon from '../../assets/icons/MedcheckLogo.svg'
 import medcheck from '../../assets/icons/MedCheckIcon.svg'
@@ -11,13 +14,16 @@ import cross from '../../assets/icons/cross.svg'
 import pdfIcon from '../../assets/icons/PdfIcon.svg'
 import printIcon from '../../assets/icons/printIcon.svg'
 import useToast from '../../hooks/useToast'
-import ApplicationsDocument from '../../components/ApplicationsDocument'
+import barcodeIcon from '../../assets/icons/barcodeIcon.svg'
 
 const GetResults = () => {
    const { notify, ToastContainer } = useToast()
    const [resultInputValue, setResultInputValue] = useState('')
    const [getResult, setGetResult] = useState([])
    const [successfullyGetResult, setSuccessfullyGetResult] = useState(false)
+   // const pdfRef = useRef(null)
+   const componentRef = useRef(null)
+
    const getResultInputChangeHandler = (event) => {
       setResultInputValue(event.target.value)
    }
@@ -32,111 +38,159 @@ const GetResults = () => {
          notify('error', 'Error')
       }
    }
+   const handlePrint = useReactToPrint({
+      content: () => componentRef.current,
+   })
 
    const closeResultHandler = () => {
       setSuccessfullyGetResult(false)
    }
+   // const handleSavePDF = () => {
+   //    // const pdfWidth = pdfRef.current.offsetWidth
+   //    //  Get the width of the reference box element
+   //    // const pdfHeight = pdfRef.current.offsetHeight
+   //    //  Get the height of the reference box element
+   //    // // eslint-disable-next-line new-cap
+   //    // const pdf = new jsPDF() // Set the PDF dimensions based on the reference box size
+
+   //    // eslint-disable-next-line new-cap
+   //    const doc = new jsPDF('p', 'pt', 'letter')
+
+   //    doc.html(pdfRef.current, {
+   //       callback: (doc) => {
+   //          console.log(doc)
+   //          doc.save()
+   //       },
+   //    })
+
+   //    // html2canvas(pdfRef.current).then((canvas) => {
+   //    //    const imgData = canvas.toDataURL('image/png')
+   //    //    // eslint-disable-next-line new-cap
+   //    //    const pdf = new jsPDF('p', 'px', [pdfWidth
+   //    // , pdfHeight]) // Set the PDF dimensions based on the reference box size
+   //    //    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+   //    //    pdf.save('document.pdf')
+   //    // })
+   // }
 
    return (
-      <BackgroundImage>
-         <ImageStyle>
-            {ToastContainer}
-            {successfullyGetResult ? (
-               <>
-                  <InfoBoxStyle>
-                     <ExtraditionBoxStyle>
-                        <h3>Выдача результатов</h3>
-                        <div>
-                           <CloseResultButton onClick={closeResultHandler}>
-                              <img src={cross} alt="cross" />
-                              Закрыть результаты
-                           </CloseResultButton>
-                           <PdfButtonStyle>
-                              <img src={pdfIcon} alt="pdf" />
-                              pdf
-                           </PdfButtonStyle>
-                           <PrintButtonStyle>
-                              <img src={printIcon} alt="print" />
-                              Распечатать
-                           </PrintButtonStyle>
-                        </div>
-                     </ExtraditionBoxStyle>
-                     <p>Вы можете:</p>
-                     <ul>
-                        <li>
-                           Просмотреть свои результаты анализов онлайн
-                           Вы можете, введя в поле слева индивидуальный цифровой
-                           код, который указан в верхней части Вашей квитанции
-                           под штрих-кодом;
-                        </li>
-                        <li>
-                           Распечатать результат можно непосредсвенно с этой
-                           страницы или сохранить в PDF формате с помощью
-                           кнопок, расположенной в верхней части сайта;
-                        </li>
-                        <li>
-                           При возникновении проблем с отображением результатов,
-                           Вы можете оставить заявку на получение результатов
-                           по электронной почте, позвонив в Службу поддержки
-                           клиентов по номеру 909 090
-                        </li>
-                     </ul>
-                  </InfoBoxStyle>
-                  <ApplicationsDocument getResult={getResult} />
-               </>
-            ) : (
-               <InfoBoxStyle>
-                  <h3>Выдача результатов</h3>
-                  <p>Вы можете:</p>
-                  <ul>
-                     <li>
-                        Просмотреть свои результаты анализов онлайн Вы можете,
-                        введя в поле слева индивидуальный цифровой код, который
-                        указан в верхней части Вашей квитанции под штрих-кодом;
-                     </li>
-                     <li>
-                        Распечатать результат можно непосредсвенно с этой
-                        страницы или сохранить в PDF формате с помощью кнопок,
-                        расположенной в верхней части сайта;
-                     </li>
-                     <li>
-                        При возникновении проблем с отображением результатов,
-                        Вы можете оставить заявку на получение результатов
-                        по электронной почте, позвонив в Службу поддержки
-                        клиентов по номеру 909 090
-                     </li>
-                  </ul>
-               </InfoBoxStyle>
-            )}
-
-            <Box>
-               <LogoBox>
-                  <NavLink to="/">
-                     <img src={medcheckIcon} alt="logo" />
-                  </NavLink>
-                  <NavLink to="/">
-                     <LogoStyle src={medcheck} alt="medcheck" />
-                  </NavLink>
-               </LogoBox>
-               <UiBox>
-                  <InputStyle
-                     placeholder="Введите номер заказа..."
-                     onChange={getResultInputChangeHandler}
-                     value={resultInputValue}
-                  />
-                  <div>
-                     <ButtonStyle
-                        onClick={getResultHandler}
-                        variant="contained"
-                     >
-                        найти
-                     </ButtonStyle>
-                  </div>
-               </UiBox>
-            </Box>
+      <ImageStyle>
+         {ToastContainer}
+         <Box>
+            <LogoBox>
+               <NavLink to="/">
+                  <img src={medcheckIcon} alt="logo" />
+               </NavLink>
+               <NavLink to="/">
+                  <LogoStyle src={medcheck} alt="medcheck" />
+               </NavLink>
+            </LogoBox>
+            <UiBox>
+               <InputStyle
+                  placeholder="Введите номер заказа..."
+                  onChange={getResultInputChangeHandler}
+                  value={resultInputValue}
+               />
+               <div>
+                  <ButtonStyle onClick={getResultHandler} variant="contained">
+                     найти
+                  </ButtonStyle>
+               </div>
+            </UiBox>
+         </Box>
+         <LineBox>
             <Line />
-         </ImageStyle>
-      </BackgroundImage>
+         </LineBox>
+         <ContainerPdf>
+            <InfoBoxStyle>
+               <ButtonResultBox>
+                  <h3>Выдача результатов</h3>
+                  {successfullyGetResult && (
+                     <ContainerButtons>
+                        <CloseResultButton onClick={closeResultHandler}>
+                           <img src={cross} alt="крестикинолики:)" />
+                           Закрыть
+                        </CloseResultButton>
+                        <PdfButtonStyle>
+                           <img src={pdfIcon} alt="pdf" />
+                           PDF
+                        </PdfButtonStyle>
+                        <ReactToPrint
+                           // eslint-disable-next-line react/no-unstable-nested-components
+                           trigger={() => (
+                              <PrintButtonStyle onClick={handlePrint}>
+                                 <img src={printIcon} alt="print" />
+                                 Распечатать
+                              </PrintButtonStyle>
+                           )}
+                           content={() => componentRef.current}
+                        />
+                     </ContainerButtons>
+                  )}
+               </ButtonResultBox>
+
+               <p>Вы можете:</p>
+               <ul>
+                  <li>
+                     Просмотреть свои результаты анализов онлайн Вы можете,
+                     введя в поле слева индивидуальный цифровой код, который
+                     указан в верхней части Вашей квитанции под штрих-кодом;
+                  </li>
+                  <li>
+                     Распечатать результат можно непосредсвенно с этой страницы
+                     или сохранить в PDF формате с помощью кнопок, расположенной
+                     в верхней части сайта;
+                  </li>
+                  <li>
+                     При возникновении проблем с отображением результатов,
+                     Вы можете оставить заявку на получение результатов
+                     по электронной почте, позвонив в Службу поддержки клиентов
+                     по номеру 909 090
+                  </li>
+               </ul>
+            </InfoBoxStyle>
+            {successfullyGetResult && (
+               <div ref={componentRef}>
+                  <ReferenceBoxStyle>
+                     <LogoReferenceBox>
+                        <div>
+                           <LogoReferenceStyle src={medcheckIcon} alt="logo" />
+                           <LogoMedcheckStyle src={medcheck} alt="medcheck" />
+                        </div>
+                        <BoxStyle>
+                           <p>
+                              № заявки для просмотра результатов анализов на
+                              сайте
+                              <a href="/">MedCheck-me.ru</a>
+                           </p>
+                           <img src={barcodeIcon} alt="barcode" />
+                        </BoxStyle>
+                     </LogoReferenceBox>
+
+                     <GetResultsInfoStyle>
+                        <div>
+                           <h3>Услуга: {getResult.name}</h3>
+                        </div>
+                        <div>
+                           <p>Пациент: {getResult.patientFullName}</p>
+                           <p>Телефон :{getResult.patientPhoneNumber}</p>
+                           <p>Email :{getResult.patientEmail}</p>
+                        </div>
+                        <div>
+                           № заявки
+                           <h2>{getResult.orderNumber}</h2>
+                        </div>
+                     </GetResultsInfoStyle>
+                     <h3>Внимание!!!</h3>
+                     <TitleStyle>
+                        В случае сомнительного результата,лаборатория оставляет
+                        за собой право задержать результат для перепроверки.
+                     </TitleStyle>
+                  </ReferenceBoxStyle>
+               </div>
+            )}
+         </ContainerPdf>
+      </ImageStyle>
    )
 }
 
@@ -146,22 +200,16 @@ const LogoStyle = styledMui('img')({
    marginTop: '30px',
 })
 const ImageStyle = styledMui('div')({
-   position: 'absolute',
-   top: 0,
-   left: 0,
    width: '100vw',
    height: '100vh',
    backgroundImage: `url(${getResultBackgroundImage})`,
    backgroundSize: 'cover',
    backgroundPosition: 'center',
-   zIndex: -1,
-})
-const BackgroundImage = styledMui('div')({
-   position: 'relative',
+   display: 'flex',
 })
 
 const Box = styledMui('div')({
-   width: '35.6944vw',
+   width: '35.7vw',
    height: '215px',
    background: '#FFFFFF',
    borderRadius: '10px',
@@ -184,6 +232,9 @@ const InputStyle = styledMui(TextField)({
    '&': {
       width: '300px',
       paddingTop: '10px',
+      input: {
+         fontFamily: 'Manrope',
+      },
       fieldset: {
          borderRadius: '10px',
       },
@@ -198,23 +249,14 @@ const ButtonStyle = styledMui(Button)({
       borderRadius: '10px',
    },
 })
-const Line = styledMui('div')({
-   borderLeft: '10px solid #3977C0',
-   height: '100%',
-   position: 'absolute',
-   left: '42%',
-   top: '0px',
-})
+
 const InfoBoxStyle = styledMui('div')({
    width: '57.2vw',
-   height: '310px',
    background: '#FEFBFB80',
-   position: 'absolute',
-   left: '42.8%',
-   top: '0',
    color: '#346EFB',
    fontFamily: 'Manrope',
-   paddingRight: '30px',
+   padding: '0px 25px 20px 10px',
+   marginLeft: '60px',
 
    '& h3': {
       padding: '20px 0 0 30px',
@@ -242,51 +284,53 @@ const InfoBoxStyle = styledMui('div')({
       },
    },
 })
-// const ReferenceBoxStyle = styledMui('div')({
-//    position: 'absolute',
-//    right: '2rem',
-//    bottom: '20px',
-//    padding: '40px',
-//    width: '52vw',
-//    background: '#FFFF',
-// })
-// const LogoReferenceStyle = styledMui('img')({
-//    width: '45px',
-//    height: '45px',
-// })
-// const LogoMedcheckStyle = styledMui('img')({
-//    marginBottom: '14px',
-// })
-// const LogoReferenceBox = styledMui('div')({
-//    display: 'flex',
-//    justifyContent: 'space-around',
-//    borderBottom: '1px solid #716B6B',
-//    fontFamily: 'Manrope',
-//    paddingBottom: '10px',
-// })
-// const BoxStyle = styledMui('div')({
-//    display: 'flex',
-//    p: {
-//       width: '200px',
-//       fontFamily: 'Roboto',
-//       fontWeight: 600,
 
-//       a: {
-//          marginLeft: '7px',
-//       },
-//    },
-//    img: {
-//       width: '200px',
-//       height: '50px',
-//    },
-// })
+const ReferenceBoxStyle = styledMui('div')({
+   background: '#FFFF',
+   width: '53vw',
+   padding: '30px',
+   fontFamily: 'Manrope',
+   marginLeft: '90px',
+   marginTop: '20px',
+})
+
+const LogoReferenceStyle = styledMui('img')({
+   width: '45px',
+   height: '45px',
+})
+const LogoMedcheckStyle = styledMui('img')({
+   marginBottom: '14px',
+})
+const LogoReferenceBox = styledMui('div')({
+   display: 'flex',
+   justifyContent: 'space-around',
+   borderBottom: '1px solid #716B6B',
+   fontFamily: 'Manrope',
+   paddingBottom: '10px',
+})
+const BoxStyle = styledMui('div')({
+   display: 'flex',
+   p: {
+      width: '200px',
+      fontFamily: 'Roboto',
+      fontWeight: 600,
+
+      a: {
+         marginLeft: '7px',
+      },
+   },
+   img: {
+      width: '200px',
+      height: '50px',
+   },
+})
 
 const CloseResultButton = styledMui(Button)({
    '&': {
       padding: '10px 30px',
       background: '#F91515',
       img: {
-         marginRight: '20px',
+         marginRight: '15px',
       },
    },
 
@@ -336,34 +380,44 @@ const PrintButtonStyle = styledMui(Button)({
    },
 })
 
-const ExtraditionBoxStyle = styledMui('div')({
+const GetResultsInfoStyle = styledMui('div')({
    display: 'flex',
-   alignItems: 'center',
    justifyContent: 'space-between',
+   margin: '10px 0',
+   fontFamily: 'Manrope',
 
-   h3: {
-      marginBottom: '20px',
-   },
-   div: {
-      marginTop: '25px',
-      display: 'flex',
-      gap: '10px',
+   h2: {
+      border: '2px solid  #222222',
+      padding: '7px',
    },
 })
-// const GetResultsInfoStyle = styledMui('div')({
-//    display: 'flex',
-//    justifyContent: 'space-between',
-//    margin: '10px 0',
-//    fontFamily: 'Manrope',
 
-//    h2: {
-//       border: '2px solid  #222222',
-//       padding: '7px',
-//    },
-// })
+const TitleStyle = styledMui('p')({
+   fontWeight: 600,
+   fontFamily: 'Manrope',
+   fontSize: '14px',
+})
 
-// const TitleStyle = styledMui('p')({
-//    fontWeight: 600,
-//    fontFamily: 'Manrope',
-//    fontSize: '14px',
-// })
+const ContainerButtons = styledMui('div')({
+   display: 'flex',
+   marginTop: '25px',
+   gap: '12px',
+})
+
+const ContainerPdf = styledMui('div')({
+   display: 'flex',
+   flexDirection: 'column',
+})
+const ButtonResultBox = styledMui('div')({
+   display: 'flex',
+   justifyContent: 'space-between',
+})
+const LineBox = styledMui('div')({
+   position: 'relative',
+})
+const Line = styledMui('div')({
+   borderRight: '10px solid #3977C0',
+   height: '100%',
+   position: 'absolute',
+   left: '49px',
+})
