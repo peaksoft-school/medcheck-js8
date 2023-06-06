@@ -3,7 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import useToast from '../../hooks/useToast'
-import { getPatients } from '../../api/patientsService'
+import { getPatients, getResultsById } from '../../api/patientsService'
+import { fileInstance } from '../../api/instanses'
 // import { mainApi } from '../../api/instanses'
 
 function PatientResult() {
@@ -12,6 +13,7 @@ function PatientResult() {
    console.log(allDatas)
    const { ToastContainer, notify: notifyCall } = useToast()
    const [patients, setPatients] = useState([])
+   const [results, setResults] = useState([])
    const getAllPatients = async () => {
       try {
          const { data } = await getPatients()
@@ -24,30 +26,47 @@ function PatientResult() {
       getAllPatients()
    }, [])
 
+   const patientGetById = async () => {
+      try {
+         const { data } = await getResultsById(id)
+         setResults(data)
+      } catch (error) {
+         notifyCall('error', error.message)
+      }
+   }
+
+   useEffect(() => {
+      patientGetById()
+   }, [id])
    const findPatient = useMemo(() => {
       return patients.find((el) => String(el.id) === id)
    }, [id, patients])
-   // const PDFFileHandler = () => {
-   //    mainApi
-   //       .get('pdf', {
-   //          responseType: 'arraybuffer',
-   //          headers: {
-   //             'Content-Type': 'application/json',
-   //             Accept: 'application/pdf',
-   //          },
-   //       })
-   //       .then((response) => {
-   //          const url = window.URL.createObjectURL(new Blob([response.data]))
-   //          const link = document.createElement('a')
-   //          link.href = url
-   //          link.setAttribute('download', 'file.pdf')
-   //          document.body.appendChild(link)
-   //          link.click()
-   //       })
-   //       .catch(() =>
-   //          notifyCall('error', 'Что-то не так с сервером или данными')
-   //       )
-   // }
+   const findPatientById = useMemo(() => {
+      return results.find((el) => String(el.patientId) === id)
+   }, [id, results])
+   console.log(findPatientById)
+   const PDFFileHandler = () => {
+      fileInstance
+         .get(`api/s3/download/${findPatientById.file}`, {
+            responseType: 'arraybuffer',
+            headers: {
+               'Content-Type': 'application/json',
+               Accept: 'application/pdf',
+            },
+            params: { link: findPatientById.file },
+         })
+         .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', 'file.pdf')
+            document.body.appendChild(link)
+            link.click()
+         })
+         .catch(() =>
+            notifyCall('error', 'Что-то не так с сервером или данными')
+         )
+   }
    return (
       <Container>
          {ToastContainer}
@@ -86,15 +105,17 @@ function PatientResult() {
             </div>
             <Div>
                <p>
-                  Услуга: <h5>{allDatas?.name}</h5>
+                  Услуга: <h5>{findPatientById?.name}</h5>
                </p>
                <p>
-                  Дата и время: <h5>{allDatas?.date} </h5>{' '}
+                  Дата и время: <h5>{findPatientById?.date} </h5>{' '}
                </p>
                <p>
-                  Номер заказа:<h5>{allDatas?.orderNumber}</h5>
+                  Номер заказа:<h5>{findPatientById?.orderNumber}</h5>
                </p>
-               <p>Загруженный файл:{}</p>
+               <button type="button" onClick={PDFFileHandler}>
+                  Загруженный файл:
+               </button>
             </Div>
          </PaperStyled>
       </Container>

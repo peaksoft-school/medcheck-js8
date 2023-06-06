@@ -7,6 +7,9 @@ export const getPatients = (searchValue) => {
       },
    })
 }
+export const getResultsById = (id) => {
+   return mainApi.get(`/api/results/${id}`, { param: { patientId: id } })
+}
 export const deletePatientService = (id) => {
    return mainApi.delete(`/api/patients/?id=${id}`)
 }
@@ -15,4 +18,7 @@ export const putPatients = (data) => {
 }
 export const uploadFiles = (body) => {
    return fileInstance.post('/api/s3', body)
+}
+export const downloadFiles = (link) => {
+   return fileInstance.get(`/api/s3/${link}`, { params: { link } })
 }
