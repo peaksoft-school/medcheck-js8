@@ -34,10 +34,10 @@ const ServiceDetails = () => {
                      marginTop: '30px',
                   }}
                >
-                  <StyledNavLink to="/admin/specialists">
+                  <StyledNavLink to="/">
                      <p>Главная</p>
                   </StyledNavLink>
-                  <StyledNavLink to="/admin/specialists">
+                  <StyledNavLink to="/service">
                      <p>Услуги</p>
                   </StyledNavLink>
                   <div>
@@ -72,44 +72,53 @@ const ServiceDetails = () => {
                </ContainerPrice>
                {currentService.price.map((item) => {
                   return (
-                     <StyledAccordion key={item.price}>
-                        <StyledAccordionSummary
-                           expandIcon={<ExpandMoreIcon />}
-                           aria-controls="panel1bh-content"
-                           id="panel1bh-header"
-                        >
-                           <StyledInfoPriceTypography
-                              sx={{ width: '42%', flexShrink: 0 }}
+                     <div>
+                        <StyledAccordion key={item.price}>
+                           <StyledAccordionSummary
+                              expandIcon={<ExpandMoreIcon />}
+                              aria-controls="panel1bh-content"
+                              id="panel1bh-header"
                            >
-                              {item.title}
-                           </StyledInfoPriceTypography>
+                              <StyledInfoPriceTypography>
+                                 {item.title}
+                              </StyledInfoPriceTypography>
 
-                           <StyledInfoPriceTypography
-                              sx={{
-                                 width: '33%',
-                                 flexShrink: 0,
-                                 margin: '0 10px 0 0',
-                              }}
-                           >
-                              {item.price}
-                           </StyledInfoPriceTypography>
-                        </StyledAccordionSummary>
-                        <AccordionDetails>
-                           <StyledDascriptionTypography>
-                              {item.description}
-                           </StyledDascriptionTypography>
-                        </AccordionDetails>
-                     </StyledAccordion>
+                              <StyledPriceTypography
+                                 sx={{
+                                    flexShrink: 0,
+                                 }}
+                              >
+                                 {item.price}
+                              </StyledPriceTypography>
+                           </StyledAccordionSummary>
+                           <AccordionDetails>
+                              <StyledDascriptionTypography>
+                                 {item.description}
+                              </StyledDascriptionTypography>
+                           </AccordionDetails>
+                        </StyledAccordion>
+                     </div>
                   )
                })}
 
                <StyledContainerPrice>
                   {currentService.priceInfo.map((item) => {
                      return (
-                        <>
+                        <div
+                           style={{
+                              width: '100%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                           }}
+                        >
                            <InfoPrice>{item.titlee}</InfoPrice>
-                           <InfoPrice>{item.priceInfo}</InfoPrice>
-                        </>
+                           <InfoPrice
+                              style={{ fontWeight: 500, paddingRight: '22px' }}
+                           >
+                              {item.priceInfo}
+                           </InfoPrice>
+                        </div>
                      )
                   })}
                </StyledContainerPrice>
@@ -135,9 +144,13 @@ const StyledAccordion = styled(Accordion)(() => ({
    border: 'none',
    background: 'none',
    boxShadow: 'none',
+   display: 'flex',
+   flexDirection: 'column',
+   justifyContent: 'flex-start',
    borderBottom: '1px solid #E0E2E7',
    '&.MuiAccordion-root': {
       margin: 0,
+      padding: '0px 27px',
    },
 }))
 const StyledDascriptionTypography = styled(Typography)(() => ({
@@ -150,6 +163,11 @@ const StyledInfoPriceTypography = styled(Typography)(() => ({
    fontSize: '18px',
    lineHeight: '25px',
    color: '#4D4E51',
+}))
+
+const StyledPriceTypography = styled(Typography)(() => ({
+   fontWeight: 400,
+   fontSize: '18px',
 }))
 
 const Container = styled('div')(() => ({
@@ -231,7 +249,7 @@ const StyledContainerPrice = styled('div')(() => ({
    borderBottom: '1px solid #E0E2E7',
    display: 'flex',
    justifyContent: 'space-between',
-   padding: '16px 34px 16px 21px',
+   padding: '16px 12px 16px 27px',
    marginBottom: '120px',
 }))
 

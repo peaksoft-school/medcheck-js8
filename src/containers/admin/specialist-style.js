@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 export const MainContainer = muiStyled('div')(() => ({
    '&': {
       width: '100%',
-      height: '100vh',
+      height: '100%',
       background: 'rgba(245, 245, 245, 0.61)',
       padding: '30px 70px',
       fontFamily: 'Manrope',

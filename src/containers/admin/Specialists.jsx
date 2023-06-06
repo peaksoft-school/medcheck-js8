@@ -289,6 +289,7 @@ const Img = styled('img')(() => ({
       width: '36px',
       height: '36px',
       borderRadius: '100px',
+      marginRight: '7px',
    },
 }))
 
@@ -301,5 +302,6 @@ const ContainerNamesStyled = styled('div')(() => ({
 
 const StyledCircularProgress = styled(CircularProgress)`
    color: green;
-   margin-left: 300px;
+   display: flex;
+   margin: auto;
 `
