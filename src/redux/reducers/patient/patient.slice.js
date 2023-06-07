@@ -1,17 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { putDatas } from './patient.thunk'
 
-const initialState = () => {
-   const json = localStorage.getItem('patient')
-   if (json) {
-      const userData = JSON.parse(json)
-      return {
-         error: userData.error,
-         isLoading: userData.isLoading,
-         allDatas: userData.allDatas,
-      }
-   }
-   return { allDatas: [], error: '', isLoading: '' }
+const initialState = {
+   allDatas: [],
+   error: '',
+   isLoading: '',
 }
 const patientSlice = createSlice({
    name: 'patient',

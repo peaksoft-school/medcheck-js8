@@ -6,8 +6,6 @@ export const putDatas = createAsyncThunk(
    async (datasOfPatient, { rejectWithValue }) => {
       try {
          const { data } = await putPatients(datasOfPatient)
-         localStorage.setItem('patient', JSON.stringify(data))
-         console.log(data)
          return data
       } catch (error) {
          return rejectWithValue(error)

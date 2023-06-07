@@ -15,7 +15,6 @@ function Service() {
    const [expanded, setExpanded] = useState()
    const [colors, setColors] = useState(false)
 
-   console.log(expanded)
    const clickHandler = (panel) => (e, isExpanded) => {
       setExpanded(isExpanded ? panel : false)
       setColors(!colors)

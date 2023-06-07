@@ -11,7 +11,7 @@ import Calendar from '../../components/UI/calendar/Calendar'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import { getPatients } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
-import AvatarUpload from '../../components/UI/avatar/Avatar'
+import AvatarUpload from '../../components/UI/avatar/AvatarUpload'
 import { putDatas } from '../../redux/reducers/patient/patient.thunk'
 import { fileInstance } from '../../api/instanses'
 
@@ -248,14 +248,16 @@ const FileInput = styled('div')({
    marginBottom: '30px',
 })
 const ButtonContainer = styled('div')({
+   marginTop: '-20px',
    '& .cancel': {
       marginRight: '18px',
+      marginLeft: '10px',
       width: '257px',
       height: '38px',
       background: '#959595',
    },
    '& .add': {
-      marginRight: '18px',
+      marginRight: '8px',
       width: '257px',
       height: '38px',
    },

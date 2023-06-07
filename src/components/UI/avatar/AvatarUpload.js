@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { Avatar, IconButton, Stack } from '@mui/material'
-import { useUploadAvatar } from '../../../hooks/UseUploadAvatar'
+import { useUploadAvatar } from '../../../hooks/uploadAvatar'
 import { ReactComponent as AddPhoto } from '../../../assets/table/File.svg'
 
 const AvatarUpload = ({ ...rest }) => {
