@@ -16,12 +16,12 @@ import { serviceDetails } from '../../utlis/helpers/serviceDetails'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 
 const ServiceDetails = () => {
+   window.scrollTo({ top: 0 })
+
    const { id } = useParams()
-   console.log(id)
    const currentService = serviceDetails.find(
       (service) => service.id === Number(id)
    )
-   console.log(currentService.price)
 
    return (
       <div>
@@ -92,9 +92,9 @@ const ServiceDetails = () => {
                               </StyledPriceTypography>
                            </StyledAccordionSummary>
                            <AccordionDetails>
-                              <StyledDascriptionTypography>
+                              <StyledDescriptionTypography>
                                  {item.description}
-                              </StyledDascriptionTypography>
+                              </StyledDescriptionTypography>
                            </AccordionDetails>
                         </StyledAccordion>
                      </div>
@@ -138,6 +138,9 @@ const StyledAccordionSummary = styled(AccordionSummary)(() => ({
       display: 'flex',
       justifyContent: 'space-between',
    },
+   '& .MuiAccordionDetails-root ': {
+      padding: '0',
+   },
 }))
 
 const StyledAccordion = styled(Accordion)(() => ({
@@ -153,8 +156,13 @@ const StyledAccordion = styled(Accordion)(() => ({
       padding: '0px 27px',
    },
 }))
-const StyledDascriptionTypography = styled(Typography)(() => ({
+const StyledDescriptionTypography = styled(Typography)(() => ({
    color: '#4D4E51',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: '300',
+   fontSize: '16px',
+   lineHeight: '22px',
 }))
 const StyledInfoPriceTypography = styled(Typography)(() => ({
    fontFamily: 'Manrope',

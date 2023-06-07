@@ -6,7 +6,7 @@ import CardApplication from '../../components/UI/card/CardApplication'
 
 function Service() {
    return (
-      <>
+      <div>
          <Hr />
          <MainPart href="/">
             <span>Главная\</span>
@@ -27,7 +27,7 @@ function Service() {
             <Sellect />
          </SelectContent>
          <CardApplication />
-      </>
+      </div>
    )
 }
 
