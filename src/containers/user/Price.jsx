@@ -154,7 +154,6 @@ const AccordionContainer = styled('div')(() => ({
 }))
 
 const AccordionStyle = styled(Accordion)(() => ({
-   // width: '852px',
    marginBottom: '16px',
    borderRadius: '10px',
    boxShadow: 'none',
@@ -171,13 +170,9 @@ const StyledAccordionSummary = styled(AccordionSummary)((colors) => ({
 }))
 
 const AccordionDetailsStyle = styled(AccordionDetails)(() => ({
-   // marginTop: '23px',
-   // width: '806px',
-   // marginBottom: '20px',
    color: '#4D4E51',
    fontSize: '16px',
    '& li': {
-      // width: '798px',
       marginBottom: '20px',
       color: '#4D4E51',
       fontSize: '16px',
