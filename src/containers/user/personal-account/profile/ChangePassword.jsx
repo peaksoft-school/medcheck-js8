@@ -24,9 +24,9 @@ const ChangePassword = () => {
       try {
          const { data } = await postChangePassword(password)
          if (data.message === 'Wrong old password.') {
-            return notify('error', 'неверный пароль')
+            return notify('error', 'Неверный пароль')
          }
-         notify('success', 'успешно')
+         notify('success', 'Успешно')
          return data
       } catch (error) {
          return notify('error', 'ОШИБКА')
@@ -37,23 +37,28 @@ const ChangePassword = () => {
       register,
       handleSubmit,
       formState: { errors },
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
          password: '',
-         newPassword: '',
+         newwPassword: '',
          confirmPassword: '',
       },
    })
 
    function onSubmit(values) {
-      // console.log('will come values', values)
-      const password = {
-         oldPassword: values.password,
-         newPassword: values.newPassword,
+      const { password, newwPassword, confirmPassword } = values
+      if (newwPassword !== confirmPassword) {
+         notify('error', 'Пароли не совпадают')
+         return
+      }
+      const passwordData = {
+         oldPassword: password,
+         newPassword: newwPassword,
       }
 
-      postPassword(password)
+      postPassword(passwordData)
    }
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -69,7 +74,7 @@ const ChangePassword = () => {
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
          {ToastContainer}
-         <StyledTitleText>Смена пароля </StyledTitleText>
+         <StyledTitleText>Смена пароля</StyledTitleText>
          <StyledForm>
             <div>
                <StyledInputLabel htmlFor="old_password">
@@ -82,7 +87,7 @@ const ChangePassword = () => {
                      className="inputStyle"
                      error={errors.password}
                      {...register('password', {
-                        required: 'введите старый пароль',
+                        required: 'Введите старый пароль',
                      })}
                      type={showPassword ? 'text' : 'password'}
                      InputProps={{
@@ -116,16 +121,16 @@ const ChangePassword = () => {
                      placeholder="Введите новый пароль"
                      id="new_password"
                      className="inputStyle"
-                     error={errors.newPassword}
-                     {...register('newPassword', {
-                        required: 'поле не заполнено',
+                     error={errors.newwPassword}
+                     {...register('newwPassword', {
+                        required: 'Поле не заполнено',
                         maxLength: {
                            value: 15,
-                           message: 'слишком много деталей',
+                           message: 'Слишком много деталей',
                         },
                         minLength: {
                            value: 5,
-                           message: 'слишком мало деталей',
+                           message: 'Слишком мало деталей',
                         },
                      })}
                      type={showPasswordNew ? 'text' : 'password'}
@@ -146,8 +151,8 @@ const ChangePassword = () => {
                         ),
                      }}
                   />
-                  {errors.newPassword && (
-                     <p className="message">{errors.newPassword?.message}</p>
+                  {errors.newwPassword && (
+                     <p className="message">{errors.newwPassword?.message}</p>
                   )}
                </FormControl>
             </div>
@@ -162,15 +167,18 @@ const ChangePassword = () => {
                      id="confirm_password"
                      error={errors.confirmPassword}
                      {...register('confirmPassword', {
-                        required: 'пароль не совпадает',
+                        required: 'Пароль не совпадает',
                         maxLength: {
                            value: 15,
-                           message: 'слишком много деталей',
+                           message: 'Слишком много деталей',
                         },
                         minLength: {
                            value: 5,
-                           message: 'слишком мало деталей',
+                           message: 'Слишком мало деталей',
                         },
+                        validate: (value) =>
+                           value === getValues('newwPassword') ||
+                           'Пароли не совпадают',
                      })}
                      type={showPasswordConfirm ? 'text' : 'password'}
                      InputProps={{
