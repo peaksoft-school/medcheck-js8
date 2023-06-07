@@ -77,11 +77,6 @@ function PatientResult() {
          })
          .catch((error) => notifyCall('error', error.message))
    }
-   console.log(
-      findPatientById?.file
-         .split('https://medcheckbucket.s3.eu-central-1.amazonaws.com/')
-         .join('')
-   )
 
    return (
       <Container>
