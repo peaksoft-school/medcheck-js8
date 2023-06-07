@@ -20,5 +20,5 @@ export const uploadFiles = (body) => {
    return fileInstance.post('/api/s3', body)
 }
 export const downloadFiles = (link) => {
-   return fileInstance.get(`/api/s3/${link}`, { params: { link } })
+   return fileInstance.get(`/api/s3/${link}`)
 }

@@ -23,7 +23,6 @@ const PatientDetails = () => {
    const [open, setOpen] = useState(false)
    const [name, setName] = useState('')
    const [patients, setPatients] = useState([])
-   // const [results, setResults] = useState([])
    const [inputDate, setInputDate] = useState('')
    const [selectedFile, setSelectedFile] = useState(null)
    const getAllPatients = async () => {
@@ -40,7 +39,6 @@ const PatientDetails = () => {
    const findPatient = useMemo(() => {
       return patients.find((el) => String(el.id) === id)
    }, [id, patients])
-   console.log(patients)
 
    const handleOpen = () => {
       setOpen(true)
@@ -67,7 +65,6 @@ const PatientDetails = () => {
          .then((responce) => setSelectedFile(responce.data.link))
          .catch((error) => notifyCall('error', error))
    }
-
    let date = ''
 
    if (inputDate && isValid(new Date(inputDate))) {

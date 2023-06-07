@@ -1,16 +1,12 @@
 import { Paper, styled } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import useToast from '../../hooks/useToast'
 import { getPatients, getResultsById } from '../../api/patientsService'
 import { fileInstance } from '../../api/instanses'
-// import { mainApi } from '../../api/instanses'
 
 function PatientResult() {
    const { id } = useParams()
-   const { allDatas } = useSelector((state) => state.patient)
-   console.log(allDatas)
    const { ToastContainer, notify: notifyCall } = useToast()
    const [patients, setPatients] = useState([])
    const [results, setResults] = useState([])
@@ -44,29 +40,49 @@ function PatientResult() {
    const findPatientById = useMemo(() => {
       return results.find((el) => String(el.patientId) === id)
    }, [id, results])
-   console.log(findPatientById)
-   const PDFFileHandler = () => {
+
+   const PDFFileHandler = (e) => {
+      e.stopPropagation()
       fileInstance
-         .get(`api/s3/download/${findPatientById.file}`, {
-            responseType: 'arraybuffer',
-            headers: {
-               'Content-Type': 'application/json',
-               Accept: 'application/pdf',
-            },
-            params: { link: findPatientById.file },
-         })
-         .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', 'file.pdf')
-            document.body.appendChild(link)
-            link.click()
-         })
-         .catch(() =>
-            notifyCall('error', 'Что-то не так с сервером или данными')
+         .get(
+            `api/s3/download/${findPatientById.file
+               .split('https://medcheckbucket.s3.eu-central-1.amazonaws.com/')
+               .join('')}`,
+            {
+               responseType: 'arraybuffer',
+               headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/pdf',
+               },
+               // params: {
+               //    link: findPatientById.file
+               //       .split(
+               //          'https://medcheckbucket.s3.eu-central-1.amazonaws.com/'
+               //       )
+               //       .join(''),
+               // },
+            }
          )
+         // .then((res) => res.blob())
+         .then((response) => {
+            const element = document.createElement('a')
+            const file = new Blob([response.data], {
+               type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            })
+            element.href = URL.createObjectURL(file)
+            element.download = 'your-filename.docx'
+            document.body.appendChild(element)
+            element.click()
+            document.body.removeChild(element)
+         })
+         .catch((error) => notifyCall('error', error.message))
    }
+   console.log(
+      findPatientById?.file
+         .split('https://medcheckbucket.s3.eu-central-1.amazonaws.com/')
+         .join('')
+   )
+
    return (
       <Container>
          {ToastContainer}
@@ -113,9 +129,12 @@ function PatientResult() {
                <p>
                   Номер заказа:<h5>{findPatientById?.orderNumber}</h5>
                </p>
-               <button type="button" onClick={PDFFileHandler}>
-                  Загруженный файл:
-               </button>
+               <p>
+                  Загруженный файл: <br />
+                  <button type="button" onClick={(e) => PDFFileHandler(e)}>
+                     downLoad
+                  </button>
+               </p>
             </Div>
          </PaperStyled>
       </Container>

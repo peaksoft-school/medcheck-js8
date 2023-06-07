@@ -13,14 +13,14 @@ const Patients = () => {
    const navigate = useNavigate()
    const [patients, setPatients] = useState([])
    const [inputVal, setInputVal] = useState('')
-   const [debouncedQuery] = useDebounce(inputVal, 800)
+   const [debouncedQuery] = useDebounce(inputVal, 400)
    const { ToastContainer, notify: notifyCall } = useToast()
 
    // eslint-disable-next-line consistent-return
    const getAllPatients = async () => {
       try {
          if (debouncedQuery) {
-            const { data } = await getPatients(debouncedQuery)
+            const { data } = await getPatients(inputVal)
             return setPatients(data)
          }
          {
@@ -34,7 +34,7 @@ const Patients = () => {
 
    useEffect(() => {
       getAllPatients()
-   }, [debouncedQuery])
+   }, [inputVal, debouncedQuery])
 
    const searchChangeHandler = (event) => {
       setInputVal(event.target.value)
