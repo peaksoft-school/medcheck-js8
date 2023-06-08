@@ -136,7 +136,9 @@ const AddSpecialist = () => {
                   <form onSubmit={handleSubmit}>
                      <FormContainer>
                         <Div>
-                           <InputLabel htmlFor="firstName">Имя</InputLabel>{' '}
+                           <StyledInputLabel htmlFor="firstName">
+                              Имя
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите имя"
                               style={{ marginBottom: '20px' }}
@@ -147,7 +149,7 @@ const AddSpecialist = () => {
                            {touched.firstName && errors.firstName && (
                               <StyledSpan>{errors.firstName}</StyledSpan>
                            )}
-                           <InputLabel>Отделение</InputLabel>
+                           <StyledInputLabel>Отделение</StyledInputLabel>
                            <StyledSelect
                               items={department}
                               onChange={handleChange}
@@ -161,7 +163,9 @@ const AddSpecialist = () => {
                         </Div>
 
                         <Div>
-                           <InputLabel htmlFor="lastName">Фамилия</InputLabel>
+                           <StyledInputLabel htmlFor="lastName">
+                              Фамилия
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите фамилию"
                               style={{ marginBottom: '20px' }}
@@ -173,7 +177,9 @@ const AddSpecialist = () => {
                               <StyledSpan>{errors.lastName}</StyledSpan>
                            )}
 
-                           <InputLabel htmlFor="position">Должность</InputLabel>
+                           <StyledInputLabel htmlFor="position">
+                              Должность
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите должность"
                               onChange={handleChange}
@@ -185,7 +191,9 @@ const AddSpecialist = () => {
                            )}
                         </Div>
                      </FormContainer>
-                     <p>Описание</p>
+                     <StyledInputLabel sx={{ marginTop: '1rem' }}>
+                        Описание
+                     </StyledInputLabel>
                      <div
                         style={{
                            border: '1px solid #909CB5',
@@ -294,6 +302,14 @@ const Info = muiStyled('p')(() => ({
 const StyledSelect = styled(SelectUi)(() => ({
    fontSize: '14px',
    height: '35px',
+}))
+
+const StyledInputLabel = styled(InputLabel)(() => ({
+   color: '#464444',
+   fontWeight: 400,
+   fontSize: '14px',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
 }))
 
 const StyledCancel = styled(Button)(() => ({
