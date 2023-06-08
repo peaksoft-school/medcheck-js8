@@ -1,24 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
-import {
-   Accordion,
-   AccordionDetails,
-   AccordionSummary,
-   Typography,
-} from '@mui/material'
 import ServiceCard from '../../components/UI/ServiceCard'
+import Sellect from '../../components/UI/select/Sellect'
 import CardApplication from '../../components/UI/card/CardApplication'
-import { ReactComponent as ExpandMoreIcon } from '../../assets/serviceIcons/Указатель.svg'
 import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
-   const [expanded, setExpanded] = useState()
-   const [colors, setColors] = useState(false)
-
-   const clickHandler = (panel) => (e, isExpanded) => {
-      setExpanded(isExpanded ? panel : false)
-      setColors(!colors)
-   }
    return (
       <>
          <Hr />
@@ -37,29 +24,8 @@ function Service() {
                Специалисты нашей клиники с удовольствием ответят на все ваши
                вопросы. <br /> Ниже представленны наиболее популярные.
             </p>
-            <AccordionContainer>
-               {serviceData.map((data) => (
-                  <AccordionStyle
-                     key={data.id}
-                     colors={colors}
-                     expanded={expanded === data.id}
-                     onChange={clickHandler(data.id)}
-                  >
-                     <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography key={data.id}>{data.title}</Typography>
-                     </StyledAccordionSummary>
-                     <AccordionDetailsStyle>
-                        <Typography key={data.id}>
-                           {data.description}
-                        </Typography>
 
-                        {data.text.map((el) => (
-                           <li key={el}>{el}</li>
-                        ))}
-                     </AccordionDetailsStyle>
-                  </AccordionStyle>
-               ))}
-            </AccordionContainer>
+            <Sellect data={serviceData} />
          </SelectContent>
          <CardApplication />
       </>
@@ -128,43 +94,5 @@ const SelectContent = styled('div')(() => ({
       textAlign: 'left',
       marginLeft: '120px',
       marginBottom: '16px',
-   },
-}))
-
-const AccordionContainer = styled('div')(() => ({
-   width: '852px',
-   marginLeft: '121px',
-}))
-
-const AccordionStyle = styled(Accordion)(() => ({
-   // width: '852px',
-   marginBottom: '16px',
-   borderRadius: '10px',
-   boxShadow: 'none',
-}))
-
-const StyledAccordionSummary = styled(AccordionSummary)((colors) => ({
-   borderLeft: '10px solid #048741',
-   borderRadius: '10px',
-   background: '#DBF0E5',
-   '&:focus': {
-      background: '#048741',
-      color: colors ? '#fff' : '#222',
-   },
-}))
-
-const AccordionDetailsStyle = styled(AccordionDetails)(() => ({
-   marginTop: '23px',
-   // width: '806px',
-   marginBottom: '20px',
-   color: '#4D4E51',
-   fontSize: '16px',
-   '& li': {
-      // width: '798px',
-      marginBottom: '20px',
-      color: '#4D4E51',
-      fontSize: '16px',
-      marginTop: '20px',
-      marginLeft: '26px',
    },
 }))
