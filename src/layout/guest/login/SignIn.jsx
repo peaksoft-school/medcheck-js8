@@ -148,7 +148,6 @@ const FormControlStyled = styled('form')(() => ({
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
-   // marginLeft: ' 35%',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
@@ -209,7 +208,6 @@ const FormControlStyled = styled('form')(() => ({
       textDecoration: 'none',
    },
    '& .register': {
-      // marginTop: '20px',
       marginLeft: '149px',
       textDecoration: 'none',
       color: '#3772FF',

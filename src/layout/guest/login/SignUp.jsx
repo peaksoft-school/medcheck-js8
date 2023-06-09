@@ -206,7 +206,6 @@ const FormControlStyled = styled('form')(() => ({
       fontWeight: 500,
       lineHeight: '25px',
       marginLeft: '180px',
-      // marginTop: ' 7px',
       color: '#222222',
    },
    '& .closeIcon': {
