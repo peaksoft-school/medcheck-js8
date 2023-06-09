@@ -13,16 +13,23 @@ const menuProps = {
 }
 
 export const ServiceSelect = ({
+   onBlur,
    items,
    label,
    value,
    onChange,
    placeholder,
+   formik,
    ...rest
 }) => {
+   console.log(formik)
    return (
-      <FormControl fullWidth>
+      <FormControl
+         fullWidth
+         error={formik.touched.gender && Boolean(formik.errors.gender)}
+      >
          <SelectMui
+            onBlur={onBlur}
             value={value}
             label={label}
             onChange={onChange}
@@ -74,6 +81,11 @@ const SelectMui = styled(Select)(() => ({
       '&& fieldset': {
          border: '1px solid #959595',
          color: '#4D4E51',
+      },
+   },
+   '& .MuiSelect-outlined': {
+      '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+         borderColor: 'red',
       },
    },
 }))

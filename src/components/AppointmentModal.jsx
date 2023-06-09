@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { CircularProgress, IconButton, InputLabel } from '@mui/material'
-import { format, formatISO, isValid } from 'date-fns'
+import { useFormik } from 'formik'
+import dayjs from 'dayjs'
+import * as Yup from 'yup'
 import { ReactComponent as CloseIcon } from '../assets/login/CloseIcon.svg'
 import DatePicker from './UI/DatePicker'
 import {
@@ -25,56 +27,153 @@ const AppointmentModal = ({
    departmentData,
    doctorData,
 }) => {
-   const { notify, ToastContainer } = useToast()
-   const [selectedServiceValue, setSelectedServiceValue] = useState('')
-   const [selectedSpecialistValue, setSelectedSpecialistValue] = useState('')
-   const [selectedIntervalValue, setSelectedIntervalValue] = useState('')
-   const [startSelectedDate, setStartSelectedDate] = useState('')
-   const [endSelectedDate, setEndSelectedDate] = useState('')
-   const [selectedFromTime, setSelectedFromTime] = useState('')
-   const [selectedUntilTime, setSelectedUntilTime] = useState('')
-   const [selectedFromTimeBreak, setSelectedFromTimeBreak] = useState('')
-   const [selectedUntilTimeBreak, setSelectedUntilTimeBreak] = useState('')
+   const { notify } = useToast()
    const [days, setDays] = useState(WEEK_REPETATION_DATA)
    const [filteredDoctors, setFilteredDoctors] = useState([])
 
+   const publishHandler = async (data) => {
+      const selectedDays = days.reduce((result, day) => {
+         result[day.week] = day.checked
+         return result
+      }, {})
+
+      const hours = data.interval
+      let number = parseFloat(hours.match(/\d+(\.\d+)?/)[0])
+      const value = number < 2 ? (number *= 60) : number
+      console.log(value)
+
+      try {
+         const newData = {
+            ...data,
+            interval: value,
+            repeatDays: selectedDays,
+         }
+         await postScheduleRequest(newData)
+         notify('success', 'Successfully added!')
+         close()
+      } catch (error) {
+         notify('error', error.response?.data.message)
+      }
+   }
+
+   const formik = useFormik({
+      initialValues: {
+         selectedServiceValue: '',
+         selectedSpecialistValue: '',
+         selectedIntervalValue: '',
+         startSelectedDate: '',
+         endSelectedDate: '',
+         selectedFromTime: '',
+         selectedUntilTime: '',
+         selectedFromTimeBreak: '',
+         selectedUntilTimeBreak: '',
+      },
+      onSubmit: (values) => {
+         const data = {
+            department: values.selectedServiceValue.toUpperCase(),
+            doctorId: values.selectedSpecialistValue,
+            interval: values.selectedIntervalValue,
+            startDate: dayjs(values.startSelectedDate).format('YYYY-MM-DD'),
+            endDate: dayjs(values.endSelectedDate).format('YYYY-MM-DD'),
+            startTime: dayjs(values.selectedFromTime).format('HH:mm'),
+            endTime: dayjs(values.selectedUntilTime).format('HH:mm'),
+            startBreak: dayjs(values.selectedFromTimeBreak).format('HH:mm'),
+            endBreak: dayjs(values.selectedUntilTimeBreak).format('HH:mm'),
+         }
+         publishHandler(data)
+      },
+      validateOnBlur: true,
+      validationSchema: Yup.object().shape({
+         gender: Yup.string().required('Обязательное поле'),
+      }),
+   })
    useEffect(() => {
-      setSelectedSpecialistValue('')
+      const { values } = formik
+      formik.setFieldValue('selectedSpecialistValue', '')
       setFilteredDoctors(
          doctorData.filter(
             (filteredDoctor) =>
                filteredDoctor.name.localeCompare(
-                  selectedServiceValue.toUpperCase()
+                  values.selectedServiceValue.toUpperCase()
                ) === 0 && filteredDoctor.dataOfFinish === null
          )
       )
-   }, [selectedServiceValue, doctorData])
+   }, [formik.values.selectedServiceValue, doctorData])
+   // const translateServiceHandler = (englishService) => {
+   //    console.log(englishService, 'mm')
 
-   const fromTime =
-      selectedFromTime && isValid(new Date(selectedFromTime))
-         ? format(new Date(selectedFromTime), 'HH:mm')
-         : ''
-   const untilTime =
-      selectedUntilTime && isValid(new Date(selectedUntilTime))
-         ? format(new Date(selectedUntilTime), 'HH:mm')
-         : ''
-   const fromTimeBreak =
-      selectedFromTimeBreak && isValid(new Date(selectedFromTimeBreak))
-         ? format(new Date(selectedFromTimeBreak), 'HH:mm')
-         : ''
-   const untilTimeBreak =
-      selectedUntilTimeBreak && isValid(new Date(selectedUntilTimeBreak))
-         ? format(new Date(selectedUntilTimeBreak), 'HH:mm')
-         : ''
+   //    const transletedServices = englishService.map((engService) => {
+   //       switch (engService) {
+   //          case 'allergology':
+   //             return 'аллергиялогия'
+   //          case 'anesthesiology':
+   //             return 'анестезиология'
+   //          case 'vaccination':
+   //             return 'вакцинация'
+   //          case 'gastroenterology':
+   //             return 'гастроэнтерология'
+   //          case 'gynecology':
+   //             return 'гинекология'
+   //          case 'dermatology':
+   //             return 'дерматология'
+   //          case 'cardiology':
+   //             return 'кардиология'
+   //          case 'neurology':
+   //             return 'неврология'
+   //          case 'neurosurgery':
+   //             return 'нейрохирургия'
+   //          case 'oncology':
+   //             return 'онкология'
+   //          case 'orthopedics':
+   //             return 'ортопедия'
+   //          case 'otorhinolaryngology':
+   //             return 'оториноларингология'
+   //          case 'ophthalmology':
+   //             return 'офтальмология'
+   //          case 'proctology':
+   //             return 'проктология'
+   //          case 'psychotherapy':
+   //             return 'психтерапия'
+   //          case 'pulmonology':
+   //             return 'пульмонология'
+   //          case 'rheumatology':
+   //             return 'ревмотология'
+   //          case 'therapy':
+   //             return 'терапия'
+   //          case 'urology':
+   //             return 'урология'
+   //          case 'phlebology':
+   //             return 'флебология'
+   //          case 'physiotherapy':
+   //             return 'психтерапия'
+   //          case 'endocrinology':
+   //             return 'эндокринология'
+   //          default:
+   //             return englishService
+   //       }
+   //    })
+   //    return transletedServices
+   // }
 
-   const formattedStartDate = startSelectedDate
-      ? formatISO(startSelectedDate, { representation: 'date' })
-      : ''
+   const handleFromTime = (time) => {
+      formik.setFieldValue('selectedFromTime', time)
+   }
+   const handleUntillTime = (time) => {
+      formik.setFieldValue('selectedUntilTime', time)
+   }
+   const handleFromTimeBreak = (time) => {
+      formik.setFieldValue('selectedFromTimeBreak', time)
+   }
+   const handleUntillTimeBreak = (time) => {
+      formik.setFieldValue('selectedUntilTimeBreak', time)
+   }
+   const handleStartDateChange = (date) => {
+      formik.setFieldValue('startSelectedDate', date)
+   }
 
-   const formattedEndDate = endSelectedDate
-      ? formatISO(endSelectedDate, { representation: 'date' })
-      : ''
-
+   const handleEndDateChange = (date) => {
+      formik.setFieldValue('endSelectedDate', date)
+   }
    const changeWeekHandler = (id) => {
       setDays((prevState) => {
          return prevState.map((item) => {
@@ -89,190 +188,147 @@ const AppointmentModal = ({
       })
    }
 
-   const handleTimeFromChange = (time) => {
-      setSelectedFromTime(time)
-   }
-   const handleTimeUntilChange = (time) => {
-      setSelectedUntilTime(time)
-   }
-   const handleTimeFromBreakChange = (time) => {
-      setSelectedFromTimeBreak(time)
-   }
-   const handleTimeUntilBreakChange = (time) => {
-      setSelectedUntilTimeBreak(time)
-   }
-   const changeServiceHandler = (event) => {
-      setSelectedServiceValue(event.target.value)
-   }
-   const changeSpecialistHandler = (event) => {
-      setSelectedSpecialistValue(event.target.value)
-   }
-   const changeIntervalHandler = (event) => {
-      setSelectedIntervalValue(event.target.value)
-   }
-   const handleStartDateChange = (date) => {
-      setStartSelectedDate(date)
-   }
-   const handleEndDateChange = (date) => {
-      setEndSelectedDate(date)
-   }
-
-   const publishHandler = async () => {
-      const selectedDays = days.reduce((result, day) => {
-         result[day.week] = day.checked
-         return result
-      }, {})
-
-      const hours = selectedIntervalValue
-      let number = parseFloat(hours.match(/\d+(\.\d+)?/)[0])
-      const value = number < 2 ? (number *= 60) : number
-
-      try {
-         const data = {
-            department: selectedServiceValue.toUpperCase(),
-            doctorId: selectedSpecialistValue,
-            startDate: formattedStartDate,
-            endDate: formattedEndDate,
-            startTime: fromTime,
-            endTime: untilTime,
-            interval: value,
-            startBreak: fromTimeBreak,
-            endBreak: untilTimeBreak,
-            repeatDays: selectedDays,
-         }
-         await postScheduleRequest(data)
-         notify('success', 'Successfully added!')
-         setSelectedServiceValue('')
-         setSelectedSpecialistValue('')
-         setSelectedIntervalValue('')
-         setStartSelectedDate('')
-         setEndSelectedDate('')
-         setSelectedFromTime('')
-         setSelectedUntilTime('')
-         setSelectedFromTimeBreak('')
-         setSelectedUntilTimeBreak('')
-         close()
-      } catch (error) {
-         notify('error', error.response?.data.message)
-      }
-   }
    return (
       <div>
-         {ToastContainer}
          <StyleModal open={open} onClose={close}>
             {isLoading ? (
                <LoaderStyle color="success" />
             ) : (
-               <ModalStyle>
-                  <>
-                     <CloseIconStyle onClick={close}>
-                        <CloseIcon className="closeIcon" />
-                     </CloseIconStyle>
-                     <HeaderModalTitlwe>Добавление записей</HeaderModalTitlwe>
-                     <Box>
-                        <InputLabel>Услуга</InputLabel>
-                        <ServiceSelect
-                           placeholder="Выберите услугу"
-                           value={selectedServiceValue}
-                           onChange={changeServiceHandler}
-                           items={departmentData}
-                        />
-                        <InputLabel>Специалист</InputLabel>
-                        <DoctorsSelect
-                           placeholder="Выберите специалиста"
-                           value={selectedSpecialistValue}
-                           onChange={changeSpecialistHandler}
-                           items={filteredDoctors}
-                        />
-                        <DataPickerBox>
-                           <div>
-                              <InputLabel>Дата начала</InputLabel>
-                              <DatePicker
-                                 value={startSelectedDate}
-                                 onChange={handleStartDateChange}
-                              />
-                           </div>
-                           <MinusImageStyle src={minus} alt="minus" />
-                           <div>
-                              <InputLabel>Дата окончания</InputLabel>
-                              <DatePicker
-                                 value={endSelectedDate}
-                                 onChange={handleEndDateChange}
-                              />
-                           </div>
-                        </DataPickerBox>
-                        <TimeBoxStyle>
-                           <div>
-                              <InputLabel>Время от</InputLabel>
+               <form onSubmit={formik.handleSubmit}>
+                  <ModalStyle>
+                     <>
+                        <CloseIconStyle onClick={close}>
+                           <CloseIcon className="closeIcon" />
+                        </CloseIconStyle>
+                        <HeaderModalTitlwe>
+                           Добавление записей
+                        </HeaderModalTitlwe>
+                        <Box>
+                           <InputLabelStyle>Услуга</InputLabelStyle>
+                           <ServiceSelect
+                              formik={formik}
+                              name="selectedServiceValue"
+                              placeholder="Выберите услугу"
+                              value={formik.values.selectedServiceValue}
+                              onChange={formik.handleChange}
+                              items={departmentData}
+                              onBlur={formik.handleBlur}
+                           />
+                           <InputLabelStyle>Специалист</InputLabelStyle>
+                           <DoctorsSelect
+                              name="selectedSpecialistValue"
+                              placeholder="Выберите специалиста"
+                              value={formik.values.selectedSpecialistValue}
+                              onChange={formik.handleChange}
+                              items={filteredDoctors}
+                           />
+                           <DataPickerBox>
+                              <div>
+                                 <InputLabelStyle>Дата начала</InputLabelStyle>
+                                 <DatePicker
+                                    name="startSelectedDate"
+                                    value={formik.values.startSelectedDate}
+                                    onChange={handleStartDateChange}
+                                    minDate={formik.values.startSelectedDate}
+                                    maxDate={formik.values.endSelectedDate}
+                                 />
+                              </div>
+                              <MinusImageStyle src={minus} alt="minus" />
+                              <div>
+                                 <InputLabelStyle>
+                                    Дата окончания
+                                 </InputLabelStyle>
+                                 <DatePicker
+                                    name="endSelectedDate"
+                                    value={formik.values.endSelectedDate}
+                                    onChange={handleEndDateChange}
+                                    minDate={formik.values.startSelectedDate}
+                                    maxDate={formik.values.endSelectedDate}
+                                 />
+                              </div>
+                           </DataPickerBox>
+                           <TimeBoxStyle>
+                              <div>
+                                 <InputLabelStyle>Время от</InputLabelStyle>
 
-                              <BasicTimePicker
-                                 value={selectedFromTime}
-                                 onChange={handleTimeFromChange}
-                              />
-                           </div>
-                           <img src={minus} alt="minus" />
+                                 <BasicTimePicker
+                                    name="selectedFromTime"
+                                    value={formik.values.selectedFromTime}
+                                    onChange={handleFromTime}
+                                 />
+                              </div>
+                              <img src={minus} alt="minus" />
+                              <div>
+                                 <InputLabelStyle>Время до</InputLabelStyle>
+                                 <BasicTimePicker
+                                    name="selectedUntilTime"
+                                    value={formik.values.selectedUntilTime}
+                                    onChange={handleUntillTime}
+                                 />
+                              </div>
+                              <IntervalBoxTimer>
+                                 <InputLabelStyle>
+                                    Интервал часов
+                                 </InputLabelStyle>
+                                 <SelectIntervalStyle
+                                    name="selectedIntervalValue"
+                                    placeholder="Выберите интервал часов"
+                                    value={formik.values.selectedIntervalValue}
+                                    onChange={formik.handleChange}
+                                    items={INTERVAL_TIME_DATA}
+                                 />
+                              </IntervalBoxTimer>
+                           </TimeBoxStyle>
+                           <TimeBoxStyleSecond>
+                              <div>
+                                 <InputLabelStyle>Время от</InputLabelStyle>
+                                 <BasicTimePicker
+                                    name="selectedFromTimeBreak"
+                                    value={formik.values.selectedFromTimeBreak}
+                                    onChange={handleFromTimeBreak}
+                                 />
+                              </div>
+                              <img src={minus} alt="minus" />
+                              <div>
+                                 <InputLabelStyle>Время до</InputLabelStyle>
+                                 <BasicTimePicker
+                                    name="selectedUntilTimeBreak"
+                                    value={formik.values.selectedUntilTimeBreak}
+                                    onChange={handleUntillTimeBreak}
+                                 />
+                              </div>
+                              <p>Выберите время для перерыва</p>
+                           </TimeBoxStyleSecond>
                            <div>
-                              <InputLabel>Время до</InputLabel>
-                              <BasicTimePicker
-                                 value={selectedUntilTime}
-                                 onChange={handleTimeUntilChange}
-                              />
+                              <InputLabelStyle>Дни повторения</InputLabelStyle>
+                              <WeekStyleBox>
+                                 {days.map((day) => (
+                                    <div key={day.id}>
+                                       <DaysContainer
+                                          type="button"
+                                          onClick={() =>
+                                             changeWeekHandler(day.id)
+                                          }
+                                          isCheck={day.checked}
+                                       >
+                                          {day.week}
+                                       </DaysContainer>
+                                    </div>
+                                 ))}
+                              </WeekStyleBox>
                            </div>
-                           <IntervalBoxTimer>
-                              <InputLabel>Интервал часов</InputLabel>
-                              <SelectIntervalStyle
-                                 placeholder="Выберите интервал часов"
-                                 value={selectedIntervalValue}
-                                 onChange={changeIntervalHandler}
-                                 items={INTERVAL_TIME_DATA}
-                              />
-                           </IntervalBoxTimer>
-                        </TimeBoxStyle>
-                        <TimeBoxStyleSecond>
                            <div>
-                              <InputLabel>Время от</InputLabel>
-                              <BasicTimePicker
-                                 value={selectedFromTimeBreak}
-                                 onChange={handleTimeFromBreakChange}
-                              />
+                              <ButtonCanceldStyle onClick={close}>
+                                 Отменить
+                              </ButtonCanceldStyle>
+                              <ButtonPublishStyle type="submit">
+                                 опубликовать
+                              </ButtonPublishStyle>
                            </div>
-                           <img src={minus} alt="minus" />
-                           <div>
-                              <InputLabel>Время до</InputLabel>
-                              <BasicTimePicker
-                                 value={selectedUntilTimeBreak}
-                                 onChange={handleTimeUntilBreakChange}
-                              />
-                           </div>
-                           <p>Выберите время для перерыва</p>
-                        </TimeBoxStyleSecond>
-                        <div>
-                           <InputLabel>Дни повторения</InputLabel>
-                           <WeekStyleBox>
-                              {days.map((day) => (
-                                 <div key={day.id}>
-                                    <DaysContainer
-                                       type="button"
-                                       onClick={() => changeWeekHandler(day.id)}
-                                       isCheck={day.checked}
-                                    >
-                                       {day.week}
-                                    </DaysContainer>
-                                 </div>
-                              ))}
-                           </WeekStyleBox>
-                        </div>
-                        <div>
-                           <ButtonCanceldStyle onClick={close}>
-                              Отменить
-                           </ButtonCanceldStyle>
-                           <ButtonPublishStyle onClick={publishHandler}>
-                              опубликовать
-                           </ButtonPublishStyle>
-                        </div>
-                     </Box>
-                  </>
-               </ModalStyle>
+                        </Box>
+                     </>
+                  </ModalStyle>
+               </form>
             )}
          </StyleModal>
       </div>
@@ -357,6 +413,7 @@ const TimeBoxStyleSecond = styled('div')(() => ({
    },
    P: {
       margin: '31px 0 0 18px',
+      fontFamily: 'Manrope',
    },
 }))
 const MinusImageStyle = styled('img')(() => ({
@@ -421,5 +478,11 @@ const LoaderStyle = styled(CircularProgress)(() => ({
       svg: {
          color: '#00ec33 ',
       },
+   },
+}))
+const InputLabelStyle = styled(InputLabel)(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      color: '#464444',
    },
 }))

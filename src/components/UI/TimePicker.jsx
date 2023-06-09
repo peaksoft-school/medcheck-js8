@@ -82,4 +82,7 @@ const StyledTimePicker = styled(TimePicker)({
       width: '100%',
       display: 'block',
    },
+   '.MuiOutlinedInput-notchedOutline': {
+      border: 'none',
+   },
 })

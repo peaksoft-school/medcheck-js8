@@ -11,7 +11,7 @@ import {
 } from '../../api/appointmentService'
 
 const Appointment = () => {
-   const { notify, ToastContainer } = useToast()
+   const { notify } = useToast()
    const [open, setOpen] = useState(false)
    const [isLoading, setIsLoading] = useState(false)
    const [patients, setPatients] = useState([])
@@ -80,10 +80,7 @@ const Appointment = () => {
             </NavLinkStyled>
          </NavLinkBox>
          <Outlet />
-         {ToastContainer}
-
          <AppointmentModal
-            toastContainer={ToastContainer}
             isLoading={isLoading}
             close={closeModal}
             open={open}

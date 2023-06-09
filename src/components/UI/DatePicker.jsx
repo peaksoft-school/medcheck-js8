@@ -3,17 +3,18 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
 import { parseISO } from 'date-fns'
-import ruLocalse from 'date-fns/locale/ru'
 
-const DatePicker = ({ value, onChange, format, ...rest }) => {
+const DatePicker = ({ value, onChange, format, maxDate, minDate, ...rest }) => {
    const parsedValue = typeof value === 'string' ? parseISO(value) : value
    return (
-      <LocalizationProvider locale={ruLocalse} dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={parsedValue}
             onChange={(date) => onChange(date)}
             // format="MM.DD.YYYY"
             {...rest}
+            maxDate={maxDate}
+            minDate={minDate}
             slotProps={{
                desktopPaper: {
                   sx: {
@@ -62,6 +63,7 @@ const StyledDatePicker = styled(MuiDatePicker)(() => ({
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
+   border: '1px solid #D4D4D4',
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',
@@ -70,6 +72,6 @@ const StyledDatePicker = styled(MuiDatePicker)(() => ({
    },
 
    '.MuiOutlinedInput-notchedOutline': {
-      borderColor: '#909CB5',
+      border: 'none',
    },
 }))

@@ -16,7 +16,7 @@ import SearchInput from './UI/SeacrchInput'
 import useToast from '../hooks/useToast'
 
 const OnlineEntry = () => {
-   const { notify, ToastContainer } = useToast()
+   const { notify } = useToast()
    const [patients, setPatients] = useState([])
    const [check, setCheck] = useState(false)
    const [isModalOpen, setIsModalOpen] = useState(false)
@@ -107,10 +107,17 @@ const OnlineEntry = () => {
    }
 
    const openModal = (patient) => {
+      if (!patient.processedChecked) {
+         notify('error', 'Вы не можете удалить необработанного пациента!')
+      } else {
+         setConfirmationPatient(patient)
+         setIsModalOpen(true)
+      }
+   }
+   const openModalAll = (patient) => {
       setConfirmationPatient(patient)
       setIsModalOpen(true)
    }
-
    const closeModal = () => {
       setIsModalOpen(false)
    }
@@ -155,7 +162,7 @@ const OnlineEntry = () => {
             header: (
                <Grid>
                   {check && (
-                     <IconButton onClick={openModal}>
+                     <IconButton onClick={openModalAll}>
                         <TrashIcon />
                      </IconButton>
                   )}
@@ -220,10 +227,7 @@ const OnlineEntry = () => {
             key: 'action',
             render: (patient) => (
                <Grid style={{ textAlign: 'center' }}>
-                  <IconButton
-                     onClick={() => openModal(patient)}
-                     disabled={!patient.processedChecked}
-                  >
+                  <IconButton onClick={() => openModal(patient)}>
                      <TrashIcon />
                   </IconButton>
                </Grid>
@@ -235,7 +239,6 @@ const OnlineEntry = () => {
 
    return (
       <div>
-         {ToastContainer}
          <SearchInputBox>
             <SearchInput
                placeholder="Поиск"
