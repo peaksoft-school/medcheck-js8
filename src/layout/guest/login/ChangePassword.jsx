@@ -7,7 +7,7 @@ import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
-import { ModalUi } from '../../../components/UI/ModalUi'
+import BasicModal from '../../../components/UI/ModalUi'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -44,7 +44,7 @@ const ChangePassword = () => {
       setModal(false)
    }
    return (
-      <ModalUi open={modal} onClose={closeModalHandler}>
+      <BasicModal open={modal} onClose={closeModalHandler}>
          <FormControlStyled onSubmit={handleSubmit(onSubmit)}>
             <CloseIcon className="closeIcon" />
             <FormLabel className="topic">смена пароля</FormLabel>
@@ -105,7 +105,7 @@ const ChangePassword = () => {
                подтвердить
             </Button>
          </FormControlStyled>
-      </ModalUi>
+      </BasicModal>
    )
 }
 
@@ -138,6 +138,7 @@ const FormControlStyled = styled('form')(() => ({
       marginTop: '19px',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '414px',
       marginLeft: '40px',
       borderRadius: ' 10px',
