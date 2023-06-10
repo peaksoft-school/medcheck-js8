@@ -31,7 +31,6 @@ const AppointmentModal = ({
    const [days, setDays] = useState(WEEK_REPETATION_DATA)
    const [filteredDoctors, setFilteredDoctors] = useState([])
    const publishHandler = async (data, formik) => {
-      console.log(data, 'f')
       const selectedDays = days.reduce((result, day) => {
          result[day.week] = day.checked
          return result
@@ -98,7 +97,7 @@ const AppointmentModal = ({
       setFilteredDoctors(
          doctorData.filter(
             (filteredDoctor) =>
-               filteredDoctor.name.localeCompare(
+               filteredDoctor.departmentName.localeCompare(
                   values.selectedServiceValue.toUpperCase()
                ) === 0 && filteredDoctor.dataOfFinish === null
          )

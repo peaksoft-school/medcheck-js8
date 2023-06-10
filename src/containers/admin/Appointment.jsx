@@ -27,7 +27,7 @@ const Appointment = () => {
             const doctorResponse = await getDoctorRequest()
             setDoctors(doctorResponse.data)
          } catch (error) {
-            notify('error', 'Error')
+            notify('error', 'Ошибка')
          }
       }
       getDoctors()
@@ -41,7 +41,7 @@ const Appointment = () => {
          setIsLoading(false)
          setPatients(departmentResponse.data)
       } catch (error) {
-         notify('error', 'Error')
+         notify('error', 'Ошибка')
       }
    }
    const closeModal = () => {
