@@ -78,7 +78,7 @@ const SelectMui = styled(Select)(() => ({
 }))
 const MenuItemStyle = styled(MenuItem)(() => ({
    color: '#222222',
-
+   fontFamily: 'Manrope',
    '&:hover': {
       background: '#DBF0E5',
    },

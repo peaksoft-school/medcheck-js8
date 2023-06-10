@@ -30,26 +30,24 @@ const AppointmentModal = ({
    const { notify } = useToast()
    const [days, setDays] = useState(WEEK_REPETATION_DATA)
    const [filteredDoctors, setFilteredDoctors] = useState([])
-
-   const publishHandler = async (data) => {
+   const publishHandler = async (data, formik) => {
+      console.log(data, 'f')
       const selectedDays = days.reduce((result, day) => {
          result[day.week] = day.checked
          return result
       }, {})
-
       const hours = data.interval
       let number = parseFloat(hours.match(/\d+(\.\d+)?/)[0])
       const value = number < 2 ? (number *= 60) : number
-      console.log(value)
-
+      const newData = {
+         ...data,
+         interval: value,
+         repeatDays: selectedDays,
+      }
       try {
-         const newData = {
-            ...data,
-            interval: value,
-            repeatDays: selectedDays,
-         }
          await postScheduleRequest(newData)
-         notify('success', 'Successfully added!')
+         notify('success', 'Успешно добавлено!')
+         formik.resetForm()
          close()
       } catch (error) {
          notify('error', error.response?.data.message)
@@ -80,11 +78,18 @@ const AppointmentModal = ({
             startBreak: dayjs(values.selectedFromTimeBreak).format('HH:mm'),
             endBreak: dayjs(values.selectedUntilTimeBreak).format('HH:mm'),
          }
-         publishHandler(data)
+         publishHandler(data, formik)
       },
-      validateOnBlur: true,
       validationSchema: Yup.object().shape({
-         gender: Yup.string().required('Обязательное поле'),
+         selectedServiceValue: Yup.string().required(),
+         selectedSpecialistValue: Yup.string().required(),
+         startSelectedDate: Yup.date().required(),
+         endSelectedDate: Yup.date().required(),
+         selectedFromTime: Yup.string().required(),
+         selectedUntilTime: Yup.string().required(),
+         selectedFromTimeBreak: Yup.string().required(),
+         selectedUntilTimeBreak: Yup.string().required(),
+         selectedIntervalValue: Yup.string().required(),
       }),
    })
    useEffect(() => {
@@ -99,61 +104,6 @@ const AppointmentModal = ({
          )
       )
    }, [formik.values.selectedServiceValue, doctorData])
-   // const translateServiceHandler = (englishService) => {
-   //    console.log(englishService, 'mm')
-
-   //    const transletedServices = englishService.map((engService) => {
-   //       switch (engService) {
-   //          case 'allergology':
-   //             return 'аллергиялогия'
-   //          case 'anesthesiology':
-   //             return 'анестезиология'
-   //          case 'vaccination':
-   //             return 'вакцинация'
-   //          case 'gastroenterology':
-   //             return 'гастроэнтерология'
-   //          case 'gynecology':
-   //             return 'гинекология'
-   //          case 'dermatology':
-   //             return 'дерматология'
-   //          case 'cardiology':
-   //             return 'кардиология'
-   //          case 'neurology':
-   //             return 'неврология'
-   //          case 'neurosurgery':
-   //             return 'нейрохирургия'
-   //          case 'oncology':
-   //             return 'онкология'
-   //          case 'orthopedics':
-   //             return 'ортопедия'
-   //          case 'otorhinolaryngology':
-   //             return 'оториноларингология'
-   //          case 'ophthalmology':
-   //             return 'офтальмология'
-   //          case 'proctology':
-   //             return 'проктология'
-   //          case 'psychotherapy':
-   //             return 'психтерапия'
-   //          case 'pulmonology':
-   //             return 'пульмонология'
-   //          case 'rheumatology':
-   //             return 'ревмотология'
-   //          case 'therapy':
-   //             return 'терапия'
-   //          case 'urology':
-   //             return 'урология'
-   //          case 'phlebology':
-   //             return 'флебология'
-   //          case 'physiotherapy':
-   //             return 'психтерапия'
-   //          case 'endocrinology':
-   //             return 'эндокринология'
-   //          default:
-   //             return englishService
-   //       }
-   //    })
-   //    return transletedServices
-   // }
 
    const handleFromTime = (time) => {
       formik.setFieldValue('selectedFromTime', time)
@@ -197,9 +147,14 @@ const AppointmentModal = ({
                <form onSubmit={formik.handleSubmit}>
                   <ModalStyle>
                      <>
-                        <CloseIconStyle onClick={close}>
-                           <CloseIcon className="closeIcon" />
-                        </CloseIconStyle>
+                        <CloseIconStyleContianer>
+                           <IconButton
+                              style={{ margin: '10px 10px 0 0' }}
+                              onClick={close}
+                           >
+                              <CloseIcon className="closeIcon" />
+                           </IconButton>
+                        </CloseIconStyleContianer>
                         <HeaderModalTitlwe>
                            Добавление записей
                         </HeaderModalTitlwe>
@@ -212,8 +167,12 @@ const AppointmentModal = ({
                               value={formik.values.selectedServiceValue}
                               onChange={formik.handleChange}
                               items={departmentData}
-                              onBlur={formik.handleBlur}
+                              error={
+                                 formik.touched.selectedServiceValue &&
+                                 !!formik.errors.selectedServiceValue
+                              }
                            />
+
                            <InputLabelStyle>Специалист</InputLabelStyle>
                            <DoctorsSelect
                               name="selectedSpecialistValue"
@@ -221,6 +180,10 @@ const AppointmentModal = ({
                               value={formik.values.selectedSpecialistValue}
                               onChange={formik.handleChange}
                               items={filteredDoctors}
+                              error={
+                                 formik.touched.selectedSpecialistValue &&
+                                 !!formik.errors.selectedSpecialistValue
+                              }
                            />
                            <DataPickerBox>
                               <div>
@@ -231,6 +194,10 @@ const AppointmentModal = ({
                                     onChange={handleStartDateChange}
                                     minDate={formik.values.startSelectedDate}
                                     maxDate={formik.values.endSelectedDate}
+                                    error={
+                                       formik.touched.startSelectedDate &&
+                                       !!formik.errors.startSelectedDate
+                                    }
                                  />
                               </div>
                               <MinusImageStyle src={minus} alt="minus" />
@@ -244,6 +211,11 @@ const AppointmentModal = ({
                                     onChange={handleEndDateChange}
                                     minDate={formik.values.startSelectedDate}
                                     maxDate={formik.values.endSelectedDate}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.endSelectedDate &&
+                                       !!formik.errors.endSelectedDate
+                                    }
                                  />
                               </div>
                            </DataPickerBox>
@@ -255,6 +227,11 @@ const AppointmentModal = ({
                                     name="selectedFromTime"
                                     value={formik.values.selectedFromTime}
                                     onChange={handleFromTime}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.selectedFromTime &&
+                                       !!formik.errors.selectedFromTime
+                                    }
                                  />
                               </div>
                               <img src={minus} alt="minus" />
@@ -264,6 +241,11 @@ const AppointmentModal = ({
                                     name="selectedUntilTime"
                                     value={formik.values.selectedUntilTime}
                                     onChange={handleUntillTime}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.selectedUntilTime &&
+                                       !!formik.errors.selectedUntilTime
+                                    }
                                  />
                               </div>
                               <IntervalBoxTimer>
@@ -276,6 +258,11 @@ const AppointmentModal = ({
                                     value={formik.values.selectedIntervalValue}
                                     onChange={formik.handleChange}
                                     items={INTERVAL_TIME_DATA}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.selectedIntervalValue &&
+                                       !!formik.errors.selectedIntervalValue
+                                    }
                                  />
                               </IntervalBoxTimer>
                            </TimeBoxStyle>
@@ -286,6 +273,11 @@ const AppointmentModal = ({
                                     name="selectedFromTimeBreak"
                                     value={formik.values.selectedFromTimeBreak}
                                     onChange={handleFromTimeBreak}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.selectedFromTimeBreak &&
+                                       !!formik.errors.selectedFromTimeBreak
+                                    }
                                  />
                               </div>
                               <img src={minus} alt="minus" />
@@ -295,6 +287,11 @@ const AppointmentModal = ({
                                     name="selectedUntilTimeBreak"
                                     value={formik.values.selectedUntilTimeBreak}
                                     onChange={handleUntillTimeBreak}
+                                    onBlur={formik.handleBlur}
+                                    error={
+                                       formik.touched.selectedUntilTimeBreak &&
+                                       !!formik.errors.selectedUntilTimeBreak
+                                    }
                                  />
                               </div>
                               <p>Выберите время для перерыва</p>
@@ -362,7 +359,7 @@ const WeekStyleBox = styled('div')(() => ({
 }))
 const Box = styled('div')(() => ({
    '&': {
-      padding: '35px 39px',
+      padding: '30px 39px',
       fontFamily: 'Manrope',
       fontWeight: 400,
       fontSize: '14px',
@@ -387,9 +384,12 @@ const HeaderModalTitlwe = styled('p')(() => ({
    },
 }))
 
-const CloseIconStyle = styled(IconButton)(() => ({
+const CloseIconStyleContianer = styled('div')(() => ({
    '&': {
-      textAlign: 'end',
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
    },
 }))
 
@@ -427,9 +427,11 @@ const ModalStyle = styled('div')(() => ({
       height: '658px',
    },
    '& .closeIcon': {
-      marginLeft: '523px',
-      marginTop: '13px',
       cursor: 'pointer',
+      display: 'flex',
+      flex: 'flex-end',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
    },
 }))
 const IntervalBoxTimer = styled('div')(() => ({
@@ -439,7 +441,7 @@ const IntervalBoxTimer = styled('div')(() => ({
 }))
 const SelectIntervalStyle = styled(SelectUi)(() => ({
    '&': {
-      width: '270px',
+      width: '257px',
    },
 }))
 

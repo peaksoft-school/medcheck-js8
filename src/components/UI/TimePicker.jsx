@@ -5,7 +5,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { styled } from '@mui/material/styles'
 
-export default function BasicTimePicker({ value, onChange, ...rest }) {
+export default function BasicTimePicker({
+   onBlur,
+   value,
+   onChange,
+   error,
+   ...rest
+}) {
    return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
          <DemoContainer
@@ -17,8 +23,10 @@ export default function BasicTimePicker({ value, onChange, ...rest }) {
                onChange={(time) => onChange(time)}
                {...rest}
                ampm={false}
+               onBlur={onBlur}
                className="time_picker"
                inputFormat="HH:mm"
+               error={error}
                slotProps={{
                   openPickerButton: {
                      classes: { root: 'custom_adornment_icon_class' },
@@ -60,13 +68,18 @@ export default function BasicTimePicker({ value, onChange, ...rest }) {
       </LocalizationProvider>
    )
 }
-const StyledTimePicker = styled(TimePicker)({
+const StyledTimePicker = styled(TimePicker)(({ error }) => ({
    '& .MuiInputBase-root': {
-      width: '90px',
+      width: '97px',
       height: '38px',
       borderRadius: '10px',
       overflowY: 'none',
-      border: '1px solid #D9D9D9',
+      border: error ? '1px solid #d32f2f' : '1px solid #D9D9D9',
+   },
+   '& .MuiOutlinedInput-root': {
+      paddingLeft: '9px',
+      fontSize: '16px',
+      fontWeight: 400,
    },
    '& .custom_adornment_class': {
       position: 'absolute',
@@ -85,4 +98,4 @@ const StyledTimePicker = styled(TimePicker)({
    '.MuiOutlinedInput-notchedOutline': {
       border: 'none',
    },
-})
+}))

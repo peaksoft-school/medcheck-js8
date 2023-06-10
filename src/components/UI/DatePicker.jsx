@@ -4,17 +4,29 @@ import { DatePicker as MuiDatePicker } from '@mui/x-date-pickers/DatePicker'
 import { styled } from '@mui/material/styles'
 import { parseISO } from 'date-fns'
 
-const DatePicker = ({ value, onChange, format, maxDate, minDate, ...rest }) => {
+const DatePicker = ({
+   value,
+   onChange,
+   onBlur,
+   format,
+   maxDate,
+   minDate,
+   error,
+   ...rest
+}) => {
    const parsedValue = typeof value === 'string' ? parseISO(value) : value
+
    return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
          <StyledDatePicker
             value={parsedValue}
             onChange={(date) => onChange(date)}
+            onBlur={onBlur}
             // format="MM.DD.YYYY"
             {...rest}
             maxDate={maxDate}
             minDate={minDate}
+            error={error}
             slotProps={{
                desktopPaper: {
                   sx: {
@@ -58,12 +70,12 @@ const DatePicker = ({ value, onChange, format, maxDate, minDate, ...rest }) => {
    )
 }
 export default DatePicker
-const StyledDatePicker = styled(MuiDatePicker)(() => ({
+const StyledDatePicker = styled(MuiDatePicker)(({ error }) => ({
    borderRadius: '6px',
    fontFamily: 'Roboto',
    fontWeight: '400',
    fontSize: '14px',
-   border: '1px solid #D4D4D4',
+   border: error ? '1px solid #d32f2f' : '1px solid #D4D4D4',
    input: {
       width: '5.625rem',
       padding: '8px 15px 8px 15px',

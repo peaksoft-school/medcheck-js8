@@ -19,15 +19,10 @@ export const ServiceSelect = ({
    value,
    onChange,
    placeholder,
-   formik,
    ...rest
 }) => {
-   console.log(formik)
    return (
-      <FormControl
-         fullWidth
-         error={formik.touched.gender && Boolean(formik.errors.gender)}
-      >
+      <FormControl fullWidth>
          <SelectMui
             onBlur={onBlur}
             value={value}
@@ -53,7 +48,7 @@ export const ServiceSelect = ({
    )
 }
 
-const SelectMui = styled(Select)(() => ({
+const SelectMui = styled(Select)(({ error }) => ({
    maxWidth: '100%',
    height: '38px',
    border: '1px solid #D9D9D9',
@@ -67,7 +62,7 @@ const SelectMui = styled(Select)(() => ({
 
    '&:hover': {
       '&& fieldset': {
-         border: '1px solid #959595',
+         borderColor: error ? '#d32f2f' : '#959595',
          color: '#4D4E51',
       },
    },
@@ -83,14 +78,13 @@ const SelectMui = styled(Select)(() => ({
          color: '#4D4E51',
       },
    },
-   '& .MuiSelect-outlined': {
-      '&.Mui-error .MuiOutlinedInput-notchedOutline': {
-         borderColor: 'red',
-      },
+   '& .Mui-focused fieldset': {
+      border: 'none',
    },
 }))
 const MenuItemStyle = styled(MenuItem)(() => ({
    color: '#222222',
+   fontFamily: 'Manrope',
 
    '&:hover': {
       background: '#DBF0E5',
