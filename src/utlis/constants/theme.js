@@ -27,7 +27,7 @@ export const appTheme = {
       },
    },
    typography: {
-      fontFamily: ['Manrope', 'Poppins'],
+      fontFamily: ['Manrope', 'Poppins', 'Montserrat'],
    },
 }
 
