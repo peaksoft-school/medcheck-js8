@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
@@ -25,6 +25,8 @@ import ChangePassword from '../containers/user/personal-account/profile/ChangePa
 import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../containers/user/personal-account/myApplications/MyApplicationDetails'
 import ApplicationsPage from '../containers/admin/Applications.Page'
+import SchedulePage from '../containers/admin/Schedule.Page'
+import OnlineEntry from '../components/OnlineEntry'
 import AddSpecialist from '../containers/admin/AddSpecialist'
 import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
 
@@ -89,7 +91,15 @@ const AppRoutes = () => {
             />
          </Route>
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
-            <Route path="appointment" element={getAdminPage(Appointment)} />
+            <Route path="appointment" element={getAdminPage(Appointment)}>
+               <Route index element={<Navigate to="online-appointment" />} />
+               <Route
+                  path="online-appointment"
+                  element={getAdminPage(OnlineEntry)}
+               />
+               <Route path="schedule" element={getAdminPage(SchedulePage)} />
+            </Route>
+
             <Route
                path="applications"
                element={getAdminPage(ApplicationsPage)}
