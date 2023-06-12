@@ -27,6 +27,7 @@ const GetResults = () => {
 
    const getResultInputChangeHandler = (event) => {
       setResultInputValue(event.target.value)
+      setSuccessfullyGetResult(false)
    }
 
    const getResultHandler = async () => {
@@ -47,13 +48,17 @@ const GetResults = () => {
       setSuccessfullyGetResult(false)
    }
    const handleSavePDF = () => {
-      html2canvas(pdfRef.current).then((canvas) => {
-         const imgData = canvas.toDataURL('image/png')
-         // eslint-disable-next-line new-cap
-         const pdf = new jsPDF('p', 'px')
-         pdf.addImage(imgData, 'PNG', 0, 0)
-         pdf.save('document.pdf')
-      })
+      try {
+         html2canvas(pdfRef.current).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png')
+            // eslint-disable-next-line new-cap
+            const pdf = new jsPDF('p', 'px')
+            pdf.addImage(imgData, 'PNG', 0, 0)
+            pdf.save('document.pdf')
+         })
+      } catch (error) {
+         notify('error', 'Произошла ошибка при сохранении PDF')
+      }
    }
 
    return (
@@ -87,7 +92,7 @@ const GetResults = () => {
             <InfoBoxStyle>
                <ButtonResultBox>
                   <h3>Выдача результатов</h3>
-                  {successfullyGetResult && (
+                  {successfullyGetResult ? (
                      <ContainerButtons>
                         <CloseResultButton onClick={closeResultHandler}>
                            <img src={cross} alt="крестикинолики:)" />
@@ -108,7 +113,7 @@ const GetResults = () => {
                            content={() => componentRef.current}
                         />
                      </ContainerButtons>
-                  )}
+                  ) : null}
                </ButtonResultBox>
 
                <p>Вы можете:</p>
@@ -131,7 +136,7 @@ const GetResults = () => {
                   </li>
                </ul>
             </InfoBoxStyle>
-            {successfullyGetResult && (
+            {successfullyGetResult ? (
                <div style={{ marginLeft: '70px' }}>
                   <div ref={componentRef} className="print-container">
                      <div ref={pdfRef}>
@@ -191,7 +196,7 @@ const GetResults = () => {
                      </div>
                   </div>
                </div>
-            )}
+            ) : null}
          </ContainerPdf>
       </ImageStyle>
    )
