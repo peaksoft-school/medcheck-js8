@@ -18,7 +18,7 @@ import barcodeIcon from '../../../assets/icons/barcodeIcon.svg'
 import './printStyle.css'
 
 const GetResults = () => {
-   const { notify, ToastContainer } = useToast()
+   const { notify } = useToast()
    const [resultInputValue, setResultInputValue] = useState('')
    const [getResult, setGetResult] = useState([])
    const [successfullyGetResult, setSuccessfullyGetResult] = useState(false)
@@ -58,7 +58,6 @@ const GetResults = () => {
 
    return (
       <ImageStyle>
-         {ToastContainer}
          <Box>
             <LogoBox>
                <NavLink to="/">
