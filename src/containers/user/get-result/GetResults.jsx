@@ -1,27 +1,28 @@
-// import html2canvas from 'html2canvas'
-// import jsPDF from 'jspdf'
 import { styled as styledMui } from '@mui/material/styles'
 import { TextField } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import { useRef, useState } from 'react'
 import ReactToPrint, { useReactToPrint } from 'react-to-print'
-import getResultBackgroundImage from '../../assets/images/getResultBackgroundImage.png'
-import medcheckIcon from '../../assets/icons/MedcheckLogo.svg'
-import medcheck from '../../assets/icons/MedCheckIcon.svg'
-import Button from '../../components/UI/Button'
-import { getResultRequest } from '../../api/getResultService'
-import cross from '../../assets/icons/cross.svg'
-import pdfIcon from '../../assets/icons/PdfIcon.svg'
-import printIcon from '../../assets/icons/printIcon.svg'
-import useToast from '../../hooks/useToast'
-import barcodeIcon from '../../assets/icons/barcodeIcon.svg'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
+import getResultBackgroundImage from '../../../assets/images/getResultBackgroundImage.png'
+import medcheckIcon from '../../../assets/icons/MedcheckLogo.svg'
+import medcheck from '../../../assets/icons/MedCheckIcon.svg'
+import Button from '../../../components/UI/Button'
+import { getResultRequest } from '../../../api/getResultService'
+import cross from '../../../assets/icons/cross.svg'
+import pdfIcon from '../../../assets/icons/PdfIcon.svg'
+import printIcon from '../../../assets/icons/printIcon.svg'
+import useToast from '../../../hooks/useToast'
+import barcodeIcon from '../../../assets/icons/barcodeIcon.svg'
+import './printStyle.css'
 
 const GetResults = () => {
    const { notify, ToastContainer } = useToast()
    const [resultInputValue, setResultInputValue] = useState('')
    const [getResult, setGetResult] = useState([])
    const [successfullyGetResult, setSuccessfullyGetResult] = useState(false)
-   // const pdfRef = useRef(null)
+   const pdfRef = useRef(null)
    const componentRef = useRef(null)
 
    const getResultInputChangeHandler = (event) => {
@@ -35,7 +36,7 @@ const GetResults = () => {
          setSuccessfullyGetResult(true)
          setResultInputValue('')
       } catch (error) {
-         notify('error', 'Error')
+         notify('error', 'Данные не найдены')
       }
    }
    const handlePrint = useReactToPrint({
@@ -45,33 +46,15 @@ const GetResults = () => {
    const closeResultHandler = () => {
       setSuccessfullyGetResult(false)
    }
-   // const handleSavePDF = () => {
-   //    // const pdfWidth = pdfRef.current.offsetWidth
-   //    //  Get the width of the reference box element
-   //    // const pdfHeight = pdfRef.current.offsetHeight
-   //    //  Get the height of the reference box element
-   //    // // eslint-disable-next-line new-cap
-   //    // const pdf = new jsPDF() // Set the PDF dimensions based on the reference box size
-
-   //    // eslint-disable-next-line new-cap
-   //    const doc = new jsPDF('p', 'pt', 'letter')
-
-   //    doc.html(pdfRef.current, {
-   //       callback: (doc) => {
-   //          console.log(doc)
-   //          doc.save()
-   //       },
-   //    })
-
-   //    // html2canvas(pdfRef.current).then((canvas) => {
-   //    //    const imgData = canvas.toDataURL('image/png')
-   //    //    // eslint-disable-next-line new-cap
-   //    //    const pdf = new jsPDF('p', 'px', [pdfWidth
-   //    // , pdfHeight]) // Set the PDF dimensions based on the reference box size
-   //    //    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
-   //    //    pdf.save('document.pdf')
-   //    // })
-   // }
+   const handleSavePDF = () => {
+      html2canvas(pdfRef.current).then((canvas) => {
+         const imgData = canvas.toDataURL('image/png')
+         // eslint-disable-next-line new-cap
+         const pdf = new jsPDF('p', 'px')
+         pdf.addImage(imgData, 'PNG', 0, 0)
+         pdf.save('document.pdf')
+      })
+   }
 
    return (
       <ImageStyle>
@@ -111,7 +94,7 @@ const GetResults = () => {
                            <img src={cross} alt="крестикинолики:)" />
                            Закрыть
                         </CloseResultButton>
-                        <PdfButtonStyle>
+                        <PdfButtonStyle onClick={handleSavePDF}>
                            <img src={pdfIcon} alt="pdf" />
                            PDF
                         </PdfButtonStyle>
@@ -150,43 +133,64 @@ const GetResults = () => {
                </ul>
             </InfoBoxStyle>
             {successfullyGetResult && (
-               <div ref={componentRef}>
-                  <ReferenceBoxStyle>
-                     <LogoReferenceBox>
-                        <div>
-                           <LogoReferenceStyle src={medcheckIcon} alt="logo" />
-                           <LogoMedcheckStyle src={medcheck} alt="medcheck" />
-                        </div>
-                        <BoxStyle>
-                           <p>
-                              № заявки для просмотра результатов анализов на
-                              сайте
-                              <a href="/">MedCheck-me.ru</a>
-                           </p>
-                           <img src={barcodeIcon} alt="barcode" />
-                        </BoxStyle>
-                     </LogoReferenceBox>
+               <div style={{ marginLeft: '70px' }}>
+                  <div ref={componentRef} className="print-container">
+                     <div ref={pdfRef}>
+                        <ReferenceBoxStyle>
+                           <LogoReferenceBox className="print-logo-box">
+                              <div className="logo-box">
+                                 <LogoReferenceStyle
+                                    src={medcheckIcon}
+                                    alt="logo"
+                                 />
+                                 <LogoMedcheckStyle
+                                    src={medcheck}
+                                    alt="medcheck"
+                                 />
+                              </div>
+                              <BoxStyle>
+                                 <p className="print-header-title">
+                                    № заявки для просмотра результатов анализов
+                                    на сайте
+                                    <a href="/">MedCheck-me.ru</a>
+                                 </p>
+                                 <img src={barcodeIcon} alt="barcode" />
+                              </BoxStyle>
+                           </LogoReferenceBox>
 
-                     <GetResultsInfoStyle>
-                        <div>
-                           <h3>Услуга: {getResult.name}</h3>
-                        </div>
-                        <div>
-                           <p>Пациент: {getResult.patientFullName}</p>
-                           <p>Телефон :{getResult.patientPhoneNumber}</p>
-                           <p>Email :{getResult.patientEmail}</p>
-                        </div>
-                        <div>
-                           № заявки
-                           <h2>{getResult.orderNumber}</h2>
-                        </div>
-                     </GetResultsInfoStyle>
-                     <h3>Внимание!!!</h3>
-                     <TitleStyle>
-                        В случае сомнительного результата,лаборатория оставляет
-                        за собой право задержать результат для перепроверки.
-                     </TitleStyle>
-                  </ReferenceBoxStyle>
+                           <GetResultsInfoStyle>
+                              <div className="server-box">
+                                 <h3>Услуга: {getResult.name}</h3>
+                              </div>
+                              <div className="patient-box">
+                                 <div>
+                                    <p>Пациент : {getResult.patientFullName}</p>
+                                 </div>
+                                 <div>
+                                    <p>
+                                       Телефон :{getResult.patientPhoneNumber}
+                                    </p>
+                                 </div>
+                                 <div>
+                                    <p>Email :{getResult.patientEmail}</p>
+                                 </div>
+                              </div>
+                              <div className="order-box">
+                                 № заявки
+                                 <h2>{getResult.orderNumber}</h2>
+                              </div>
+                           </GetResultsInfoStyle>
+                           <div className="attention-box">
+                              <h3 className="attention-title">Внимание!!!</h3>
+                              <p className="print-title">
+                                 В случае сомнительного результата,лаборатория
+                                 оставляет за собой право задержать результат
+                                 для перепроверки.
+                              </p>
+                           </div>
+                        </ReferenceBoxStyle>
+                     </div>
+                  </div>
                </div>
             )}
          </ContainerPdf>
@@ -290,7 +294,7 @@ const ReferenceBoxStyle = styledMui('div')({
    width: '53vw',
    padding: '30px',
    fontFamily: 'Manrope',
-   marginLeft: '90px',
+   marginLeft: '20px',
    marginTop: '20px',
 })
 
@@ -390,12 +394,6 @@ const GetResultsInfoStyle = styledMui('div')({
       border: '2px solid  #222222',
       padding: '7px',
    },
-})
-
-const TitleStyle = styledMui('p')({
-   fontWeight: 600,
-   fontFamily: 'Manrope',
-   fontSize: '14px',
 })
 
 const ContainerButtons = styledMui('div')({

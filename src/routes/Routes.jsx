@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
@@ -8,7 +8,7 @@ import UserLayout from '../layout/user/UserLayout'
 import NotFoundPage from '../containers/NotFoundPage'
 import AboutClinic from '../containers/user/AboutClinic'
 import Service from '../containers/user/Service'
-import GetResults from '../containers/user/GetResults'
+import GetResults from '../containers/user/get-result/GetResults'
 import ServiceDetails from '../containers/user/ServiceDetails'
 import Doctors from '../containers/user/Doctors'
 import DoctorDetails from '../containers/user/DoctorDetails'
@@ -87,7 +87,12 @@ const AppRoutes = () => {
                element={getUserPage(MyApplicationDetails)}
             />
          </Route>
-         <Route path="getResults" element={getUserPage(GetResults)} />
+         <Route
+            path="getResults"
+            element={
+               role === 'GUEST' ? <Navigate to="/" /> : getUserPage(GetResults)
+            }
+         />
 
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)} />
