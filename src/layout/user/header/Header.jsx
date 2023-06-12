@@ -43,7 +43,12 @@ import {
 import Dropdown from '../../../components/UI/Dropdown'
 import SearchInput from '../../../components/UI/SeacrchInput'
 import SignIn from '../../guest/login/SignIn'
-import { UserRoles } from '../../../utlis/constants/commons'
+import {
+   UserRoles,
+   data,
+   info,
+   services,
+} from '../../../utlis/constants/commons'
 import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
@@ -51,7 +56,7 @@ import useToast from '../../../hooks/useToast'
 
 export const services = [
    {
-      name: 'Анестезиология',
+      name: 'Аллергология',
       id: '1',
    },
    {
@@ -60,41 +65,41 @@ export const services = [
    },
    {
       name: 'Вакцинация',
-      id: '3',
+      id: '8',
    },
    {
       name: 'Гинекология',
-      id: '4',
+      id: '9',
    },
    {
       name: 'Дерматология',
-      id: '5',
+      id: '3',
    },
    {
       name: 'Кардиология',
-      id: '6',
+      id: '10',
    },
    {
       name: 'Неврология',
-      id: '7',
+      id: '11',
    },
    {
       name: 'Нейрохирургия',
-      id: '8',
+      id: '22',
    },
 ]
 export const data = [
    {
       name: 'Онкология',
-      id: '9',
+      id: '13',
    },
    {
       name: 'Ортопедия',
-      id: '10',
+      id: '14',
    },
    {
       name: 'Оториноларингология',
-      id: '11',
+      id: '15',
    },
    {
       name: 'Офтальмология',
@@ -102,45 +107,45 @@ export const data = [
    },
    {
       name: 'Проктология',
-      id: '13',
+      id: '16',
    },
    {
       name: 'Психтерапия',
-      id: '14',
+      id: '17',
    },
    {
       name: 'Пульмонология',
-      id: '15',
+      id: '18',
    },
    {
       name: 'Ревмотология',
-      id: '16',
+      id: '19',
    },
 ]
 export const info = [
    {
       name: 'Терапия',
-      id: '17',
-   },
-   {
-      name: 'Урология',
-      id: '18',
-   },
-   {
-      name: 'Флебология',
-      id: '19',
-   },
-   {
-      name: 'Эндокринология',
       id: '20',
    },
    {
-      name: 'Физиотерапия',
+      name: 'Урология',
       id: '21',
    },
    {
+      name: 'Флебология',
+      id: '6',
+   },
+   {
+      name: 'Эндокринология',
+      id: '4',
+   },
+   {
+      name: 'Физиотерапия',
+      id: '5',
+   },
+   {
       name: 'Психтерапия',
-      id: '22',
+      id: '17',
    },
 ]
 
