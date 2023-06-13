@@ -136,6 +136,7 @@ const GetResults = () => {
                   </li>
                </ul>
             </InfoBoxStyle>
+
             {successfullyGetResult ? (
                <div style={{ marginLeft: '70px' }}>
                   <div ref={componentRef} className="print-container">
