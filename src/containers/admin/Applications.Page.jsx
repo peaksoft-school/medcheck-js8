@@ -14,8 +14,10 @@ import {
 import { getApplicatonRequest } from '../../api/applicationsService'
 import Button from '../../components/UI/Button'
 import BasicModal from '../../components/UI/ModalUi'
+import useToast from '../../hooks/useToast'
 
 const ApplicationsPage = () => {
+   const { notify } = useToast()
    const dispatch = useDispatch()
 
    const { application } = useSelector((state) => state.application)
@@ -30,23 +32,23 @@ const ApplicationsPage = () => {
       setPatients(application)
    }, [application])
 
-   const getData = async () => {
-      try {
-         if (debouncedQuery) {
-            const { data } = await getApplicatonRequest(inputVal)
-            setPatients(data)
-         } else {
-            const { data } = await getApplicatonRequest()
-            setPatients(data)
-         }
-      } catch (error) {
-         console.log(error)
-      }
-   }
-
    useEffect(() => {
+      const getData = async () => {
+         try {
+            if (debouncedQuery) {
+               const { data } = await getApplicatonRequest(debouncedQuery)
+               setPatients(data)
+            } else {
+               const { data } = await getApplicatonRequest()
+               setPatients(data)
+            }
+         } catch (error) {
+            notify('error', 'Error')
+         }
+      }
+
       getData()
-   }, [inputVal, debouncedQuery])
+   }, [debouncedQuery])
 
    const searchChangeHandler = (event) => {
       setInputVal(event.target.value)
@@ -108,10 +110,17 @@ const ApplicationsPage = () => {
    }
 
    const openModal = (patient) => {
+      if (!patient.processedChecked) {
+         notify('error', 'Вы не можете удалить необработанного пациента!')
+      } else {
+         setConfirmationPatient(patient)
+         setIsModalOpen(true)
+      }
+   }
+   const openModalAll = (patient) => {
       setConfirmationPatient(patient)
       setIsModalOpen(true)
    }
-
    const confirmDeleteHandler = (id) => {
       dispatch(deleteChecked(id))
       setIsModalOpen(false)
@@ -149,7 +158,7 @@ const ApplicationsPage = () => {
             header: (
                <Grid>
                   {check && (
-                     <IconButton onClick={openModal}>
+                     <IconButton onClick={openModalAll}>
                         <TrashIcon />
                      </IconButton>
                   )}
@@ -193,10 +202,7 @@ const ApplicationsPage = () => {
             key: 'action',
             render: (patient) => (
                <Grid style={{ textAlign: 'center' }}>
-                  <IconButton
-                     onClick={() => openModal(patient)}
-                     disabled={!patient.processedChecked}
-                  >
+                  <IconButton onClick={() => openModal(patient)}>
                      <TrashIcon />
                   </IconButton>
                </Grid>

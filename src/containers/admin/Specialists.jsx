@@ -32,7 +32,7 @@ const Specialists = () => {
       keyWord: null,
    })
    const [searchTerm, setSearchTerm] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify } = useToast()
 
    const getAllSpecialists = async (queryParams) => {
       try {
@@ -41,17 +41,18 @@ const Specialists = () => {
          setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'ошибка')
       }
    }
 
    const deleteSpecialist = async ({ id }) => {
       try {
          await deleteSpecialistService(id)
-         notifyCall('success', 'успешно')
-         return getAllSpecialists('')
+
+         getAllSpecialists('')
+         return notify('success', 'успешно')
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'ошибка')
       }
    }
 
@@ -60,7 +61,7 @@ const Specialists = () => {
          await postSpecialistIsActiveReq(id, isActive)
          return getAllSpecialists('')
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'ошибка')
       }
    }
 
@@ -289,6 +290,7 @@ const Img = styled('img')(() => ({
       width: '36px',
       height: '36px',
       borderRadius: '100px',
+      marginRight: '7px',
    },
 }))
 
@@ -301,5 +303,6 @@ const ContainerNamesStyled = styled('div')(() => ({
 
 const StyledCircularProgress = styled(CircularProgress)`
    color: green;
-   margin-left: 300px;
+   display: flex;
+   margin: auto;
 `

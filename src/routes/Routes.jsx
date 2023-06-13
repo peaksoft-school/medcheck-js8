@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ProtectedRoute } from './ProtectedRoutes'
 import { UserRoles } from '../utlis/constants/commons'
@@ -8,7 +8,7 @@ import UserLayout from '../layout/user/UserLayout'
 import NotFoundPage from '../containers/NotFoundPage'
 import AboutClinic from '../containers/user/AboutClinic'
 import Service from '../containers/user/Service'
-import GetResults from '../containers/user/GetResults'
+import GetResults from '../containers/user/get-result/GetResults'
 import ServiceDetails from '../containers/user/ServiceDetails'
 import Doctors from '../containers/user/Doctors'
 import DoctorDetails from '../containers/user/DoctorDetails'
@@ -25,6 +25,8 @@ import ChangePassword from '../containers/user/personal-account/profile/ChangePa
 import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../containers/user/personal-account/myApplications/MyApplicationDetails'
 import ApplicationsPage from '../containers/admin/Applications.Page'
+import SchedulePage from '../containers/admin/Schedule.Page'
+import OnlineEntry from '../components/OnlineEntry'
 import AddSpecialist from '../containers/admin/AddSpecialist'
 import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
 import PatientResult from '../containers/admin/PatientResult'
@@ -70,7 +72,6 @@ const AppRoutes = () => {
             />
             <Route path="price" element={getUserPage(Price)} />
             <Route path="contacts" element={getUserPage(Contacts)} />
-            <Route path="getResults" element={getUserPage(GetResults)} />
             <Route path="profile" element={getUserPage(ProfileLayout)}>
                <Route
                   path="personal-data"
@@ -90,8 +91,23 @@ const AppRoutes = () => {
                element={getUserPage(MyApplicationDetails)}
             />
          </Route>
+         <Route
+            path="getResults"
+            element={
+               role === 'GUEST' ? <Navigate to="/" /> : getUserPage(GetResults)
+            }
+         />
+
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
-            <Route path="appointment" element={getAdminPage(Appointment)} />
+            <Route path="appointment" element={getAdminPage(Appointment)}>
+               <Route index element={<Navigate to="online-appointment" />} />
+               <Route
+                  path="online-appointment"
+                  element={getAdminPage(OnlineEntry)}
+               />
+               <Route path="schedule" element={getAdminPage(SchedulePage)} />
+            </Route>
+
             <Route
                path="applications"
                element={getAdminPage(ApplicationsPage)}

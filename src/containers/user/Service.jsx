@@ -7,7 +7,7 @@ import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
    return (
-      <>
+      <div>
          <Hr />
          <MainPart href="/">
             <span>Главная\</span>
@@ -28,7 +28,7 @@ function Service() {
             <Sellect data={serviceData} />
          </SelectContent>
          <CardApplication />
-      </>
+      </div>
    )
 }
 
