@@ -188,6 +188,18 @@ const StyledInput = styled(Input)(() => ({
       borderRadius: '8px',
       border: '1px solid #c5c5c5',
       margin: '4px 5px 26px 2px ',
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '16px',
+      color: '#959595',
+   },
+   '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      color: '#222222',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '22px',
    },
    '& :hover': {
       borderRadius: '8px',

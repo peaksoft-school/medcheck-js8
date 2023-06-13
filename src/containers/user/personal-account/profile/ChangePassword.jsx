@@ -81,7 +81,7 @@ const ChangePassword = () => {
                   Старый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      id="old_password"
                      placeholder="Введите ваш пароль"
                      className="inputStyle"
@@ -109,7 +109,9 @@ const ChangePassword = () => {
                   />
                </FormControl>
                {errors.password && (
-                  <p className="message">{errors.password?.message}</p>
+                  <StyledError className="message">
+                     {errors.password?.message}
+                  </StyledError>
                )}
             </div>
             <div>
@@ -117,7 +119,7 @@ const ChangePassword = () => {
                   Новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      placeholder="Введите новый пароль"
                      id="new_password"
                      className="inputStyle"
@@ -152,7 +154,9 @@ const ChangePassword = () => {
                      }}
                   />
                   {errors.newwPassword && (
-                     <p className="message">{errors.newwPassword?.message}</p>
+                     <StyledError className="message">
+                        {errors.newwPassword?.message}
+                     </StyledError>
                   )}
                </FormControl>
             </div>
@@ -161,7 +165,7 @@ const ChangePassword = () => {
                   Подтвердить новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      className="inputStyle"
                      placeholder="Подтвердите пароль"
                      id="confirm_password"
@@ -199,9 +203,9 @@ const ChangePassword = () => {
                      }}
                   />
                   {errors.confirmPassword && (
-                     <p className="message">
+                     <StyledError className="message">
                         {errors.confirmPassword?.message}
-                     </p>
+                     </StyledError>
                   )}
                </FormControl>
             </div>
@@ -224,6 +228,14 @@ const Container = styled('form')`
    width: 90%;
    margin-top: 26px;
    margin-bottom: 40px;
+`
+
+const StyledError = styled('p')`
+   font-family: 'Manrope';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 22px;
 `
 
 const StyledTitleText = styled('h1')`
@@ -320,5 +332,18 @@ const StyledInputLabel = styled(InputLabel)(() => ({
       fontFamily: 'Manrope',
       fontWeight: 400,
       lineHeight: '19px',
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '&': {
+      fontSize: '1rem',
+   },
+   '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      color: '#959595',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '22px',
    },
 }))

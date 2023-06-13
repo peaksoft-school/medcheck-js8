@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useParams } from 'react-router'
 import { serviceDetails } from '../../utlis/helpers/serviceDetails'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
+import { Hr } from './Service'
 
 const ServiceDetails = () => {
    window.scrollTo({ top: 0 })
@@ -25,6 +26,7 @@ const ServiceDetails = () => {
 
    return (
       <div>
+         <Hr />
          <Container>
             <Stack spacing={3} style={{ paddingTop: '30x' }}>
                <Breadcrumbs
@@ -174,12 +176,16 @@ const StyledInfoPriceTypography = styled(Typography)(() => ({
 }))
 
 const StyledPriceTypography = styled(Typography)(() => ({
-   fontWeight: 400,
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: 500,
    fontSize: '18px',
+   lineHeight: '25px',
+   color: '#4D4E51',
 }))
 
 const Container = styled('div')(() => ({
-   paddingLeft: '120px',
+   paddingLeft: '100px',
    fontFamily: 'Manrope',
    fontStyle: 'normal',
 }))
@@ -236,6 +242,7 @@ const DoctorInfo = styled('h4')(() => ({
    fontWeight: 700,
    fontSize: '36px',
    lineHeight: '49px',
+   paddingBottom: '60px',
 }))
 
 const DoctorName = styled('span')(() => ({
