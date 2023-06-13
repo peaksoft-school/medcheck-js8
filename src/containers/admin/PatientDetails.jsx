@@ -54,7 +54,12 @@ const PatientDetails = () => {
       setName(e.target.value)
    }
    const chooseHandler = (e) => {
-      setInputDate(e)
+      const currentDate = new Date()
+      if (currentDate > new Date(e)) {
+         setInputDate(e)
+      } else {
+         notifyCall('warning', 'choose correct date!')
+      }
    }
 
    const fileChange = (event) => {
@@ -72,6 +77,7 @@ const PatientDetails = () => {
    }
    const submitHandler = () => {
       try {
+         // const currentDate = new Date()
          if (name && date && selectedFile) {
             const datasOfPatient = {
                departmentId: name,
@@ -83,10 +89,10 @@ const PatientDetails = () => {
             notifyCall('success', 'The data has successfully sent!')
             navigate(`${findPatient?.id}/results`)
          } else {
-            notifyCall('error', 'This is error message')
+            notifyCall('error', 'This is message')
          }
       } catch (error) {
-         notifyCall('error', 'This is error message')
+         notifyCall('error', 'This is error message ')
       }
    }
 

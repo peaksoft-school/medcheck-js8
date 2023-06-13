@@ -1,10 +1,11 @@
 import styled from '@emotion/styled'
 import { Avatar, IconButton, Stack } from '@mui/material'
+// import Measure from 'react-measure'
 import { useUploadAvatar } from '../../../hooks/uploadAvatar'
 import { ReactComponent as AddPhoto } from '../../../assets/table/File.svg'
 
 const AvatarUpload = ({ ...rest }) => {
-   const [avatarUrl, handleAvatarChange] = useUploadAvatar()
+   const [avatarUrl, handleAvatarChange, fileInputRef] = useUploadAvatar()
    return (
       <ContainerFile>
          <IconButton
@@ -18,6 +19,7 @@ const AvatarUpload = ({ ...rest }) => {
                accept="image/*"
                type="file"
                onChange={handleAvatarChange}
+               ref={fileInputRef}
             />
             <Stack direction="row" spacing={2}>
                <AvatarGroupStyle sx={{ bgcolor: '#E2E4E8' }} variant="rounded">

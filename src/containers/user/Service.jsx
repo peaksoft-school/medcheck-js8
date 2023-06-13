@@ -84,8 +84,6 @@ const SelectContent = styled('div')(() => ({
       color: '#222222',
    },
    '& .info': {
-      width: '816px',
-      height: '64px',
       color: '#4D4E51',
       fontFamily: ' Manrope',
       fontSize: '18px',

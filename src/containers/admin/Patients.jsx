@@ -52,80 +52,83 @@ const Patients = () => {
    const deleteHandler = (id) => {
       deletePatient({ id })
    }
-   const column = useMemo(() => [
-      {
-         header: <NumberIcon />,
-         render: (patient) => <P>{patient.id}</P>,
-      },
-      {
-         header: 'Имя и фамилия',
-         render: (patient) => (
-            <Grid>
-               <P
-                  onClick={(patient) => {
-                     navigate(`${patient.id}/details`)
-                  }}
-               >
-                  <span>{patient.firstName} </span>
-                  <span>{patient.lastName} </span>
-               </P>
-            </Grid>
-         ),
-      },
-      {
-         header: 'Номер телефона',
-         render: (patient) => (
-            <Grid>
-               <P
-                  onClick={() => {
-                     navigate(`${patient.id}/details`)
-                  }}
-               >
-                  {patient.phoneNumber}
-               </P>
-            </Grid>
-         ),
-      },
+   const column = useMemo(
+      () => [
+         {
+            header: <NumberIcon />,
+            render: (patient) => <P>{patient.id}</P>,
+         },
+         {
+            header: 'Имя и фамилия',
+            render: (patient) => (
+               <Grid>
+                  <P
+                     onClick={(patient) => {
+                        navigate(`${patient.id}/details`)
+                     }}
+                  >
+                     <span>{patient.firstName} </span>
+                     <span>{patient.lastName} </span>
+                  </P>
+               </Grid>
+            ),
+         },
+         {
+            header: 'Номер телефона',
+            render: (patient) => (
+               <Grid>
+                  <P
+                     onClick={() => {
+                        navigate(`${patient.id}/details`)
+                     }}
+                  >
+                     {patient.phoneNumber}
+                  </P>
+               </Grid>
+            ),
+         },
 
-      {
-         header: 'Почта',
-         render: (patient) => (
-            <Grid>
-               <P
-                  onClick={() => {
-                     navigate(`${patient.id}/details`)
-                  }}
-               >
-                  {patient.email}
-               </P>
-            </Grid>
-         ),
-      },
-      {
-         header: 'Дата сдачи',
-         render: (patient) => (
-            <Grid>
-               <P
-                  onClick={() => {
-                     navigate(`${patient.id}/details`)
-                  }}
-               >
-                  {patient.dateOfVisit}
-               </P>
-            </Grid>
-         ),
-      },
-      {
-         header: 'Действия',
-         render: (patient) => (
-            <Grid style={{ textAlign: 'center' }}>
-               <IconButton onClick={() => deleteHandler(patient.id)}>
-                  <DeleteIcon />
-               </IconButton>
-            </Grid>
-         ),
-      },
-   ])
+         {
+            header: 'Почта',
+            render: (patient) => (
+               <Grid>
+                  <P
+                     onClick={() => {
+                        navigate(`${patient.id}/details`)
+                     }}
+                  >
+                     {patient.email}
+                  </P>
+               </Grid>
+            ),
+         },
+         {
+            header: 'Дата сдачи',
+            render: (patient) => (
+               <Grid>
+                  <P
+                     onClick={() => {
+                        navigate(`${patient.id}/details`)
+                     }}
+                  >
+                     {patient.dateOfVisit}
+                  </P>
+               </Grid>
+            ),
+         },
+         {
+            header: 'Действия',
+            render: (patient) => (
+               <Grid style={{ textAlign: 'center' }}>
+                  <IconButton onClick={() => deleteHandler(patient.id)}>
+                     <DeleteIcon />
+                  </IconButton>
+               </Grid>
+            ),
+         },
+      ],
+      []
+   )
    return (
       <PatientStyle>
          <p className="topic">Пациенты</p>
