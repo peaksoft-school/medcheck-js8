@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FormLabel, IconButton, Paper, styled } from '@mui/material'
 import { format, isValid } from 'date-fns'
@@ -9,7 +9,7 @@ import { SelectUi } from '../../components/UI/SelectUi'
 import { MED_SERVICE } from '../../utlis/services/img_service'
 import Calendar from '../../components/UI/calendar/Calendar'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
-import { getPatients } from '../../api/patientsService'
+import { getAllPatientsById } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
 import AvatarUpload from '../../components/UI/avatar/AvatarUpload'
 import { putDatas } from '../../redux/reducers/patient/patient.thunk'
@@ -25,20 +25,19 @@ const PatientDetails = () => {
    const [patients, setPatients] = useState([])
    const [inputDate, setInputDate] = useState('')
    const [selectedFile, setSelectedFile] = useState(null)
+
    const getAllPatients = async () => {
       try {
-         const { data } = await getPatients()
+         const { data } = await getAllPatientsById(id)
          return setPatients(data)
       } catch (error) {
          return notifyCall('error', error.response?.data.message)
       }
    }
+
    useEffect(() => {
       getAllPatients()
    }, [])
-   const findPatient = useMemo(() => {
-      return patients.find((el) => String(el.id) === id)
-   }, [id, patients])
 
    const handleOpen = () => {
       setOpen(true)
@@ -53,6 +52,7 @@ const PatientDetails = () => {
    const changeHandler = (e) => {
       setName(e.target.value)
    }
+
    const chooseHandler = (e) => {
       const currentDate = new Date()
       if (currentDate > new Date(e)) {
@@ -76,20 +76,21 @@ const PatientDetails = () => {
       date = format(new Date(inputDate), 'yyyy-MM-dd')
    }
    const submitHandler = () => {
+      const departmentId = MED_SERVICE.find((el) => el.title === name).id
       try {
-         // const currentDate = new Date()
-         if (name && date && selectedFile) {
+         if (name != null && date != null && selectedFile != null) {
             const datasOfPatient = {
-               departmentId: name,
+               departmentId,
                date: new Date(date),
-               patientId: findPatient.id,
+               patientId: patients.patientId,
                file: selectedFile,
             }
+
             dispatch(putDatas(datasOfPatient))
             notifyCall('success', 'The data has successfully sent!')
-            navigate(`${findPatient?.id}/results`)
+            navigate(`${patients?.patientId}/results`)
          } else {
-            notifyCall('error', 'This is message')
+            notifyCall('error', 'This is uncorrect message')
          }
       } catch (error) {
          notifyCall('error', 'This is error message ')
@@ -102,7 +103,7 @@ const PatientDetails = () => {
          <HeaderPart>
             <P>
                {' '}
-               {findPatient?.firstName} {findPatient?.lastName}{' '}
+               {patients?.firstName} {patients?.lastName}{' '}
             </P>
             <ButtonStyled onClick={handleOpen}>
                + добавить результаты
@@ -151,28 +152,28 @@ const PatientDetails = () => {
             <div>
                <h3>
                   <span>
-                     {findPatient?.firstName} {findPatient?.lastName}
+                     {patients?.firstName} {patients?.lastName}
                   </span>
                </h3>{' '}
                <br />
                <p>
                   имя: <br />
-                  {findPatient?.firstName}
+                  {patients?.firstName}
                </p>{' '}
                <br />
                <p>
                   фамиля: <br />
-                  {findPatient?.lastName}
+                  {patients?.lastName}
                </p>{' '}
                <br />
                <p>
                   номер телефона: <br />
-                  {findPatient?.phoneNumber}
+                  {patients?.phoneNumber}
                </p>{' '}
                <br />
                <p>
                   email: <br />
-                  {findPatient?.email}
+                  {patients?.email}
                </p>{' '}
                <br />
             </div>

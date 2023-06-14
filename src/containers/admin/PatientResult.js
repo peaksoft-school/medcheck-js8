@@ -1,51 +1,35 @@
 import { Paper, styled } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import useToast from '../../hooks/useToast'
-import { getPatients, getResultsById } from '../../api/patientsService'
+import { getAllPatientsById } from '../../api/patientsService'
 import { fileInstance } from '../../api/instanses'
+import { ReactComponent as File } from '../../assets/serviceIcons/File.svg'
 
 function PatientResult() {
    const { id } = useParams()
    const { ToastContainer, notify: notifyCall } = useToast()
-   const [patients, setPatients] = useState([])
    const [results, setResults] = useState([])
-   const getAllPatients = async () => {
-      try {
-         const { data } = await getPatients()
-         return setPatients(data)
-      } catch (error) {
-         return notifyCall('error', error.response?.data.message)
-      }
-   }
-   useEffect(() => {
-      getAllPatients()
-   }, [])
 
    const patientGetById = async () => {
       try {
-         const { data } = await getResultsById(id)
+         const { data } = await getAllPatientsById(id)
          setResults(data)
       } catch (error) {
          notifyCall('error', error.message)
       }
    }
+   console.log(results)
 
    useEffect(() => {
       patientGetById()
-   }, [id])
-   const findPatient = useMemo(() => {
-      return patients.find((el) => String(el.id) === id)
-   }, [id, patients])
-   const findPatientById = useMemo(() => {
-      return results.find((el) => String(el.patientId) === id)
-   }, [id, results])
+   }, [])
 
-   const PDFFileHandler = (e) => {
+   const PDFFileHandler = (e, file) => {
       e.stopPropagation()
       fileInstance
          .get(
-            `api/s3/download/${findPatientById.file
+            `api/s3/download/${file
                .split('https://medcheckbucket.s3.eu-central-1.amazonaws.com/')
                .join('')}`,
             {
@@ -54,16 +38,8 @@ function PatientResult() {
                   'Content-Type': 'application/json',
                   Accept: 'application/pdf',
                },
-               // params: {
-               //    link: findPatientById.file
-               //       .split(
-               //          'https://medcheckbucket.s3.eu-central-1.amazonaws.com/'
-               //       )
-               //       .join(''),
-               // },
             }
          )
-         // .then((res) => res.blob())
          .then((response) => {
             const element = document.createElement('a')
             const file = new Blob([response.data], {
@@ -83,52 +59,77 @@ function PatientResult() {
          {ToastContainer}
          <HeaderPart>
             <P>
-               <span>{findPatient?.firstName} </span>
-               <span>{findPatient?.lastName}</span>
+               <span>{results?.firstName} </span>
+               <span>{results?.lastName}</span>
             </P>
          </HeaderPart>
          <PaperStyled>
             <div>
                <h3>
-                  <span>{findPatient?.firstName} </span>
-                  <span>{findPatient?.lastName}</span>
+                  <span>{results?.firstName} </span>
+                  <span>{results?.lastName}</span>
                </h3>
                <br />
                <p>
-                  имя: <br /> {findPatient?.firstName}
+                  имя: <br /> {results?.firstName}
                </p>{' '}
                <br />
                <p>
                   фамиля: <br />
-                  {findPatient?.lastName}
+                  {results?.lastName}
                </p>{' '}
                <br />
                <p>
                   номер телефона: <br />
-                  {findPatient?.phoneNumber}
+                  {results?.phoneNumber}
                </p>{' '}
                <br />
                <p>
                   email: <br />
-                  {findPatient?.email}
+                  {results?.email}
                </p>{' '}
                <br />
             </div>
             <Div>
-               <p>
-                  Услуга: <h5>{findPatientById?.name}</h5>
+               <p style={{ color: ' #000000' }}>
+                  Услуга:{' '}
+                  <PStyle>
+                     {results.results?.map((el) => (
+                        <div>{el.services}</div>
+                     ))}
+                  </PStyle>
                </p>
-               <p>
-                  Дата и время: <h5>{findPatientById?.date} </h5>{' '}
+               <p style={{ color: ' #000000' }}>
+                  Дата и время:{' '}
+                  <PStyle>
+                     {results.results?.map((el) => (
+                        <div>
+                           {el.dateOfIssue}
+                           <p style={{ color: '#4D4E51' }}>{el.timeOfIssue}</p>
+                        </div>
+                     ))}{' '}
+                  </PStyle>{' '}
                </p>
-               <p>
-                  Номер заказа:<h5>{findPatientById?.orderNumber}</h5>
+               <p style={{ color: ' #000000' }}>
+                  Номер заказа:
+                  <PStyle>
+                     {results.results?.map((el) => (
+                        <div>{el.orderNumber}</div>
+                     ))}
+                  </PStyle>
                </p>
-               <p>
+               <p style={{ color: ' #000000' }}>
                   Загруженный файл: <br />
-                  <button type="button" onClick={(e) => PDFFileHandler(e)}>
-                     downLoad
-                  </button>
+                  <div>
+                     {results.results?.map((el) => (
+                        <ButtonStyle
+                           type="button"
+                           onClick={(e) => PDFFileHandler(e, el.file)}
+                        >
+                           <FileStyle />
+                        </ButtonStyle>
+                     ))}
+                  </div>{' '}
                </p>
             </Div>
          </PaperStyled>
@@ -161,6 +162,33 @@ const HeaderPart = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
 })
+const PStyle = styled('p')({
+   marginTop: '10px',
+   color: ' #222222',
+   marginLeft: '-20px',
+})
+const FileStyle = styled(File)`
+   margin: 6px;
+   width: 14px;
+   height: 18px;
+   fill: #346efb;
+   :hover {
+      fill: #ffffff;
+   }
+`
+const ButtonStyle = styled('button')`
+   margin-left: 50px;
+   background-color: #ffffff;
+   border-radius: 4px;
+   border-color: #ffffff;
+   margin-top: 15px;
+   width: 32px;
+   height: 32px;
+   display: flex;
+   :hover {
+      background-color: #346efb;
+   }
+`
 const PaperStyled = styled(Paper)({
    display: 'flex',
    justifyContent: 'space-between',
