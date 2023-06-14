@@ -98,7 +98,7 @@ const AppointmentModal = ({
          doctorData.filter(
             (filteredDoctor) =>
                filteredDoctor.departmentName.localeCompare(
-                  values.selectedServiceValue.toUpperCase()
+                  values.selectedServiceValue
                ) === 0 && filteredDoctor.dataOfFinish === null
          )
       )
