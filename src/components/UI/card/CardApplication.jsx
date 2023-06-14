@@ -15,7 +15,8 @@ import Input from '../input/Input'
 import { postDatas } from '../../../redux/reducers/card/card.thunk'
 import useToast from '../../../hooks/useToast'
 
-export default function CardApplication() {
+// eslint-disable-next-line no-unused-vars
+export const CardApplication = React.forwardRef((_, ref) => {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
@@ -47,7 +48,7 @@ export default function CardApplication() {
    }
 
    return (
-      <div>
+      <div ref={ref}>
          {ToastContainer}
          <ModalContainer>
             <div className="container">
@@ -110,7 +111,7 @@ export default function CardApplication() {
          </ModalContainer>
       </div>
    )
-}
+})
 
 const Input1 = styled('div')(() => ({
    '&': {

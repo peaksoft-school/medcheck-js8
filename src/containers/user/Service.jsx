@@ -2,14 +2,15 @@ import React from 'react'
 import styled from '@emotion/styled'
 import ServiceCard from '../../components/UI/ServiceCard'
 import Sellect from '../../components/UI/select/Sellect'
-import CardApplication from '../../components/UI/card/CardApplication'
+import { CardApplication } from '../../components/UI/card/CardApplication'
 
 function Service() {
+   window.scrollTo({ top: 0 })
    return (
       <div>
          <Hr />
          <MainPart href="/">
-            <span>Главная\</span>
+            <span>Главная {' > '}</span>
             <span className="service">Услуги</span>
          </MainPart>
          <ServiceStyle>
@@ -33,11 +34,12 @@ function Service() {
 
 export default Service
 
-const Hr = styled('hr')(() => ({
+export const Hr = styled('hr')(() => ({
    width: '100%',
    height: '10px',
    marginBottom: '30px',
    background: '#DBF0E5',
+   border: 'none',
 }))
 
 const MainPart = styled('a')(() => ({

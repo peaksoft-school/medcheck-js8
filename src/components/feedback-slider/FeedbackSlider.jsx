@@ -112,7 +112,7 @@ const StyledInfo = styled('h2')({
    lineHeight: '49px',
    color: '#222222',
    zIndex: 6,
-   paddingLeft: '120px',
+   paddingLeft: '90px',
    span: {
       color: '#048741',
    },
