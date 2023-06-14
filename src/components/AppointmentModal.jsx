@@ -67,7 +67,7 @@ const AppointmentModal = ({
       },
       onSubmit: (values) => {
          const data = {
-            department: values.selectedServiceValue.toUpperCase(),
+            department: values.selectedServiceValue,
             doctorId: values.selectedSpecialistValue,
             interval: values.selectedIntervalValue,
             startDate: dayjs(values.startSelectedDate).format('YYYY-MM-DD'),
