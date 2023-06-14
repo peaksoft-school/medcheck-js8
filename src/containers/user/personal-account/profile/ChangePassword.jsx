@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import {
    styled,
    FormControl,
@@ -19,17 +20,21 @@ const ChangePassword = () => {
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
    const { ToastContainer, notify } = useToast()
+   const [backendError, setBackendError] = useState('')
 
+   const navigate = useNavigate()
    const postPassword = async (password) => {
       try {
          const { data } = await postChangePassword(password)
          if (data.message === 'Wrong old password.') {
             return notify('error', 'Неверный пароль')
          }
+         navigate('/profile')
          notify('success', 'Успешно')
          return data
       } catch (error) {
-         return notify('error', 'ОШИБКА')
+         setBackendError(error.response.data.message)
+         return notify('error', 'не правильный пароль')
       }
    }
 
@@ -160,6 +165,7 @@ const ChangePassword = () => {
                   )}
                </FormControl>
             </div>
+            <StyledError>{backendError}</StyledError>
             <div>
                <StyledInputLabel htmlFor="confirm_password">
                   Подтвердить новый пароль
@@ -336,8 +342,9 @@ const StyledInputLabel = styled(InputLabel)(() => ({
 }))
 
 const StyledInput = styled(Input)(() => ({
-   '&': {
+   '& .inputStyle': {
       fontSize: '1rem',
+      width: '220px',
    },
    '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
       fontSize: '1rem',

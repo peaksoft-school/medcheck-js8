@@ -15,7 +15,6 @@ const Doctors = () => {
    const [showMoreClicked, setShowMoreClicked] = useState(false)
 
    const fetchDepartments = async (start, end) => {
-      // window.scrollTo({ top: 0 })
       try {
          const departmentNames = [
             'ALLERGOLOGY',

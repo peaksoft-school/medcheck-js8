@@ -43,7 +43,7 @@ const ServiceDetails = () => {
                      <p>Услуги</p>
                   </StyledNavLink>
                   <div>
-                     <p>{currentService.name}</p>
+                     <StyledTitle>{currentService.name}</StyledTitle>
                   </div>
                </Breadcrumbs>
             </Stack>
@@ -209,6 +209,10 @@ const LisStyled = styled('li')(() => ({
 
 const StyledNavLink = styled(NavLink)(() => ({
    color: '#048741',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '14px',
 }))
 
 const NameStyled = styled('h1')(() => ({
@@ -275,4 +279,11 @@ const InfoPrice = styled('p')(() => ({
    fontSize: '18px',
    lineHeight: '25px',
    color: '#4D4E51',
+}))
+
+const StyledTitle = styled('p')(() => ({
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: 400,
+   fontSize: '14px',
 }))

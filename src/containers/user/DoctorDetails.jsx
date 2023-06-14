@@ -11,7 +11,6 @@ import { Hr } from './Service'
 import useToast from '../../hooks/useToast'
 
 const DoctorDetails = () => {
-   window.scrollTo({ top: 0 })
    const [oneSpecialist, setOneSpecialist] = useState({})
    const { ToastContainer, notify } = useToast()
    const getOneDoctor = async (id) => {
@@ -28,6 +27,7 @@ const DoctorDetails = () => {
 
    useEffect(() => {
       getOneDoctor(id)
+      window.scrollTo({ top: 0 })
    }, [])
 
    return (

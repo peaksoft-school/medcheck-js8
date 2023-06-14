@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router'
 import { styled, FormControl, InputLabel } from '@mui/material'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
@@ -12,11 +13,12 @@ import { postDataProfieValid } from '../../../../utlis/helpers/general'
 
 const PersonalData = () => {
    const { ToastContainer, notify } = useToast()
+   const navigate = useNavigate()
 
    const postDataProfile = async (dataProfile) => {
       try {
          await postDataProfileService(dataProfile)
-
+         navigate('/profile')
          return notify('success', 'отправлено успешно')
       } catch (error) {
          return notify('error', 'ошибка')

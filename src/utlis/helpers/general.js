@@ -52,12 +52,12 @@ export const postDataProfieValid = yup.object().shape({
    firstName: yup
       .string()
       .required('Поле "firstName" обязательно для заполнения')
-      .matches(/^[А-ЯЁ][а-яё]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3'),
    lastName: yup
       .string()
       .min(2)
       .required('Поле "lastName" обязательно для заполнения')
-      .matches(/^[А-ЯЁ][а-яё]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3'),
    email: yup
       .string()
       .email('Неверный формат E-mail')
