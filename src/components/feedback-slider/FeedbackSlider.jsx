@@ -195,7 +195,7 @@ const StyledSlider = styled(Slider)({
    },
    '& .slick-prev': {
       position: 'absolute',
-      top: '389.2px',
+      top: '389px',
       zIndex: '8',
       left: '273px',
    },
