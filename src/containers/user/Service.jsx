@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import ServiceCard from '../../components/UI/ServiceCard'
 import Sellect from '../../components/UI/select/Sellect'
 import CardApplication from '../../components/UI/card/CardApplication'
+import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
    return (
@@ -24,7 +25,7 @@ function Service() {
                вопросы. <br /> Ниже представленны наиболее популярные.
             </p>
 
-            <Sellect />
+            <Sellect data={serviceData} />
          </SelectContent>
          <CardApplication />
       </div>
@@ -83,8 +84,6 @@ const SelectContent = styled('div')(() => ({
       color: '#222222',
    },
    '& .info': {
-      width: '816px',
-      height: '64px',
       color: '#4D4E51',
       fontFamily: ' Manrope',
       fontSize: '18px',

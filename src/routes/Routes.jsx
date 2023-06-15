@@ -29,6 +29,8 @@ import SchedulePage from '../containers/admin/Schedule.Page'
 import OnlineEntry from '../components/OnlineEntry'
 import AddSpecialist from '../containers/admin/AddSpecialist'
 import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
+import PatientResult from '../containers/admin/PatientResult'
+import PatientDetails from '../containers/admin/PatientDetails'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)
@@ -121,6 +123,14 @@ const AppRoutes = () => {
             />
 
             <Route path="patients" element={getAdminPage(Patients)} />
+            <Route
+               path="patients/:id/details"
+               element={getAdminPage(PatientDetails)}
+            />
+            <Route
+               path="patients/:id/details/:id/results"
+               element={getAdminPage(PatientResult)}
+            />
          </Route>
          <Route path="*" element={<NotFoundPage />} />
       </Routes>

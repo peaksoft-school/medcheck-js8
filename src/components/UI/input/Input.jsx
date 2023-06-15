@@ -28,6 +28,7 @@ const StyledInput = styled(TextField)`
       border-radius: 8px;
       padding: 10px 8px 10px 16px;
       border: 1x solid #d9d9d9;
+      fontfamily: 'Manrope';
    }
    :hover {
       border-radius: 8px;
