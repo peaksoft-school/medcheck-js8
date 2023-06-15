@@ -50,13 +50,14 @@ const Toastify = styled(ToastContainer)(() => ({
 
 const StyledSnackbar = styled('div')(() => ({
    '&': {
-      width: '387px',
+      width: 'auto',
       borderRadius: 0,
       backgroundColor: '#fff',
       color: '#000',
       display: 'flex',
       alignItems: 'center',
       boxShadow: '4px 0px 8px 0px rgba(34, 60, 80, 0.2)',
+      fontFamily: 'Manrope',
    },
 }))
 

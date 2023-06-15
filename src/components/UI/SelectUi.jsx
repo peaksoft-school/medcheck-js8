@@ -3,6 +3,14 @@ import MenuItem from '@mui/material/MenuItem'
 import { FormControl, Select, styled } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
+const menuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: 292,
+      },
+   },
+}
+
 export const SelectUi = ({
    items,
    label,
@@ -21,6 +29,7 @@ export const SelectUi = ({
             onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
             inputProps={{ 'aria-label': 'Without label' }}
+            MenuProps={menuProps}
             displayEmpty
             {...rest}
          >
@@ -29,9 +38,9 @@ export const SelectUi = ({
             </MenuItem>
             {items &&
                items.map((item) => (
-                  <MenuItem key={item.id} value={item.title}>
+                  <MenuItemStyle key={item.id} value={item.title}>
                      {item.title}
-                  </MenuItem>
+                  </MenuItemStyle>
                ))}
          </SelectMui>
       </FormControl>
@@ -40,7 +49,6 @@ export const SelectUi = ({
 
 const SelectMui = styled(Select)(() => ({
    maxWidth: '100%',
-   height: '38px',
    border: '1px solid #D9D9D9',
    borderRadius: '6px',
    fontFamily: 'Manrope',
@@ -89,3 +97,13 @@ const Icon = styled('span')(() => ({
 //    fontSize: '16px',
 //    fontWeight: '500',
 // }))
+const MenuItemStyle = styled(MenuItem)(() => ({
+   color: '#222222',
+   fontFamily: 'Manrope',
+   '&:hover': {
+      background: '#DBF0E5',
+   },
+   '&:active': {
+      background: '#DBF0E5',
+   },
+}))

@@ -19,7 +19,7 @@ export default function CardApplication() {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify: notifyCall } = useToast()
 
    const nameChangeHandler = (e) => {
       setName(e.target.value)

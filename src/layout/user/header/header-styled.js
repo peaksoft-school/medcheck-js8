@@ -18,6 +18,7 @@ export const HeaderStyled = styledMui(AppBar)(() => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      boxShadow: 'none',
    },
 }))
 export const StyledHeaderGlobalContainer = styledMui(Grid)({
