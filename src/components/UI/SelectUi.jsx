@@ -1,18 +1,32 @@
 import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
-import { FormControl, Select } from '@mui/material'
-import styled from '@emotion/styled'
+import { FormControl, Select, styled } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
-export const SelectUi = ({ items, label, value, onChange }) => {
+export const SelectUi = ({
+   items,
+   label,
+   value,
+   onChange,
+   placeholder,
+   icon,
+   ...rest
+}) => {
    return (
       <FormControl fullWidth>
+         <Icon>{icon}</Icon>
          <SelectMui
             value={value}
             label={label}
             onChange={onChange}
             IconComponent={KeyboardArrowDownIcon}
+            inputProps={{ 'aria-label': 'Without label' }}
+            displayEmpty
+            {...rest}
          >
+            <MenuItem disabled value="" style={{ display: 'none' }}>
+               {placeholder}
+            </MenuItem>
             {items &&
                items.map((item) => (
                   <MenuItem key={item.id} value={item.title}>
@@ -54,3 +68,24 @@ const SelectMui = styled(Select)(() => ({
       },
    },
 }))
+
+const Icon = styled('span')(() => ({
+   position: 'absolute',
+   top: 25,
+   left: 15,
+   zIndex: '10',
+}))
+
+// const Placeholder = styled('p')(() => ({
+//    position: 'absolute',
+//    top: 0,
+//    left: '0',
+//    width: '45p%',
+//    height: '100%',
+//    display: 'flex',
+//    alignItems: 'center',
+//    justifyContent: 'space-between',
+//    color: '#222222',
+//    fontSize: '16px',
+//    fontWeight: '500',
+// }))

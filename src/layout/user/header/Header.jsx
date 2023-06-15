@@ -48,6 +48,7 @@ import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
+import OnlineAppointment from '../../../components/online-appointment/OnlineAppointment'
 
 export const services = [
    {
@@ -147,6 +148,8 @@ export const info = [
 const Header = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const role = useSelector((state) => state.auth.role)
+   const { notify } = useToast()
    const [anchorEl, setAnchorEl] = useState(null)
 
    const handleClose = () => {
@@ -154,6 +157,7 @@ const Header = () => {
    }
    const [searchParams, setSearchParams] = useSearchParams()
    const { openModal } = Object.fromEntries(searchParams)
+
    const onCloseModal = () => setSearchParams({})
    const openSignInModal = () => {
       setSearchParams({ openModal: 'sign-in' })
@@ -166,8 +170,10 @@ const Header = () => {
    const openForgotModal = () =>
       setSearchParams({ openModal: 'forgot-password' })()
    // const openResetModal = () => setSearchParams({ openModal: 'reset-password' })
-   const role = useSelector((state) => state.auth.role)
-   const { notify } = useToast()
+
+   const openOnlineAppointment = () => {
+      setSearchParams({ openModal: 'online-appointment' })
+   }
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -176,9 +182,6 @@ const Header = () => {
 
    const navigateResultHandler = () => {
       navigate('/getResults')
-   }
-   const navigateOnlineAppointmentHandler = () => {
-      navigate('/onlineAppointment')
    }
 
    const signOutHandler = () => {
@@ -203,6 +206,10 @@ const Header = () => {
                />
                <ForgotPassword
                   open={openModal === 'forgot-password'}
+                  onClose={onCloseModal}
+               />
+               <OnlineAppointment
+                  open={openModal === 'online-appointment'}
                   onClose={onCloseModal}
                />
                <Grid>
@@ -338,7 +345,7 @@ const Header = () => {
                   </OutlinedButtonStyled>
                   <ContainedButtonStyled
                      variant="contained"
-                     onClick={navigateOnlineAppointmentHandler}
+                     onClick={openOnlineAppointment}
                   >
                      запись онлайн
                   </ContainedButtonStyled>
