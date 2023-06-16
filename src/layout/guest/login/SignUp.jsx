@@ -71,8 +71,8 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                      required: 'Поле не заполнено',
                   })}
                />
-               {errors.name && (
-                  <p className="message">{errors.name?.message}</p>
+               {errors.firstName && (
+                  <p className="message">{errors.firstName?.message}</p>
                )}
                <Input
                   placeholder="Фамилия"
@@ -82,8 +82,8 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                      required: 'Поле не заполнено',
                   })}
                />
-               {errors.surname && (
-                  <p className="message">{errors.surname?.message}</p>
+               {errors.lastName && (
+                  <p className="message">{errors.lastName?.message}</p>
                )}
                <Input
                   placeholder="+996 (_ _ _) _ _  _ _  _ _ "
@@ -93,8 +93,8 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                      required: 'поле не заполнено',
                   })}
                />
-               {errors.number && (
-                  <p className="message">{errors.number?.message}</p>
+               {errors.phoneNumber && (
+                  <p className="message">{errors.phoneNumber?.message}</p>
                )}
                <Input
                   placeholder="Email"
@@ -209,7 +209,7 @@ const FormControlStyled = styled('form')(() => ({
    background: '#FFFFFF',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .inputContainer': {
-      marginTop: '14px',
+      marginTop: '10px',
       marginLeft: '40px',
    },
    '& .topic': {
@@ -218,34 +218,34 @@ const FormControlStyled = styled('form')(() => ({
       fontWeight: 500,
       lineHeight: '25px',
       marginLeft: '180px',
-      marginTop: ' 17px',
       color: '#222222',
    },
    '& .closeIcon': {
       marginLeft: '450px',
-      marginTop: '19px',
+      marginTop: '29px',
       cursor: 'pointer',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '414px',
       borderRadius: ' 10px',
       marginBottom: '5px',
       border: '1px solid #D9D9D9',
    },
    '& .buttonStyle': {
-      height: '53px',
-      width: '390px',
-      marginLeft: '60px',
-      marginTop: '20px',
+      height: '33px',
+      width: '420px',
+      marginLeft: '40px',
+      marginTop: '10px',
       borderRadius: ' 10px',
       fontSize: '14px',
       marginBottom: '18px',
    },
    '& .buttonGoogle': {
-      height: '39px',
-      width: '390px',
-      marginLeft: '60px',
-      marginTop: '24px',
+      height: '30px',
+      width: '420px',
+      marginLeft: '40px',
+      marginTop: '14px',
       marginBottom: '15px',
       padding: '10px 20px 10px 20px',
       background: '#F5F5F5',
@@ -263,6 +263,9 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '165px',
       textDecoration: 'none',
       color: '#3772FF',
+      fontFamily: 'Manrope',
+      fontSize: '14px',
+      fontWeight: 400,
       '& span': {
          color: '#222222',
       },
@@ -281,21 +284,24 @@ const Line = styled('div')(() => ({
    display: 'flex',
    justifyContent: 'space-between',
    '& .lineFirst': {
-      width: '215px',
+      width: '170px',
       height: '0px',
       color: '#F3F1F1',
-      marginTop: '20px',
+      marginTop: '10px',
+      marginLeft: '38px',
    },
    '& span': {
-      marginTop: '14px',
+      marginBottom: '-13px',
       fontSize: '14px',
       fontWeight: 400,
       color: '#222222',
+      fontFamily: 'Manrope',
    },
    '& .lineSecond': {
-      width: '215px',
+      width: '170px',
       height: '0px',
       color: '#F3F1F1',
-      marginTop: '20px',
+      marginTop: '10px',
+      marginRight: '38px',
    },
 }))

@@ -23,10 +23,12 @@ function Sellect({ data = [] }) {
                onChange={clickHandler(data.id)}
             >
                <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography key={data.id}>{data.title}</Typography>
+                  <TypographyStyle key={data.id}>{data.title}</TypographyStyle>
                </StyledAccordionSummary>
                <AccordionDetailsStyle>
-                  <Typography key={data.id}>{data.description}</Typography>
+                  <TypographyTitle key={data.id}>
+                     {data.description}
+                  </TypographyTitle>
 
                   {data.text.map((el) => (
                      <li key={el}>{el}</li>
@@ -40,9 +42,23 @@ function Sellect({ data = [] }) {
 
 export default Sellect
 
+const TypographyStyle = styled(Typography)(() => ({
+   fontFamily: 'Manrope',
+   fontWeight: 500,
+   fontSize: '20px',
+   lineHeight: '27px',
+}))
+const TypographyTitle = styled(Typography)(() => ({
+   fontFamily: 'Manrope',
+   fontWeight: 400,
+   fontSize: '16px',
+   lineHeight: '22px',
+}))
+
 const AccordionContainer = styled('div')(() => ({
    width: '852px',
-   marginLeft: '121px',
+   marginLeft: '95px',
+   fontFamily: 'Manrope',
 }))
 
 const AccordionStyle = styled(Accordion)(() => ({
@@ -58,6 +74,7 @@ const StyledAccordionSummary = styled(AccordionSummary)(() => ({
    background: '#DBF0E5',
    '&:focus': {
       background: '#048741',
+      color: '#FFFF',
    },
 }))
 

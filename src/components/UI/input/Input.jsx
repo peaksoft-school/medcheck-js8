@@ -11,9 +11,6 @@ const Input = forwardRef(
             variant={variant}
             placeholder={placeholder}
             onChange={onChange}
-            InputProps={{
-               className: 'custom-input-styles', // Добавляем класс для своих стилей
-            }}
             classes={{
                root: 'input',
                error: 'invalid',
@@ -27,6 +24,9 @@ const Input = forwardRef(
 export default Input
 
 const StyledInput = styled(TextField)(() => ({
+   input: {
+      fontFamily: 'Manrope',
+   },
    '&:-webkit-autofill': {
       WebkitBoxShadow: '0 0 0 1000px white inset',
    },

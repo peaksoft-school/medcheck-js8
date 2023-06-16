@@ -20,7 +20,7 @@ export const CardApplication = React.forwardRef((_, ref) => {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify: notifyCall } = useToast()
 
    const nameChangeHandler = (e) => {
       setName(e.target.value)
@@ -183,6 +183,9 @@ const TextFieldStyled = styled(Input)(() => ({
       borderRadius: '5px',
       background: '#FFFFFF',
       border: ' 1px solid rgba(0, 147, 68, 0.5)',
+      input: {
+         fontFamily: 'Manrope',
+      },
    },
 }))
 
