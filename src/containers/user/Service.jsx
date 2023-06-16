@@ -2,7 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import ServiceCard from '../../components/UI/ServiceCard'
 import Sellect from '../../components/UI/select/Sellect'
-import CardApplication from '../../components/UI/card/CardApplication'
+import { CardApplication } from '../../components/UI/card/CardApplication'
 import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
@@ -44,7 +44,7 @@ export const Hr = styled('hr')(() => ({
 }))
 
 const MainPart = styled('a')(() => ({
-   marginLeft: '120px',
+   marginLeft: '95px',
    fontFamily: ' Manrope',
    fontSize: '14px',
    fontWeight: 400,
@@ -60,9 +60,10 @@ const MainPart = styled('a')(() => ({
 const ServiceStyle = styled('div')(() => ({
    fontSize: '36px',
    fontWeight: 600,
+   fontFamily: 'Manrope',
    lineHeight: '49px',
    color: '#222222',
-   marginLeft: '120px',
+   marginLeft: '95px',
    marginBottom: '60px',
    marginTop: '26px',
    '& .our_service': {
@@ -72,14 +73,14 @@ const ServiceStyle = styled('div')(() => ({
 
 const SelectContent = styled('div')(() => ({
    '& .topic': {
-      fontFamily: 'Myriad Pro',
-      fontSize: '36px',
+      fontFamily: 'Manrope',
+      fontSize: '34px',
       fontWeight: 400,
       lineHeight: '36px',
       letterSpacing: '0em',
       textAlign: 'left',
       height: '36px',
-      marginLeft: '120px',
+      marginLeft: '90px',
       top: '1760px',
       borderRadius: 'nullpx',
       marginBottom: '34px',
@@ -92,7 +93,7 @@ const SelectContent = styled('div')(() => ({
       lineHeight: ' 25px',
       letterSpacing: '0em',
       textAlign: 'left',
-      marginLeft: '120px',
+      marginLeft: '95px',
       marginBottom: '16px',
    },
 }))

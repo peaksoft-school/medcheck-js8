@@ -183,6 +183,9 @@ const TextFieldStyled = styled(Input)(() => ({
       borderRadius: '5px',
       background: '#FFFFFF',
       border: ' 1px solid rgba(0, 147, 68, 0.5)',
+      input: {
+         fontFamily: 'Manrope',
+      },
    },
 }))
 

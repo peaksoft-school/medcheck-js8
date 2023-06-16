@@ -8,12 +8,12 @@ import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../../assets/login/image 90.svg'
-import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import BasicModal from '../../../components/UI/ModalUi'
 import { signIn } from '../../../redux/reducers/auth/auth.thunk'
 import useToast from '../../../hooks/useToast'
 import Spiner from '../../../components/UI/Spiner'
+import Input from '../../../components/UI/input/Input'
 
 const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
    const dispatch = useDispatch()
@@ -214,6 +214,9 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '149px',
       textDecoration: 'none',
       color: '#3772FF',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      fontSize: '14px',
       '& span': {
          color: '#222222',
          marginBottom: '50px',
@@ -244,6 +247,7 @@ const Line = styled('div')(() => ({
       fontSize: '14px',
       fontWeight: 400,
       color: '#222222',
+      fontFamily: 'Manrope',
    },
    '& .lineSecond': {
       width: '215px',

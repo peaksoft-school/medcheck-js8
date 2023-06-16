@@ -263,6 +263,9 @@ const FormControlStyled = styled('form')(() => ({
       marginLeft: '165px',
       textDecoration: 'none',
       color: '#3772FF',
+      fontFamily: 'Manrope',
+      fontSize: '14px',
+      fontWeight: 400,
       '& span': {
          color: '#222222',
       },
@@ -292,6 +295,7 @@ const Line = styled('div')(() => ({
       fontSize: '14px',
       fontWeight: 400,
       color: '#222222',
+      fontFamily: 'Manrope',
    },
    '& .lineSecond': {
       width: '170px',
