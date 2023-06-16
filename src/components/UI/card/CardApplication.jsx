@@ -20,7 +20,7 @@ export const CardApplication = React.forwardRef((_, ref) => {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify: notifyCall } = useToast()
 
    const nameChangeHandler = (e) => {
       setName(e.target.value)

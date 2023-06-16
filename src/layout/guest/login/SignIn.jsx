@@ -167,6 +167,7 @@ const FormControlStyled = styled('form')(() => ({
       cursor: 'pointer',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '390px',
       marginLeft: '60px',
       marginTop: ' 14px',
@@ -187,7 +188,7 @@ const FormControlStyled = styled('form')(() => ({
       width: '390px',
       marginLeft: '60px',
       marginTop: '24px',
-      marginBottom: '30px',
+      marginBottom: '20px',
       padding: '10px 20px 10px 20px',
       background: '#F5F5F5',
       fontFamily: 'Manrope',
@@ -210,7 +211,6 @@ const FormControlStyled = styled('form')(() => ({
       textDecoration: 'none',
    },
    '& .register': {
-      marginTop: '20px',
       marginLeft: '149px',
       textDecoration: 'none',
       color: '#3772FF',

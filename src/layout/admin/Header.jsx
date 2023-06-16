@@ -120,9 +120,9 @@ const Container = styled(Grid)(() => ({
 }))
 const AppBarStyled = styled(AppBar)(() => ({
    '&': {
-      boxShadow: 'none',
       padding: '0 70px',
       height: '80px',
+      boxShadow: 'none',
    },
 }))
 

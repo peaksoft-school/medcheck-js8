@@ -8,7 +8,7 @@ import UserLayout from '../layout/user/UserLayout'
 import NotFoundPage from '../containers/NotFoundPage'
 import AboutClinic from '../containers/user/AboutClinic'
 import Service from '../containers/user/Service'
-import GetResults from '../containers/user/GetResults'
+import GetResults from '../containers/user/get-result/GetResults'
 import ServiceDetails from '../containers/user/ServiceDetails'
 import Doctors from '../containers/user/Doctors'
 import DoctorDetails from '../containers/user/DoctorDetails'
@@ -29,6 +29,8 @@ import SchedulePage from '../containers/admin/Schedule.Page'
 import OnlineEntry from '../components/OnlineEntry'
 import AddSpecialist from '../containers/admin/AddSpecialist'
 import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
+import PatientResult from '../containers/admin/PatientResult'
+import PatientDetails from '../containers/admin/PatientDetails'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)
@@ -70,7 +72,6 @@ const AppRoutes = () => {
             />
             <Route path="price" element={getUserPage(Price)} />
             <Route path="contacts" element={getUserPage(Contacts)} />
-            <Route path="getResults" element={getUserPage(GetResults)} />
             <Route path="profile" element={getUserPage(ProfileLayout)}>
                <Route
                   path="personal-data"
@@ -90,6 +91,13 @@ const AppRoutes = () => {
                element={getUserPage(MyApplicationDetails)}
             />
          </Route>
+         <Route
+            path="getResults"
+            element={
+               role === 'GUEST' ? <Navigate to="/" /> : getUserPage(GetResults)
+            }
+         />
+
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)}>
                <Route index element={<Navigate to="online-appointment" />} />
@@ -115,6 +123,14 @@ const AppRoutes = () => {
             />
 
             <Route path="patients" element={getAdminPage(Patients)} />
+            <Route
+               path="patients/:id/details"
+               element={getAdminPage(PatientDetails)}
+            />
+            <Route
+               path="patients/:id/details/:id/results"
+               element={getAdminPage(PatientResult)}
+            />
          </Route>
          <Route path="*" element={<NotFoundPage />} />
       </Routes>
