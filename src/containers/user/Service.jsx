@@ -6,11 +6,12 @@ import CardApplication from '../../components/UI/card/CardApplication'
 import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
+   window.scrollTo({ top: 0 })
    return (
       <div>
          <Hr />
          <MainPart href="/">
-            <span>Главная\</span>
+            <span>Главная {' > '}</span>
             <span className="service">Услуги</span>
          </MainPart>
          <ServiceStyle>
@@ -34,11 +35,12 @@ function Service() {
 
 export default Service
 
-const Hr = styled('hr')(() => ({
+export const Hr = styled('hr')(() => ({
    width: '100%',
    height: '10px',
    marginBottom: '30px',
    background: '#DBF0E5',
+   border: 'none',
 }))
 
 const MainPart = styled('a')(() => ({

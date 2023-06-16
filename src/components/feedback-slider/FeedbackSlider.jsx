@@ -112,7 +112,7 @@ const StyledInfo = styled('h2')({
    lineHeight: '49px',
    color: '#222222',
    zIndex: 6,
-   paddingLeft: '120px',
+   paddingLeft: '90px',
    span: {
       color: '#048741',
    },
@@ -195,7 +195,7 @@ const StyledSlider = styled(Slider)({
    },
    '& .slick-prev': {
       position: 'absolute',
-      top: '389.2px',
+      top: '389px',
       zIndex: '8',
       left: '273px',
    },

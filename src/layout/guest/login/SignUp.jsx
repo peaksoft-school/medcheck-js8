@@ -68,7 +68,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                   className="inputStyle"
                   error={errors.name}
                   {...register('firstName', {
-                     required: 'поле не заполнено',
+                     required: 'Поле не заполнено',
                   })}
                />
                {errors.firstName && (
@@ -79,7 +79,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                   className="inputStyle"
                   error={errors.surname}
                   {...register('lastName', {
-                     required: 'поле не заполнено',
+                     required: 'Поле не заполнено',
                   })}
                />
                {errors.lastName && (
@@ -101,7 +101,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                   className="inputStyle"
                   error={errors.email}
                   {...register('email', {
-                     required: 'поле не заполнено',
+                     required: 'Поле не заполнено',
                      pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: 'Неверный формат электронной почты',
@@ -116,9 +116,15 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                   className="inputStyle"
                   error={errors.password}
                   {...register('password', {
-                     required: 'поле не заполнено',
-                     maxLength: { value: 15, message: 'слишком много деталей' },
-                     minLength: { value: 5, message: 'слишком мало деталей' },
+                     required: 'Поле не заполнено',
+                     maxLength: {
+                        value: 15,
+                        message: 'Слишком длинный пароль',
+                     },
+                     minLength: {
+                        value: 5,
+                        message: 'Пароль должен содержать не менее 5 букв',
+                     },
                   })}
                   type={showPassword ? 'text' : 'password'}
                   InputProps={{
@@ -142,9 +148,15 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                   className="inputStyle"
                   error={errors.password}
                   {...register('copyPassword', {
-                     required: 'поле не заполнено',
-                     maxLength: { value: 15, message: 'слишком много деталей' },
-                     minLength: { value: 5, message: 'слишком мало деталей' },
+                     required: 'Поле не заполнено',
+                     maxLength: {
+                        value: 15,
+                        message: 'Слишком длинный пароль',
+                     },
+                     minLength: {
+                        value: 5,
+                        message: 'Пароль должен содержать не менее 5 букв',
+                     },
                   })}
                   type={showPasswordCopy ? 'text' : 'password'}
                   InputProps={{
@@ -191,8 +203,8 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
 export default SignUp
 
 const FormControlStyled = styled('form')(() => ({
-   height: '750px',
    width: ' 494px',
+   paddingBottom: '40px',
    borderRadius: '2px',
    background: '#FFFFFF',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',

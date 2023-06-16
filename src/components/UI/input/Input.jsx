@@ -11,6 +11,9 @@ const Input = forwardRef(
             variant={variant}
             placeholder={placeholder}
             onChange={onChange}
+            InputProps={{
+               className: 'custom-input-styles', // Добавляем класс для своих стилей
+            }}
             classes={{
                root: 'input',
                error: 'invalid',
@@ -23,23 +26,24 @@ const Input = forwardRef(
 )
 export default Input
 
-const StyledInput = styled(TextField)`
-   fieldset {
-      border-radius: 8px;
-      padding: 10px 8px 10px 16px;
-      border: 1x solid #d9d9d9;
-      fontfamily: 'Manrope';
-   }
-   :hover {
-      border-radius: 8px;
-      border: 1x solid #959595;
-   }
-   :active {
-      border-radius: 8px;
-      border: 1px solid #048741;
-   }
-   :invalid {
-      border-radius: 8px;
-      border: 5px solid #f91515;
-   }
-`
+const StyledInput = styled(TextField)(() => ({
+   '&:-webkit-autofill': {
+      WebkitBoxShadow: '0 0 0 1000px white inset',
+   },
+   '& .MuiOutlinedInput-root': {
+      '&:hover': {
+         borderRadius: '8px',
+         border: '1x solid #959595',
+      },
+      '&:active': {
+         borderRadius: '8px',
+         border: '1px solid #048741',
+         background: 'none',
+      },
+      '&:invalid': {
+         borderRadius: '8px',
+         border: '5px solid #f91515',
+      },
+   },
+}))
+

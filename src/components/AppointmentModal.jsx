@@ -48,6 +48,11 @@ const AppointmentModal = ({
          notify('success', 'Успешно добавлено!')
          formik.resetForm()
          close()
+         setDays((prev) =>
+            prev.map((item) =>
+               item.checked === true ? { ...item, checked: false } : item
+            )
+         )
       } catch (error) {
          notify('error', error.response?.data.message)
       }
