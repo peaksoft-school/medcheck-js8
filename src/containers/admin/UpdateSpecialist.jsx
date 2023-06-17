@@ -37,6 +37,7 @@ const UpdateSpecialist = () => {
    const [updateDepartment, setUpdateDepartment] = useState('')
    const { ToastContainer, notifyCall } = useToast()
 
+   console.log(updateDepartment)
    const getOneSpecialist = async (id) => {
       try {
          const { data } = await getOneSpecialistService(id)
@@ -49,7 +50,7 @@ const UpdateSpecialist = () => {
 
    useEffect(() => {
       getOneSpecialist(doctorId)
-   }, [])
+   }, [doctorId])
 
    useEffect(() => {
       setDoctor(oneSpecialist)
@@ -57,7 +58,7 @@ const UpdateSpecialist = () => {
       setUpdateLastName(oneSpecialist.lastName)
       setUpdatePosition(oneSpecialist.position)
       setUpdateDescription(oneSpecialist.description)
-      setUpdateDepartment(oneSpecialist.name)
+      setUpdateDepartment(oneSpecialist.departmentName)
       setUpdatePhoto(oneSpecialist.image)
    }, [oneSpecialist])
 
@@ -162,6 +163,7 @@ const UpdateSpecialist = () => {
                            placeholder={updateDepartment}
                            label={doctor.name}
                            onChange={changeDepartment}
+                           value={updateDepartment}
                         />
                      </Div>
                      <Div>
