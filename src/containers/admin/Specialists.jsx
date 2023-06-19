@@ -41,7 +41,7 @@ const Specialists = () => {
          setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
@@ -50,9 +50,9 @@ const Specialists = () => {
          await deleteSpecialistService(id)
 
          getAllSpecialists('')
-         return notify('success', 'успешно')
+         return notify('success', ' Успешно удалено')
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
@@ -61,7 +61,7 @@ const Specialists = () => {
          await postSpecialistIsActiveReq(id, isActive)
          return getAllSpecialists('')
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Что-то пошло не так')
       }
    }
 
@@ -153,6 +153,11 @@ const Specialists = () => {
          {
             header: 'Отделение',
             key: 'name',
+            render: (el) => (
+               <TableRow>
+                  <StyledDepatment>{el.departmentName}</StyledDepatment>
+               </TableRow>
+            ),
          },
          {
             header: 'Расписение до',
@@ -290,7 +295,7 @@ const Img = styled('img')(() => ({
       width: '36px',
       height: '36px',
       borderRadius: '100px',
-      marginRight: '7px',
+      marginRight: '12px',
    },
 }))
 
@@ -306,3 +311,11 @@ const StyledCircularProgress = styled(CircularProgress)`
    display: flex;
    margin: auto;
 `
+const StyledDepatment = styled('p')(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: '16px',
+   },
+}))

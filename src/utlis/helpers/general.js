@@ -30,32 +30,34 @@ export const useDebounce = (value, delay) => {
 export const addSpecialistSchema = yup.object().shape({
    firstName: yup
       .string()
-      .required('Поле "firstName" обязательно для заполнения')
-      .matches(/^[A-Z][a-z]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3')
+      .required('Поле "firstName" обязательно для заполнения'),
    lastName: yup
       .string()
       .min(2)
       .required('Поле "lastName" обязательно для заполнения')
-      .matches(/^[A-Z][a-z]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3'),
    position: yup
       .string()
       .required('Поле "position" обязательно для заполнения'),
    description: yup
       .string()
       .required('Поле "description" обязательно для заполнения'),
-   department: yup.string(),
+   department: yup
+      .string()
+      .required('Поле "Отделение" обязательно для заполнения'),
 })
 
 export const postDataProfieValid = yup.object().shape({
    firstName: yup
       .string()
       .required('Поле "firstName" обязательно для заполнения')
-      .matches(/^[А-ЯЁ][а-яё]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3'),
    lastName: yup
       .string()
       .min(2)
       .required('Поле "lastName" обязательно для заполнения')
-      .matches(/^[А-ЯЁ][а-яё]*$/, 'Имя должно начинаться с большой буквы'),
+      .min(3, 'the lenght should be from 3'),
    email: yup
       .string()
       .email('Неверный формат E-mail')

@@ -1,9 +1,4 @@
-import {
-   InputLabel,
-   Stack,
-   ToggleButtonGroup,
-   ToggleButton,
-} from '@mui/material'
+import { Stack, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import { styled as muiStyled } from '@mui/material/styles'
 import { useFormik } from 'formik'
 import styled from '@emotion/styled'
@@ -31,6 +26,7 @@ import {
    TitlePhoto,
    Wrapper,
    Container,
+   StyledInputLabel,
 } from './specialist-style'
 import { addSpecialistSchema } from '../../utlis/helpers/general'
 import useToast from '../../hooks/useToast'
@@ -79,7 +75,7 @@ const AddSpecialist = () => {
          navigate(-1)
          return data
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notifyCall('error', 'Что-то пошло не так')
       }
    }
 
@@ -302,14 +298,6 @@ const Info = muiStyled('p')(() => ({
 const StyledSelect = styled(SelectUi)(() => ({
    fontSize: '14px',
    height: '35px',
-}))
-
-const StyledInputLabel = styled(InputLabel)(() => ({
-   color: '#464444',
-   fontWeight: 400,
-   fontSize: '14px',
-   fontFamily: 'Manrope',
-   fontStyle: 'normal',
 }))
 
 const StyledCancel = styled(Button)(() => ({
