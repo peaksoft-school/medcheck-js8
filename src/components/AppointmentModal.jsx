@@ -446,6 +446,7 @@ const IntervalBoxTimer = styled('div')(() => ({
 const SelectIntervalStyle = styled(SelectUi)(() => ({
    '&': {
       width: '257px',
+      height: '38px',
    },
 }))
 

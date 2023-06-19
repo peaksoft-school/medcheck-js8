@@ -1,7 +1,8 @@
 import { Grid, IconButton, Menu } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
+import { useDebounce } from 'use-debounce'
 import GeoPoint from '../../../assets/icons/GeoPoint.svg'
 import Timer from '../../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
@@ -53,17 +54,21 @@ import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
+import { getGlobalSearchRequest } from '../../../api/globalSearchService'
 
 const Header = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
    const [anchorEl, setAnchorEl] = useState(null)
+   const [searchParams, setSearchParams] = useSearchParams()
+   const { openModal } = Object.fromEntries(searchParams)
+   const [searchInput, setSearchInput] = useState('')
+   const [debouncedQuery] = useDebounce(searchInput, 400)
+   const [search, setSearch] = useState([])
 
    const handleClose = () => {
       setAnchorEl(null)
    }
-   const [searchParams, setSearchParams] = useSearchParams()
-   const { openModal } = Object.fromEntries(searchParams)
    const onCloseModal = () => setSearchParams({})
    const openSignInModal = () => {
       setSearchParams({ openModal: 'sign-in' })
@@ -96,6 +101,25 @@ const Header = () => {
       handleClose()
    }
 
+   useEffect(() => {
+      setSearch(search)
+   }, [search])
+
+   useEffect(() => {
+      const getSearchData = async () => {
+         try {
+            const { data } = await getGlobalSearchRequest(debouncedQuery)
+            setSearch(data)
+         } catch (error) {
+            notify('error', error.response?.data.message)
+         }
+      }
+
+      getSearchData()
+   }, [debouncedQuery])
+   const globalSearchHandler = (event) => {
+      setSearchInput(event.target.value)
+   }
    return (
       <HeaderStyled position="static">
          <StyledHeaderGlobalContainer>
@@ -131,7 +155,10 @@ const Header = () => {
                   </Box>
                </Grid>
                <SearchInputBox>
-                  <SearchInput />
+                  <SearchInput
+                     onChange={globalSearchHandler}
+                     value={searchInput}
+                  />
                </SearchInputBox>
                <ContactsBox>
                   <IconBox>
