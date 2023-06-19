@@ -37,7 +37,7 @@ export const SelectUi = ({
             </MenuItem>
             {items &&
                items.map((item) => (
-                  <MenuItemStyle key={item.id} value={item.title}>
+                  <MenuItemStyle key={item.id} value={item.id}>
                      {item.title}
                   </MenuItemStyle>
                ))}

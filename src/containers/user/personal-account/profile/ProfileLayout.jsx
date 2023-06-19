@@ -34,10 +34,10 @@ const Container = styled('div')`
 `
 const StyledTitleText = styled('h1')`
    font-family: 'Manrope';
-   font-weight: 600;
-   font-size: 1.5rem;
-   line-height: 33px;
-   color: #222222;
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+
    margin-bottom: 30px;
 `
 
@@ -46,13 +46,14 @@ const NavlinkStyle = styled(NavLink)(() => ({
       marginRight: '30px',
       textDecoration: 'none',
       fontFamily: 'Manrope',
-      fontWeight: 600,
+      fontWeight: 400,
       fontSize: '0.75rem',
       lineHeight: '16px',
       textTransform: 'uppercase',
       letterSpacing: '1px',
       color: '#959595',
    },
+
    '&:active': {
       color: '#048741',
       textDecoration: 'underline',

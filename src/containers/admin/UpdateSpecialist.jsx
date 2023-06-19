@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { InputLabel, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 import styled from '@emotion/styled'
 import { SelectUi } from '../../components/UI/SelectUi'
@@ -7,6 +7,7 @@ import {
    Container,
    InputStyled,
    MainContainer,
+   StyledInputLabel,
    StyledNavLink,
    StyledTextField,
    TitlePhoto,
@@ -36,6 +37,7 @@ const UpdateSpecialist = () => {
    const [updateDepartment, setUpdateDepartment] = useState('')
    const { ToastContainer, notifyCall } = useToast()
 
+   console.log(updateDepartment)
    const getOneSpecialist = async (id) => {
       try {
          const { data } = await getOneSpecialistService(id)
@@ -48,7 +50,7 @@ const UpdateSpecialist = () => {
 
    useEffect(() => {
       getOneSpecialist(doctorId)
-   }, [])
+   }, [doctorId])
 
    useEffect(() => {
       setDoctor(oneSpecialist)
@@ -56,7 +58,7 @@ const UpdateSpecialist = () => {
       setUpdateLastName(oneSpecialist.lastName)
       setUpdatePosition(oneSpecialist.position)
       setUpdateDescription(oneSpecialist.description)
-      setUpdateDepartment(oneSpecialist.name)
+      setUpdateDepartment(oneSpecialist.departmentName)
       setUpdatePhoto(oneSpecialist.image)
    }, [oneSpecialist])
 
@@ -102,6 +104,7 @@ const UpdateSpecialist = () => {
       event.preventDefault()
       const dataSpecialist = {
          doctorId,
+         departmentId: updateDepartment,
          firstName: updateFirstName,
          lastName: updateLastName,
          position: updatePosition,
@@ -143,30 +146,39 @@ const UpdateSpecialist = () => {
                <form onSubmit={updateHandler}>
                   <FormContainer>
                      <Div>
-                        <InputLabel htmlFor="firstName">Имя</InputLabel>
+                        <StyledInputLabel htmlFor="firstName">
+                           Имя
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="firstName"
                            onChange={changeFirstName}
                            value={updateFirstName}
                         />
-                        <InputLabel htmlFor="lastName">Отделение</InputLabel>
+                        <StyledInputLabel htmlFor="lastName">
+                           Отделение
+                        </StyledInputLabel>
                         <StyledSelect
                            items={department}
                            placeholder={updateDepartment}
                            label={doctor.name}
                            onChange={changeDepartment}
+                           value={updateDepartment}
                         />
                      </Div>
                      <Div>
-                        <InputLabel htmlFor="position">Фамилия</InputLabel>
+                        <StyledInputLabel htmlFor="position">
+                           Фамилия
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="position"
                            onChange={changeLastName}
                            value={updateLastName}
                         />
-                        <InputLabel htmlFor="description">Должность</InputLabel>
+                        <StyledInputLabel htmlFor="description">
+                           Должность
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="description"
@@ -175,7 +187,9 @@ const UpdateSpecialist = () => {
                         />
                      </Div>
                   </FormContainer>
-                  <InputLabel htmlFor="description">Описание</InputLabel>
+                  <StyledInputLabel htmlFor="description">
+                     Описание
+                  </StyledInputLabel>
                   <TextFieldDiv>
                      <StyledTextField
                         name="description"
