@@ -5,8 +5,10 @@ import ServiceCard from '../../components/UI/ServiceCard'
 import Sellect from '../../components/UI/select/Sellect'
 import CardApplication from '../../components/UI/card/CardApplication'
 import { Container, StyledNavLink } from '../admin/specialist-style'
+import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
+   window.scrollTo({ top: 0 })
    return (
       <div>
          <Hr />
@@ -48,11 +50,14 @@ export const Hr = styled('hr')(() => ({
    height: '10px',
    marginBottom: '30px',
    background: '#DBF0E5',
+   border: 'none',
 }))
+
 
 const ServiceStyle = styled('div')(() => ({
    fontSize: '36px',
    fontWeight: 600,
+   fontFamily: 'Manrope',
    lineHeight: '49px',
    color: '#222222',
    marginLeft: '100px',
@@ -65,8 +70,8 @@ const ServiceStyle = styled('div')(() => ({
 
 const SelectContent = styled('div')(() => ({
    '& .topic': {
-      fontFamily: 'Myriad Pro',
-      fontSize: '36px',
+      fontFamily: 'Manrope',
+      fontSize: '34px',
       fontWeight: 400,
       lineHeight: '36px',
       letterSpacing: '0em',
@@ -79,8 +84,6 @@ const SelectContent = styled('div')(() => ({
       color: '#222222',
    },
    '& .info': {
-      width: '816px',
-      height: '64px',
       color: '#4D4E51',
       fontFamily: ' Manrope',
       fontSize: '18px',

@@ -28,7 +28,7 @@ export default ServiceCard
 const GridContainer = styled(Grid)(() => ({
    width: '889px',
    height: '1252px',
-   // marginLeft: '100px',
+   marginLeft: '95px',
 
    marginBottom: '120px',
    '& .grid': {

@@ -313,7 +313,7 @@ const SearchInputBox = styled('div')(() => ({
 }))
 const Title = styled('p')(() => ({
    '&': {
-      fontFamily: 'Work Sans',
+      fontFamily: 'Manrope',
       fontWeight: 500,
       fontSize: '22px',
       lineHeight: '26px',

@@ -49,6 +49,11 @@ const AppointmentModal = ({
          notify('success', 'Успешно добавлено!')
          formik.resetForm()
          close()
+         setDays((prev) =>
+            prev.map((item) =>
+               item.checked === true ? { ...item, checked: false } : item
+            )
+         )
       } catch (error) {
          notify('error', error.response?.data.message)
       }
@@ -68,7 +73,7 @@ const AppointmentModal = ({
       },
       onSubmit: (values) => {
          const data = {
-            department: values.selectedServiceValue.toUpperCase(),
+            department: values.selectedServiceValue,
             doctorId: values.selectedSpecialistValue,
             interval: values.selectedIntervalValue,
             startDate: dayjs(values.startSelectedDate).format('YYYY-MM-DD'),
@@ -99,7 +104,7 @@ const AppointmentModal = ({
          doctorData.filter(
             (filteredDoctor) =>
                filteredDoctor.departmentName.localeCompare(
-                  values.selectedServiceValue.toUpperCase()
+                  values.selectedServiceValue
                ) === 0 && filteredDoctor.dataOfFinish === null
          )
       )

@@ -48,7 +48,6 @@ export const SelectUi = ({
 
 const SelectMui = styled(Select)(() => ({
    maxWidth: '100%',
-   height: '38px',
    border: '1px solid #D9D9D9',
    borderRadius: '6px',
    fontFamily: 'Manrope',
