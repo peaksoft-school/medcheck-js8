@@ -7,7 +7,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 const menuProps = {
    PaperProps: {
       style: {
-         maxHeight: 150,
+         maxHeight: 292,
       },
    },
 }
@@ -37,9 +37,9 @@ export const SelectUi = ({
             </MenuItem>
             {items &&
                items.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
+                  <MenuItemStyle key={item.id} value={item.id}>
                      {item.title}
-                  </MenuItem>
+                  </MenuItemStyle>
                ))}
          </SelectMui>
       </FormControl>
@@ -48,7 +48,6 @@ export const SelectUi = ({
 
 const SelectMui = styled(Select)(() => ({
    maxWidth: '100%',
-   height: '38px',
    border: '1px solid #D9D9D9',
    borderRadius: '6px',
    fontFamily: 'Manrope',
@@ -74,5 +73,15 @@ const SelectMui = styled(Select)(() => ({
          border: '1px solid #959595',
          color: '#4D4E51',
       },
+   },
+}))
+const MenuItemStyle = styled(MenuItem)(() => ({
+   color: '#222222',
+   fontFamily: 'Manrope',
+   '&:hover': {
+      background: '#DBF0E5',
+   },
+   '&:active': {
+      background: '#DBF0E5',
    },
 }))

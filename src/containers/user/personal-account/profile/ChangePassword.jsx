@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import {
    styled,
    FormControl,
@@ -13,23 +14,28 @@ import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
 import { postChangePassword } from '../../../../api/profileService'
 import useToast from '../../../../hooks/useToast'
+import ProfileLayout from './ProfileLayout'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
    const { ToastContainer, notify } = useToast()
+   const [backendError, setBackendError] = useState('')
 
+   const navigate = useNavigate()
    const postPassword = async (password) => {
       try {
          const { data } = await postChangePassword(password)
          if (data.message === 'Wrong old password.') {
-            return notify('error', 'неверный пароль')
+            return notify('error', 'Неверный пароль')
          }
-         notify('success', 'успешно')
+         navigate('/')
+         notify('success', 'Успешно')
          return data
       } catch (error) {
-         return notify('error', 'ОШИБКА')
+         setBackendError(error.response.data.message)
+         return notify('error', 'не правильный пароль')
       }
    }
 
@@ -37,23 +43,28 @@ const ChangePassword = () => {
       register,
       handleSubmit,
       formState: { errors },
+      getValues,
    } = useForm({
       mode: 'all',
       defaultValues: {
          password: '',
-         newPassword: '',
+         newwPassword: '',
          confirmPassword: '',
       },
    })
 
    function onSubmit(values) {
-      // console.log('will come values', values)
-      const password = {
-         oldPassword: values.password,
-         newPassword: values.newPassword,
+      const { password, newwPassword, confirmPassword } = values
+      if (newwPassword !== confirmPassword) {
+         notify('error', 'Пароли не совпадают')
+         return
+      }
+      const passwordData = {
+         oldPassword: password,
+         newPassword: newwPassword,
       }
 
-      postPassword(password)
+      postPassword(passwordData)
    }
 
    const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -68,21 +79,22 @@ const ChangePassword = () => {
 
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
+         <ProfileLayout />
          {ToastContainer}
-         <StyledTitleText>Смена пароля </StyledTitleText>
+         <StyledTitleText>Смена пароля</StyledTitleText>
          <StyledForm>
             <div>
                <StyledInputLabel htmlFor="old_password">
                   Старый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      id="old_password"
                      placeholder="Введите ваш пароль"
                      className="inputStyle"
                      error={errors.password}
                      {...register('password', {
-                        required: 'введите старый пароль',
+                        required: 'Введите старый пароль',
                      })}
                      type={showPassword ? 'text' : 'password'}
                      InputProps={{
@@ -104,7 +116,9 @@ const ChangePassword = () => {
                   />
                </FormControl>
                {errors.password && (
-                  <p className="message">{errors.password?.message}</p>
+                  <StyledError className="message">
+                     {errors.password?.message}
+                  </StyledError>
                )}
             </div>
             <div>
@@ -112,20 +126,20 @@ const ChangePassword = () => {
                   Новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      placeholder="Введите новый пароль"
                      id="new_password"
                      className="inputStyle"
-                     error={errors.newPassword}
-                     {...register('newPassword', {
-                        required: 'поле не заполнено',
+                     error={errors.newwPassword}
+                     {...register('newwPassword', {
+                        required: 'Поле не заполнено',
                         maxLength: {
                            value: 15,
-                           message: 'слишком много деталей',
+                           message: 'Слишком много деталей',
                         },
                         minLength: {
                            value: 5,
-                           message: 'слишком мало деталей',
+                           message: 'Слишком мало деталей',
                         },
                      })}
                      type={showPasswordNew ? 'text' : 'password'}
@@ -146,31 +160,37 @@ const ChangePassword = () => {
                         ),
                      }}
                   />
-                  {errors.newPassword && (
-                     <p className="message">{errors.newPassword?.message}</p>
+                  {errors.newwPassword && (
+                     <StyledError className="message">
+                        {errors.newwPassword?.message}
+                     </StyledError>
                   )}
                </FormControl>
             </div>
+            <StyledError>{backendError}</StyledError>
             <div>
                <StyledInputLabel htmlFor="confirm_password">
                   Подтвердить новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      className="inputStyle"
                      placeholder="Подтвердите пароль"
                      id="confirm_password"
                      error={errors.confirmPassword}
                      {...register('confirmPassword', {
-                        required: 'пароль не совпадает',
+                        required: 'Пароль не совпадает',
                         maxLength: {
                            value: 15,
-                           message: 'слишком много деталей',
+                           message: 'Слишком много деталей',
                         },
                         minLength: {
                            value: 5,
-                           message: 'слишком мало деталей',
+                           message: 'Слишком мало деталей',
                         },
+                        validate: (value) =>
+                           value === getValues('newwPassword') ||
+                           'Пароли не совпадают',
                      })}
                      type={showPasswordConfirm ? 'text' : 'password'}
                      InputProps={{
@@ -191,15 +211,20 @@ const ChangePassword = () => {
                      }}
                   />
                   {errors.confirmPassword && (
-                     <p className="message">
+                     <StyledError className="message">
                         {errors.confirmPassword?.message}
-                     </p>
+                     </StyledError>
                   )}
                </FormControl>
             </div>
          </StyledForm>
          <StyledBoxButton>
-            <StyledButton type="submit" variant="contained">
+            <StyledButton
+               variant="contained"
+               onClick={() => {
+                  navigate('/')
+               }}
+            >
                Назад
             </StyledButton>
             <Button type="submit" variant="outlined">
@@ -213,9 +238,19 @@ const ChangePassword = () => {
 export default ChangePassword
 
 const Container = styled('form')`
-   width: 90%;
+   width: 85%;
    margin-top: 26px;
    margin-bottom: 40px;
+
+   margin: auto;
+`
+
+const StyledError = styled('p')`
+   font-family: 'Manrope';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 22px;
 `
 
 const StyledTitleText = styled('h1')`
@@ -312,5 +347,19 @@ const StyledInputLabel = styled(InputLabel)(() => ({
       fontFamily: 'Manrope',
       fontWeight: 400,
       lineHeight: '19px',
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '& .inputStyle': {
+      fontSize: '1rem',
+      width: '220px',
+   },
+   '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      color: '#959595',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '22px',
    },
 }))

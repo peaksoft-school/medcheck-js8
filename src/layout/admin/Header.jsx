@@ -120,9 +120,9 @@ const Container = styled(Grid)(() => ({
 }))
 const AppBarStyled = styled(AppBar)(() => ({
    '&': {
-      boxShadow: 'none',
       padding: '0 70px',
       height: '80px',
+      boxShadow: 'none',
    },
 }))
 
@@ -158,9 +158,9 @@ const NavLinkStyled = styled(NavLink)(() => ({
    '&': {
       color: '#707070',
       textDecoration: 'none',
-      fontFamily: 'Work Sans',
+      fontFamily: 'Manrope',
       fontWeight: 500,
-      fontSize: '18px',
+      fontSize: '16px',
       lineHeight: '21px',
    },
    '&:active': {
@@ -172,9 +172,9 @@ const ButtonStyled = styled('button')(() => ({
       color: '#22222',
       background: 'none',
       border: 'none',
-      fontFamily: 'Open Sans',
-      fontWeight: 400,
-      fontSize: '16px',
+      fontFamily: 'Manrope',
+      fontWeight: 500,
+      fontSize: '15px',
       lineHeight: '22px',
       display: 'flex',
       alignItems: 'center',
@@ -189,9 +189,9 @@ const AdminHeaderBtnStyled = styled(IdminHeaderBtnIcon)(() => ({
 }))
 const MenuItemStyled = styled(MenuItem)(() => ({
    '&': {
-      fontFamily: 'Work Sans',
+      fontFamily: 'Manrope',
       fontWeight: 500,
-      fontSize: '18px',
+      fontSize: '16px',
       lineHeight: '21px',
    },
    '&:hover': {

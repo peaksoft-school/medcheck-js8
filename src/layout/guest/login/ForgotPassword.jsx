@@ -62,7 +62,7 @@ const ForgotPassword = ({ open, onClose }) => {
 export default ForgotPassword
 
 const FormControlStyled = styled('form')(() => ({
-   height: '361px',
+   height: '400px',
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
@@ -88,6 +88,7 @@ const FormControlStyled = styled('form')(() => ({
       cursor: 'pointer',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '414px',
       marginLeft: '40px',
       borderRadius: ' 10px',

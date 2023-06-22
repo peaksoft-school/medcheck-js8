@@ -1,9 +1,4 @@
-import {
-   InputLabel,
-   Stack,
-   ToggleButtonGroup,
-   ToggleButton,
-} from '@mui/material'
+import { Stack, ToggleButtonGroup, ToggleButton } from '@mui/material'
 import { styled as muiStyled } from '@mui/material/styles'
 import { useFormik } from 'formik'
 import styled from '@emotion/styled'
@@ -31,6 +26,7 @@ import {
    TitlePhoto,
    Wrapper,
    Container,
+   StyledInputLabel,
 } from './specialist-style'
 import { addSpecialistSchema } from '../../utlis/helpers/general'
 import useToast from '../../hooks/useToast'
@@ -79,7 +75,7 @@ const AddSpecialist = () => {
          navigate(-1)
          return data
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notifyCall('error', 'Что-то пошло не так')
       }
    }
 
@@ -136,7 +132,9 @@ const AddSpecialist = () => {
                   <form onSubmit={handleSubmit}>
                      <FormContainer>
                         <Div>
-                           <InputLabel htmlFor="firstName">Имя</InputLabel>{' '}
+                           <StyledInputLabel htmlFor="firstName">
+                              Имя
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите имя"
                               style={{ marginBottom: '20px' }}
@@ -147,7 +145,7 @@ const AddSpecialist = () => {
                            {touched.firstName && errors.firstName && (
                               <StyledSpan>{errors.firstName}</StyledSpan>
                            )}
-                           <InputLabel>Отделение</InputLabel>
+                           <StyledInputLabel>Отделение</StyledInputLabel>
                            <StyledSelect
                               items={department}
                               onChange={handleChange}
@@ -161,7 +159,9 @@ const AddSpecialist = () => {
                         </Div>
 
                         <Div>
-                           <InputLabel htmlFor="lastName">Фамилия</InputLabel>
+                           <StyledInputLabel htmlFor="lastName">
+                              Фамилия
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите фамилию"
                               style={{ marginBottom: '20px' }}
@@ -173,7 +173,9 @@ const AddSpecialist = () => {
                               <StyledSpan>{errors.lastName}</StyledSpan>
                            )}
 
-                           <InputLabel htmlFor="position">Должность</InputLabel>
+                           <StyledInputLabel htmlFor="position">
+                              Должность
+                           </StyledInputLabel>
                            <InputStyled
                               placeholder="Напишите должность"
                               onChange={handleChange}
@@ -185,7 +187,9 @@ const AddSpecialist = () => {
                            )}
                         </Div>
                      </FormContainer>
-                     <p>Описание</p>
+                     <StyledInputLabel sx={{ marginTop: '1rem' }}>
+                        Описание
+                     </StyledInputLabel>
                      <div
                         style={{
                            border: '1px solid #909CB5',

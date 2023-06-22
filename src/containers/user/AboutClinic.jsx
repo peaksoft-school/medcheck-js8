@@ -1,14 +1,27 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { styled as styledMui } from '@mui/material/styles'
+
+import { NavLink } from 'react-router-dom'
 import signature from '../../assets/images/image 12.png'
 import { ReactComponent as Rectange } from '../../assets/images/Subtract.svg'
 import doctorImg from '../../assets/images/mainDoctor.jpg'
 import AboutClinicPart from '../../components/AboutClinicPart'
+import { Hr } from './Service'
 
 const AboutClinic = () => {
+   window.scrollTo({ top: 0 })
+
    return (
       <>
+         <Hr />
          <Container>
+            <NavigatePathTitle>
+               <p>
+                  <NavLinkStyle to="/">Главная {' > '}</NavLinkStyle>
+                  <span>О клинике</span>{' '}
+               </p>
+            </NavigatePathTitle>
             <StyledTitleText>
                Здоровье — самое
                <span style={{ color: '#048741' }}> ценное в жизни</span>
@@ -55,6 +68,21 @@ const AboutClinic = () => {
 
 export default AboutClinic
 
+const NavigatePathTitle = styledMui('div')(() => ({
+   fontFamily: 'Manrope',
+   fontSize: '14px',
+   fontWeight: 400,
+   paddingBottom: '26px',
+
+   span: {
+      color: '#048741',
+   },
+}))
+
+const NavLinkStyle = styledMui(NavLink)(() => ({
+   textDecoration: 'none',
+   color: '#959595',
+}))
 const StyledAboutText = styled.div`
    width: 58%;
    height: 156px;
@@ -107,8 +135,9 @@ const StyledImageBlock = styled.div`
    }
 `
 const Container = styled.div`
-   margin-left: 120px;
+   margin-left: 90px;
    margin-top: 26px;
+   margin-bottom: 120px;
 `
 const StyledTitleText = styled.h1`
    font-size: 2.25rem;

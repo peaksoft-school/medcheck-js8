@@ -70,7 +70,7 @@ function Footer() {
          <div>
             <DataContent>
                <NavLink to="about">
-                  <li>Оклинике</li>
+                  <li>О клинике</li>
                </NavLink>
                <NavLink to="service">
                   <li>Услуги</li>

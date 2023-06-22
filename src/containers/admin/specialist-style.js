@@ -1,4 +1,9 @@
-import { Breadcrumbs, TextField, TextareaAutosize } from '@mui/material'
+import {
+   Breadcrumbs,
+   InputLabel,
+   TextField,
+   TextareaAutosize,
+} from '@mui/material'
 import styled from '@emotion/styled'
 import { styled as muiStyled } from '@mui/material/styles'
 import { NavLink } from 'react-router-dom'
@@ -7,7 +12,7 @@ import { NavLink } from 'react-router-dom'
 export const MainContainer = muiStyled('div')(() => ({
    '&': {
       width: '100%',
-      height: '100vh',
+      height: '100%',
       background: 'rgba(245, 245, 245, 0.61)',
       padding: '30px 70px',
       fontFamily: 'Manrope',
@@ -19,6 +24,11 @@ export const Container = muiStyled(Breadcrumbs)({
    lineHeight: '19px',
    marginTop: '30px',
    marginBottom: '26px',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   '& .css-1bifq5f-MuiTypography-root-MuiBreadcrumbs-root': {
+      fontFamily: 'Manrope',
+   },
    ':last-child': {
       color: '#048741',
    },
@@ -27,6 +37,8 @@ export const Container = muiStyled(Breadcrumbs)({
 export const StyledNavLink = muiStyled(NavLink)({
    textDecoration: 'none',
    color: ' #959595',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
 })
 
 export const AddContainer = muiStyled('div')(() => ({
@@ -47,6 +59,11 @@ export const InputStyled = styled(TextField)(() => ({
       },
       '&.Mui-focused fieldset': {
          borderColor: '#909CB5',
+      },
+      input: {
+         fontFamily: 'Manrope',
+         fontWeight: 400,
+         color: '#222222',
       },
    },
    input: {
@@ -91,4 +108,12 @@ export const TitlePhoto = muiStyled('p')(() => ({
       fontSize: '12px',
       paddingLeft: '1rem',
    },
+}))
+
+export const StyledInputLabel = styled(InputLabel)(() => ({
+   color: '#464444',
+   fontWeight: 400,
+   fontSize: '14px',
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
 }))

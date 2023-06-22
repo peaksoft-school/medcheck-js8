@@ -32,7 +32,7 @@ const Specialists = () => {
       keyWord: null,
    })
    const [searchTerm, setSearchTerm] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { ToastContainer, notify } = useToast()
 
    const getAllSpecialists = async (queryParams) => {
       try {
@@ -41,17 +41,18 @@ const Specialists = () => {
          setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
    const deleteSpecialist = async ({ id }) => {
       try {
          await deleteSpecialistService(id)
-         notifyCall('success', 'успешно')
-         return getAllSpecialists('')
+
+         getAllSpecialists('')
+         return notify('success', ' Успешно удалено')
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
@@ -60,7 +61,7 @@ const Specialists = () => {
          await postSpecialistIsActiveReq(id, isActive)
          return getAllSpecialists('')
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', 'Что-то пошло не так')
       }
    }
 
@@ -152,6 +153,11 @@ const Specialists = () => {
          {
             header: 'Отделение',
             key: 'name',
+            render: (el) => (
+               <TableRow>
+                  <StyledDepatment>{el.departmentName}</StyledDepatment>
+               </TableRow>
+            ),
          },
          {
             header: 'Расписение до',
@@ -289,6 +295,7 @@ const Img = styled('img')(() => ({
       width: '36px',
       height: '36px',
       borderRadius: '100px',
+      marginRight: '12px',
    },
 }))
 
@@ -301,5 +308,14 @@ const ContainerNamesStyled = styled('div')(() => ({
 
 const StyledCircularProgress = styled(CircularProgress)`
    color: green;
-   margin-left: 300px;
+   display: flex;
+   margin: auto;
 `
+const StyledDepatment = styled('p')(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: '16px',
+   },
+}))

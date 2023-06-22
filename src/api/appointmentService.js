@@ -4,18 +4,35 @@ export const getUserAppointmentRequest = () => {
    return mainApi.get('/api/appointments/myAppointments')
 }
 
-export const deleteUserAppointmentsRequest = () => {
+export const getOneUserAppoinmentRequest = (id) => {
+   return mainApi.get(`/api/appointments/myAppointment?id=${id}`)
+}
+
+export const postUserFreeTimeAppointmentsRequest = () => {
+   return mainApi.post('/api/appointments/free')
+}
+
+export const postUserCanceledAppointmentsRequest = (appointmentId) => {
+   return mainApi.post(`/api/appointments/canceled=${appointmentId}`)
+}
+export const getDepartmentRequest = () => {
+   return mainApi.get('/api/departments/getAll')
+}
+
+export const getDoctorRequest = () => {
+   return mainApi.get('/api/doctors')
+}
+export const getAppointmentRequest = (searchValue) => {
+   return mainApi.get('/api/appointments', {
+      params: {
+         keyWord: searchValue,
+      },
+   })
+}
+export const deleteAppointmentRequest = () => {
    return mainApi.delete('/api/appointments/delete')
 }
 
-// export const postUserAppointmentsRequest = () => {
-//   return mainApi.post('/api/appointments')
-// }
-
-// export const postUserFreeTimeAppointmentsRequest = () => {
-//   return mainApi.post('/api/appointments/free')
-// }
-
-// export const postUserCanceledAppointmentsRequest = (appointmentId) => {
-//   return mainApi.post(`/api/appointments/canceled=${appointmentId}`)
-// }
+export const postScheduleRequest = (data) => {
+   return mainApi.post('/api/schedule/save', data)
+}

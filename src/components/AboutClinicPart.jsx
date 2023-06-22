@@ -11,53 +11,56 @@ import Button from './UI/Button'
 const AboutClinicPart = ({ place }) => {
    return (
       <Container>
-         <StyledTitleText>
-            О нашей клинике
-            <span style={{ color: '#048741' }}>MedCheck</span>
-         </StyledTitleText>
-         <StyledMainBlock>
-            <StyledAboutSecondText>
-               <p>
-                  Вся наша команда готова обеспечить вам медицинский уход и
-                  заботу на самом высоком уровне. Наша главная задача — оказать
-                  Вам теплый прием и обеспечить самый лучший медицинский уход. У
-                  нас Вы в хороших руках! В нашей клинике используются только
-                  качественные материалы и проверенные технологии. Для каждого
-                  клиента специалисты нашей клиники разработают <br />
-                  индивидуальный план лечения, подробно рассказывая о каждом
-                  этапе.
-               </p>
-               <p>
-                  Доброжелательность и уважительное отношение к пациентам, не
-                  только материальная, но и моральная ответственность за
-                  результаты лечения — все это взято за основу политики Medical
-                  Clinic. Профессионализм и высокое качество оказываемых услуг
-                  помогают нам привлечь пациентов которые рекомендуют нас своим
-                  родным и близким.
-               </p>
-               <p>
-                  Уже 20 лет мы работаем на уровне лучших мировых стандартов,
-                  внедряя и развивая передовые методы лечения для сохранения
-                  здоровья наших пациентов.
-               </p>
-               {place === 'main' ? (
-                  <StyledNavlink to="/about">
-                     Читать подробнее o клинике <ForwardVector />
-                  </StyledNavlink>
-               ) : (
-                  <StyledButton>Записаться на консультацию</StyledButton>
-               )}
-            </StyledAboutSecondText>
-            <StyledImageBlock>
-               <StyledBuildingImG src={building} alt="" />
+         <div>
+            <StyledTitleText>
+               О нашей клинике
+               <span style={{ color: '#048741' }}> MedCheck</span>
+            </StyledTitleText>
+            <StyledMainBlock>
+               <StyledAboutSecondText>
+                  <p>
+                     Вся наша команда готова обеспечить вам медицинский уход и
+                     заботу на самом высоком уровне. Наша главная задача —
+                     оказать Вам теплый прием и обеспечить самый лучший
+                     медицинский уход. У нас Вы в хороших руках! В нашей клинике
+                     используются только качественные материалы и проверенные
+                     технологии. Для каждого клиента специалисты нашей клиники
+                     разработают <br />
+                     индивидуальный план лечения, подробно рассказывая о каждом
+                     этапе.
+                  </p>
+                  <p>
+                     Доброжелательность и уважительное отношение к пациентам, не
+                     только материальная, но и моральная ответственность за
+                     результаты лечения — все это взято за основу политики
+                     Medical Clinic. Профессионализм и высокое качество
+                     оказываемых услуг помогают нам привлечь пациентов которые
+                     рекомендуют нас своим родным и близким.
+                  </p>
+                  <p>
+                     Уже 20 лет мы работаем на уровне лучших мировых стандартов,
+                     внедряя и развивая передовые методы лечения для сохранения
+                     здоровья наших пациентов.
+                  </p>
+                  {place === 'main' ? (
+                     <StyledNavlink to="about">
+                        Читать подробнее o клинике <ForwardVector />
+                     </StyledNavlink>
+                  ) : (
+                     <StyledButton>Записаться на консультацию</StyledButton>
+                  )}
+               </StyledAboutSecondText>
+               <StyledImageBlock>
+                  <StyledBuildingImG src={building} alt="" />
 
-               <StyledSlidingImG>
-                  <StyledBuildingImG src={conference} alt="conference" />
-                  <StyledCenterBuildingImG src={doctors} alt="doctors" />
-                  <StyledBuildingImG src={consilium} alt="consilium" />
-               </StyledSlidingImG>
-            </StyledImageBlock>
-         </StyledMainBlock>
+                  <StyledSlidingImG>
+                     <StyledBuildingImG src={conference} alt="conference" />
+                     <StyledCenterBuildingImG src={doctors} alt="doctors" />
+                     <StyledBuildingImG src={consilium} alt="consilium" />
+                  </StyledSlidingImG>
+               </StyledImageBlock>
+            </StyledMainBlock>
+         </div>
       </Container>
    )
 }
@@ -120,8 +123,11 @@ const StyledImageBlock = styled.div`
    }
 `
 const Container = styled.div`
-   margin-left: 120px;
-   margin-top: 120px;
+   padding-left: 90px;
+   padding-right: 70px;
+   max-width: 100%;
+   display: flex;
+   justify-content: center;
 `
 const StyledTitleText = styled.h1`
    font-size: 2.25rem;
@@ -155,11 +161,14 @@ const StyledNavlink = styled(NavLink)(() => ({
    color: '#009344',
    fontSize: '1rem',
    fontWeight: 500,
+   fontFamily: 'Manrope',
    lineHeight: '22px',
    textDecoration: 'none',
-
+   display: 'flex',
+   alignItems: 'center',
+   paddingTop: '40px',
    '& :first-of-type': {
-      marginTop: '110px',
+      margin: '4px 0 0 10px',
    },
 }))
 

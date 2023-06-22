@@ -20,6 +20,10 @@ import { ReactComponent as RevmatIcon } from '../../assets/serviceIcons/revmatol
 import { ReactComponent as TerapIcon } from '../../assets/serviceIcons/terapiya.svg'
 import { ReactComponent as UrolIcon } from '../../assets/serviceIcons/urologiya.svg'
 import { ReactComponent as NeiroIcon } from '../../assets/serviceIcons/neirohirurgiya.svg'
+import DoctorVoinich from '../../assets/images/Doctore.png'
+import DoctorMisko from '../../assets/images/docotor-misko.png'
+import DoctorAntux from '../../assets/images/doctore-antux.png'
+import DoctorMisnik from '../../assets/images/doctor-misnik.png'
 
 export const MED_SERVICE = [
    {
@@ -34,102 +38,183 @@ export const MED_SERVICE = [
    },
    {
       id: 3,
-      img: <DermIcon />,
-      title: 'Дермотология',
-   },
-   {
-      id: 4,
-      img: <EndocIcon />,
-      title: 'Эндокринология',
-   },
-   {
-      id: 5,
-      img: <FizIcon />,
-      title: 'Физиотерапия',
-   },
-   {
-      id: 6,
-      img: <FlebIcon />,
-      title: 'Флебология',
-   },
-   {
-      id: 7,
-      img: <GastIcon />,
-      title: 'Гастроэнтерология',
-   },
-   {
-      id: 8,
       img: <GemIcon />,
       title: 'Вакцинация',
    },
    {
-      id: 9,
+      id: 4,
+      img: <GastIcon />,
+      title: 'Гастроэнтерология',
+   },
+   {
+      id: 5,
       img: <GinIcon />,
       title: 'Гинекология',
    },
    {
-      id: 10,
+      id: 6,
+      img: <DermIcon />,
+      title: 'Дермотология',
+   },
+   {
+      id: 7,
       img: <KardIcon />,
       title: 'Кардиология',
    },
    {
-      id: 11,
+      id: 8,
       img: <NevrIcon />,
       title: 'Неврология',
    },
    {
-      id: 12,
-      img: <OftalIcon />,
-      title: 'Офтальмология',
+      id: 9,
+      img: <NeiroIcon />,
+      title: 'Нейрохирургия',
    },
    {
-      id: 13,
+      id: 10,
       img: <OnkolIcon />,
       title: 'Онкология',
    },
    {
-      id: 14,
+      id: 11,
       img: <OrtopIcon />,
       title: 'Ортопедия',
    },
    {
-      id: 15,
+      id: 12,
       img: <OtorIcon />,
       title: 'Оториноларингология',
    },
    {
-      id: 16,
+      id: 13,
+      img: <OftalIcon />,
+      title: 'Офтальмология',
+   },
+   {
+      id: 14,
       img: <ProkIcon />,
       title: 'Проктология',
    },
    {
-      id: 17,
+      id: 15,
       img: <PsikhIcon />,
       title: 'Психтерапия',
    },
    {
-      id: 18,
+      id: 16,
       img: <PulmonIcon />,
       title: 'Пульмонология',
    },
    {
-      id: 19,
+      id: 17,
       img: <RevmatIcon />,
       title: 'Ревмотология',
    },
    {
-      id: 20,
+      id: 18,
       img: <TerapIcon />,
       title: 'Терапия',
    },
    {
-      id: 21,
+      id: 19,
       img: <UrolIcon />,
       title: 'Урология',
    },
    {
+      id: 20,
+      img: <FlebIcon />,
+      title: 'Флебология',
+   },
+   {
+      id: 21,
+      img: <FizIcon />,
+      title: 'Физиотерапия',
+   },
+   {
       id: 22,
-      img: <NeiroIcon />,
-      title: 'Нейрохирургия',
+      img: <EndocIcon />,
+      title: 'Эндокринология',
+   },
+]
+
+export const mainMedService = [
+   {
+      id: 1,
+      img: <GemIcon />,
+      title: 'Вакцинация',
+   },
+   {
+      id: 2,
+      img: <KardIcon />,
+      title: 'Кардиология',
+   },
+   {
+      id: 3,
+      img: <NevrIcon />,
+      title: 'Неврология',
+   },
+   {
+      id: 4,
+      img: <DermIcon />,
+      title: 'Дермотология',
+   },
+   {
+      id: 5,
+      img: <OftalIcon />,
+      title: 'Офтальмология',
+   },
+   {
+      id: 6,
+      img: <TerapIcon />,
+      title: 'Терапия',
+   },
+   {
+      id: 7,
+      img: <FizIcon />,
+      title: 'Физиотерапия',
+   },
+   {
+      id: 8,
+      img: <OnkolIcon />,
+      title: 'Онкология',
+   },
+   {
+      id: 9,
+      img: <UrolIcon />,
+      title: 'Урология',
+   },
+]
+
+export const doctorImages = [
+   {
+      id: 1,
+      img: DoctorVoinich,
+      name: 'Войнич Дарья',
+      description: 'Врач-терапевт',
+   },
+   {
+      id: 4,
+      img: DoctorAntux,
+      name: 'Антух Евгений',
+      description: 'Врач-невролог',
+   },
+   {
+      id: 2,
+      img: DoctorMisko,
+      name: 'Мисько Екатерина',
+      description: 'Врач-Педиатр',
+   },
+   {
+      id: 3,
+      img: DoctorAntux,
+      name: 'Дмитроченко Дмитрий',
+      description: 'Врач-уролог-андролог',
+   },
+   {
+      id: 5,
+      img: DoctorMisnik,
+      name: 'Мисник Елена',
+      description: 'Врач эндокринолог',
    },
 ]

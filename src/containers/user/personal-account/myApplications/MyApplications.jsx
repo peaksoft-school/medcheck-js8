@@ -1,47 +1,45 @@
 import React, { useEffect, useState } from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
-// import { appointmentData } from '../../../../utlis/constants/commons'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
-import { getUserAppointmentRequest } from '../../../../api/appointmentService'
-import { deleteAllUser } from '../../../../redux/reducers/appointment/appointment.thunk'
+import {
+   deleteAppointmentRequest,
+   getUserAppointmentRequest,
+} from '../../../../api/appointmentService'
+import useToast from '../../../../hooks/useToast'
 
 const MyApplications = () => {
-   const dispatch = useDispatch()
-   const appointment = useSelector((state) => state.appointment)
-   // console.log('🚀 ~ appointment:', appointment)
-
    const [patients, setPatients] = useState([])
-   // console.log('🚀 ~ patients:', patients)
-
-   useEffect(() => {
-      setPatients(appointment)
-   }, [appointment])
+   const { ToastContainer, notify } = useToast()
 
    const fetchPatients = async () => {
       try {
          const { data } = await getUserAppointmentRequest()
-         // console.log('🚀 ~ data:', data)
-
-         setPatients(data.response.results)
+         setPatients(data)
+         return notify('success', 'успешно')
       } catch (error) {
-         console.log(error)
+         return notify('error', 'произошло ошибка при загрузке')
       }
    }
-
    useEffect(() => {
       fetchPatients()
    }, [])
 
-   const deleteOrder = () => {
-      dispatch(deleteAllUser())
-      setPatients([])
+   const deleteAppointment = async () => {
+      try {
+         await deleteAppointmentRequest()
+         fetchPatients('')
+         return notify('success', 'успешно удалено')
+      } catch (error) {
+         return notify('error', 'произошло ошибка при загрузке')
+      }
    }
+
    return (
       <StyledMyNotesContainer>
+         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink>
@@ -66,7 +64,7 @@ const MyApplications = () => {
                   />
                   <DeleteContainer>
                      <Deletelist />
-                     <DeleteTitle onClick={deleteOrder}>
+                     <DeleteTitle onClick={deleteAppointment}>
                         Очистить список заказов
                      </DeleteTitle>
                   </DeleteContainer>
@@ -90,6 +88,7 @@ const StyledMyNotesContainer = styled('div')({
 const StyledNavLink = styled(NavLink)({
    textDecoration: 'none',
    color: ' #959595',
+   fontFamily: 'Manrope',
 })
 
 const Container = styled(Breadcrumbs)({

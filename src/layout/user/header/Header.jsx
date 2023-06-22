@@ -43,106 +43,16 @@ import {
 import Dropdown from '../../../components/UI/Dropdown'
 import SearchInput from '../../../components/UI/SeacrchInput'
 import SignIn from '../../guest/login/SignIn'
-import { UserRoles } from '../../../utlis/constants/commons'
+import {
+   UserRoles,
+   data,
+   info,
+   services,
+} from '../../../utlis/constants/commons'
 import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
-
-export const services = [
-   {
-      name: 'Анестезиология',
-      id: '1',
-   },
-   {
-      name: 'Анестезиология',
-      id: '2',
-   },
-   {
-      name: 'Вакцинация',
-      id: '3',
-   },
-   {
-      name: 'Гинекология',
-      id: '4',
-   },
-   {
-      name: 'Дерматология',
-      id: '5',
-   },
-   {
-      name: 'Кардиология',
-      id: '6',
-   },
-   {
-      name: 'Неврология',
-      id: '7',
-   },
-   {
-      name: 'Нейрохирургия',
-      id: '8',
-   },
-]
-export const data = [
-   {
-      name: 'Онкология',
-      id: '9',
-   },
-   {
-      name: 'Ортопедия',
-      id: '10',
-   },
-   {
-      name: 'Оториноларингология',
-      id: '11',
-   },
-   {
-      name: 'Офтальмология',
-      id: '12',
-   },
-   {
-      name: 'Проктология',
-      id: '13',
-   },
-   {
-      name: 'Психтерапия',
-      id: '14',
-   },
-   {
-      name: 'Пульмонология',
-      id: '15',
-   },
-   {
-      name: 'Ревмотология',
-      id: '16',
-   },
-]
-export const info = [
-   {
-      name: 'Терапия',
-      id: '17',
-   },
-   {
-      name: 'Урология',
-      id: '18',
-   },
-   {
-      name: 'Флебология',
-      id: '19',
-   },
-   {
-      name: 'Эндокринология',
-      id: '20',
-   },
-   {
-      name: 'Физиотерапия',
-      id: '21',
-   },
-   {
-      name: 'Психтерапия',
-      id: '22',
-   },
-]
 
 const Header = () => {
    const dispatch = useDispatch()
@@ -288,7 +198,7 @@ const Header = () => {
                                        Мои записи
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                                 <NavlinkStyle to="/profile">
+                                 <NavlinkStyle to="/personal-data">
                                     <MenuItemStyled onClick={handleClose}>
                                        Профиль
                                     </MenuItemStyled>

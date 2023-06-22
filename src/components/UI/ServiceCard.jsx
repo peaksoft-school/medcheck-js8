@@ -6,20 +6,20 @@ import { MED_SERVICE } from '../../utlis/services/img_service'
 
 function ServiceCard() {
    return (
-      <div>
-         <GridContainer container>
-            {MED_SERVICE.map((el) => {
-               return (
-                  <Grid item xs={6} key={el.id}>
-                     <div className="grid">
-                        <span className="img">{el.img}</span>
-                        <NavLink to={`${el.id}/details/`}>{el.title}</NavLink>
-                     </div>
-                  </Grid>
-               )
-            })}
-         </GridContainer>
-      </div>
+      <GridContainer container>
+         {MED_SERVICE.map((el) => {
+            return (
+               <Grid item xs={6} key={el.id}>
+                  <div className="grid" href="#top">
+                     <NavLink to={`${el.id}/details/`} className="img">
+                        {el.img}
+                     </NavLink>
+                     <NavLink to={`${el.id}/details/`}>{el.title}</NavLink>
+                  </div>
+               </Grid>
+            )
+         })}
+      </GridContainer>
    )
 }
 
@@ -28,7 +28,7 @@ export default ServiceCard
 const GridContainer = styled(Grid)(() => ({
    width: '889px',
    height: '1252px',
-   marginLeft: '120px',
+   marginLeft: '95px',
 
    marginBottom: '120px',
    '& .grid': {

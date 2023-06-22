@@ -8,12 +8,12 @@ import { ReactComponent as CloseIcon } from '../../../assets/login/CloseIcon.svg
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
 import { ReactComponent as GoogleIcon } from '../../../assets/login/image 90.svg'
-import Input from '../../../components/UI/input/Input'
 import Button from '../../../components/UI/Button'
 import BasicModal from '../../../components/UI/ModalUi'
 import { signIn } from '../../../redux/reducers/auth/auth.thunk'
 import useToast from '../../../hooks/useToast'
 import Spiner from '../../../components/UI/Spiner'
+import Input from '../../../components/UI/input/Input'
 
 const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
    const dispatch = useDispatch()
@@ -71,7 +71,7 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
                className="inputStyle"
                error={errors.email}
                {...register('email', {
-                  required: 'поле не заполнено',
+                  required: 'Поле не заполнено',
                   pattern: {
                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                      message: 'Неверный формат электронной почты',
@@ -84,9 +84,12 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
                className="inputStyle"
                error={errors.password}
                {...register('password', {
-                  required: 'поле не заполнено',
-                  maxLength: { value: 15, message: 'слишком много деталей' },
-                  minLength: { value: 5, message: 'слишком мало деталей' },
+                  required: 'Поле не заполнено',
+                  maxLength: { value: 15, message: 'Слишком длинный пароль' },
+                  minLength: {
+                     value: 5,
+                     message: 'Пароль должен содержать не менее 5 букв',
+                  },
                })}
                type={showPassword ? 'text' : 'password'}
                InputProps={{
@@ -144,11 +147,10 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
 export default SignIn
 
 const FormControlStyled = styled('form')(() => ({
-   height: '511px',
    width: ' 494px',
    borderRadius: '2px',
    background: '#FFFFFF',
-   // marginLeft: ' 35%',
+   paddingBottom: '40px',
    boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
    '& .topic': {
       fontFamily: 'Manrope',
@@ -165,6 +167,7 @@ const FormControlStyled = styled('form')(() => ({
       cursor: 'pointer',
    },
    '& .inputStyle': {
+      fontFamily: 'Manrope',
       width: '390px',
       marginLeft: '60px',
       marginTop: ' 14px',
@@ -185,7 +188,7 @@ const FormControlStyled = styled('form')(() => ({
       width: '390px',
       marginLeft: '60px',
       marginTop: '24px',
-      marginBottom: '30px',
+      marginBottom: '20px',
       padding: '10px 20px 10px 20px',
       background: '#F5F5F5',
       fontFamily: 'Manrope',
@@ -208,10 +211,12 @@ const FormControlStyled = styled('form')(() => ({
       textDecoration: 'none',
    },
    '& .register': {
-      marginTop: '20px',
       marginLeft: '149px',
       textDecoration: 'none',
       color: '#3772FF',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      fontSize: '14px',
       '& span': {
          color: '#222222',
          marginBottom: '50px',
@@ -242,6 +247,7 @@ const Line = styled('div')(() => ({
       fontSize: '14px',
       fontWeight: 400,
       color: '#222222',
+      fontFamily: 'Manrope',
    },
    '& .lineSecond': {
       width: '215px',
