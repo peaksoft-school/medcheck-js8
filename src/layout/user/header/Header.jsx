@@ -148,7 +148,7 @@ const Header = () => {
                <ContactsBox>
                   <IconBox>
                      <IconButton>
-                        <NavLink to="https://www.instagram.com/peaksoft.house/">
+                        <NavLink to="https://www.instagram.com/medcheck.kg/">
                            <InstagramIcon />
                         </NavLink>
                      </IconButton>
