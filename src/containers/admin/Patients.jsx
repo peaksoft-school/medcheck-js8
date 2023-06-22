@@ -57,13 +57,14 @@ const Patients = () => {
          {
             header: <NumberIcon />,
             render: (patient) => <P>{patient.id}</P>,
+            key: 'number',
          },
          {
             header: 'Имя и фамилия',
             render: (patient) => (
                <Grid>
                   <P
-                     onClick={(patient) => {
+                     onClick={() => {
                         navigate(`${patient.id}/details`)
                      }}
                   >
@@ -72,6 +73,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'name and lastname',
          },
          {
             header: 'Номер телефона',
@@ -86,6 +88,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'phone number',
          },
 
          {
@@ -101,6 +104,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'email',
          },
          {
             header: 'Дата сдачи',
@@ -115,6 +119,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'date',
          },
          {
             header: 'Действия',
@@ -125,6 +130,7 @@ const Patients = () => {
                   </IconButton>
                </Grid>
             ),
+            key: 'action',
          },
       ],
       []
