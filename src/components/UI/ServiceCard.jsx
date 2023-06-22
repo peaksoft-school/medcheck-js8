@@ -28,8 +28,8 @@ export default ServiceCard
 const GridContainer = styled(Grid)(() => ({
    width: '889px',
    height: '1252px',
-   marginLeft: '95px',
-
+   // marginLeft: '95px',
+   paddingTop: '60px',
    marginBottom: '120px',
    '& .grid': {
       display: 'flex',

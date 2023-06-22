@@ -284,4 +284,5 @@ const StyledContainerButton = styled('div')(() => ({
 const StyledSelect = styled(SelectUi)(() => ({
    padding: '1px',
    fontSize: '14px',
+   height: '36px',
 }))

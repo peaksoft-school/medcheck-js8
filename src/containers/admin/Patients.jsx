@@ -179,6 +179,6 @@ const PatientStyle = styled('div')({
       fontSize: '22px',
       color: '#222222',
       fontFamily: 'Manrope',
-      paddingBottom: '34px',
+      paddingBottom: '23px',
    },
 })

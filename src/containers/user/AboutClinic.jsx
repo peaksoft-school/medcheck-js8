@@ -72,7 +72,7 @@ const NavigatePathTitle = styledMui('div')(() => ({
    fontFamily: 'Manrope',
    fontSize: '14px',
    fontWeight: 400,
-   paddingBottom: '26px',
+   padding: '26px 0',
 
    span: {
       color: '#048741',

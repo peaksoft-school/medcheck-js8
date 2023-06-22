@@ -10,6 +10,8 @@ import { departmentName } from '../../utlis/constants/commons'
 import { Hr } from './Service'
 
 const Doctors = () => {
+   window.scrollTo({ top: 0 })
+
    const { ToastContainer, notify } = useToast()
    const [departments, setDepartments] = useState([])
    const [showMoreClicked, setShowMoreClicked] = useState(false)
@@ -162,7 +164,7 @@ export default Doctors
 
 const Wrapper = styled('div')(() => ({
    '&': {
-      paddingLeft: '100px',
+      paddingLeft: '95px',
    },
 }))
 

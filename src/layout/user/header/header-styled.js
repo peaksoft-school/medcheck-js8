@@ -245,11 +245,13 @@ export const ContainedButtonStyled = styledMui(Button)(() => ({
       lineHeight: '19px',
       fontFamily: 'Manrope',
       marginLeft: '16px',
+      boxShadow: 'none',
    },
    '&:hover': {
       border: '1px solid #048741',
       color: '#048741',
       background: 'none',
+      boxShadow: 'none',
    },
    '&:active': {
       border: '1px solid #048741',

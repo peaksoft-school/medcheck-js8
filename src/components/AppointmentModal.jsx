@@ -389,7 +389,7 @@ const HeaderModalTitlwe = styled('p')(() => ({
    },
 }))
 
-const CloseIconStyleContianer = styled('div')(() => ({
+export const CloseIconStyleContianer = styled('div')(() => ({
    '&': {
       width: '100%',
       display: 'flex',
@@ -447,6 +447,7 @@ const IntervalBoxTimer = styled('div')(() => ({
 const SelectIntervalStyle = styled(SelectUi)(() => ({
    '&': {
       width: '257px',
+      height: '38px',
    },
 }))
 
