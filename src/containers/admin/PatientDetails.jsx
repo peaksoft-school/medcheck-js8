@@ -14,6 +14,7 @@ import { putDatas } from '../../redux/reducers/patient/patient.thunk'
 import { fileInstance } from '../../api/instanses'
 import DatePicker from '../../components/UI/DatePicker'
 import BasicModal from '../../components/UI/ModalUi'
+import buttonPlusIcon from '../../assets/icons/ButtonPlusIcon.svg'
 
 const PatientDetails = () => {
    const { id } = useParams()
@@ -105,7 +106,10 @@ const PatientDetails = () => {
                {patients?.firstName} {patients?.lastName}{' '}
             </P>
             <ButtonStyled onClick={handleOpen}>
-               + добавить результаты
+               <span>
+                  <img src={buttonPlusIcon} alt="plus" />
+               </span>{' '}
+               добавить результаты
             </ButtonStyled>
          </HeaderPart>
 
@@ -236,9 +240,13 @@ const HeaderPart = styled('div')({
    justifyContent: 'space-between',
 })
 const ButtonStyled = styled(Button)({
-   width: '300px',
-   height: '44px',
+   padding: '10px 15px',
    marginTop: '30px',
+   span: {
+      width: '12px',
+      height: '12px',
+      marginRight: '15px',
+   },
 })
 const PaperStyled = styled(Paper)({
    height: '1300px',
@@ -305,6 +313,14 @@ const ButtonContainer = styled('div')({
       border: '1px solid #959595',
       padding: '10px 80px',
       color: '#959595',
+      '&:hover': {
+         background: '#959595',
+         color: '#fff',
+      },
+      '&:active': {
+         background: '#959595',
+         color: '#FFFF',
+      },
    },
    '& .add': {
       padding: '10px 80px',

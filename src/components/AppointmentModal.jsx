@@ -389,7 +389,7 @@ const HeaderModalTitlwe = styled('p')(() => ({
    },
 }))
 
-const CloseIconStyleContianer = styled('div')(() => ({
+export const CloseIconStyleContianer = styled('div')(() => ({
    '&': {
       width: '100%',
       display: 'flex',

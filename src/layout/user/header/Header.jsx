@@ -2,7 +2,7 @@ import { Grid, IconButton, Menu } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
-import { useDebounce } from 'use-debounce'
+// import { useDebounce } from 'use-debounce'
 import GeoPoint from '../../../assets/icons/GeoPoint.svg'
 import Timer from '../../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
@@ -36,13 +36,12 @@ import {
    StyledPhoneIconButton,
    ProfileButtonStyled,
    ProfileBox,
-   SearchInputBox,
    MenuItemStyled,
    NavlinkStyle,
    NavlinkStyled,
+   SearchInputBox,
 } from './header-styled'
 import Dropdown from '../../../components/UI/Dropdown'
-import SearchInput from '../../../components/UI/SeacrchInput'
 import SignIn from '../../guest/login/SignIn'
 import {
    UserRoles,
@@ -54,7 +53,7 @@ import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
-import { getGlobalSearchRequest } from '../../../api/globalSearchService'
+import GlobalSearchInput from '../../../components/GlobalSearchInput'
 
 const Header = () => {
    const dispatch = useDispatch()
@@ -62,14 +61,13 @@ const Header = () => {
    const [anchorEl, setAnchorEl] = useState(null)
    const [searchParams, setSearchParams] = useSearchParams()
    const { openModal } = Object.fromEntries(searchParams)
-   const [searchInput, setSearchInput] = useState('')
-   const [debouncedQuery] = useDebounce(searchInput, 400)
    const [search, setSearch] = useState([])
 
    const handleClose = () => {
       setAnchorEl(null)
    }
    const onCloseModal = () => setSearchParams({})
+
    const openSignInModal = () => {
       setSearchParams({ openModal: 'sign-in' })
       handleClose()
@@ -90,7 +88,11 @@ const Header = () => {
    }
 
    const navigateResultHandler = () => {
-      navigate('/getResults')
+      if (role === UserRoles.PATIENT) {
+         navigate('/getResults')
+      } else {
+         openSignInModal()
+      }
    }
    const navigateOnlineAppointmentHandler = () => {
       navigate('/onlineAppointment')
@@ -105,21 +107,6 @@ const Header = () => {
       setSearch(search)
    }, [search])
 
-   useEffect(() => {
-      const getSearchData = async () => {
-         try {
-            const { data } = await getGlobalSearchRequest(debouncedQuery)
-            setSearch(data)
-         } catch (error) {
-            notify('error', error.response?.data.message)
-         }
-      }
-
-      getSearchData()
-   }, [debouncedQuery])
-   const globalSearchHandler = (event) => {
-      setSearchInput(event.target.value)
-   }
    return (
       <HeaderStyled position="static">
          <StyledHeaderGlobalContainer>
@@ -155,11 +142,9 @@ const Header = () => {
                   </Box>
                </Grid>
                <SearchInputBox>
-                  <SearchInput
-                     onChange={globalSearchHandler}
-                     value={searchInput}
-                  />
+                  <GlobalSearchInput openModal={openSignInModal} />
                </SearchInputBox>
+
                <ContactsBox>
                   <IconBox>
                      <IconButton>
@@ -268,7 +253,7 @@ const Header = () => {
                </InfoBox>
                <Grid>
                   <OutlinedButtonStyled
-                     variant="oultined"
+                     variant="outlined"
                      onClick={navigateResultHandler}
                   >
                      получить результаты

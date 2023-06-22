@@ -4,7 +4,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { FormLabel, Grid, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { ReactComponent as ButtonIcon } from '../../../assets/serviceIcons/ButtonIcon.svg'
 import { ReactComponent as Users } from '../../../assets/serviceIcons/Users.svg'
@@ -14,14 +14,18 @@ import Button from '../Button'
 import Input from '../input/Input'
 import { postDatas } from '../../../redux/reducers/card/card.thunk'
 import useToast from '../../../hooks/useToast'
+import { UserRoles } from '../../../utlis/constants/commons'
 
 // eslint-disable-next-line no-unused-vars
-export const CardApplication = React.forwardRef((_, ref) => {
+export const CardApplication = ({ openSignInModal }) => {
    const dispatch = useDispatch()
+   const role = useSelector((state) => state.auth.role)
+
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
    const { ToastContainer, notify: notifyCall } = useToast()
 
+   const disabled = name && number
    const nameChangeHandler = (e) => {
       setName(e.target.value)
    }
@@ -30,25 +34,31 @@ export const CardApplication = React.forwardRef((_, ref) => {
    }
 
    const submitHandler = () => {
-      try {
-         if (name.length >= 2 && number.length === 13) {
-            const patientData = {
-               name,
-               phoneNumber: number,
+      if (role === UserRoles.PATIENT) {
+         try {
+            if (name.length >= 2 && number.length === 13) {
+               const patientData = {
+                  name,
+                  phoneNumber: number,
+               }
+               dispatch(postDatas(patientData))
+               notifyCall('success', 'Заявка успешно отправлено!')
+               setName('')
+               setNumber('')
+            } else {
+               notifyCall('error', 'Данные неправильно заполнены!')
             }
-            dispatch(postDatas(patientData))
-            notifyCall('success', 'The data has successfully sent!')
-         } else {
-            notifyCall('error', 'This is error message')
+         } catch (error) {
+            console.error(error)
+            notifyCall('error', 'Заявка не отправлено!')
          }
-      } catch (error) {
-         console.error(error)
-         notifyCall('error', 'This is error message')
+      } else {
+         openSignInModal()
       }
    }
 
    return (
-      <div ref={ref}>
+      <div>
          {ToastContainer}
          <ModalContainer>
             <div className="container">
@@ -101,7 +111,11 @@ export const CardApplication = React.forwardRef((_, ref) => {
                      </div>
                   </InputBoxStyled>
                </DialogContent>
-               <ButtonBox variant="outlined" onClick={submitHandler}>
+               <ButtonBox
+                  disabled={!disabled}
+                  variant="outlined"
+                  onClick={submitHandler}
+               >
                   <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
                </ButtonBox>
             </div>
@@ -111,7 +125,7 @@ export const CardApplication = React.forwardRef((_, ref) => {
          </ModalContainer>
       </div>
    )
-})
+}
 
 const Input1 = styled('div')(() => ({
    '&': {

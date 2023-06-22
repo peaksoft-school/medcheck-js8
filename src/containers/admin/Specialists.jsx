@@ -255,6 +255,7 @@ const SearchInputBox = styled('div')(() => ({
    '&': {
       width: '600px',
       marginBottom: '20px',
+      paddingTop: '20px',
 
       div: {
          background: '#FFFFFF',
@@ -287,6 +288,7 @@ const LastNameStyled = styled('p')(() => ({
    '&': {
       color: '#959595',
       fontSize: '14px',
+      fontFamily: 'Manrope',
    },
 }))
 
