@@ -8,7 +8,7 @@ import {
 import styled from '@emotion/styled'
 import { ReactComponent as ExpandMoreIcon } from '../../../assets/serviceIcons/Указатель.svg'
 
-function Sellect({ data = [] }) {
+const Sellect = ({ data = [] }) => {
    const [expanded, setExpanded] = useState()
 
    const clickHandler = (panel) => (e, isExpanded) => {
@@ -31,7 +31,7 @@ function Sellect({ data = [] }) {
                   </TypographyTitle>
 
                   {data.text.map((el) => (
-                     <li key={el}>{el}</li>
+                     <List key={el}>{el}</List>
                   ))}
                </AccordionDetailsStyle>
             </AccordionStyle>
@@ -39,7 +39,6 @@ function Sellect({ data = [] }) {
       </AccordionContainer>
    )
 }
-
 export default Sellect
 
 const TypographyStyle = styled(Typography)(() => ({
@@ -57,7 +56,6 @@ const TypographyTitle = styled(Typography)(() => ({
 
 const AccordionContainer = styled('div')(() => ({
    width: '852px',
-   marginLeft: '95px',
    fontFamily: 'Manrope',
 }))
 
@@ -86,10 +84,18 @@ const AccordionDetailsStyle = styled(AccordionDetails)(() => ({
    fontSize: '16px',
    '& li': {
       width: '798px',
-      marginBottom: '20px',
       color: '#4D4E51',
       fontSize: '16px',
-      marginTop: '20px',
       marginLeft: '26px',
+   },
+   '&::marker': {
+      color: 'green',
+   },
+}))
+
+const List = styled('li')(() => ({
+   color: 'black',
+   '&:: marker': {
+      color: 'green',
    },
 }))

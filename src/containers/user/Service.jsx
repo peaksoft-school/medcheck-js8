@@ -2,9 +2,9 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Stack } from '@mui/material'
 import ServiceCard from '../../components/UI/ServiceCard'
-import Sellect from '../../components/UI/select/Sellect'
-import CardApplication from '../../components/UI/card/CardApplication'
+import { CardApplication } from '../../components/UI/card/CardApplication'
 import { Container, StyledNavLink } from '../admin/specialist-style'
+import Sellect from '../../components/UI/select/Sellect'
 import { serviceData } from '../../utlis/services/service_data'
 
 function Service() {
@@ -33,8 +33,7 @@ function Service() {
                      ваши вопросы. <br /> Ниже представленны наиболее
                      популярные.
                   </p>
-
-                  <Sellect />
+                  <Sellect data={serviceData} />
                </SelectContent>
             </ServiceStyle>
             <CardApplication />
@@ -53,14 +52,13 @@ export const Hr = styled('hr')(() => ({
    border: 'none',
 }))
 
-
 const ServiceStyle = styled('div')(() => ({
    fontSize: '36px',
    fontWeight: 600,
    fontFamily: 'Manrope',
    lineHeight: '49px',
    color: '#222222',
-   marginLeft: '100px',
+   marginLeft: '95px',
    marginBottom: '60px',
    marginTop: '26px',
    '& .our_service': {

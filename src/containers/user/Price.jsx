@@ -20,8 +20,8 @@ const Price = () => {
    return (
       <>
          <Hr />
-         <MainPart href="/">
-            <span>Главная {'>'}</span>
+         <MainPart>
+            <a href="/">Главная {'>'}</a>
             <span className="service"> Прайс</span>
          </MainPart>
          <ServiceStyle>
@@ -146,15 +146,18 @@ const Hr = styled('hr')(() => ({
    border: 'none',
 }))
 
-const MainPart = styled('a')(() => ({
+const MainPart = styled('p')(() => ({
    marginLeft: '95px',
    fontFamily: ' Manrope',
    fontSize: '14px',
    fontWeight: 400,
    lineHeight: '19px',
    textAlign: 'left',
-   color: '#959595',
-   textDecoration: 'none',
+   paddingTop: '25px',
+   a: {
+      color: '#959595',
+      textDecoration: 'none',
+   },
    '& .service': {
       color: '#048741',
    },

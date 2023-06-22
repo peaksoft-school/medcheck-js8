@@ -91,12 +91,7 @@ const AppRoutes = () => {
                element={getUserPage(MyApplicationDetails)}
             />
          </Route>
-         <Route
-            path="getResults"
-            element={
-               role === 'GUEST' ? <Navigate to="/" /> : getUserPage(GetResults)
-            }
-         />
+         <Route path="getResults" element={getUserPage(GetResults)} />
 
          <Route path="/admin" element={getAdminPage(AdminLayout)}>
             <Route path="appointment" element={getAdminPage(Appointment)}>

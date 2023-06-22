@@ -24,6 +24,7 @@ import DoctorVoinich from '../../assets/images/Doctore.png'
 import DoctorMisko from '../../assets/images/docotor-misko.png'
 import DoctorAntux from '../../assets/images/doctore-antux.png'
 import DoctorMisnik from '../../assets/images/doctor-misnik.png'
+import DoctorDmitryi from '../../assets/images/dmitryiImage.png'
 
 export const MED_SERVICE = [
    {
@@ -43,86 +44,81 @@ export const MED_SERVICE = [
    },
    {
       id: 4,
-      img: <GastIcon />,
-      title: 'Гастроэнтерология',
-   },
-   {
-      id: 5,
       img: <GinIcon />,
       title: 'Гинекология',
    },
    {
-      id: 6,
+      id: 5,
       img: <DermIcon />,
       title: 'Дермотология',
    },
    {
-      id: 7,
+      id: 6,
       img: <KardIcon />,
       title: 'Кардиология',
    },
    {
-      id: 8,
+      id: 7,
       img: <NevrIcon />,
       title: 'Неврология',
    },
    {
-      id: 9,
+      id: 8,
       img: <NeiroIcon />,
       title: 'Нейрохирургия',
    },
    {
-      id: 10,
+      id: 9,
       img: <OnkolIcon />,
       title: 'Онкология',
    },
    {
-      id: 11,
+      id: 10,
       img: <OrtopIcon />,
       title: 'Ортопедия',
    },
    {
-      id: 12,
+      id: 11,
       img: <OtorIcon />,
       title: 'Оториноларингология',
    },
    {
-      id: 13,
+      id: 12,
       img: <OftalIcon />,
       title: 'Офтальмология',
    },
    {
-      id: 14,
+      id: 13,
       img: <ProkIcon />,
       title: 'Проктология',
    },
    {
-      id: 15,
+      id: 14,
       img: <PsikhIcon />,
       title: 'Психтерапия',
    },
    {
-      id: 16,
+      id: 15,
       img: <PulmonIcon />,
       title: 'Пульмонология',
    },
    {
-      id: 17,
+      id: 16,
       img: <RevmatIcon />,
       title: 'Ревмотология',
    },
    {
-      id: 18,
+      id: 17,
       img: <TerapIcon />,
       title: 'Терапия',
    },
    {
-      id: 19,
+      id: 18,
       img: <UrolIcon />,
       title: 'Урология',
    },
    {
-      id: 20,
+      id: 19,
       img: <FlebIcon />,
       title: 'Флебология',
    },
@@ -132,9 +128,14 @@ export const MED_SERVICE = [
       title: 'Физиотерапия',
    },
    {
-      id: 22,
+      id: 20,
       img: <EndocIcon />,
       title: 'Эндокринология',
+   },
+   {
+      id: 23,
+      img: <GastIcon />,
+      title: 'Гастроэнтерология',
    },
 ]
 
@@ -200,17 +201,18 @@ export const doctorImages = [
       description: 'Врач-невролог',
    },
    {
+      id: 3,
+      img: DoctorDmitryi,
+      name: 'Дмитроченко Дмитрий',
+      description: 'Врач-уролог-андролог',
+   },
+   {
       id: 2,
       img: DoctorMisko,
       name: 'Мисько Екатерина',
       description: 'Врач-Педиатр',
    },
-   {
-      id: 3,
-      img: DoctorAntux,
-      name: 'Дмитроченко Дмитрий',
-      description: 'Врач-уролог-андролог',
-   },
+
    {
       id: 5,
       img: DoctorMisnik,

@@ -42,7 +42,7 @@ const ServiceDetails = () => {
                   <StyledNavLink to="/service">
                      <p>Услуги</p>
                   </StyledNavLink>
-                  <div>
+                  <div key={serviceDetails.id}>
                      <StyledTitle>{currentService.name}</StyledTitle>
                   </div>
                </Breadcrumbs>
@@ -53,17 +53,17 @@ const ServiceDetails = () => {
             <TitleStyled>{currentService.description}</TitleStyled>
             <ListStyled>
                {currentService.answers.map((item) => {
-                  return <LisStyled>{item.answer}</LisStyled>
+                  return <LisStyled key={item.id}>{item.answer}</LisStyled>
                })}
             </ListStyled>
             <QuetioansStyled>{currentService.questionstwo}</QuetioansStyled>
             <TitleStyled>{currentService.descriptiontwo}</TitleStyled>
             <ListStyled>
                {currentService.answersTwo.map((el) => {
-                  return <LisStyled>{el.answer}</LisStyled>
+                  return <LisStyled key={el.id}>{el.answer}</LisStyled>
                })}
             </ListStyled>
-            <DoctorInfo>
+            <DoctorInfo key={serviceDetails.id}>
                Цены на прием{' '}
                <DoctorName>{currentService.doctorName}</DoctorName>
             </DoctorInfo>
@@ -75,7 +75,7 @@ const ServiceDetails = () => {
                {currentService.price.map((item) => {
                   return (
                      <div>
-                        <StyledAccordion key={item.price}>
+                        <StyledAccordion key={item.id}>
                            <StyledAccordionSummary
                               expandIcon={<ExpandMoreIcon />}
                               aria-controls="panel1bh-content"

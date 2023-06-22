@@ -1,6 +1,8 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useNavigate } from 'react-router'
+import { useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Button from '../../components/UI/Button'
 import mainPageDoctor from '../../assets/images/mainDoctorImage.png'
 import welcomeWord from '../../assets/images/Добро пожаловать в клинику MedCheck.png'
@@ -8,17 +10,32 @@ import { doctorImages, mainMedService } from '../../utlis/services/img_service'
 import AboutClinicPart from '../../components/AboutClinicPart'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 import { CardApplication } from '../../components/UI/card/CardApplication'
+import BasicModal from '../../components/UI/ModalUi'
+import { ApplicationModal } from '../../components/ApplicationModal'
+import { UserRoles } from '../../utlis/constants/commons'
 
 const Main = () => {
    window.scrollTo({ top: 0 })
    const navigate = useNavigate()
+   const role = useSelector((state) => state.auth.role)
 
-   const targetRef = useRef(null)
+   const [showApplicationModal, setShowApplicationModal] = useState(false)
+   const [searchParams, setSearchParams] = useSearchParams()
+   Object.fromEntries(searchParams)
 
-   const scrollToElement = () => {
-      if (targetRef.current) {
-         targetRef.current.scrollIntoView({ behavior: 'smooth' })
+   const openSignInModal = () => {
+      setSearchParams({ openModal: 'sign-in' })
+   }
+   const showModalHandler = () => {
+      if (role === UserRoles.PATIENT) {
+         setShowApplicationModal(true)
+      } else {
+         openSignInModal()
       }
+   }
+
+   const closeModalHandler = () => {
+      setShowApplicationModal(false)
    }
    const serviceNavigatePage = () => {
       navigate('service')
@@ -38,9 +55,15 @@ const Main = () => {
                         клиника, в которой применяются новейшие диагностические
                         и лечебные технологии и ведут прием лучшие специалисты.
                      </p>
-                     <ApplicationButton onClick={scrollToElement}>
+                     <ApplicationButton onClick={showModalHandler}>
                         оставьте заявку
                      </ApplicationButton>
+                     <BasicModalStyle
+                        open={showApplicationModal}
+                        onClose={closeModalHandler}
+                     >
+                        <ApplicationModal onClose={closeModalHandler} />
+                     </BasicModalStyle>
                   </InfoBox>
                   <img src={mainPageDoctor} alt="mainPageDoctor" />
                </Box>
@@ -131,7 +154,7 @@ const Main = () => {
             </MainDoctorsBox>
          </GlobalDoctorContainer>
          <FeedbackSlider />
-         <CardApplication ref={targetRef} />
+         <CardApplication openSignInModal={openSignInModal} />
       </>
    )
 }
@@ -148,6 +171,14 @@ const Box = styled('div')(() => ({
    display: 'flex',
    marginTop: '22px',
    paddingLeft: '10px',
+}))
+const BasicModalStyle = styled(BasicModal)(() => ({
+   '& .MuiBox-root': {
+      borderRadius: '20px',
+      background: '#EBF2FC',
+      width: '659px',
+      padding: '10px 10px 60px 20px',
+   },
 }))
 const InfoBox = styled('div')(() => ({
    display: 'flex',
