@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react'
 import * as yup from 'yup'
 
 export const getStatusTitleChangeHandler = (statusTitle) => {
-   if (statusTitle === 'Cancelled') {
+   if (statusTitle === 'CANCELLED') {
       return 'Отменён'
    }
-   if (statusTitle === 'Confirmed') {
+   if (statusTitle === 'CONFIRMED') {
       return 'Подтверждён'
    }
-   if (statusTitle === 'Completed') {
+   if (statusTitle === 'COMPLETED') {
+      return 'Завершён'
+   }
+   if (statusTitle === 'COMPLETED') {
       return 'Завершён'
    }
    return null

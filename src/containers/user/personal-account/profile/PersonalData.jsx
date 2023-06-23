@@ -10,6 +10,7 @@ import {
    postDataProfileService,
 } from '../../../../api/profileService'
 import { postDataProfieValid } from '../../../../utlis/helpers/general'
+import ProfileLayout from './ProfileLayout'
 
 const PersonalData = () => {
    const { ToastContainer, notify } = useToast()
@@ -18,7 +19,7 @@ const PersonalData = () => {
    const postDataProfile = async (dataProfile) => {
       try {
          await postDataProfileService(dataProfile)
-         navigate('/profile')
+         navigate('/')
          return notify('success', 'отправлено успешно')
       } catch (error) {
          return notify('error', 'ошибка')
@@ -63,6 +64,7 @@ const PersonalData = () => {
 
    return (
       <Container onSubmit={handleSubmit} noValidate autoComplete="off">
+         <ProfileLayout />
          {ToastContainer}
          <StyledTitleText>Ваши личные данные</StyledTitleText>
          <StyledForm>
@@ -156,9 +158,10 @@ const PersonalData = () => {
 export default PersonalData
 
 const Container = styled('form')`
-   width: 90%;
+   width: 85%;
    margin-top: 26px;
    margin-bottom: 40px;
+   margin: auto;
 `
 
 const StyledTitleText = styled('h1')`

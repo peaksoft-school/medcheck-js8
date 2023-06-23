@@ -210,7 +210,7 @@ const Header = () => {
                                        Мои записи
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                                 <NavlinkStyle to="/profile">
+                                 <NavlinkStyle to="/personal-data">
                                     <MenuItemStyled onClick={handleClose}>
                                        Профиль
                                     </MenuItemStyled>
