@@ -11,9 +11,13 @@ export const getOneUserAppoinmentRequest = (id) => {
 export const postUserFreeTimeAppointmentsRequest = () => {
    return mainApi.post('/api/appointments/free')
 }
-
 export const postUserCanceledAppointmentsRequest = (appointmentId) => {
    return mainApi.post(`/api/appointments/canceled=${appointmentId}`)
+}
+export const deleteAppointmentRequest = (id) => {
+   return mainApi.delete('/api/appointments/delete', {
+      data: id,
+   })
 }
 export const getDepartmentRequest = () => {
    return mainApi.get('/api/departments/getAll')
@@ -29,7 +33,7 @@ export const getAppointmentRequest = (searchValue) => {
       },
    })
 }
-export const deleteAppointmentRequest = () => {
+export const deleteUserAppointmentRequest = () => {
    return mainApi.delete('/api/appointments/delete')
 }
 
