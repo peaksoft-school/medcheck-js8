@@ -5,7 +5,7 @@ import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
 import {
-   deleteAppointmentRequest,
+   deleteUserAppointmentRequest,
    getUserAppointmentRequest,
 } from '../../../../api/appointmentService'
 import useToast from '../../../../hooks/useToast'
@@ -29,7 +29,7 @@ const MyApplications = () => {
 
    const deleteAppointment = async () => {
       try {
-         await deleteAppointmentRequest()
+         await deleteUserAppointmentRequest()
          fetchPatients('')
          return notify('success', 'успешно удалено')
       } catch (error) {

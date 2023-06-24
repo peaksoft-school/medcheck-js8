@@ -17,7 +17,7 @@ import Input from '../../../components/UI/input/Input'
 
 const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
    const dispatch = useDispatch()
-   const { isAuthorized, isLoading } = useSelector((state) => state.auth)
+   const { isAuthorized, isLoading, error } = useSelector((state) => state.auth)
    const [showPassword, setShowPassword] = useState(false)
    const { notify } = useToast()
 
@@ -60,6 +60,8 @@ const SignIn = ({ open, onClose, openSignUpHandler, openForgotPassword }) => {
       e.preventDefault()
       openForgotPassword()
    }
+
+   console.log(error)
 
    return (
       <BasicModal open={open} onClose={onClose}>
