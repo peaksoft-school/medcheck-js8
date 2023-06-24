@@ -19,7 +19,7 @@ import AdminLayout from '../layout/admin/Index'
 import Appointment from '../containers/admin/Appointment'
 import Specialists from '../containers/admin/Specialists'
 import Patients from '../containers/admin/Patients'
-import ProfileLayout from '../containers/user/personal-account/profile/ProfileLayout'
+// import ProfileLayout from '../containers/user/personal-account/profile/ProfileLayout'
 import PersonalData from '../containers/user/personal-account/profile/PersonalData'
 import ChangePassword from '../containers/user/personal-account/profile/ChangePassword'
 import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
@@ -72,16 +72,13 @@ const AppRoutes = () => {
             />
             <Route path="price" element={getUserPage(Price)} />
             <Route path="contacts" element={getUserPage(Contacts)} />
-            <Route path="profile" element={getUserPage(ProfileLayout)}>
-               <Route
-                  path="personal-data"
-                  element={getUserPage(PersonalData)}
-               />
-               <Route
-                  path="change-password"
-                  element={getUserPage(ChangePassword)}
-               />
-            </Route>
+            {/* <Route path="profile" element={getUserPage(ProfileLayout)}> */}
+            <Route path="personal-data" element={getUserPage(PersonalData)} />
+            <Route
+               path="change-password"
+               element={getUserPage(ChangePassword)}
+            />
+            {/* </Route> */}
             <Route
                path="myApplications"
                element={getUserPage(MyApplications)}

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Outlet } from 'react-router'
 import { styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import ChangePassword from './ChangePassword'
@@ -11,15 +10,12 @@ const ProfileLayout = () => {
       <Container>
          <Path />
          <StyledTitleText>Профиль</StyledTitleText>
-         <NavlinkStyle to="personal-data" element={<PersonalData />}>
+         <NavlinkStyle to="/personal-data" element={<PersonalData />}>
             Личные данные
          </NavlinkStyle>
-         <NavlinkStyle to="change-password" element={<ChangePassword />}>
+         <NavlinkStyle to="/change-password" element={<ChangePassword />}>
             Сменить пароль
          </NavlinkStyle>
-         <main>
-            <Outlet />
-         </main>
       </Container>
    )
 }
@@ -27,8 +23,6 @@ const ProfileLayout = () => {
 export default ProfileLayout
 
 const Container = styled('div')`
-   width: 85%;
-   margin-left: 120px;
    margin-top: 26px;
    margin-bottom: 40px;
 `

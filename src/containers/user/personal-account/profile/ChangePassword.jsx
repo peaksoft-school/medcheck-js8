@@ -14,6 +14,7 @@ import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
 import { postChangePassword } from '../../../../api/profileService'
 import useToast from '../../../../hooks/useToast'
+import ProfileLayout from './ProfileLayout'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
@@ -29,7 +30,7 @@ const ChangePassword = () => {
          if (data.message === 'Wrong old password.') {
             return notify('error', 'Неверный пароль')
          }
-         navigate('/profile')
+         navigate('/')
          notify('success', 'Успешно')
          return data
       } catch (error) {
@@ -78,6 +79,7 @@ const ChangePassword = () => {
 
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
+         <ProfileLayout />
          {ToastContainer}
          <StyledTitleText>Смена пароля</StyledTitleText>
          <StyledForm>
@@ -217,7 +219,12 @@ const ChangePassword = () => {
             </div>
          </StyledForm>
          <StyledBoxButton>
-            <StyledButton type="submit" variant="contained">
+            <StyledButton
+               variant="contained"
+               onClick={() => {
+                  navigate('/')
+               }}
+            >
                Назад
             </StyledButton>
             <Button type="submit" variant="outlined">
@@ -231,9 +238,11 @@ const ChangePassword = () => {
 export default ChangePassword
 
 const Container = styled('form')`
-   width: 90%;
+   width: 85%;
    margin-top: 26px;
    margin-bottom: 40px;
+
+   margin: auto;
 `
 
 const StyledError = styled('p')`
