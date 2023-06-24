@@ -36,12 +36,3 @@ export const deleteAppointmentRequest = () => {
 export const postScheduleRequest = (data) => {
    return mainApi.post('/api/schedule/save', data)
 }
-
-export const getScheduleRequest = (startDate, endDate) => {
-   return mainApi.get('/api/schedule/', {
-      params: {
-         startDate,
-         endDate,
-      },
-   })
-}
