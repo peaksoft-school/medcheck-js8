@@ -11,10 +11,19 @@ function ServiceCard() {
             return (
                <Grid item xs={6} key={el.id}>
                   <div className="grid" href="#top">
-                     <NavLink to={`${el.id}/details/`} className="img">
+                     <NavLink
+                        to={`${el.id}/details/`}
+                        state={{ departName: el.title }}
+                        className="img"
+                     >
                         {el.img}
                      </NavLink>
-                     <NavLink to={`${el.id}/details/`}>{el.title}</NavLink>
+                     <NavLink
+                        to={`${el.id}/details/`}
+                        state={{ departName: el.title }}
+                     >
+                        {el.title}
+                     </NavLink>
                   </div>
                </Grid>
             )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Stack } from '@mui/material'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import { Container, StyledNavLink } from '../admin/specialist-style'
 import Button from '../../components/UI/Button'
 import { getDoctorsService } from '../../api/doctors'
@@ -15,7 +15,12 @@ const Doctors = () => {
    const { ToastContainer, notify } = useToast()
    const [departments, setDepartments] = useState([])
    const [showMoreClicked, setShowMoreClicked] = useState(false)
+   const [searchParams, setSearchParams] = useSearchParams()
+   Object.fromEntries(searchParams)
 
+   const openOnlineAppointment = () => {
+      setSearchParams({ openModal: 'online-appointment' })
+   }
    const fetchDepartments = async (start, end) => {
       try {
          const departmentNames = [
@@ -130,7 +135,10 @@ const Doctors = () => {
                               </NameContainer>
                            </Navlink>
                            <PositionStyled>{doctor.position}</PositionStyled>
-                           <StyledButton> Записаться на прием</StyledButton>
+                           <StyledButton onClick={openOnlineAppointment}>
+                              {' '}
+                              Записаться на прием
+                           </StyledButton>
                         </div>
                      ))}
                   </div>
@@ -193,7 +201,7 @@ export const Title = styled('p')(() => ({
    },
 }))
 
-const ContainerCard = styled('div')(() => ({
+export const ContainerCard = styled('div')(() => ({
    '&': {
       background:
          'radial-gradient(43.84% 43.84% at 50.16% 55.3%, #FDFDFD 0%, #E4E7EE 100%)',
@@ -204,7 +212,7 @@ const ContainerCard = styled('div')(() => ({
    },
 }))
 
-const PositionStyled = styled('p')(() => ({
+export const PositionStyled = styled('p')(() => ({
    '&': {
       fontFamily: 'Manrope',
       fontStyle: 'normal',
@@ -215,7 +223,7 @@ const PositionStyled = styled('p')(() => ({
    },
 }))
 
-const NameContainer = styled('div')(() => ({
+export const NameContainer = styled('div')(() => ({
    '&': {
       display: 'flex',
       gap: '0.5rem',
@@ -281,7 +289,7 @@ const StylednavLink = styled('button')(() => ({
    },
 }))
 
-const Navlink = styled(NavLink)(() => ({
+export const Navlink = styled(NavLink)(() => ({
    '&': {
       color: '#4D4E51',
       fontFamily: 'Manrope',

@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import {
    Accordion,
    AccordionDetails,
@@ -11,18 +11,63 @@ import {
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-import { useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import { serviceDetails } from '../../utlis/helpers/serviceDetails'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 import { Hr } from './Service'
+import { getDoctorsService } from '../../api/doctors'
+import { MED_SERVICE, MED_SERVICE_EN } from '../../utlis/services/img_service'
+import {
+   ContainerCard,
+   NameContainer,
+   Navlink,
+   PositionStyled,
+   StyledButton,
+} from './Doctors'
 
 const ServiceDetails = () => {
+   const [deparnmentDoctors, setDeparnmentDoctors] = useState([])
+   const { state } = useLocation()
    window.scrollTo({ top: 0 })
+   const [searchParams, setSearchParams] = useSearchParams()
+   Object.fromEntries(searchParams)
+
+   const openOnlineAppointment = () => {
+      setSearchParams({ openModal: 'online-appointment' })
+   }
 
    const { id } = useParams()
    const currentService = serviceDetails.find(
       (service) => service.id === Number(id)
    )
+
+   const translateNameofService = (service) => {
+      let translatedService = ''
+      const findedItem = MED_SERVICE.find((item) => item.title === service)
+      if (findedItem) {
+         const { id } = findedItem
+         const { title } = MED_SERVICE_EN.find((item) => item.id === id)
+         translatedService = title
+      }
+      return translatedService
+   }
+
+   const getDeparnmentName = async () => {
+      try {
+         const { data } = await getDoctorsService(
+            translateNameofService(state?.departName)
+         )
+
+         return setDeparnmentDoctors(data)
+      } catch (error) {
+         return console.log(error)
+      }
+   }
+
+   useEffect(() => {
+      getDeparnmentName()
+   }, [state?.departName])
+   console.log(deparnmentDoctors)
 
    return (
       <div>
@@ -127,6 +172,36 @@ const ServiceDetails = () => {
             </div>
          </Container>
          <FeedbackSlider />
+         <Container>
+            <StyledDoctorTitle>
+               Специалисты в данном направлении
+            </StyledDoctorTitle>
+            <div style={{ display: 'flex', gap: '1.5rem' }}>
+               {deparnmentDoctors.map((doctor) => {
+                  console.log(doctor.id)
+                  return (
+                     <div key={doctor.id}>
+                        <ContainerCard style={{ display: 'flex' }}>
+                           <NavLink to={`/doctors/${doctor.id}/details/`}>
+                              <img src={doctor.image} alt="" />
+                           </NavLink>
+                        </ContainerCard>
+                        <Navlink to={`/doctors/${doctor.id}/details/`}>
+                           <NameContainer>
+                              <p>{doctor.firstName}</p>
+                              <p>{doctor.lastName}</p>
+                           </NameContainer>
+                        </Navlink>
+                        <PositionStyled>{doctor.position}</PositionStyled>
+                        <StyledButton onClick={openOnlineAppointment}>
+                           {' '}
+                           Записаться на прием
+                        </StyledButton>
+                     </div>
+                  )
+               })}
+            </div>
+         </Container>
       </div>
    )
 }
@@ -286,4 +361,13 @@ const StyledTitle = styled('p')(() => ({
    fontStyle: 'normal',
    fontWeight: 400,
    fontSize: '14px',
+}))
+
+const StyledDoctorTitle = styled('p')(() => ({
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: 500,
+   fontSize: '16px',
+   paddingTop: '90px',
+   paddingBottom: '30px',
 }))

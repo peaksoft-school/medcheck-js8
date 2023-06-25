@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Container, StyledNavLink } from '../admin/specialist-style'
 import { Hr } from './Service'
-// import MapComponent from '../../components/UI/MapComponent'
 
 const Contacts = () => {
    return (
@@ -34,12 +33,13 @@ const Contacts = () => {
             </ContainerInfo>
             <ContainerInfo>
                <ContactInfo>Наш адрес:</ContactInfo>
-               <ContactInfoP> Кыргызстан, г. Бишкек, Медерова 44 </ContactInfoP>
+               <ContactInfoP>
+                  Кыргызстан, г. Бишкек, Гражданская 119
+               </ContactInfoP>
             </ContainerInfo>
             <ContainerInfo>
                <ContactInfo>Режим работы клиники:</ContactInfo>
                <ContactInfoP>
-                  {' '}
                   Понедельник - суббота с 08:00 до 18:00.
                </ContactInfoP>
             </ContainerInfo>
@@ -49,13 +49,13 @@ const Contacts = () => {
             </ContainerInfo>
          </Wrapper>
          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2925.0102186775384!2d74.61196257469494!3d42.8515174039134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb6383aeb06c3%3A0x7f9125f0f4e0f063!2zNDQg0YPQuy4g0JzQtdC00LXRgNC-0LLQsCwg0JHQuNGI0LrQtdC6!5e0!3m2!1sru!2skg!4v1687003184758!5m2!1sru!2skg"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2923.8663069501154!2d74.62509847469657!3d42.8756659023736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb7bb28a68e35%3A0x7b32540e6affd011!2zMTE5INGD0LsuINCT0YDQsNC20LTQsNC90YHQutCw0Y8sINCR0LjRiNC60LXQug!5e0!3m2!1sru!2skg!4v1687678938749!5m2!1sru!2skg"
             width="100%"
             height="400"
             style={{ border: 0, marginBottom: '-123px' }}
             allowfullscreen=""
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
+            // referrerpolicy="no-referrer-when-downgrade"
             title="map"
          />
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
 import { Breadcrumbs, Stack } from '@mui/material'
 import { getOneDoctorService } from '../../api/doctors'
 import { StyledButton, Title } from './Doctors'
@@ -13,6 +13,12 @@ import useToast from '../../hooks/useToast'
 const DoctorDetails = () => {
    const [oneSpecialist, setOneSpecialist] = useState({})
    const { ToastContainer, notify } = useToast()
+   const [searchParams, setSearchParams] = useSearchParams()
+   Object.fromEntries(searchParams)
+
+   const openOnlineAppointment = () => {
+      setSearchParams({ openModal: 'online-appointment' })
+   }
    const getOneDoctor = async (id) => {
       try {
          const { data } = await getOneDoctorService(id)
@@ -100,7 +106,10 @@ const DoctorDetails = () => {
                         {oneSpecialist.position}
                      </span>
                   </StyledPosition>
-                  <StyledButton style={{ marginTop: '24px' }}>
+                  <StyledButton
+                     style={{ marginTop: '24px' }}
+                     onClick={openOnlineAppointment}
+                  >
                      Записаться на прием
                   </StyledButton>
                </div>
