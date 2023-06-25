@@ -57,7 +57,6 @@ const ServiceDetails = () => {
          const { data } = await getDoctorsService(
             translateNameofService(state?.departName)
          )
-
          return setDeparnmentDoctors(data)
       } catch (error) {
          return console.log(error)
