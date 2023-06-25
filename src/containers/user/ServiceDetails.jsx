@@ -178,17 +178,15 @@ const ServiceDetails = () => {
             </StyledDoctorTitle>
             <div style={{ display: 'flex', gap: '1.5rem' }}>
                {deparnmentDoctors.map((doctor) => {
+                  console.log(doctor.id)
                   return (
-                     <div
-                        // style={{ display: 'flex', flexDirection: 'column' }}
-                        key={doctor.id}
-                     >
+                     <div key={doctor.id}>
                         <ContainerCard style={{ display: 'flex' }}>
-                           <NavLink to={`${doctor.id}/details/`}>
+                           <NavLink to={`/doctors/${doctor.id}/details/`}>
                               <img src={doctor.image} alt="" />
                            </NavLink>
                         </ContainerCard>
-                        <Navlink to={`${doctor.id}/details/`}>
+                        <Navlink to={`/doctors/${doctor.id}/details/`}>
                            <NameContainer>
                               <p>{doctor.firstName}</p>
                               <p>{doctor.lastName}</p>
