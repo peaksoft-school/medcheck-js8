@@ -1,14 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import building from '../assets/images/Rectangle 387.png'
 import conference from '../assets/images/Rectangle 388.png'
 import doctors from '../assets/images/Rectangle 389.png'
 import consilium from '../assets/images/Rectangle 390.png'
 import { ReactComponent as ForwardVector } from '../assets/icons/Vector (4).svg'
 import Button from './UI/Button'
+import BasicModal from './UI/ModalUi'
+import { ApplicationModal } from './ApplicationModal'
+import { UserRoles } from '../utlis/constants/commons'
 
 const AboutClinicPart = ({ place }) => {
+   const role = useSelector((state) => state.auth.role)
+
+   const [showApplicationModal, setShowApplicationModal] = useState(false)
+   const [searchParams, setSearchParams] = useSearchParams()
+   Object.fromEntries(searchParams)
+
+   const openSignInModal = () => {
+      setSearchParams({ openModal: 'sign-in' })
+   }
+   const showModalHandler = () => {
+      if (role === UserRoles.PATIENT) {
+         setShowApplicationModal(true)
+      } else {
+         openSignInModal()
+      }
+   }
+
+   const closeModalHandler = () => {
+      setShowApplicationModal(false)
+   }
    return (
       <Container>
          <div>
@@ -42,12 +66,20 @@ const AboutClinicPart = ({ place }) => {
                      внедряя и развивая передовые методы лечения для сохранения
                      здоровья наших пациентов.
                   </p>
+                  <BasicModalStyle
+                     open={showApplicationModal}
+                     onClose={closeModalHandler}
+                  >
+                     <ApplicationModal />
+                  </BasicModalStyle>
                   {place === 'main' ? (
                      <StyledNavlink to="about">
                         Читать подробнее o клинике <ForwardVector />
                      </StyledNavlink>
                   ) : (
-                     <StyledButton>Записаться на консультацию</StyledButton>
+                     <StyledButton onClick={showModalHandler}>
+                        Записаться на консультацию
+                     </StyledButton>
                   )}
                </StyledAboutSecondText>
                <StyledImageBlock>
@@ -195,5 +227,13 @@ const StyledButton = styled(Button)(() => ({
    '&:active': {
       background: 'linear-gradient(180.61deg, #0CBB6B 0.45%, #027B44 99.39%)',
       color: '#FFFFFF',
+   },
+}))
+const BasicModalStyle = styled(BasicModal)(() => ({
+   '& .MuiBox-root': {
+      borderRadius: '20px',
+      background: '#EBF2FC',
+      width: '659px',
+      padding: '10px 10px 60px 20px',
    },
 }))

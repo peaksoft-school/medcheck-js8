@@ -3,9 +3,10 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Container, StyledNavLink } from '../admin/specialist-style'
 import { Hr } from './Service'
-// import MapComponent from '../../components/UI/MapComponent'
 
 const Contacts = () => {
+   window.scrollTo({ top: 0 })
+
    return (
       <div>
          <Hr />

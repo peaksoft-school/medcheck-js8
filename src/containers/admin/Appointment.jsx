@@ -16,6 +16,7 @@ const Appointment = () => {
    const [isLoading, setIsLoading] = useState(false)
    const [patients, setPatients] = useState([])
    const [doctors, setDoctors] = useState([])
+   const [path, setPath] = useState(false)
 
    useEffect(() => {
       setPatients(patients)
@@ -51,15 +52,23 @@ const Appointment = () => {
       <MainContainer>
          <HeaderTitleBoxStyle>
             <p>Онлайн Запись</p>
-            <ButtonStyle onClick={openModal}>
-               <span>
-                  <img src={buttonPlusIcon} alt="plus" />
-               </span>{' '}
-               Добавить запись
-            </ButtonStyle>
+            {path ? (
+               <ButtonBox>
+                  <ButtonExcelStyle>export to Excel</ButtonExcelStyle>
+                  <ButtonSaveStyle>Сохранить</ButtonSaveStyle>
+               </ButtonBox>
+            ) : (
+               <ButtonStyle onClick={openModal}>
+                  <span>
+                     <img src={buttonPlusIcon} alt="plus" />
+                  </span>{' '}
+                  Добавить запись
+               </ButtonStyle>
+            )}
          </HeaderTitleBoxStyle>
          <NavLinkBox>
             <NavLinkStyled
+               onClick={() => setPath(false)}
                to="online-appointment"
                style={({ isActive }) => ({
                   color: isActive ? '#048741' : '#707070',
@@ -70,6 +79,7 @@ const Appointment = () => {
                Онлайн-запись
             </NavLinkStyled>
             <NavLinkStyled
+               onClick={() => setPath(true)}
                to="schedule"
                style={({ isActive }) => ({
                   color: isActive ? '#048741' : '#707070',
@@ -142,5 +152,24 @@ const NavLinkBox = styled('div')(() => ({
       display: 'flex',
       gap: '30px',
       margin: '34px 0',
+   },
+}))
+const ButtonBox = styled('div')(() => ({
+   '&': {
+      display: 'flex',
+      gap: '10px',
+   },
+}))
+const ButtonExcelStyle = styled(Button)(() => ({
+   '&': {
+      padding: '8px 30px',
+      background: 'none',
+      border: '1px solid #048741',
+      color: '#048741',
+   },
+}))
+const ButtonSaveStyle = styled(Button)(() => ({
+   '&': {
+      padding: '8px 20px',
    },
 }))
