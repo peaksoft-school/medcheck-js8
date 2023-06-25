@@ -91,7 +91,7 @@ const MyApplicationDetails = () => {
 
 export default MyApplicationDetails
 const getStatusColorChangeHandler = (statusColor) => {
-   if (statusColor === 'CANCELLED') {
+   if (statusColor === 'CANCELED') {
       return '#F91515'
    }
    if (statusColor === 'CONFIRMED') {

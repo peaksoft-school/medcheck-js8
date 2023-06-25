@@ -3,6 +3,7 @@ import {
    CircularProgress,
    Grid,
    IconButton,
+   // TablePagination,
    TableRow,
    styled,
 } from '@mui/material'
@@ -28,6 +29,8 @@ const Specialists = () => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
    const [specisalists, setSpecialists] = useState([])
    const [loading, setIsLoading] = useState(false)
+   // const [size, setSize] = useState(1)
+   // const [page, setPage] = useState(1)
    const [queryParams, setQueryParams] = useState({
       keyWord: null,
    })
@@ -45,6 +48,7 @@ const Specialists = () => {
       }
    }
 
+   console.log(isButtonDisabled)
    const deleteSpecialist = async ({ id }) => {
       try {
          await deleteSpecialistService(id)
@@ -102,6 +106,14 @@ const Specialists = () => {
       }
    }, [debouncedSearchTerm])
 
+   // const changeHandlerPage = (newPage) => {
+   //    setPage(newPage)
+   // }
+   // const changeHandlerSize = (event) => {
+   //    setSize(event.target.value)
+   //    setPage(0)
+   // }
+
    const column = useMemo(
       () => [
          {
@@ -118,7 +130,7 @@ const Specialists = () => {
                      <SwitchApp
                         checked={item.isActive}
                         onChange={() => changeHandler(item.id, !item.isActive)}
-                        disabled={isButtonDisabled}
+                        // disabled={isButtonDisabled}
                         onClick={handleClick}
                      />
                   </Grid>
@@ -191,7 +203,7 @@ const Specialists = () => {
                      <IconButton disabled={!item.isActive}>
                         <UpdateIcon onClick={() => updateHandler(item.id)} />
                      </IconButton>
-                     <IconButton disabled={!item.isActive}>
+                     <IconButton disabled={item.isActive}>
                         <TrashIcon onClick={() => deleteHandler(item.id)} />
                      </IconButton>
                   </Grid>
@@ -230,6 +242,13 @@ const Specialists = () => {
          ) : (
             <AppTable columns={column} rows={specisalists} />
          )}
+         {/* <TablePagination
+            component="div"
+            page={page}
+            rowsPerPage={size}
+            onPageChange={changeHandlerPage}
+            onRowsPerPageChange={changeHandlerSize}
+         /> */}
       </MainContainer>
    )
 }
