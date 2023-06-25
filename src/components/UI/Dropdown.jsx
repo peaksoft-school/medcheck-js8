@@ -42,7 +42,10 @@ const Dropdown = ({ children, services, data, info }) => {
                <div>
                   {services.map((service) => (
                      <div key={service.id}>
-                        <NavlinkStyled to={`service/${service.id}/details`}>
+                        <NavlinkStyled
+                           to={`service/${service.id}/details`}
+                           state={{ departName: service.name }}
+                        >
                            {service.name}
                         </NavlinkStyled>
                      </div>
@@ -52,7 +55,10 @@ const Dropdown = ({ children, services, data, info }) => {
                   {data.map((el) => {
                      return (
                         <div key={el.id}>
-                           <NavlinkStyled to={`service/${el.id}/details`}>
+                           <NavlinkStyled
+                              to={`service/${el.id}/details`}
+                              state={{ departName: el.name }}
+                           >
                               {el.name}
                            </NavlinkStyled>
                         </div>
@@ -63,7 +69,10 @@ const Dropdown = ({ children, services, data, info }) => {
                   {info.map((el) => {
                      return (
                         <div key={el.id}>
-                           <NavlinkStyled to={`service/${el.id}/details`}>
+                           <NavlinkStyled
+                              to={`service/${el.id}/details`}
+                              state={{ departName: el.name }}
+                           >
                               {el.name}
                            </NavlinkStyled>
                         </div>
