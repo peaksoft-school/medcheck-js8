@@ -3,24 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FormLabel, IconButton, Paper, styled } from '@mui/material'
 import { format, isValid } from 'date-fns'
 import { useDispatch } from 'react-redux'
+import ModalUi from '../../components/UI/ModalUi'
 import Button from '../../components/UI/Button'
 import { SelectUi } from '../../components/UI/SelectUi'
 import { MED_SERVICE } from '../../utlis/services/img_service'
+import Calendar from '../../components/UI/calendar/Calendar'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import { getAllPatientsById } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
 import AvatarUpload from '../../components/UI/avatar/AvatarUpload'
 import { putDatas } from '../../redux/reducers/patient/patient.thunk'
 import { fileInstance } from '../../api/instanses'
-import DatePicker from '../../components/UI/DatePicker'
-import BasicModal from '../../components/UI/ModalUi'
-import buttonPlusIcon from '../../assets/icons/ButtonPlusIcon.svg'
 
 const PatientDetails = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { notify: notifyCall } = useToast()
+   const { ToastContainer, notify: notifyCall } = useToast()
    const [open, setOpen] = useState(false)
    const [name, setName] = useState('')
    const [patients, setPatients] = useState([])
@@ -77,11 +76,10 @@ const PatientDetails = () => {
       date = format(new Date(inputDate), 'yyyy-MM-dd')
    }
    const submitHandler = () => {
-      const departmentId = MED_SERVICE.find((el) => el.title === name).id
       try {
          if (name != null && date != null && selectedFile != null) {
             const datasOfPatient = {
-               departmentId,
+               departmentId: name,
                date: new Date(date),
                patientId: patients.patientId,
                file: selectedFile,
@@ -100,20 +98,18 @@ const PatientDetails = () => {
 
    return (
       <Container>
+         {ToastContainer}
          <HeaderPart>
             <P>
                {' '}
                {patients?.firstName} {patients?.lastName}{' '}
             </P>
             <ButtonStyled onClick={handleOpen}>
-               <span>
-                  <img src={buttonPlusIcon} alt="plus" />
-               </span>{' '}
-               добавить результаты
+               + добавить результаты
             </ButtonStyled>
          </HeaderPart>
 
-         <BasicModalStyle open={open} onClose={handleClose}>
+         <ModalUi open={open} onClose={handleClose}>
             <ModalContainer>
                <IconButtonStyled onClick={cancelHandler}>
                   <CloseIcon />
@@ -121,19 +117,16 @@ const PatientDetails = () => {
                <Topic>Добавление результата</Topic>
                <Div>
                   <div className="serviceInput">
-                     <LabelServiceStyle htmlFor="id">Услуга</LabelServiceStyle>
-                     <SelectUiStyle
+                     <label htmlFor="id">Услуга</label>
+                     <SelectUi
                         items={MED_SERVICE}
                         value={name}
                         onChange={changeHandler}
-                        placeholder="Выберите услугу"
                      />
                   </div>
                   <div className="calendar">
-                     <LabelServiceStyle htmlFor="id">
-                        Дата сдачи
-                     </LabelServiceStyle>
-                     <DatePicker
+                     <label htmlFor="id">Дата сдачи</label>
+                     <Calendar
                         className="calendar"
                         value={inputDate}
                         onChange={chooseHandler}
@@ -141,7 +134,7 @@ const PatientDetails = () => {
                   </div>
                </Div>
                <FileInput>
-                  <FormLabelStyle htmlFor="id">Файл</FormLabelStyle>
+                  <FormLabel htmlFor="id">Файл</FormLabel>
                   <AvatarUpload onChange={fileChange} />
                </FileInput>
                <ButtonContainer>
@@ -153,7 +146,7 @@ const PatientDetails = () => {
                   </Button>
                </ButtonContainer>
             </ModalContainer>
-         </BasicModalStyle>
+         </ModalUi>
          <PaperStyled>
             <div>
                <h3>
@@ -164,22 +157,22 @@ const PatientDetails = () => {
                <br />
                <p>
                   имя: <br />
-                  <span>{patients?.firstName}</span>
+                  {patients?.firstName}
                </p>{' '}
                <br />
                <p>
                   фамиля: <br />
-                  <span>{patients?.lastName}</span>
+                  {patients?.lastName}
                </p>{' '}
                <br />
                <p>
                   номер телефона: <br />
-                  <span>{patients?.phoneNumber}</span>
+                  {patients?.phoneNumber}
                </p>{' '}
                <br />
                <p>
                   email: <br />
-                  <span>{patients?.email}</span>
+                  {patients?.email}
                </p>{' '}
                <br />
             </div>
@@ -190,99 +183,52 @@ const PatientDetails = () => {
 
 export default PatientDetails
 
-const FormLabelStyle = styled(FormLabel)({
-   fontFamily: 'Manrope',
-   fontSize: '14px',
-   fontWeight: 400,
-   lineHeight: '19px',
-   color: '#464444',
-   paddingLeft: '5px',
-})
-
-const LabelServiceStyle = styled('label')({
-   fontFamily: 'Manrope',
-   fontSize: '14px',
-   fontWeight: 400,
-   lineHeight: '19px',
-   color: '#464444',
-})
-const BasicModalStyle = styled(BasicModal)({
-   '& .MuiBox-root': {
-      borderRadius: '15px',
-   },
-})
-const SelectUiStyle = styled(SelectUi)({
-   width: '270px',
-   height: '37px',
-})
-
 const Container = styled('div')({
-   background: 'rgba(245, 245, 245, 0.61)',
-   padding: '0px 70px',
+   background: '#9B9690',
 })
 const ModalContainer = styled('div')({
-   width: '560px',
-   padding: '15px 40px 32px 40px',
+   width: '550px',
+   height: '388px',
 })
 
 const IconButtonStyled = styled(IconButton)({
-   marginLeft: '470px',
+   marginLeft: '500px',
 })
 
 const P = styled('p')({
    fontSize: '22px',
    marginTop: '40px',
-   fontFamily: 'Manrope',
-   fontWeight: 400,
+   marginLeft: '7%',
 })
 const HeaderPart = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
 })
 const ButtonStyled = styled(Button)({
-   padding: '10px 15px',
-   marginTop: '30px',
-   span: {
-      width: '12px',
-      height: '12px',
-      marginRight: '15px',
-   },
+   width: '300px',
+   height: '44px',
+   marginTop: '40px',
+   marginRight: '7%',
 })
 const PaperStyled = styled(Paper)({
+   width: '1300px',
    height: '1300px',
    margin: 'auto',
    marginTop: '20px',
-   fontFamily: 'Manrope',
    '& div': {
       paddingTop: '20px',
       marginLeft: '20px',
-
-      h3: {
-         fontWeight: 500,
-         fontSize: '20px',
-         lineHeight: '27px',
-      },
-      p: {
-         fontSize: '14px',
-         fontWeight: 400,
-         lineHeight: '17px',
-         color: '#4D4E51',
-         span: {
-            fontSize: '16px',
-            fontWeight: 400,
-            lineHeight: '22px',
-            color: '#222222',
-         },
-      },
    },
 })
 const Div = styled('div')({
    display: 'flex',
-   gap: '15px',
-   padding: '32px 0 38px 0',
+   justifyContent: 'space-between',
+   marginTop: '32px',
    '& .serviceInput': {
       width: '400px',
-      height: '10px',
+      height: '38px',
+      marginRight: '18px',
+      paddingTop: '4px',
       fontSize: '18px',
       color: '#464444',
    },
@@ -303,26 +249,22 @@ const Topic = styled('p')({
 const FileInput = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   paddingBottom: '30px',
+   marginTop: '68px',
+   marginLeft: '5px',
+   marginBottom: '30px',
 })
 const ButtonContainer = styled('div')({
-   display: 'flex',
-   justifyContent: 'space-between',
+   marginTop: '-20px',
    '& .cancel': {
-      background: 'none',
-      border: '1px solid #959595',
-      padding: '10px 80px',
-      color: '#959595',
-      '&:hover': {
-         background: '#959595',
-         color: '#fff',
-      },
-      '&:active': {
-         background: '#959595',
-         color: '#FFFF',
-      },
+      marginRight: '18px',
+      marginLeft: '10px',
+      width: '257px',
+      height: '38px',
+      background: '#959595',
    },
    '& .add': {
-      padding: '10px 80px',
+      marginRight: '8px',
+      width: '257px',
+      height: '38px',
    },
 })
