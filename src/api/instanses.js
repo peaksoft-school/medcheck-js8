@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable func-names */
 
 import axios from 'axios'
@@ -18,7 +19,6 @@ mainApi.interceptors.request.use(
       }
       return config
    },
-
    function (error) {
       return Promise.reject(error)
    }

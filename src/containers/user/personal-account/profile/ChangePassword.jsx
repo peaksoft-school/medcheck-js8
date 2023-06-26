@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import {
    styled,
    FormControl,
@@ -13,23 +14,28 @@ import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
 import { postChangePassword } from '../../../../api/profileService'
 import useToast from '../../../../hooks/useToast'
+import ProfileLayout from './ProfileLayout'
 
 const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
    const { ToastContainer, notify } = useToast()
+   const [backendError, setBackendError] = useState('')
 
+   const navigate = useNavigate()
    const postPassword = async (password) => {
       try {
          const { data } = await postChangePassword(password)
          if (data.message === 'Wrong old password.') {
             return notify('error', 'Неверный пароль')
          }
+         navigate('/')
          notify('success', 'Успешно')
          return data
       } catch (error) {
-         return notify('error', 'ОШИБКА')
+         setBackendError(error.response.data.message)
+         return notify('error', 'не правильный пароль')
       }
    }
 
@@ -73,6 +79,7 @@ const ChangePassword = () => {
 
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
+         <ProfileLayout />
          {ToastContainer}
          <StyledTitleText>Смена пароля</StyledTitleText>
          <StyledForm>
@@ -81,7 +88,7 @@ const ChangePassword = () => {
                   Старый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      id="old_password"
                      placeholder="Введите ваш пароль"
                      className="inputStyle"
@@ -109,7 +116,9 @@ const ChangePassword = () => {
                   />
                </FormControl>
                {errors.password && (
-                  <p className="message">{errors.password?.message}</p>
+                  <StyledError className="message">
+                     {errors.password?.message}
+                  </StyledError>
                )}
             </div>
             <div>
@@ -117,7 +126,7 @@ const ChangePassword = () => {
                   Новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      placeholder="Введите новый пароль"
                      id="new_password"
                      className="inputStyle"
@@ -152,16 +161,19 @@ const ChangePassword = () => {
                      }}
                   />
                   {errors.newwPassword && (
-                     <p className="message">{errors.newwPassword?.message}</p>
+                     <StyledError className="message">
+                        {errors.newwPassword?.message}
+                     </StyledError>
                   )}
                </FormControl>
             </div>
+            <StyledError>{backendError}</StyledError>
             <div>
                <StyledInputLabel htmlFor="confirm_password">
                   Подтвердить новый пароль
                </StyledInputLabel>
                <FormControl variant="outlined">
-                  <Input
+                  <StyledInput
                      className="inputStyle"
                      placeholder="Подтвердите пароль"
                      id="confirm_password"
@@ -199,15 +211,20 @@ const ChangePassword = () => {
                      }}
                   />
                   {errors.confirmPassword && (
-                     <p className="message">
+                     <StyledError className="message">
                         {errors.confirmPassword?.message}
-                     </p>
+                     </StyledError>
                   )}
                </FormControl>
             </div>
          </StyledForm>
          <StyledBoxButton>
-            <StyledButton type="submit" variant="contained">
+            <StyledButton
+               variant="contained"
+               onClick={() => {
+                  navigate('/')
+               }}
+            >
                Назад
             </StyledButton>
             <Button type="submit" variant="outlined">
@@ -221,9 +238,19 @@ const ChangePassword = () => {
 export default ChangePassword
 
 const Container = styled('form')`
-   width: 90%;
+   width: 85%;
    margin-top: 26px;
    margin-bottom: 40px;
+
+   margin: auto;
+`
+
+const StyledError = styled('p')`
+   font-family: 'Manrope';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 22px;
 `
 
 const StyledTitleText = styled('h1')`
@@ -320,5 +347,19 @@ const StyledInputLabel = styled(InputLabel)(() => ({
       fontFamily: 'Manrope',
       fontWeight: 400,
       lineHeight: '19px',
+   },
+}))
+
+const StyledInput = styled(Input)(() => ({
+   '& .inputStyle': {
+      fontSize: '1rem',
+      width: '220px',
+   },
+   '& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      color: '#959595',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '22px',
    },
 }))

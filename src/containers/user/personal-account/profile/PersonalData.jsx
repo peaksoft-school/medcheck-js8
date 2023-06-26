@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
+import { useNavigate } from 'react-router'
 import { styled, FormControl, InputLabel } from '@mui/material'
 import Button from '../../../../components/UI/Button'
 import Input from '../../../../components/UI/input/Input'
@@ -9,14 +10,16 @@ import {
    postDataProfileService,
 } from '../../../../api/profileService'
 import { postDataProfieValid } from '../../../../utlis/helpers/general'
+import ProfileLayout from './ProfileLayout'
 
 const PersonalData = () => {
    const { ToastContainer, notify } = useToast()
+   const navigate = useNavigate()
 
    const postDataProfile = async (dataProfile) => {
       try {
          await postDataProfileService(dataProfile)
-
+         navigate('/')
          return notify('success', 'отправлено успешно')
       } catch (error) {
          return notify('error', 'ошибка')
@@ -61,6 +64,7 @@ const PersonalData = () => {
 
    return (
       <Container onSubmit={handleSubmit} noValidate autoComplete="off">
+         <ProfileLayout />
          {ToastContainer}
          <StyledTitleText>Ваши личные данные</StyledTitleText>
          <StyledForm>
@@ -154,9 +158,10 @@ const PersonalData = () => {
 export default PersonalData
 
 const Container = styled('form')`
-   width: 90%;
+   width: 85%;
    margin-top: 26px;
    margin-bottom: 40px;
+   margin: auto;
 `
 
 const StyledTitleText = styled('h1')`
@@ -188,6 +193,18 @@ const StyledInput = styled(Input)(() => ({
       borderRadius: '8px',
       border: '1px solid #c5c5c5',
       margin: '4px 5px 26px 2px ',
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      fontSize: '16px',
+      color: '#959595',
+   },
+   '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      color: '#222222',
+      fontFamily: 'Manrope',
+      fontWeight: 400,
+      lineHeight: '22px',
    },
    '& :hover': {
       borderRadius: '8px',

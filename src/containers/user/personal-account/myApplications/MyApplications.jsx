@@ -1,19 +1,45 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import AppointmentTable from '../../../../components/UI/AppointmentTable'
 import { ReactComponent as Deletelist } from '../../../../assets/icons/X1.svg'
-import { appointmentData } from '../../../../utlis/constants/commons'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
+import {
+   deleteUserAppointmentRequest,
+   getUserAppointmentRequest,
+} from '../../../../api/appointmentService'
+import useToast from '../../../../hooks/useToast'
 
 const MyApplications = () => {
-   const [patients, setPatients] = useState(appointmentData)
+   const [patients, setPatients] = useState([])
+   const { ToastContainer, notify } = useToast()
 
-   const deleteorder = () => {
-      setPatients([])
+   const fetchPatients = async () => {
+      try {
+         const { data } = await getUserAppointmentRequest()
+         setPatients(data)
+         return notify('success', 'успешно')
+      } catch (error) {
+         return notify('error', 'произошло ошибка при загрузке')
+      }
    }
+   useEffect(() => {
+      fetchPatients()
+   }, [])
+
+   const deleteAppointment = async () => {
+      try {
+         await deleteUserAppointmentRequest()
+         fetchPatients('')
+         return notify('success', 'успешно удалено')
+      } catch (error) {
+         return notify('error', 'произошло ошибка при загрузке')
+      }
+   }
+
    return (
       <StyledMyNotesContainer>
+         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink>
@@ -32,15 +58,14 @@ const MyApplications = () => {
          >
             {patients.length !== 0 && (
                <>
-                  {' '}
                   <AppointmentTable
                      appointmentData={patients}
                      getStatusTitleChangeHandler={getStatusTitleChangeHandler}
                   />
                   <DeleteContainer>
                      <Deletelist />
-                     <DeleteTitle onClick={deleteorder}>
-                        Очистить список заказов{' '}
+                     <DeleteTitle onClick={deleteAppointment}>
+                        Очистить список заказов
                      </DeleteTitle>
                   </DeleteContainer>
                </>
@@ -63,6 +88,7 @@ const StyledMyNotesContainer = styled('div')({
 const StyledNavLink = styled(NavLink)({
    textDecoration: 'none',
    color: ' #959595',
+   fontFamily: 'Manrope',
 })
 
 const Container = styled(Breadcrumbs)({

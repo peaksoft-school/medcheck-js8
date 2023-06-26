@@ -1,30 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Breadcrumbs, Stack, styled } from '@mui/material'
 import { NavLink, useParams } from 'react-router-dom'
-import { appointmentData } from '../../../../utlis/constants/commons'
+import { getOneUserAppoinmentRequest } from '../../../../api/appointmentService'
 import { getStatusTitleChangeHandler } from '../../../../utlis/helpers/general'
-
-const infoCustomer = [
-   {
-      id: '2',
-      data: 'Подвержден',
-      infoName: 'Айназик',
-      infoSurname: 'Бакытова',
-      infoEmail: 'ainazik@gmail.com',
-      infoPhoneNumber: '+996 707 123 456',
-      infoDate: '23.01.23',
-      infoTime: '11:30',
-      infoSpecialist: ' Манак Елена',
-      infoService: 'Дерматалогия',
-   },
-]
+import useToast from '../../../../hooks/useToast'
 
 const MyApplicationDetails = () => {
+   const [appoinment, setAppoinment] = useState({})
    const { id } = useParams()
-   const detailsCustomerID = appointmentData.find((elem) => elem.id === id)
+   const { ToastContainer, notify } = useToast()
+   const getOneAppointment = async (id) => {
+      try {
+         const { data } = await getOneUserAppoinmentRequest(id)
+         setAppoinment(data)
+         return notify('success', 'успешно')
+      } catch (error) {
+         return notify('error', 'Произошла ошибка при загрузке')
+      }
+   }
 
+   useEffect(() => {
+      getOneAppointment(id)
+   }, [id])
    return (
       <StyledMyNotesContainer>
+         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink>
@@ -34,80 +34,70 @@ const MyApplicationDetails = () => {
             </Container>
          </Stack>
          <Title>Мои записи</Title>
-         {infoCustomer.map((item) => {
-            return (
-               <MapContainer key={item.id}>
-                  <div>
-                     <Wrapper>
-                        <P>Статус</P>
-                        <StyledStatus statusColor={detailsCustomerID.status}>
-                           {getStatusTitleChangeHandler(
-                              detailsCustomerID.status
-                           )}
-                        </StyledStatus>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Имя</P>
-                        <StyledInfoCustomer>{item.infoName}</StyledInfoCustomer>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Фамилия</P>
-                        <StyledInfoCustomer>
-                           {item.infoSurname}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Email</P>
-                        <StyledInfoCustomer>
-                           {item.infoEmail}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Телефон номера</P>
-                        <StyledInfoCustomer>
-                           {item.infoPhoneNumber}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                  </div>
-                  <div>
-                     <Wrapper>
-                        <P>Дата</P>
-                        <StyledInfoCustomer>
-                           {detailsCustomerID.date}
-                        </StyledInfoCustomer>
-                        <StyledInfoCustomer>
-                           {detailsCustomerID.time}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Специалист</P>
-                        <StyledInfoCustomer>
-                           {detailsCustomerID.title}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                     <Wrapper>
-                        <P>Услуга</P>
-                        <StyledInfoCustomer>
-                           {detailsCustomerID.serviceSelection}
-                        </StyledInfoCustomer>
-                     </Wrapper>
-                  </div>
-               </MapContainer>
-            )
-         })}
+         <MapContainer key={appoinment.id}>
+            <div>
+               <Wrapper>
+                  <P>Статус</P>
+                  <StyledStatus statusColor={appoinment.status}>
+                     {getStatusTitleChangeHandler(appoinment.status)}
+                  </StyledStatus>
+               </Wrapper>
+               <Wrapper>
+                  <P>Имя</P>
+                  <StyledInfoCustomer>
+                     {appoinment.patientFirstName}
+                  </StyledInfoCustomer>
+               </Wrapper>
+               <Wrapper>
+                  <P>Фамилия</P>
+                  <StyledInfoCustomer>
+                     {appoinment.patientLastName}
+                  </StyledInfoCustomer>
+               </Wrapper>
+               <Wrapper>
+                  <P>Email</P>
+                  <StyledInfoCustomer>{appoinment.email}</StyledInfoCustomer>
+               </Wrapper>
+               <Wrapper>
+                  <P>Телефон номера</P>
+                  <StyledInfoCustomer>
+                     {appoinment.phoneNumber}
+                  </StyledInfoCustomer>
+               </Wrapper>
+            </div>
+            <div>
+               <Wrapper>
+                  <P>Дата</P>
+                  <StyledInfoCustomer>{appoinment.date}</StyledInfoCustomer>
+                  <StyledInfoCustomer>{appoinment.time}</StyledInfoCustomer>
+               </Wrapper>
+               <Wrapper>
+                  <P>Специалист</P>
+                  <StyledInfoCustomer>
+                     {appoinment.doctorFullName}
+                  </StyledInfoCustomer>
+               </Wrapper>
+               <Wrapper>
+                  <P>Услуга</P>
+                  <StyledInfoCustomer>
+                     {appoinment.departmentName}
+                  </StyledInfoCustomer>
+               </Wrapper>
+            </div>
+         </MapContainer>
       </StyledMyNotesContainer>
    )
 }
 
 export default MyApplicationDetails
 const getStatusColorChangeHandler = (statusColor) => {
-   if (statusColor === 'Cancelled') {
+   if (statusColor === 'CANCELED') {
       return '#F91515'
    }
-   if (statusColor === 'Confirmed') {
+   if (statusColor === 'CONFIRMED') {
       return '#346EFB'
    }
-   if (statusColor === 'Completed') {
+   if (statusColor === 'COMPLETED') {
       return '#07AB53'
    }
    return null
@@ -162,7 +152,7 @@ const MapContainer = styled('div')({
 })
 
 const P = styled('p')({
-   fontFamily: 'Inter',
+   fontFamily: 'Manrope',
    fontWeight: 400,
    fontSize: '14px',
    lineHeight: '17px',

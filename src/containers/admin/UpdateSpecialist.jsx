@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { InputLabel, Stack } from '@mui/material'
+import { MenuItem, Select, Stack } from '@mui/material'
 import { useNavigate, useParams } from 'react-router'
 import styled from '@emotion/styled'
-import { SelectUi } from '../../components/UI/SelectUi'
 import {
    Container,
    InputStyled,
    MainContainer,
+   StyledInputLabel,
    StyledNavLink,
    StyledTextField,
    TitlePhoto,
@@ -22,12 +22,24 @@ import {
 } from '../../api/specialistService'
 import useToast from '../../hooks/useToast'
 
+const ITEM_HEIGHT = 60
+const ITEM_PADDING_TOP = 0
+const MenuProps = {
+   PaperProps: {
+      style: {
+         maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+         width: 360,
+         marginLeft: -16,
+      },
+   },
+}
+
 const UpdateSpecialist = () => {
    const navigate = useNavigate()
    const [doctor, setDoctor] = useState({})
    const { doctorId } = useParams()
    const [oneSpecialist, setOneSpecialist] = useState([])
-
+   const [ids, setId] = useState()
    const [updatePhoto, setUpdatePhoto] = useState('')
    const [updateFirstName, setUpdateFirstName] = useState('')
    const [updateLastName, setUpdateLastName] = useState('')
@@ -40,15 +52,15 @@ const UpdateSpecialist = () => {
       try {
          const { data } = await getOneSpecialistService(id)
          setOneSpecialist(data)
-         return console.log(data)
+         return data
       } catch (error) {
-         return console.log(error)
+         return error
       }
    }
 
    useEffect(() => {
       getOneSpecialist(doctorId)
-   }, [])
+   }, [doctorId])
 
    useEffect(() => {
       setDoctor(oneSpecialist)
@@ -56,8 +68,9 @@ const UpdateSpecialist = () => {
       setUpdateLastName(oneSpecialist.lastName)
       setUpdatePosition(oneSpecialist.position)
       setUpdateDescription(oneSpecialist.description)
-      setUpdateDepartment(oneSpecialist.name)
+      setUpdateDepartment(oneSpecialist.departmentName)
       setUpdatePhoto(oneSpecialist.image)
+      setId(oneSpecialist.id)
    }, [oneSpecialist])
 
    const updateSpecialist = async (putSpecialist) => {
@@ -102,6 +115,7 @@ const UpdateSpecialist = () => {
       event.preventDefault()
       const dataSpecialist = {
          doctorId,
+         departmentId: ids,
          firstName: updateFirstName,
          lastName: updateLastName,
          position: updatePosition,
@@ -111,6 +125,11 @@ const UpdateSpecialist = () => {
 
       updateSpecialist(dataSpecialist)
    }
+
+   const clickO = (id) => {
+      setId(id)
+   }
+
    return (
       <MainContainer key={doctor.id}>
          {ToastContainer}
@@ -143,30 +162,57 @@ const UpdateSpecialist = () => {
                <form onSubmit={updateHandler}>
                   <FormContainer>
                      <Div>
-                        <InputLabel htmlFor="firstName">Имя</InputLabel>
+                        <StyledInputLabel htmlFor="firstName">
+                           Имя
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="firstName"
                            onChange={changeFirstName}
                            value={updateFirstName}
                         />
-                        <InputLabel htmlFor="lastName">Отделение</InputLabel>
+                        <StyledInputLabel htmlFor="lastName">
+                           Отделение
+                        </StyledInputLabel>
                         <StyledSelect
-                           items={department}
-                           placeholder={updateDepartment}
-                           label={doctor.name}
+                           sx={{
+                              fontFamily: 'Manrope',
+                              fontWeight: 400,
+                              color: '#222222',
+                           }}
+                           name="select"
                            onChange={changeDepartment}
-                        />
+                           value={updateDepartment}
+                           MenuProps={MenuProps}
+                        >
+                           {department.map((elem) => (
+                              <MenuItem
+                                 onClick={() => clickO(elem.id)}
+                                 key={elem.id}
+                                 value={elem.title}
+                                 sx={{
+                                    maxHeight: '100px',
+                                    fontFamily: 'Manrope',
+                                 }}
+                              >
+                                 {elem.title}
+                              </MenuItem>
+                           ))}
+                        </StyledSelect>
                      </Div>
                      <Div>
-                        <InputLabel htmlFor="position">Фамилия</InputLabel>
+                        <StyledInputLabel htmlFor="position">
+                           Фамилия
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="position"
                            onChange={changeLastName}
                            value={updateLastName}
                         />
-                        <InputLabel htmlFor="description">Должность</InputLabel>
+                        <StyledInputLabel htmlFor="description">
+                           Должность
+                        </StyledInputLabel>
                         <InputStyled
                            style={{ marginBottom: '20px' }}
                            name="description"
@@ -175,7 +221,9 @@ const UpdateSpecialist = () => {
                         />
                      </Div>
                   </FormContainer>
-                  <InputLabel htmlFor="description">Описание</InputLabel>
+                  <StyledInputLabel htmlFor="description">
+                     Описание
+                  </StyledInputLabel>
                   <TextFieldDiv>
                      <StyledTextField
                         name="description"
@@ -267,7 +315,15 @@ const StyledContainerButton = styled('div')(() => ({
    gap: '1rem',
 }))
 
-const StyledSelect = styled(SelectUi)(() => ({
+const StyledSelect = styled(Select)(() => ({
    padding: '1px',
    fontSize: '14px',
+   height: '36px',
+   fontFamily: 'Manrope',
+   fontWeight: 400,
+   color: '#222222',
+   border: '1px solid #D9D9D9',
+   '&:hover': {
+      color: '#4D4E51',
+   },
 }))

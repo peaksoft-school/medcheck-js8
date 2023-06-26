@@ -3,23 +3,24 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FormLabel, IconButton, Paper, styled } from '@mui/material'
 import { format, isValid } from 'date-fns'
 import { useDispatch } from 'react-redux'
-import ModalUi from '../../components/UI/ModalUi'
 import Button from '../../components/UI/Button'
 import { SelectUi } from '../../components/UI/SelectUi'
 import { MED_SERVICE } from '../../utlis/services/img_service'
-import Calendar from '../../components/UI/calendar/Calendar'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import { getAllPatientsById } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
 import AvatarUpload from '../../components/UI/avatar/AvatarUpload'
 import { putDatas } from '../../redux/reducers/patient/patient.thunk'
 import { fileInstance } from '../../api/instanses'
+import DatePicker from '../../components/UI/DatePicker'
+import BasicModal from '../../components/UI/ModalUi'
+import buttonPlusIcon from '../../assets/icons/ButtonPlusIcon.svg'
 
 const PatientDetails = () => {
    const { id } = useParams()
    const dispatch = useDispatch()
    const navigate = useNavigate()
-   const { ToastContainer, notify: notifyCall } = useToast()
+   const { notify: notifyCall } = useToast()
    const [open, setOpen] = useState(false)
    const [name, setName] = useState('')
    const [patients, setPatients] = useState([])
@@ -99,18 +100,20 @@ const PatientDetails = () => {
 
    return (
       <Container>
-         {ToastContainer}
          <HeaderPart>
             <P>
                {' '}
                {patients?.firstName} {patients?.lastName}{' '}
             </P>
             <ButtonStyled onClick={handleOpen}>
-               + добавить результаты
+               <span>
+                  <img src={buttonPlusIcon} alt="plus" />
+               </span>{' '}
+               добавить результаты
             </ButtonStyled>
          </HeaderPart>
 
-         <ModalUi open={open} onClose={handleClose}>
+         <BasicModalStyle open={open} onClose={handleClose}>
             <ModalContainer>
                <IconButtonStyled onClick={cancelHandler}>
                   <CloseIcon />
@@ -118,16 +121,19 @@ const PatientDetails = () => {
                <Topic>Добавление результата</Topic>
                <Div>
                   <div className="serviceInput">
-                     <label htmlFor="id">Услуга</label>
-                     <SelectUi
+                     <LabelServiceStyle htmlFor="id">Услуга</LabelServiceStyle>
+                     <SelectUiStyle
                         items={MED_SERVICE}
                         value={name}
                         onChange={changeHandler}
+                        placeholder="Выберите услугу"
                      />
                   </div>
                   <div className="calendar">
-                     <label htmlFor="id">Дата сдачи</label>
-                     <Calendar
+                     <LabelServiceStyle htmlFor="id">
+                        Дата сдачи
+                     </LabelServiceStyle>
+                     <DatePicker
                         className="calendar"
                         value={inputDate}
                         onChange={chooseHandler}
@@ -135,7 +141,7 @@ const PatientDetails = () => {
                   </div>
                </Div>
                <FileInput>
-                  <FormLabel htmlFor="id">Файл</FormLabel>
+                  <FormLabelStyle htmlFor="id">Файл</FormLabelStyle>
                   <AvatarUpload onChange={fileChange} />
                </FileInput>
                <ButtonContainer>
@@ -147,7 +153,7 @@ const PatientDetails = () => {
                   </Button>
                </ButtonContainer>
             </ModalContainer>
-         </ModalUi>
+         </BasicModalStyle>
          <PaperStyled>
             <div>
                <h3>
@@ -158,22 +164,22 @@ const PatientDetails = () => {
                <br />
                <p>
                   имя: <br />
-                  {patients?.firstName}
+                  <span>{patients?.firstName}</span>
                </p>{' '}
                <br />
                <p>
                   фамиля: <br />
-                  {patients?.lastName}
+                  <span>{patients?.lastName}</span>
                </p>{' '}
                <br />
                <p>
                   номер телефона: <br />
-                  {patients?.phoneNumber}
+                  <span>{patients?.phoneNumber}</span>
                </p>{' '}
                <br />
                <p>
                   email: <br />
-                  {patients?.email}
+                  <span>{patients?.email}</span>
                </p>{' '}
                <br />
             </div>
@@ -184,52 +190,99 @@ const PatientDetails = () => {
 
 export default PatientDetails
 
+const FormLabelStyle = styled(FormLabel)({
+   fontFamily: 'Manrope',
+   fontSize: '14px',
+   fontWeight: 400,
+   lineHeight: '19px',
+   color: '#464444',
+   paddingLeft: '5px',
+})
+
+const LabelServiceStyle = styled('label')({
+   fontFamily: 'Manrope',
+   fontSize: '14px',
+   fontWeight: 400,
+   lineHeight: '19px',
+   color: '#464444',
+})
+const BasicModalStyle = styled(BasicModal)({
+   '& .MuiBox-root': {
+      borderRadius: '15px',
+   },
+})
+const SelectUiStyle = styled(SelectUi)({
+   width: '270px',
+   height: '37px',
+})
+
 const Container = styled('div')({
-   background: '#9B9690',
+   background: 'rgba(245, 245, 245, 0.61)',
+   padding: '0px 70px',
 })
 const ModalContainer = styled('div')({
-   width: '550px',
-   height: '388px',
+   width: '560px',
+   padding: '15px 40px 32px 40px',
 })
 
 const IconButtonStyled = styled(IconButton)({
-   marginLeft: '500px',
+   marginLeft: '470px',
 })
 
 const P = styled('p')({
    fontSize: '22px',
    marginTop: '40px',
-   marginLeft: '7%',
+   fontFamily: 'Manrope',
+   fontWeight: 400,
 })
 const HeaderPart = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
 })
 const ButtonStyled = styled(Button)({
-   width: '300px',
-   height: '44px',
-   marginTop: '40px',
-   marginRight: '7%',
+   padding: '10px 15px',
+   marginTop: '30px',
+   span: {
+      width: '12px',
+      height: '12px',
+      marginRight: '15px',
+   },
 })
 const PaperStyled = styled(Paper)({
-   width: '1300px',
    height: '1300px',
    margin: 'auto',
    marginTop: '20px',
+   fontFamily: 'Manrope',
    '& div': {
       paddingTop: '20px',
       marginLeft: '20px',
+
+      h3: {
+         fontWeight: 500,
+         fontSize: '20px',
+         lineHeight: '27px',
+      },
+      p: {
+         fontSize: '14px',
+         fontWeight: 400,
+         lineHeight: '17px',
+         color: '#4D4E51',
+         span: {
+            fontSize: '16px',
+            fontWeight: 400,
+            lineHeight: '22px',
+            color: '#222222',
+         },
+      },
    },
 })
 const Div = styled('div')({
    display: 'flex',
-   justifyContent: 'space-between',
-   marginTop: '32px',
+   gap: '15px',
+   padding: '32px 0 38px 0',
    '& .serviceInput': {
       width: '400px',
-      height: '38px',
-      marginRight: '18px',
-      paddingTop: '4px',
+      height: '10px',
       fontSize: '18px',
       color: '#464444',
    },
@@ -250,22 +303,26 @@ const Topic = styled('p')({
 const FileInput = styled('div')({
    display: 'flex',
    flexDirection: 'column',
-   marginTop: '68px',
-   marginLeft: '5px',
-   marginBottom: '30px',
+   paddingBottom: '30px',
 })
 const ButtonContainer = styled('div')({
-   marginTop: '-20px',
+   display: 'flex',
+   justifyContent: 'space-between',
    '& .cancel': {
-      marginRight: '18px',
-      marginLeft: '10px',
-      width: '257px',
-      height: '38px',
-      background: '#959595',
+      background: 'none',
+      border: '1px solid #959595',
+      padding: '10px 80px',
+      color: '#959595',
+      '&:hover': {
+         background: '#959595',
+         color: '#fff',
+      },
+      '&:active': {
+         background: '#959595',
+         color: '#FFFF',
+      },
    },
    '& .add': {
-      marginRight: '8px',
-      width: '257px',
-      height: '38px',
+      padding: '10px 80px',
    },
 })

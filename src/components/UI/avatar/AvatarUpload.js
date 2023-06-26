@@ -46,13 +46,14 @@ const ContainerFile = styled('div')`
    align-items: center;
    gap: 20px;
 `
-const DivStyle = styled('div')`
+const DivStyle = styled('p')`
    font-family: Manrope;
    font-size: 14px;
    font-weight: 400;
    line-height: 20px;
    letter-spacing: 0em;
    text-align: left;
+   color: #4d4e51;
 `
 const P = styled('p')`
    width: 124px;
@@ -64,4 +65,5 @@ const P = styled('p')`
    line-height: 17px;
    letter-spacing: 0em;
    text-align: left;
+   color: #959595;
 `

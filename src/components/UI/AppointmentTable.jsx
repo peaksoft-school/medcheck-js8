@@ -29,22 +29,28 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
                <TableBody>
                   {appointmentData.map((patient) => (
                      <TableRow key={patient.id}>
-                        <TableCell component="th">
+                        <TableCell
+                           component="th"
+                           onClick={() => {
+                              navigate(`${patient.appointmentId}/details`)
+                           }}
+                        >
                            <Box>
                               <IconStyled
-                                 src={patient.img}
+                                 src={patient.doctorImage}
                                  alt="patientImage"
-                                 onClick={() => {
-                                    navigate(`${patient.id}/details`)
-                                 }}
                               />
 
                               <TitleBox>
                                  <ChangeSpecialistTitleStyled>
-                                    {patient.changeSpecialist}
+                                    {patient.doctorFullName}
+
+                                    <a href={patient.webUrl}>
+                                       {patient.webTitle}
+                                    </a>
                                  </ChangeSpecialistTitleStyled>
                                  <ServiceSelectionTitleStyled>
-                                    {patient.serviceSelection}
+                                    {patient.doctorPosition}
                                  </ServiceSelectionTitleStyled>
                               </TitleBox>
                            </Box>
@@ -60,6 +66,7 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
                            statusColor={patient.status}
                         >
                            {getStatusTitleChangeHandler(patient.status)}
+                           {/* {patient.status} */}
                         </StatusTitleleStyled>
                      </TableRow>
                   ))}
@@ -73,13 +80,13 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
 export default AppointmentTable
 
 const getStatusColorChangeHandler = (statusColor) => {
-   if (statusColor === 'Cancelled') {
+   if (statusColor === 'CANCELED') {
       return '#F91515'
    }
-   if (statusColor === 'Confirmed') {
+   if (statusColor === 'CONFIRMED') {
       return '#346EFB'
    }
-   if (statusColor === 'Completed') {
+   if (statusColor === 'COMPLETED') {
       return '#07AB53'
    }
    return null

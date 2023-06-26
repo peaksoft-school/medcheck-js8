@@ -4,22 +4,22 @@ import { signInRequest, signUpRequest } from '../../../api/authService'
 
 export const signIn = createAsyncThunk(
    'auth/signIn',
-   async ({ values, notify }, { rejecWithValue }) => {
+   async ({ values, notify }, { rejectWithValue }) => {
       try {
          const { data } = await signInRequest(values)
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
          notify('success', 'Вы успешно вошли в аккаунт!')
          return data
       } catch (error) {
-         // notify('error', error.response?.data.message)
-         return rejecWithValue(error.response?.data.message)
+         notify('error', error.response?.data.message)
+         return rejectWithValue(error.response?.data.message)
       }
    }
 )
 
 export const signUp = createAsyncThunk(
    'auth/signUp',
-   async ({ values, notify }, { rejecWithValue }) => {
+   async ({ values, notify, onClose }, { rejectWithValue }) => {
       try {
          const { data } = await signUpRequest(values)
 
@@ -27,7 +27,8 @@ export const signUp = createAsyncThunk(
          notify('success', 'Вы успешно зарегистрировались!')
          return data
       } catch (error) {
-         return rejecWithValue(error.response?.data.message)
+         notify('error', error.response?.data.message)
+         return rejectWithValue(error.response?.data.message)
       }
    }
 )

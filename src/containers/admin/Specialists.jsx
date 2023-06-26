@@ -3,6 +3,7 @@ import {
    CircularProgress,
    Grid,
    IconButton,
+   // TablePagination,
    TableRow,
    styled,
 } from '@mui/material'
@@ -28,6 +29,8 @@ const Specialists = () => {
    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
    const [specisalists, setSpecialists] = useState([])
    const [loading, setIsLoading] = useState(false)
+   // const [size, setSize] = useState(1)
+   // const [page, setPage] = useState(1)
    const [queryParams, setQueryParams] = useState({
       keyWord: null,
    })
@@ -41,18 +44,19 @@ const Specialists = () => {
          setIsLoading(false)
          return setSpecialists(data)
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
+   console.log(isButtonDisabled)
    const deleteSpecialist = async ({ id }) => {
       try {
          await deleteSpecialistService(id)
 
          getAllSpecialists('')
-         return notify('success', 'успешно')
+         return notify('success', ' Успешно удалено')
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Произошла ошибка при загрузке')
       }
    }
 
@@ -61,7 +65,7 @@ const Specialists = () => {
          await postSpecialistIsActiveReq(id, isActive)
          return getAllSpecialists('')
       } catch (error) {
-         return notify('error', 'ошибка')
+         return notify('error', 'Что-то пошло не так')
       }
    }
 
@@ -102,6 +106,14 @@ const Specialists = () => {
       }
    }, [debouncedSearchTerm])
 
+   // const changeHandlerPage = (newPage) => {
+   //    setPage(newPage)
+   // }
+   // const changeHandlerSize = (event) => {
+   //    setSize(event.target.value)
+   //    setPage(0)
+   // }
+
    const column = useMemo(
       () => [
          {
@@ -118,7 +130,7 @@ const Specialists = () => {
                      <SwitchApp
                         checked={item.isActive}
                         onChange={() => changeHandler(item.id, !item.isActive)}
-                        disabled={isButtonDisabled}
+                        // disabled={isButtonDisabled}
                         onClick={handleClick}
                      />
                   </Grid>
@@ -153,6 +165,11 @@ const Specialists = () => {
          {
             header: 'Отделение',
             key: 'name',
+            render: (el) => (
+               <TableRow>
+                  <StyledDepatment>{el.departmentName}</StyledDepatment>
+               </TableRow>
+            ),
          },
          {
             header: 'Расписение до',
@@ -186,7 +203,7 @@ const Specialists = () => {
                      <IconButton disabled={!item.isActive}>
                         <UpdateIcon onClick={() => updateHandler(item.id)} />
                      </IconButton>
-                     <IconButton disabled={!item.isActive}>
+                     <IconButton disabled={item.isActive}>
                         <TrashIcon onClick={() => deleteHandler(item.id)} />
                      </IconButton>
                   </Grid>
@@ -225,6 +242,13 @@ const Specialists = () => {
          ) : (
             <AppTable columns={column} rows={specisalists} />
          )}
+         {/* <TablePagination
+            component="div"
+            page={page}
+            rowsPerPage={size}
+            onPageChange={changeHandlerPage}
+            onRowsPerPageChange={changeHandlerSize}
+         /> */}
       </MainContainer>
    )
 }
@@ -250,6 +274,7 @@ const SearchInputBox = styled('div')(() => ({
    '&': {
       width: '600px',
       marginBottom: '20px',
+      paddingTop: '20px',
 
       div: {
          background: '#FFFFFF',
@@ -282,6 +307,7 @@ const LastNameStyled = styled('p')(() => ({
    '&': {
       color: '#959595',
       fontSize: '14px',
+      fontFamily: 'Manrope',
    },
 }))
 
@@ -290,7 +316,7 @@ const Img = styled('img')(() => ({
       width: '36px',
       height: '36px',
       borderRadius: '100px',
-      marginRight: '7px',
+      marginRight: '12px',
    },
 }))
 
@@ -306,3 +332,11 @@ const StyledCircularProgress = styled(CircularProgress)`
    display: flex;
    margin: auto;
 `
+const StyledDepatment = styled('p')(() => ({
+   '&': {
+      fontFamily: 'Manrope',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      fontSize: '16px',
+   },
+}))

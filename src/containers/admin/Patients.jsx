@@ -57,13 +57,14 @@ const Patients = () => {
          {
             header: <NumberIcon />,
             render: (patient) => <P>{patient.id}</P>,
+            key: 'number',
          },
          {
             header: 'Имя и фамилия',
             render: (patient) => (
                <Grid>
                   <P
-                     onClick={(patient) => {
+                     onClick={() => {
                         navigate(`${patient.id}/details`)
                      }}
                   >
@@ -72,6 +73,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'name and lastname',
          },
          {
             header: 'Номер телефона',
@@ -86,6 +88,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'phone number',
          },
 
          {
@@ -101,6 +104,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'email',
          },
          {
             header: 'Дата сдачи',
@@ -115,6 +119,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
+            key: 'date',
          },
          {
             header: 'Действия',
@@ -125,6 +130,7 @@ const Patients = () => {
                   </IconButton>
                </Grid>
             ),
+            key: 'action',
          },
       ],
       []
@@ -151,28 +157,34 @@ export default Patients
 
 const P = styled('p')({
    color: '#222222',
+   fontFamily: 'Manrope',
+   fontWeight: 500,
+   fontSize: '16px',
+   lineHeight: '22px',
 })
 const PaperStyled = styled(Paper)({
-   width: '1300px',
-   height: '1374px',
    margin: 'auto',
-   marginTop: '20px',
    borderRadius: '6px',
 })
 const PatientStyle = styled('div')({
-   background: '#9B9690',
-   paddingTop: '40px',
+   background: 'rgba(245, 245, 245, 0.61)',
+   padding: '40px 70px 0 70px',
    '& .search': {
       width: '600px',
       borderRadius: '24px',
-      marginLeft: '110px',
-      background: '#FFFFFF',
       fontSize: '14px',
+      paddingBottom: '20px',
+      div: {
+         background: '#FFFFFF',
+      },
+      input: {
+         background: '#FFFFFF',
+      },
    },
    '& .topic': {
-      marginLeft: '110px',
       fontSize: '22px',
       color: '#222222',
-      paddingBottom: '40px',
+      fontFamily: 'Manrope',
+      paddingBottom: '23px',
    },
 })

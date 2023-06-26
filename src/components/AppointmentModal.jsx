@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { CircularProgress, IconButton, InputLabel } from '@mui/material'
-import { useFormik } from 'formik'
 import dayjs from 'dayjs'
+import { useFormik } from 'formik'
+
 import * as Yup from 'yup'
 import { ReactComponent as CloseIcon } from '../assets/login/CloseIcon.svg'
 import DatePicker from './UI/DatePicker'
@@ -48,6 +49,11 @@ const AppointmentModal = ({
          notify('success', 'Успешно добавлено!')
          formik.resetForm()
          close()
+         setDays((prev) =>
+            prev.map((item) =>
+               item.checked === true ? { ...item, checked: false } : item
+            )
+         )
       } catch (error) {
          notify('error', error.response?.data.message)
       }
@@ -383,7 +389,7 @@ const HeaderModalTitlwe = styled('p')(() => ({
    },
 }))
 
-const CloseIconStyleContianer = styled('div')(() => ({
+export const CloseIconStyleContianer = styled('div')(() => ({
    '&': {
       width: '100%',
       display: 'flex',
@@ -441,6 +447,7 @@ const IntervalBoxTimer = styled('div')(() => ({
 const SelectIntervalStyle = styled(SelectUi)(() => ({
    '&': {
       width: '257px',
+      height: '38px',
    },
 }))
 

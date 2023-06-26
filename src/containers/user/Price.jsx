@@ -20,8 +20,8 @@ const Price = () => {
    return (
       <>
          <Hr />
-         <MainPart href="/">
-            <span>Главная \</span>
+         <MainPart>
+            <a href="/">Главная {'>'}</a>
             <span className="service"> Прайс</span>
          </MainPart>
          <ServiceStyle>
@@ -44,10 +44,12 @@ const Price = () => {
                   onChange={clickHandler(data.title)}
                >
                   <StyledAccordionSummary expandIcon={<ExpandMoreIcon />}>
-                     <Typography key={data.title}>{data.title}</Typography>
+                     <TypographyStyle key={data.title}>
+                        {data.title}
+                     </TypographyStyle>
                   </StyledAccordionSummary>
                   <AccordionDetailsStyle>
-                     <Typography key={data.title}>
+                     <TypographyStyleTitle key={data.title}>
                         <div
                            style={{
                               display: 'flex',
@@ -59,9 +61,19 @@ const Price = () => {
                            <span>{data.description}</span>{' '}
                            <span>{data.totalPrice}</span>
                         </div>
-                     </Typography>
+                     </TypographyStyleTitle>
                      {data.info.map((el) => (
-                        <li key={el} style={{ listStyle: 'none' }}>
+                        <li
+                           key={el}
+                           style={{
+                              listStyle: 'none',
+                              fontFamily: 'Manrope',
+                              fontWeight: 400,
+                              fontSize: '16px',
+                              lineHeight: '22px',
+                              color: '#4D4E51',
+                           }}
+                        >
                            {el}
                         </li>
                      ))}
@@ -72,6 +84,10 @@ const Price = () => {
                            display: 'flex',
                            justifyContent: 'space-between',
                            width: '820px',
+                           fontFamily: 'Manrope',
+                           fontWeight: 600,
+                           fontSize: '18px',
+                           lineHeight: '25px',
                         }}
                      >
                         {' '}
@@ -90,8 +106,12 @@ const Price = () => {
                         }}
                      >
                         {' '}
-                        <span>{data.description2}</span>{' '}
-                        <span>{data.price}</span>
+                        <TypographyStyleTitle>
+                           {data.description2}
+                        </TypographyStyleTitle>{' '}
+                        <TypographyStyleTitle>
+                           {data.price}
+                        </TypographyStyleTitle>
                      </div>
                      <br />
                      <hr style={{ width: '820px' }} />
@@ -104,22 +124,40 @@ const Price = () => {
 }
 
 export default Price
+
+const TypographyStyle = styled(Typography)(() => ({
+   fontFamily: 'Manrope',
+   fontWeight: 600,
+   fontSize: '20px',
+   lineHeight: '27px',
+}))
+const TypographyStyleTitle = styled(Typography)(() => ({
+   color: '4D4E51',
+   fontFamily: 'Manrope',
+   fontWeight: 600,
+   fontSize: '18px',
+   lineHeight: '25px',
+}))
 const Hr = styled('hr')(() => ({
    width: '100%',
    height: '10px',
    marginBottom: '30px',
    background: '#DBF0E5',
+   border: 'none',
 }))
 
-const MainPart = styled('a')(() => ({
-   marginLeft: '120px',
+const MainPart = styled('p')(() => ({
+   marginLeft: '95px',
    fontFamily: ' Manrope',
    fontSize: '14px',
    fontWeight: 400,
    lineHeight: '19px',
    textAlign: 'left',
-   color: '#959595',
-   textDecoration: 'none',
+   paddingTop: '25px',
+   a: {
+      color: '#959595',
+      textDecoration: 'none',
+   },
    '& .service': {
       color: '#048741',
    },
@@ -129,8 +167,9 @@ const ServiceStyle = styled('div')(() => ({
    fontSize: '36px',
    fontWeight: 600,
    lineHeight: '49px',
+   fontFamily: 'Manrope',
    color: '#222222',
-   marginLeft: '120px',
+   marginLeft: '95px',
    marginBottom: '34px',
    marginTop: '26px',
    '& .our_service': {
@@ -145,12 +184,12 @@ const P = styled('p')(() => ({
    lineHeight: '24px',
    color: ' #4D4E51',
    fontFamily: ' Manrope',
-   marginLeft: '120px',
+   marginLeft: '95px',
    marginBottom: '40px',
 }))
 const AccordionContainer = styled('div')(() => ({
    width: '852px',
-   marginLeft: '121px',
+   marginLeft: '95px',
 }))
 
 const AccordionStyle = styled(Accordion)(() => ({

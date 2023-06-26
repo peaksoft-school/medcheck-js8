@@ -1,7 +1,8 @@
 import { Grid, IconButton, Menu } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
+// import { useDebounce } from 'use-debounce'
 import GeoPoint from '../../../assets/icons/GeoPoint.svg'
 import Timer from '../../../assets/icons/Timer.svg'
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/ProfileIcon.svg'
@@ -35,13 +36,12 @@ import {
    StyledPhoneIconButton,
    ProfileButtonStyled,
    ProfileBox,
-   SearchInputBox,
    MenuItemStyled,
    NavlinkStyle,
    NavlinkStyled,
+   SearchInputBox,
 } from './header-styled'
 import Dropdown from '../../../components/UI/Dropdown'
-import SearchInput from '../../../components/UI/SeacrchInput'
 import SignIn from '../../guest/login/SignIn'
 import {
    UserRoles,
@@ -54,6 +54,7 @@ import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
 import OnlineAppointment from '../../../components/online-appointment/OnlineAppointment'
+import GlobalSearchInput from '../../../components/GlobalSearchInput'
 
 const Header = () => {
    const dispatch = useDispatch()
@@ -61,12 +62,13 @@ const Header = () => {
    const role = useSelector((state) => state.auth.role)
    const { notify } = useToast()
    const [anchorEl, setAnchorEl] = useState(null)
+   const [searchParams, setSearchParams] = useSearchParams()
+   const { openModal } = Object.fromEntries(searchParams)
+   const [search, setSearch] = useState([])
 
    const handleClose = () => {
       setAnchorEl(null)
    }
-   const [searchParams, setSearchParams] = useSearchParams()
-   const { openModal } = Object.fromEntries(searchParams)
 
    const onCloseModal = () => setSearchParams({})
 
@@ -92,13 +94,21 @@ const Header = () => {
    }
 
    const navigateResultHandler = () => {
-      navigate('/getResults')
+      if (role === UserRoles.PATIENT) {
+         navigate('/getResults')
+      } else {
+         openSignInModal()
+      }
    }
 
    const signOutHandler = () => {
       dispatch(signOut(notify))
       handleClose()
    }
+
+   useEffect(() => {
+      setSearch(search)
+   }, [search])
 
    return (
       <HeaderStyled position="static">
@@ -139,12 +149,13 @@ const Header = () => {
                   </Box>
                </Grid>
                <SearchInputBox>
-                  <SearchInput />
+                  <GlobalSearchInput openModal={openSignInModal} />
                </SearchInputBox>
+
                <ContactsBox>
                   <IconBox>
                      <IconButton>
-                        <NavLink to="https://www.instagram.com/peaksoft.house/">
+                        <NavLink to="https://www.instagram.com/medcheck.kg/">
                            <InstagramIcon />
                         </NavLink>
                      </IconButton>
@@ -206,7 +217,7 @@ const Header = () => {
                                        Мои записи
                                     </MenuItemStyled>
                                  </NavlinkStyle>
-                                 <NavlinkStyle to="/profile">
+                                 <NavlinkStyle to="/personal-data">
                                     <MenuItemStyled onClick={handleClose}>
                                        Профиль
                                     </MenuItemStyled>
@@ -249,7 +260,7 @@ const Header = () => {
                </InfoBox>
                <Grid>
                   <OutlinedButtonStyled
-                     variant="oultined"
+                     variant="outlined"
                      onClick={navigateResultHandler}
                   >
                      получить результаты
