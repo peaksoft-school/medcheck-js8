@@ -69,6 +69,7 @@ const Header = () => {
    const { openModal } = Object.fromEntries(searchParams)
 
    const onCloseModal = () => setSearchParams({})
+
    const openSignInModal = () => {
       setSearchParams({ openModal: 'sign-in' })
       handleClose()

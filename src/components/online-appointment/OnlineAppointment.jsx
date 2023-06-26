@@ -1,53 +1,139 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { styled } from '@mui/material'
+import { useDispatch } from 'react-redux'
 import SideDrawer from '../UI/SideDrawer'
 import ChooseDate from './ChooseDate'
 import ChooseSpecialist from './ChooseSpecialist'
 import MainOnlineAppointment from './MainOnlineAppointment'
 import { ReactComponent as CloseIcon } from '../../assets/online-appoinment-icons/closeIcon.svg'
 import { ReactComponent as GoBackIcon } from '../../assets/online-appoinment-icons/goBack.svg'
+import { getDoctors } from '../../redux/reducers/appointment/appointment.thunk'
+import { MED_SERVICE, MED_SERVICE_EN } from '../../utlis/services/img_service'
+import AppointmentForm from './form/AppointmentForm'
 
 const OnlineAppointment = ({ open, onClose }) => {
-   const [main, setMain] = useState(true)
-   const [specialist, setSpecialist] = useState(false)
-   const [date, setDate] = useState(false)
+   const [mainPage, setMainPage] = useState(true)
+   const [specialistPage, setSpecialistPage] = useState(false)
+   const [datePage, setDatePage] = useState(false)
+   const [formPage, setFormPage] = useState(false)
+
+   const [service, setService] = useState('')
+   const [specialist, setSpecialist] = useState(null)
+   const [date, setDate] = useState('')
+   // console.log(service)
+   // console.log(specialist)
+   // console.log(date)
+
+   const dispatch = useDispatch()
+
+   const translateNameofService = (service) => {
+      let translatedService = ''
+      const findedItem = MED_SERVICE.find((item) => item.title === service)
+      if (findedItem) {
+         const { id } = findedItem
+         const { title } = MED_SERVICE_EN.find((item) => item.id === id)
+         translatedService = title
+      }
+      return translatedService
+   }
+
+   useEffect(() => {
+      if (service) {
+         const department = translateNameofService(service)
+
+         const data = {
+            department,
+            timeZone: 'Asia/Bishkek',
+         }
+         dispatch(getDoctors(data))
+      }
+   }, [service])
+
+   const serviceChangeHandler = (e) => {
+      setService(e.target.value)
+      setDate('')
+   }
 
    const openChooseSpecialist = () => {
-      setMain(false)
-      setSpecialist(true)
+      setMainPage(false)
+      setSpecialistPage(true)
    }
 
    const openDate = () => {
-      setMain(false)
-      setDate(true)
+      setMainPage(false)
+      setDatePage(true)
    }
 
-   const goBack = () => {
-      setSpecialist(false)
-      setDate(false)
-      setMain(true)
+   const openForm = () => {
+      setMainPage(false)
+      setFormPage(true)
    }
+   const goBack = () => {
+      setSpecialistPage(false)
+      setDatePage(false)
+      setFormPage(false)
+      setMainPage(true)
+   }
+   const dateChangeHandler = (date) => {
+      setDate(date)
+      goBack()
+   }
+
+   const chooseSpecialist = (specialist) => {
+      setSpecialist(specialist)
+      goBack()
+   }
+
+   // const closeAndClearData = () => {
+   //    setService('')
+   //    setSpecialist('')
+   //    setDatePage('')
+   //    onClose()
+   // }
 
    return (
       <SideDrawer open={open} onClose={onClose}>
          <Container>
-            {main ? <Close onClick={onClose} /> : <GoBack onClick={goBack} />}
+            {mainPage ? (
+               <Close onClick={onClose} />
+            ) : (
+               <GoBack onClick={goBack} />
+            )}
             <Header>
                <Title>
-                  {main && 'Онлайн Запись'}
-                  {specialist && 'Выбрать специалиста'}
-                  {date && 'Выбрать дату и время'}
+                  {mainPage && 'Онлайн Запись'}
+                  {specialistPage && 'Выбрать специалиста'}
+                  {datePage && 'Выбрать дату и время'}
+                  {formPage && 'Запись'}
                </Title>
             </Header>
-            {main && (
+            {mainPage && (
                <MainOnlineAppointment
                   onClose={onClose}
                   openChooseSpecialist={openChooseSpecialist}
                   openDate={openDate}
+                  openForm={openForm}
+                  service={service}
+                  specialist={specialist}
+                  date={date}
+                  serviceChangeHandler={serviceChangeHandler}
                />
             )}
-            {specialist && <ChooseSpecialist />}
-            {date && <ChooseDate />}
+            {specialistPage && (
+               <ChooseSpecialist
+                  chooseSpecialist={chooseSpecialist}
+                  dateChangeHandler={dateChangeHandler}
+               />
+            )}
+            {datePage && <ChooseDate dateChangeHandler={dateChangeHandler} />}
+            {formPage && (
+               <AppointmentForm
+                  service={service}
+                  specialist={specialist}
+                  date={date}
+                  translateNameofService={translateNameofService}
+               />
+            )}
          </Container>
       </SideDrawer>
    )

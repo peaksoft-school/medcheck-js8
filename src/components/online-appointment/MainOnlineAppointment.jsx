@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+/* eslint-disable no-unneeded-ternary */
+import React from 'react'
 import { styled } from '@mui/material'
 import { ReactComponent as ChooseServiceIcon } from '../../assets/online-appoinment-icons/chooseService.svg'
 import { ReactComponent as ChooseSpecialistIcon } from '../../assets/online-appoinment-icons/chooseSpecialist.svg'
 import { ReactComponent as ChooseDateIcon } from '../../assets/online-appoinment-icons/chooseDate.svg'
 import { SelectUi } from '../UI/SelectUi'
+import Button from '../UI/Button'
 import { MED_SERVICE } from '../../utlis/services/img_service'
 
-const MainOnlineAppointment = ({ openChooseSpecialist, openDate }) => {
-   const [service, setService] = useState('')
-
-   const serviceChangeHandler = (e) => {
-      setService(e.target.value)
-   }
-
+const MainOnlineAppointment = ({
+   openChooseSpecialist,
+   openDate,
+   openForm,
+   service,
+   specialist,
+   date,
+   serviceChangeHandler,
+}) => {
    return (
       <Wrapper>
          <Select
@@ -30,13 +34,26 @@ const MainOnlineAppointment = ({ openChooseSpecialist, openDate }) => {
             }}
          />
          <ChooseCard onClick={openChooseSpecialist}>
-            <SpecialistIcon />
-            <p>Выбрать специалиста</p>
+            {specialist ? (
+               <ImageContainer>
+                  <Image src={specialist.image} alt="" />
+               </ImageContainer>
+            ) : (
+               <SpecialistIcon />
+            )}
+
+            <p>{specialist ? specialist.fullName : 'Выбрать специалиста'}</p>
          </ChooseCard>
          <ChooseCard onClick={openDate}>
             <DateIcon />
-            <p>Выбрать дату и время</p>
+            <div>
+               <Date>
+                  {date && `${date.dayOfAWeek}, ${date.day} ${date.month}`}
+               </Date>
+               <Time>{date ? `${date.time}` : 'Выбрать дату и время'}</Time>
+            </div>
          </ChooseCard>
+         <StyledButton onClick={openForm}>Продолжить</StyledButton>
       </Wrapper>
    )
 }
@@ -48,7 +65,7 @@ const Wrapper = styled('div')(() => ({
 }))
 
 const Select = styled(SelectUi)(() => ({
-   padding: '36px 0',
+   padding: '10px 0',
    paddingLeft: '50px',
    margin: '6px 0',
    border: '1px solid #fff',
@@ -99,4 +116,38 @@ const SpecialistIcon = styled(ChooseSpecialistIcon)(() => ({
 }))
 const DateIcon = styled(ChooseDateIcon)(() => ({
    marginRight: '12px',
+}))
+
+const ImageContainer = styled('div')(() => ({
+   width: '36px',
+   height: '36px',
+   marginRight: '12px',
+}))
+
+const Image = styled('img')(() => ({
+   width: '100%',
+   height: '100%',
+   borderRadius: '50%',
+}))
+
+const StyledButton = styled(Button)(() => ({
+   marginTop: '24px',
+   width: '100%',
+}))
+
+const Date = styled('p')(() => ({
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: '500',
+   fontSize: '12px',
+   lineHeight: '16px',
+   color: '#707070',
+}))
+
+const Time = styled('p')(() => ({
+   fontFamily: 'Manrope',
+   fontStyle: 'normal',
+   fontWeight: '400',
+   fontSize: '14px',
+   lineHeight: '19px',
 }))
