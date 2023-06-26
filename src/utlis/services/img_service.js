@@ -44,81 +44,86 @@ export const MED_SERVICE = [
    },
    {
       id: 4,
+      img: <GastIcon />,
+      title: 'Гастроэнтерология',
+   },
+   {
+      id: 5,
       img: <GinIcon />,
       title: 'Гинекология',
    },
    {
-      id: 5,
+      id: 6,
       img: <DermIcon />,
       title: 'Дермотология',
    },
    {
-      id: 6,
+      id: 7,
       img: <KardIcon />,
       title: 'Кардиология',
    },
    {
-      id: 7,
+      id: 8,
       img: <NevrIcon />,
       title: 'Неврология',
    },
    {
-      id: 8,
+      id: 9,
       img: <NeiroIcon />,
       title: 'Нейрохирургия',
    },
    {
-      id: 9,
+      id: 10,
       img: <OnkolIcon />,
       title: 'Онкология',
    },
    {
-      id: 10,
+      id: 11,
       img: <OrtopIcon />,
       title: 'Ортопедия',
    },
    {
-      id: 11,
+      id: 12,
       img: <OtorIcon />,
       title: 'Оториноларингология',
    },
    {
-      id: 12,
+      id: 13,
       img: <OftalIcon />,
       title: 'Офтальмология',
    },
    {
-      id: 13,
+      id: 14,
       img: <ProkIcon />,
       title: 'Проктология',
    },
    {
-      id: 14,
+      id: 15,
       img: <PsikhIcon />,
       title: 'Психтерапия',
    },
    {
-      id: 15,
+      id: 16,
       img: <PulmonIcon />,
       title: 'Пульмонология',
    },
    {
-      id: 16,
+      id: 17,
       img: <RevmatIcon />,
       title: 'Ревмотология',
    },
    {
-      id: 17,
+      id: 18,
       img: <TerapIcon />,
       title: 'Терапия',
    },
    {
-      id: 18,
+      id: 19,
       img: <UrolIcon />,
       title: 'Урология',
    },
    {
-      id: 19,
+      id: 20,
       img: <FlebIcon />,
       title: 'Флебология',
    },
@@ -128,14 +133,122 @@ export const MED_SERVICE = [
       title: 'Физиотерапия',
    },
    {
-      id: 20,
+      id: 22,
       img: <EndocIcon />,
       title: 'Эндокринология',
    },
+]
+
+export const MED_SERVICE_EN = [
    {
-      id: 23,
+      id: 1,
+      img: <GroupIcon />,
+      title: 'ALLERGOLOGY',
+   },
+   {
+      id: 2,
+      img: <AnestIcon />,
+      title: 'ANESTHESIOLOGY',
+   },
+   {
+      id: 3,
+      img: <GemIcon />,
+      title: 'VACCINATION',
+   },
+   {
+      id: 4,
       img: <GastIcon />,
-      title: 'Гастроэнтерология',
+      title: 'GASTROENTEROLOGY',
+   },
+   {
+      id: 5,
+      img: <GinIcon />,
+      title: 'GYNECOLOGY',
+   },
+   {
+      id: 6,
+      img: <DermIcon />,
+      title: 'DERMATOLOGY',
+   },
+   {
+      id: 7,
+      img: <KardIcon />,
+      title: 'CARDIOLOGY',
+   },
+   {
+      id: 8,
+      img: <NevrIcon />,
+      title: 'NEUROLOGY',
+   },
+   {
+      id: 9,
+      img: <NeiroIcon />,
+      title: 'NEUROSURGERY',
+   },
+   {
+      id: 10,
+      img: <OnkolIcon />,
+      title: 'ONCOLOGY',
+   },
+   {
+      id: 11,
+      img: <OrtopIcon />,
+      title: 'ORTHOPEDICS',
+   },
+   {
+      id: 12,
+      img: <OtorIcon />,
+      title: 'OTORHINOLARYNGOLOGY',
+   },
+   {
+      id: 13,
+      img: <OftalIcon />,
+      title: 'OPHTHALMOLOGY',
+   },
+   {
+      id: 14,
+      img: <ProkIcon />,
+      title: 'PROCTOLOGY',
+   },
+   {
+      id: 15,
+      img: <PsikhIcon />,
+      title: 'PSYCHOTHERAPY',
+   },
+   {
+      id: 16,
+      img: <PulmonIcon />,
+      title: 'PULMONOLOGY',
+   },
+   {
+      id: 17,
+      img: <RevmatIcon />,
+      title: 'RHEUMATOLOGY',
+   },
+   {
+      id: 18,
+      img: <TerapIcon />,
+      title: 'THERAPY',
+   },
+   {
+      id: 19,
+      img: <UrolIcon />,
+      title: 'UROLOGY',
+   },
+   {
+      id: 20,
+      img: <FlebIcon />,
+      title: 'PHLEBOLOGY',
+   },
+   {
+      id: 21,
+      img: <FizIcon />,
+      title: 'PHYSIOTHERAPY',
+   },
+   {
+      id: 22,
+      img: <EndocIcon />,
+      title: 'ENDOCRINOLOGY',
    },
 ]
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { NavLink, useSearchParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import building from '../assets/images/Rectangle 387.png'
 import conference from '../assets/images/Rectangle 388.png'
 import doctors from '../assets/images/Rectangle 389.png'
@@ -10,24 +9,12 @@ import { ReactComponent as ForwardVector } from '../assets/icons/Vector (4).svg'
 import Button from './UI/Button'
 import BasicModal from './UI/ModalUi'
 import { ApplicationModal } from './ApplicationModal'
-import { UserRoles } from '../utlis/constants/commons'
 
 const AboutClinicPart = ({ place }) => {
-   const role = useSelector((state) => state.auth.role)
-
    const [showApplicationModal, setShowApplicationModal] = useState(false)
-   const [searchParams, setSearchParams] = useSearchParams()
-   Object.fromEntries(searchParams)
 
-   const openSignInModal = () => {
-      setSearchParams({ openModal: 'sign-in' })
-   }
    const showModalHandler = () => {
-      if (role === UserRoles.PATIENT) {
-         setShowApplicationModal(true)
-      } else {
-         openSignInModal()
-      }
+      setShowApplicationModal(true)
    }
 
    const closeModalHandler = () => {

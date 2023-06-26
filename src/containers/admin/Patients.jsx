@@ -21,9 +21,8 @@ const Patients = () => {
       try {
          if (debouncedQuery) {
             const { data } = await getPatients(inputVal)
-            return setPatients(data)
-         }
-         {
+            setPatients(data)
+         } else {
             const { data } = await getPatients()
             setPatients(data)
          }

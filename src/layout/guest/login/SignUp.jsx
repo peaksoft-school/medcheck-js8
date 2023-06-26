@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { FormLabel, IconButton, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Link, NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ReactComponent as CloseIcon } from '../../../assets/icons/closeIcon.svg'
 import { ReactComponent as Show } from '../../../assets/login/Vector (3).svg'
 import { ReactComponent as ShowOff } from '../../../assets/login/Password.svg'
@@ -19,6 +19,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordCopy, setShowPasswordCopy] = useState(false)
    const { notify } = useToast()
+   const { error } = useSelector((state) => state.auth)
 
    const {
       register,
@@ -36,8 +37,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
       },
    })
    function onSubmit(values) {
-      dispatch(signUp({ values, notify }))
-      onClose()
+      dispatch(signUp({ values, notify, onClose }))
    }
    const showPasswordHandle = () => {
       setShowPassword(!showPassword)
@@ -172,6 +172,7 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                      ),
                   }}
                />
+               {error}
                {errors.copyPassword && (
                   <p className="message">{errors.copyPassword?.message}</p>
                )}
