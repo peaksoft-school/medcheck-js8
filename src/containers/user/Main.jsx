@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { useNavigate } from 'react-router'
-import { useSearchParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+// import { useSearchParams } from 'react-router-dom'
+// import { useSelector } from 'react-redux'
 import Button from '../../components/UI/Button'
 import mainPageDoctor from '../../assets/images/mainDoctorImage.png'
 import welcomeWord from '../../assets/images/Добро пожаловать в клинику MedCheck.png'
@@ -12,26 +12,26 @@ import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 import { CardApplication } from '../../components/UI/card/CardApplication'
 import BasicModal from '../../components/UI/ModalUi'
 import { ApplicationModal } from '../../components/ApplicationModal'
-import { UserRoles } from '../../utlis/constants/commons'
+// import { UserRoles } from '../../utlis/constants/commons'
 
 const Main = () => {
    window.scrollTo({ top: 0 })
    const navigate = useNavigate()
-   const role = useSelector((state) => state.auth.role)
+   // const role = useSelector((state) => state.auth.role)
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
-   const [searchParams, setSearchParams] = useSearchParams()
-   Object.fromEntries(searchParams)
+   // const [searchParams, setSearchParams] = useSearchParams()
+   // Object.fromEntries(searchParams)
 
-   const openSignInModal = () => {
-      setSearchParams({ openModal: 'sign-in' })
-   }
+   // const openSignInModal = () => {
+   //    setSearchParams({ openModal: 'sign-in' })
+   // }
    const showModalHandler = () => {
-      if (role === UserRoles.PATIENT) {
-         setShowApplicationModal(true)
-      } else {
-         openSignInModal()
-      }
+      // if (role === UserRoles.PATIENT) {
+      setShowApplicationModal(true)
+      // } else {
+      //    openSignInModal()
+      // }
    }
 
    const closeModalHandler = () => {
@@ -154,7 +154,7 @@ const Main = () => {
             </MainDoctorsBox>
          </GlobalDoctorContainer>
          <FeedbackSlider />
-         <CardApplication openSignInModal={openSignInModal} />
+         <CardApplication onClose={closeModalHandler} />
       </>
    )
 }

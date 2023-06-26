@@ -46,7 +46,7 @@ const AppointmentModal = ({
       }
       try {
          await postScheduleRequest(newData)
-         notify('success', 'Успешно добавлено!')
+         notify('success', 'Расписание успешно сохранено!')
          formik.resetForm()
          close()
          setDays((prev) =>

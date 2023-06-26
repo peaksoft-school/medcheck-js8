@@ -4,7 +4,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { FormLabel, Grid, InputAdornment } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { ReactComponent as ButtonIcon } from '../../../assets/serviceIcons/ButtonIcon.svg'
 import { ReactComponent as Users } from '../../../assets/serviceIcons/Users.svg'
@@ -14,12 +14,10 @@ import Button from '../Button'
 import Input from '../input/Input'
 import { postDatas } from '../../../redux/reducers/card/card.thunk'
 import useToast from '../../../hooks/useToast'
-import { UserRoles } from '../../../utlis/constants/commons'
 
 // eslint-disable-next-line no-unused-vars
 export const CardApplication = ({ openSignInModal }) => {
    const dispatch = useDispatch()
-   const role = useSelector((state) => state.auth.role)
 
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
@@ -34,26 +32,22 @@ export const CardApplication = ({ openSignInModal }) => {
    }
 
    const submitHandler = () => {
-      if (role === UserRoles.PATIENT) {
-         try {
-            if (name.length >= 2 && number.length === 13) {
-               const patientData = {
-                  name,
-                  phoneNumber: number,
-               }
-               dispatch(postDatas(patientData))
-               notifyCall('success', 'Заявка успешно отправлено!')
-               setName('')
-               setNumber('')
-            } else {
-               notifyCall('error', 'Данные неправильно заполнены!')
+      try {
+         if (name.length >= 2 && number.length === 13) {
+            const patientData = {
+               name,
+               phoneNumber: number,
             }
-         } catch (error) {
-            console.error(error)
-            notifyCall('error', 'Заявка не отправлено!')
+            dispatch(postDatas(patientData))
+            notifyCall('success', 'Заявка успешно отправлено!')
+            setName('')
+            setNumber('')
+         } else {
+            notifyCall('error', 'Данные неправильно заполнены!')
          }
-      } else {
-         openSignInModal()
+      } catch (error) {
+         console.error(error)
+         notifyCall('error', 'Заявка не отправлено!')
       }
    }
 

@@ -5,6 +5,8 @@ import { Container, StyledNavLink } from '../admin/specialist-style'
 import { Hr } from './Service'
 
 const Contacts = () => {
+   window.scrollTo({ top: 0 })
+
    return (
       <div>
          <Hr />
