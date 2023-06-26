@@ -8,9 +8,9 @@ import { ReactComponent as File } from '../../assets/serviceIcons/File.svg'
 
 function PatientResult() {
    const { id } = useParams()
-   const { ToastContainer, notify: notifyCall } = useToast()
+   const { notify: notifyCall } = useToast()
    const [results, setResults] = useState([])
-
+   console.log(results, 'resultss')
    const patientGetById = async () => {
       try {
          const { data } = await getAllPatientsById(id)
@@ -19,7 +19,6 @@ function PatientResult() {
          notifyCall('error', error.message)
       }
    }
-   console.log(results)
 
    useEffect(() => {
       patientGetById()
@@ -56,7 +55,6 @@ function PatientResult() {
 
    return (
       <Container>
-         {ToastContainer}
          <HeaderPart>
             <P>
                <span>{results?.firstName} </span>
@@ -64,7 +62,7 @@ function PatientResult() {
             </P>
          </HeaderPart>
          <PaperStyled>
-            <div>
+            <PatientInfoBox>
                <h3>
                   <span>{results?.firstName} </span>
                   <span>{results?.lastName}</span>
@@ -89,38 +87,39 @@ function PatientResult() {
                   {results?.email}
                </p>{' '}
                <br />
-            </div>
+            </PatientInfoBox>
             <Div>
-               <p style={{ color: ' #000000' }}>
-                  Услуга:{' '}
-                  <PStyle>
+               <div>
+                  <Sercvietitle>Услуга:</Sercvietitle>
+                  <p>
                      {results.results?.map((el) => (
                         <div>{el.services}</div>
                      ))}
-                  </PStyle>
-               </p>
-               <p style={{ color: ' #000000' }}>
-                  Дата и время:{' '}
-                  <PStyle>
+                  </p>
+               </div>
+               <div>
+                  <DateTitle>Дата и время:</DateTitle>
+                  <p>
                      {results.results?.map((el) => (
                         <div>
                            {el.dateOfIssue}
                            <p style={{ color: '#4D4E51' }}>{el.timeOfIssue}</p>
                         </div>
                      ))}{' '}
-                  </PStyle>{' '}
-               </p>
-               <p style={{ color: ' #000000' }}>
-                  Номер заказа:
-                  <PStyle>
+                  </p>
+               </div>
+               <div>
+                  <NumberTitle> Номер заказа:</NumberTitle>
+
+                  <p style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
                         <div>{el.orderNumber}</div>
                      ))}
-                  </PStyle>
-               </p>
-               <p style={{ color: ' #000000' }}>
-                  Загруженный файл: <br />
-                  <div>
+                  </p>
+               </div>
+               <div>
+                  <LoadingTitle>Загруженный файл:</LoadingTitle>
+                  <p style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
                         <ButtonStyle
                            type="button"
@@ -129,8 +128,8 @@ function PatientResult() {
                            <FileStyle />
                         </ButtonStyle>
                      ))}
-                  </div>{' '}
-               </p>
+                  </p>
+               </div>
             </Div>
          </PaperStyled>
       </Container>
@@ -139,8 +138,12 @@ function PatientResult() {
 
 export default PatientResult
 
+const PatientInfoBox = styled('div')({
+   height: '1374px',
+})
 const Container = styled('div')({
-   background: '#9B9690',
+   background: 'rgba(245, 245, 245, 0.61)',
+   padding: '20px 65px',
 })
 
 const P = styled('h3')({
@@ -152,21 +155,17 @@ const Div = styled('div')({
    display: 'flex',
    justifyContent: 'space-around',
    background: '#DBEBFF',
-   height: '200px',
    width: '928px',
-   marginRight: '43px',
-   marginTop: '20px',
+   height: 'fit-content',
    borderRadius: ' 8px',
+   padding: '20px',
+   color: '#000000',
 })
 const HeaderPart = styled('div')({
    display: 'flex',
    justifyContent: 'space-between',
 })
-const PStyle = styled('p')({
-   marginTop: '10px',
-   color: ' #222222',
-   marginLeft: '-20px',
-})
+
 const FileStyle = styled(File)`
    margin: 6px;
    width: 14px;
@@ -192,12 +191,20 @@ const ButtonStyle = styled('button')`
 const PaperStyled = styled(Paper)({
    display: 'flex',
    justifyContent: 'space-between',
-   width: '1300px',
-   height: '1300px',
    margin: 'auto',
-   marginTop: '20px',
-   '& div': {
-      paddingTop: '20px',
-      marginLeft: '20px',
-   },
+   padding: '30px',
+   fontFamily: 'Manrope',
+})
+
+const Sercvietitle = styled('div')({
+   marginBottom: '20px',
+})
+const DateTitle = styled('div')({
+   marginBottom: '20px',
+})
+const NumberTitle = styled('div')({
+   marginBottom: '20px',
+})
+const LoadingTitle = styled('div')({
+   marginBottom: '20px',
 })

@@ -66,6 +66,8 @@ const Header = () => {
    const { openModal } = Object.fromEntries(searchParams)
    const [search, setSearch] = useState([])
 
+   const phoneNumber = '+996(505) 000 000'
+
    const handleClose = () => {
       setAnchorEl(null)
    }
@@ -172,7 +174,9 @@ const Header = () => {
                   </IconBox>
                   <PhoneBox>
                      <StyledPhoneIconButton>
-                        <TelephoneIcon />
+                        <a href={`tel:${phoneNumber}`}>
+                           <TelephoneIcon />
+                        </a>
                      </StyledPhoneIconButton>
                      <Grid>
                         <NumberTitle1>

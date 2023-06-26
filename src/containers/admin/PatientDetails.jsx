@@ -76,8 +76,9 @@ const PatientDetails = () => {
    if (inputDate && isValid(new Date(inputDate))) {
       date = format(new Date(inputDate), 'yyyy-MM-dd')
    }
+
    const submitHandler = () => {
-      const departmentId = MED_SERVICE.find((el) => el.title === name).id
+      const { id: departmentId } = MED_SERVICE.find((el) => el.id === name)
       try {
          if (name != null && date != null && selectedFile != null) {
             const datasOfPatient = {

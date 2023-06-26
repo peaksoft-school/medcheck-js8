@@ -81,9 +81,6 @@ function Footer() {
                <NavLink to="price">
                   <li>Прайс</li>
                </NavLink>
-               <NavLink to="reviews">
-                  <li>Отзывы</li>
-               </NavLink>
                <NavLink to="contacts">
                   <li>Контакты</li>
                </NavLink>

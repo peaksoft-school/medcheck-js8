@@ -10,7 +10,7 @@ import {
    TextField,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { ReactComponent as ButtonIcon } from '../assets/serviceIcons/ButtonIcon.svg'
 import { ReactComponent as Users } from '../assets/serviceIcons/Users.svg'
@@ -19,12 +19,10 @@ import Button from './UI/Button'
 import { postDatas } from '../redux/reducers/card/card.thunk'
 import useToast from '../hooks/useToast'
 import { ReactComponent as CloseIcon } from '../assets/login/CloseIcon.svg'
-import { UserRoles } from '../utlis/constants/commons'
 
 // eslint-disable-next-line no-unused-vars
 export const ApplicationModal = ({ onClose }) => {
    const dispatch = useDispatch()
-   const role = useSelector((state) => state.auth.role)
 
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
@@ -78,94 +76,71 @@ export const ApplicationModal = ({ onClose }) => {
                </DialogContentTextStyled>
             </SuccessSmsBox>
          ) : (
-            <div>
-               {role === UserRoles.GUEST ? (
-                  <Title>
-                     <p>Для отправки заявки зарегистрируйтесь ^_^</p>
-                     <Button>dd</Button>
-                  </Title>
-               ) : (
-                  <>
-                     <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
-                     <DialogContent>
-                        <DialogContentTextStyled>
-                           Оставьте свой номер и наши специалисты свяжутся с
-                           Вами
-                           <br /> в ближайшее время
-                        </DialogContentTextStyled>
-                        <InputBoxStyled>
-                           <div>
-                              <FormLabelStyled>
-                                 Как к Вам обратиться?
-                              </FormLabelStyled>
-                              <TextFieldStyled
-                                 margin="dense"
-                                 id="name"
-                                 type="text"
-                                 variant="outlined"
-                                 placeholder="Введите имя"
-                                 onChange={nameChangeHandler}
-                                 value={name}
-                                 InputProps={{
-                                    startAdornment: (
-                                       <InputAdornment position="start">
-                                          <Users />
-                                       </InputAdornment>
-                                    ),
-                                 }}
-                              />
-                           </div>
-                           <div>
-                              <FormLabelStyled>
-                                 Номер мобильного телефона
-                              </FormLabelStyled>
-                              <TextFieldStyled
-                                 id="name"
-                                 margin="dense"
-                                 type="text"
-                                 variant="outlined"
-                                 placeholder="+996 (___) __-__-__"
-                                 onChange={numberChangeHandler}
-                                 value={number}
-                                 InputProps={{
-                                    startAdornment: (
-                                       <InputAdornment position="start">
-                                          <Phone />
-                                       </InputAdornment>
-                                    ),
-                                 }}
-                              />
-                           </div>
-                        </InputBoxStyled>
-                     </DialogContent>
-                     <ButtonContainer>
-                        <ButtonStyle
-                           disabled={!disabledInfo}
+            <>
+               <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
+               <DialogContent>
+                  <DialogContentTextStyled>
+                     Оставьте свой номер и наши специалисты свяжутся с Вами
+                     <br /> в ближайшее время
+                  </DialogContentTextStyled>
+                  <InputBoxStyled>
+                     <div>
+                        <FormLabelStyled>Как к Вам обратиться?</FormLabelStyled>
+                        <TextFieldStyled
+                           margin="dense"
+                           id="name"
+                           type="text"
                            variant="outlined"
-                           onClick={submitHandler}
-                        >
-                           <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
-                        </ButtonStyle>
-                     </ButtonContainer>
-                  </>
-               )}
-            </div>
+                           placeholder="Введите имя"
+                           onChange={nameChangeHandler}
+                           value={name}
+                           InputProps={{
+                              startAdornment: (
+                                 <InputAdornment position="start">
+                                    <Users />
+                                 </InputAdornment>
+                              ),
+                           }}
+                        />
+                     </div>
+                     <div>
+                        <FormLabelStyled>
+                           Номер мобильного телефона
+                        </FormLabelStyled>
+                        <TextFieldStyled
+                           id="name"
+                           margin="dense"
+                           type="text"
+                           variant="outlined"
+                           placeholder="+996 (___) __-__-__"
+                           onChange={numberChangeHandler}
+                           value={number}
+                           InputProps={{
+                              startAdornment: (
+                                 <InputAdornment position="start">
+                                    <Phone />
+                                 </InputAdornment>
+                              ),
+                           }}
+                        />
+                     </div>
+                  </InputBoxStyled>
+               </DialogContent>
+               <ButtonContainer>
+                  <ButtonStyle
+                     disabled={!disabledInfo}
+                     variant="outlined"
+                     onClick={submitHandler}
+                  >
+                     <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
+                  </ButtonStyle>
+               </ButtonContainer>
+            </>
          )}
       </div>
    )
 }
 
-const Title = styled('div')(() => ({
-   '&': {
-      padding: '50px',
-
-      p: {
-         fontSize: '20px',
-         fontFamily: 'Manrope',
-         fontWeight: 500,
-      },
-   },
-}))
 const InputBoxStyled = styled(Grid)(() => ({
    '&': {
       display: 'flex',

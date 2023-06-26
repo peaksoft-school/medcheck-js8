@@ -43,7 +43,7 @@ const ApplicationsPage = () => {
                setPatients(data)
             }
          } catch (error) {
-            notify('error', 'Error')
+            notify('error', 'Ошибка')
          }
       }
 

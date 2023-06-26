@@ -14,16 +14,15 @@ const Patients = () => {
    const [patients, setPatients] = useState([])
    const [inputVal, setInputVal] = useState('')
    const [debouncedQuery] = useDebounce(inputVal, 400)
-   const { ToastContainer, notify: notifyCall } = useToast()
+   const { notify: notifyCall } = useToast()
 
    // eslint-disable-next-line consistent-return
    const getAllPatients = async () => {
       try {
          if (debouncedQuery) {
             const { data } = await getPatients(inputVal)
-            return setPatients(data)
-         }
-         {
+            setPatients(data)
+         } else {
             const { data } = await getPatients()
             setPatients(data)
          }
@@ -43,7 +42,7 @@ const Patients = () => {
    const deletePatient = async ({ id }) => {
       try {
          await deletePatientService(id)
-         notifyCall('success', 'успешно')
+         notifyCall('success', 'Успешно удалено')
          return getAllPatients('')
       } catch (error) {
          return notifyCall('error', error.response?.data.message)
@@ -146,7 +145,6 @@ const Patients = () => {
             />
          </div>
          <PaperStyled>
-            {ToastContainer}
             <AppTable key={patients.id} rows={patients} columns={column} />
          </PaperStyled>
       </PatientStyle>

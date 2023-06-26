@@ -17,7 +17,11 @@ export const putPatients = (datasOfPatient) => {
    return mainApi.post('/api/results', datasOfPatient)
 }
 export const deletePatientService = (id) => {
-   return mainApi.delete(`/api/patients/?id=${id}`)
+   return mainApi.delete(`/api/patients/`, {
+      params: {
+         id,
+      },
+   })
 }
 export const uploadFiles = (body) => {
    return fileInstance.post('/api/s3', body)
