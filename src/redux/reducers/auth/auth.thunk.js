@@ -19,7 +19,7 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
    'auth/signUp',
-   async ({ values, notify, onClose }, { rejectWithValue }) => {
+   async ({ values, notify }, { rejectWithValue }) => {
       try {
          const { data } = await signUpRequest(values)
 

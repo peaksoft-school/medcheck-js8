@@ -87,7 +87,11 @@ const Header = () => {
    // const openResetModal = () => setSearchParams({ openModal: 'reset-password' })
 
    const openOnlineAppointment = () => {
-      setSearchParams({ openModal: 'online-appointment' })
+      if (role === UserRoles.PATIENT) {
+         setSearchParams({ openModal: 'online-appointment' })
+      } else {
+         openSignInModal()
+      }
    }
 
    const open = Boolean(anchorEl)

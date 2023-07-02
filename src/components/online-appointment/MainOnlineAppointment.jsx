@@ -147,7 +147,7 @@ const Date = styled('p')(() => ({
 const Time = styled('p')(() => ({
    fontFamily: 'Manrope',
    fontStyle: 'normal',
-   fontWeight: '400',
-   fontSize: '14px',
+   fontWeight: '500',
+   fontSize: '16px',
    lineHeight: '19px',
 }))

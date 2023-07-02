@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
+   cancelAppointmentService,
    getDoctorsService,
    postAppointmentService,
 } from '../../../api/onlineAppointmentService'
@@ -17,12 +18,28 @@ export const getDoctors = createAsyncThunk(
 )
 
 export const postAppointment = createAsyncThunk(
-   'appointments/free',
-   async (userData, { rejectWithValue }) => {
+   'appointments/post',
+   async ({ obj, notify }, { rejectWithValue }) => {
       try {
-         const { data } = await postAppointmentService(userData)
+         const { data } = await postAppointmentService(obj)
+         notify('success', 'Вы успешно записались!')
          return data
       } catch (error) {
+         notify('error', error.response?.data.message)
+         return rejectWithValue(error)
+      }
+   }
+)
+
+export const cancelAppointment = createAsyncThunk(
+   'appointments/canceled',
+   async ({ appointmentId, notify }, { rejectWithValue }) => {
+      try {
+         const { data } = await cancelAppointmentService(appointmentId)
+         notify('success', 'Запись удалена!')
+         return data
+      } catch (error) {
+         notify('error', error.response?.data.message)
          return rejectWithValue(error)
       }
    }

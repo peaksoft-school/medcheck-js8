@@ -22,7 +22,7 @@ const ChooseDate = ({ dateChangeHandler }) => {
       const data = value.$d
 
       const day = data.getDate()
-      const month = months[data.getMonth() + 1]
+      const month = months[data.getMonth()]
       const dayOfAWeek = DAYS_OF_A_WEEK[data.getDay()]
 
       const obj = { day, month, dayOfAWeek, time }
@@ -50,7 +50,7 @@ const ChooseDate = ({ dateChangeHandler }) => {
             </LocalizationProvider>
          </Container>
          <TimeContainer>
-            {doctors[0].localDateTimes.map((time) => (
+            {doctors[0]?.localDateTimes?.map((time) => (
                <Time
                   key={time.id}
                   onClick={() => chooseDateHandler(time.timeFrom)}

@@ -7,3 +7,7 @@ export const getDoctorsService = (userData) => {
 export const postAppointmentService = (userData) => {
    return mainApi.post('api/appointments', userData)
 }
+
+export const cancelAppointmentService = (userData) => {
+   return mainApi.post('api/appointments/canceled', userData)
+}

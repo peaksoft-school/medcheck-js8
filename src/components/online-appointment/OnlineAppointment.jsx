@@ -10,12 +10,14 @@ import { ReactComponent as GoBackIcon } from '../../assets/online-appoinment-ico
 import { getDoctors } from '../../redux/reducers/appointment/appointment.thunk'
 import { MED_SERVICE, MED_SERVICE_EN } from '../../utlis/services/img_service'
 import AppointmentForm from './form/AppointmentForm'
+import Registered from './Registered'
 
 const OnlineAppointment = ({ open, onClose }) => {
    const [mainPage, setMainPage] = useState(true)
    const [specialistPage, setSpecialistPage] = useState(false)
    const [datePage, setDatePage] = useState(false)
    const [formPage, setFormPage] = useState(false)
+   const [registeredPage, setRegisteredPage] = useState(false)
 
    const [service, setService] = useState('')
    const [specialist, setSpecialist] = useState(null)
@@ -38,6 +40,7 @@ const OnlineAppointment = ({ open, onClose }) => {
    }
 
    useEffect(() => {
+      console.log(service)
       if (service) {
          const department = translateNameofService(service)
 
@@ -68,12 +71,20 @@ const OnlineAppointment = ({ open, onClose }) => {
       setMainPage(false)
       setFormPage(true)
    }
+
+   const openRegistered = () => {
+      setFormPage(false)
+      setRegisteredPage(true)
+   }
+
    const goBack = () => {
       setSpecialistPage(false)
       setDatePage(false)
       setFormPage(false)
+      setRegisteredPage(false)
       setMainPage(true)
    }
+
    const dateChangeHandler = (date) => {
       setDate(date)
       goBack()
@@ -105,6 +116,7 @@ const OnlineAppointment = ({ open, onClose }) => {
                   {specialistPage && 'Выбрать специалиста'}
                   {datePage && 'Выбрать дату и время'}
                   {formPage && 'Запись'}
+                  {registeredPage && 'Онлайн Запись'}
                </Title>
             </Header>
             {mainPage && (
@@ -132,8 +144,10 @@ const OnlineAppointment = ({ open, onClose }) => {
                   specialist={specialist}
                   date={date}
                   translateNameofService={translateNameofService}
+                  openRegistered={openRegistered}
                />
             )}
+            {registeredPage && <Registered goBack={goBack} />}
          </Container>
       </SideDrawer>
    )

@@ -109,6 +109,10 @@ const Card = styled('div')(() => ({
    border: '1px solid #D9D9D9',
 }))
 
+const Profile = styled('div')(() => ({
+   display: 'flex',
+}))
+
 const ImageContainer = styled('div')(() => ({
    width: '36px',
    height: '36px',
@@ -119,11 +123,6 @@ const Image = styled('img')(() => ({
    height: '100%',
    borderRadius: '50%',
 }))
-
-const Profile = styled('div')(() => ({
-   display: 'flex',
-}))
-
 const About = styled('div')(() => ({
    marginLeft: '10px',
 }))

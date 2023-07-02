@@ -1,21 +1,29 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import FormInput from './FormInput'
 import Button from '../../UI/Button'
 import { months } from '../../../utlis/constants/commons'
 import { postAppointment } from '../../../redux/reducers/appointment/appointment.thunk'
+import useToast from '../../../hooks/useToast'
 
 const AppointmentForm = ({
    service,
    specialist,
    date,
    translateNameofService,
+   openRegistered,
 }) => {
    const dispatch = useDispatch()
    const [name, setName] = useState('')
    const [phone, setPhone] = useState('')
    const [email, setEmail] = useState('')
+
+   const appointment = useSelector((state) => state.appointment.appointment)
+
+   const { notify } = useToast()
+
+   console.log(appointment, 'APPOINTMENT')
 
    const getMonth = (string) => {
       const index = months.indexOf(string) + 1
@@ -36,7 +44,7 @@ const AppointmentForm = ({
       return str.slice(0, 5)
    }
 
-   const submitAppointment = () => {
+   const submitAppointment = async () => {
       let department = ''
       let doctorId = 0
       let formatDate = ''
@@ -56,7 +64,10 @@ const AppointmentForm = ({
          email,
          zoneId: 'Asia/Bishkek',
       }
-      dispatch(postAppointment(obj))
+      dispatch(postAppointment({ obj, notify }))
+         .unwrap()
+         .then(() => openRegistered())
+         .catch((error) => notify('error', error.response?.data.message))
    }
 
    const changeNameHandler = (e) => {
