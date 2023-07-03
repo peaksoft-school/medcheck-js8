@@ -1,7 +1,6 @@
 import React from 'react'
 import MenuItem from '@mui/material/MenuItem'
-import { FormControl, Select } from '@mui/material'
-import styled from '@emotion/styled'
+import { FormControl, Select, styled } from '@mui/material'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 const menuProps = {
@@ -18,10 +17,12 @@ export const SelectUi = ({
    value,
    onChange,
    placeholder,
+   icon,
    ...rest
 }) => {
    return (
       <FormControl fullWidth>
+         <Icon>{icon}</Icon>
          <SelectMui
             value={value}
             label={label}
@@ -37,7 +38,7 @@ export const SelectUi = ({
             </MenuItem>
             {items &&
                items.map((item) => (
-                  <MenuItemStyle key={item.id} value={item.id}>
+                  <MenuItemStyle key={item.id} value={item.title}>
                      {item.title}
                   </MenuItemStyle>
                ))}
@@ -75,6 +76,27 @@ const SelectMui = styled(Select)(() => ({
       },
    },
 }))
+
+const Icon = styled('span')(() => ({
+   position: 'absolute',
+   top: 25,
+   left: 15,
+   zIndex: '10',
+}))
+
+// const Placeholder = styled('p')(() => ({
+//    position: 'absolute',
+//    top: 0,
+//    left: '0',
+//    width: '45p%',
+//    height: '100%',
+//    display: 'flex',
+//    alignItems: 'center',
+//    justifyContent: 'space-between',
+//    color: '#222222',
+//    fontSize: '16px',
+//    fontWeight: '500',
+// }))
 const MenuItemStyle = styled(MenuItem)(() => ({
    color: '#222222',
    fontFamily: 'Manrope',

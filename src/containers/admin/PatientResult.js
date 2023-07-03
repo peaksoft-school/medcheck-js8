@@ -10,8 +10,6 @@ function PatientResult() {
    const { id } = useParams()
    const { notify: notifyCall } = useToast()
    const [results, setResults] = useState([])
-   console.log(results)
-
    const patientGetById = async () => {
       try {
          const { data } = await getAllPatientsById(id)
@@ -89,6 +87,16 @@ function PatientResult() {
                <br />
             </PatientInfoBox>
             <Div>
+               <ServiceBox>
+                  <p>Услуга:</p>
+                  {results.results?.map((el) => (
+                     <StyledContainerForServicer>
+                        <StyledTitleForServicer>
+                           {el.services}
+                        </StyledTitleForServicer>
+                     </StyledContainerForServicer>
+                  ))}
+               </ServiceBox>
                <div>
                   <p>Услуга:</p>
                   {results.results?.map((el) => (
@@ -100,12 +108,12 @@ function PatientResult() {
                   ))}
                </div>
                <div>
-                  <p>Дата и время:</p>
                   {results.results?.map((el) => (
                      <div>
                         <Title>
                            {el.dateOfIssue}
                            <br />
+                           {el.dateOfIssue}{' '}
                            <span style={{ color: '#4D4E51' }}>
                               {el.timeOfIssue}
                            </span>
@@ -114,6 +122,9 @@ function PatientResult() {
                   ))}
                </div>
                <div>
+                  ))}{' '}
+               </div>
+               <ServiceBox>
                   <p>Номер заказа:</p>
 
                   {results.results?.map((el) => (
@@ -125,6 +136,8 @@ function PatientResult() {
                   ))}
                </div>
                <div>
+               </ServiceBox>
+               <ServiceBox>
                   <p>Загруженный файл:</p>
                   <div style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
@@ -139,6 +152,7 @@ function PatientResult() {
                      ))}
                   </div>
                </div>
+               </ServiceBox>
             </Div>
          </PaperStyled>
       </Container>

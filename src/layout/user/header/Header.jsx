@@ -53,11 +53,14 @@ import { signOut } from '../../../redux/reducers/auth/auth.thunk'
 import SignUp from '../../guest/login/SignUp'
 import ForgotPassword from '../../guest/login/ForgotPassword'
 import useToast from '../../../hooks/useToast'
+import OnlineAppointment from '../../../components/online-appointment/OnlineAppointment'
 import GlobalSearchInput from '../../../components/GlobalSearchInput'
 
 const Header = () => {
    const dispatch = useDispatch()
    const navigate = useNavigate()
+   const role = useSelector((state) => state.auth.role)
+   const { notify } = useToast()
    const [anchorEl, setAnchorEl] = useState(null)
    const [searchParams, setSearchParams] = useSearchParams()
    const { openModal } = Object.fromEntries(searchParams)
@@ -68,6 +71,7 @@ const Header = () => {
    const handleClose = () => {
       setAnchorEl(null)
    }
+
    const onCloseModal = () => setSearchParams({})
 
    const openSignInModal = () => {
@@ -81,8 +85,14 @@ const Header = () => {
    const openForgotModal = () =>
       setSearchParams({ openModal: 'forgot-password' })()
    // const openResetModal = () => setSearchParams({ openModal: 'reset-password' })
-   const role = useSelector((state) => state.auth.role)
-   const { notify } = useToast()
+
+   const openOnlineAppointment = () => {
+      if (role === UserRoles.PATIENT) {
+         setSearchParams({ openModal: 'online-appointment' })
+      } else {
+         openSignInModal()
+      }
+   }
 
    const open = Boolean(anchorEl)
    const handleClick = (event) => {
@@ -95,9 +105,6 @@ const Header = () => {
       } else {
          openSignInModal()
       }
-   }
-   const navigateOnlineAppointmentHandler = () => {
-      navigate('/onlineAppointment')
    }
 
    const signOutHandler = () => {
@@ -126,6 +133,10 @@ const Header = () => {
                />
                <ForgotPassword
                   open={openModal === 'forgot-password'}
+                  onClose={onCloseModal}
+               />
+               <OnlineAppointment
+                  open={openModal === 'online-appointment'}
                   onClose={onCloseModal}
                />
                <Grid>
@@ -264,7 +275,7 @@ const Header = () => {
                   </OutlinedButtonStyled>
                   <ContainedButtonStyled
                      variant="contained"
-                     onClick={navigateOnlineAppointmentHandler}
+                     onClick={openOnlineAppointment}
                   >
                      запись онлайн
                   </ContainedButtonStyled>
