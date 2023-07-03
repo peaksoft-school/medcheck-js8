@@ -10,6 +10,8 @@ function PatientResult() {
    const { id } = useParams()
    const { notify: notifyCall } = useToast()
    const [results, setResults] = useState([])
+   console.log(results)
+
    const patientGetById = async () => {
       try {
          const { data } = await getAllPatientsById(id)
@@ -18,7 +20,6 @@ function PatientResult() {
          notifyCall('error', error.message)
       }
    }
-
    useEffect(() => {
       patientGetById()
    }, [])
@@ -69,26 +70,26 @@ function PatientResult() {
                <br />
                <p>
                   имя: <br /> {results?.firstName}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   фамиля: <br />
                   {results?.lastName}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   номер телефона: <br />
                   {results?.phoneNumber}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   email: <br />
                   {results?.email}
-               </p>{' '}
+               </p>
                <br />
             </PatientInfoBox>
             <Div>
-               <ServiceBox>
+               <div>
                   <p>Услуга:</p>
                   {results.results?.map((el) => (
                      <StyledContainerForServicer>
@@ -97,21 +98,22 @@ function PatientResult() {
                         </StyledTitleForServicer>
                      </StyledContainerForServicer>
                   ))}
-               </ServiceBox>
+               </div>
                <div>
                   <p>Дата и время:</p>
                   {results.results?.map((el) => (
                      <div>
                         <Title>
-                           {el.dateOfIssue}{' '}
+                           {el.dateOfIssue}
+                           <br />
                            <span style={{ color: '#4D4E51' }}>
                               {el.timeOfIssue}
                            </span>
                         </Title>
                      </div>
-                  ))}{' '}
+                  ))}
                </div>
-               <ServiceBox>
+               <div>
                   <p>Номер заказа:</p>
 
                   {results.results?.map((el) => (
@@ -121,8 +123,8 @@ function PatientResult() {
                         </StyledTitleForOrderNumber>
                      </StyledContainerForOrderNumber>
                   ))}
-               </ServiceBox>
-               <ServiceBox>
+               </div>
+               <div>
                   <p>Загруженный файл:</p>
                   <div style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
@@ -136,7 +138,7 @@ function PatientResult() {
                         </StyledLocalContainerForButton>
                      ))}
                   </div>
-               </ServiceBox>
+               </div>
             </Div>
          </PaperStyled>
       </Container>
@@ -145,7 +147,6 @@ function PatientResult() {
 
 export default PatientResult
 
-const ServiceBox = styled('div')({})
 const Title = styled('p')({
    width: '100px',
    padding: '5px',

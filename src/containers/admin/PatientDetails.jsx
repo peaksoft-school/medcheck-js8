@@ -102,8 +102,7 @@ const PatientDetails = () => {
       <Container>
          <HeaderPart>
             <P>
-               {' '}
-               {patients?.firstName} {patients?.lastName}{' '}
+               {patients?.firstName} {patients?.lastName}
             </P>
             <ButtonStyled onClick={handleOpen}>
                <span>
