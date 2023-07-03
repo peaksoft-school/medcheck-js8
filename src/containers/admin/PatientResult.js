@@ -87,7 +87,7 @@ function PatientResult() {
                <br />
             </PatientInfoBox>
             <Div>
-               <ServiceBox>
+               <div>
                   <p>Услуга:</p>
                   {results.results?.map((el) => (
                      <StyledContainerForServicer>
@@ -96,7 +96,7 @@ function PatientResult() {
                         </StyledTitleForServicer>
                      </StyledContainerForServicer>
                   ))}
-               </ServiceBox>
+               </div>
                <div>
                   <p>Услуга:</p>
                   {results.results?.map((el) => (
@@ -122,9 +122,6 @@ function PatientResult() {
                   ))}
                </div>
                <div>
-                  ))}{' '}
-               </div>
-               <ServiceBox>
                   <p>Номер заказа:</p>
 
                   {results.results?.map((el) => (
@@ -136,8 +133,6 @@ function PatientResult() {
                   ))}
                </div>
                <div>
-               </ServiceBox>
-               <ServiceBox>
                   <p>Загруженный файл:</p>
                   <div style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
@@ -152,7 +147,6 @@ function PatientResult() {
                      ))}
                   </div>
                </div>
-               </ServiceBox>
             </Div>
          </PaperStyled>
       </Container>
