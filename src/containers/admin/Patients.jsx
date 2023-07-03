@@ -4,27 +4,32 @@ import { useNavigate } from 'react-router'
 import { useDebounce } from 'use-debounce'
 import SearchInput from '../../components/UI/SeacrchInput'
 import AppTable from '../../components/UI/Table'
-import { ReactComponent as NumberIcon } from '../../assets/table/NumberIcon.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/table/DeleteIcon.svg'
 import { getPatients, deletePatientService } from '../../api/patientsService'
 import useToast from '../../hooks/useToast'
+import Spiner from '../../components/UI/Spiner'
 
 const Patients = () => {
    const navigate = useNavigate()
    const [patients, setPatients] = useState([])
    const [inputVal, setInputVal] = useState('')
    const [debouncedQuery] = useDebounce(inputVal, 400)
+   const [loading, setLoading] = useState(false)
    const { notify: notifyCall } = useToast()
 
    // eslint-disable-next-line consistent-return
    const getAllPatients = async () => {
       try {
          if (debouncedQuery) {
+            setLoading(true)
             const { data } = await getPatients(inputVal)
             setPatients(data)
+            setLoading(false)
          } else {
+            setLoading(true)
             const { data } = await getPatients()
             setPatients(data)
+            setLoading(false)
          }
       } catch (error) {
          return notifyCall('error', error.response?.data.message)
@@ -54,9 +59,9 @@ const Patients = () => {
    const column = useMemo(
       () => [
          {
-            header: <NumberIcon />,
-            render: (patient) => <P>{patient.id}</P>,
-            key: 'number',
+            header: '№',
+            key: 'id',
+            index: true,
          },
          {
             header: 'Имя и фамилия',
@@ -72,7 +77,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
-            key: 'name and lastname',
+            key: 'nameAndLastname',
          },
          {
             header: 'Номер телефона',
@@ -87,7 +92,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
-            key: 'phone number',
+            key: 'phoneNumber',
          },
 
          {
@@ -118,7 +123,7 @@ const Patients = () => {
                   </P>
                </Grid>
             ),
-            key: 'date',
+            key: 'dateOfVisit',
          },
          {
             header: 'Действия',
@@ -144,9 +149,13 @@ const Patients = () => {
                value={inputVal}
             />
          </div>
-         <PaperStyled>
-            <AppTable key={patients.id} rows={patients} columns={column} />
-         </PaperStyled>
+         {loading ? (
+            <Spiner />
+         ) : (
+            <PaperStyled>
+               <AppTable key={patients.id} rows={patients} columns={column} />
+            </PaperStyled>
+         )}
       </PatientStyle>
    )
 }
@@ -159,6 +168,7 @@ const P = styled('p')({
    fontWeight: 500,
    fontSize: '16px',
    lineHeight: '22px',
+   cursor: 'pointer',
 })
 const PaperStyled = styled(Paper)({
    margin: 'auto',

@@ -12,7 +12,7 @@ import useToast from '../../hooks/useToast'
 
 const DoctorDetails = () => {
    const [oneSpecialist, setOneSpecialist] = useState({})
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
    const [searchParams, setSearchParams] = useSearchParams()
    Object.fromEntries(searchParams)
 
@@ -38,7 +38,6 @@ const DoctorDetails = () => {
 
    return (
       <div>
-         {ToastContainer}
          <Hr />
          <Wrapper>
             <Stack spacing={4}>
@@ -81,7 +80,7 @@ const DoctorDetails = () => {
                }}
             >
                <div>
-                  <img src={oneSpecialist.image} alt="" />
+                  <ImageStyle src={oneSpecialist.image} alt="" />
                </div>
 
                <div style={{ paddingLeft: '60px' }}>
@@ -203,6 +202,11 @@ const DoctorDetails = () => {
 }
 
 export default DoctorDetails
+
+const ImageStyle = styled('img')({
+   width: '319px',
+   height: '349px',
+})
 
 const StyledNamesContainer = styled('div')({
    display: 'flex',

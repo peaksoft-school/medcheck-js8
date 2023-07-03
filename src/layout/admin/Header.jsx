@@ -179,6 +179,7 @@ const ButtonStyled = styled('button')(() => ({
       display: 'flex',
       alignItems: 'center',
       gap: '10px',
+      cursor: 'pointer',
    },
 }))
 const AdminHeaderBtnStyled = styled(IdminHeaderBtnIcon)(() => ({

@@ -10,7 +10,7 @@ import { departmentName } from '../../utlis/constants/commons'
 import { Hr } from './Service'
 
 const Doctors = () => {
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
    const [departments, setDepartments] = useState([])
    const [showMoreClicked, setShowMoreClicked] = useState(false)
    const [searchParams, setSearchParams] = useSearchParams()
@@ -86,7 +86,6 @@ const Doctors = () => {
       <div>
          <Hr />
          <Wrapper>
-            {ToastContainer}
             <Stack spacing={2}>
                <Container separator="›" aria-label="breadcrumb">
                   <StyledNavLink to="/">
@@ -207,6 +206,10 @@ export const ContainerCard = styled('div')(() => ({
       width: '319px',
       height: '349px',
       display: 'flex',
+      img: {
+         width: '319px',
+         height: '349px',
+      },
    },
 }))
 

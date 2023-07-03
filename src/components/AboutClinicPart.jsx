@@ -57,7 +57,7 @@ const AboutClinicPart = ({ place }) => {
                      open={showApplicationModal}
                      onClose={closeModalHandler}
                   >
-                     <ApplicationModal />
+                     <ApplicationModal onClose={closeModalHandler} />
                   </BasicModalStyle>
                   {place === 'main' ? (
                      <StyledNavlink to="about">

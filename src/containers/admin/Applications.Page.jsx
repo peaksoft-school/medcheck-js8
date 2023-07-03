@@ -15,6 +15,7 @@ import { getApplicatonRequest } from '../../api/applicationsService'
 import Button from '../../components/UI/Button'
 import BasicModal from '../../components/UI/ModalUi'
 import useToast from '../../hooks/useToast'
+import Spiner from '../../components/UI/Spiner'
 
 const ApplicationsPage = () => {
    const { notify } = useToast()
@@ -27,6 +28,7 @@ const ApplicationsPage = () => {
    const [debouncedQuery] = useDebounce(inputVal, 400)
    const [isModalOpen, setIsModalOpen] = useState(false)
    const [confirmationPatient, setConfirmationPatient] = useState({})
+   const [isLoading, setIsLoading] = useState(false)
 
    useEffect(() => {
       setPatients(application)
@@ -36,11 +38,15 @@ const ApplicationsPage = () => {
       const getData = async () => {
          try {
             if (debouncedQuery) {
+               setIsLoading(true)
                const { data } = await getApplicatonRequest(debouncedQuery)
                setPatients(data)
+               setIsLoading(false)
             } else {
+               setIsLoading(true)
                const { data } = await getApplicatonRequest()
                setPatients(data)
+               setIsLoading(false)
             }
          } catch (error) {
             notify('error', 'Ошибка')
@@ -226,7 +232,11 @@ const ApplicationsPage = () => {
                />
             </SearchInputBox>
             <div>
-               <AppTable columns={column} rows={patients} />
+               {isLoading ? (
+                  <Spiner />
+               ) : (
+                  <AppTable columns={column} rows={patients} />
+               )}
             </div>
             <StyleModal open={isModalOpen} onClose={closeModal}>
                <ModalBoxStyle>

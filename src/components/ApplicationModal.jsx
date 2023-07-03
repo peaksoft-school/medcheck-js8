@@ -132,7 +132,8 @@ export const ApplicationModal = ({ onClose }) => {
                      variant="outlined"
                      onClick={submitHandler}
                   >
-                     <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
+                     <span>ОТПРАВИТЬ ЗАЯВКУ</span>{' '}
+                     <ButtonIconStyle disabled={disabledInfo} />{' '}
                   </ButtonStyle>
                </ButtonContainer>
             </>
@@ -140,7 +141,13 @@ export const ApplicationModal = ({ onClose }) => {
       </div>
    )
 }
-
+const ButtonIconStyle = styled(ButtonIcon)(({ disabled }) => ({
+   '&': {
+      ellipse: {
+         fill: disabled ? '#13AF5B' : 'gray',
+      },
+   },
+}))
 const InputBoxStyled = styled(Grid)(() => ({
    '&': {
       display: 'flex',

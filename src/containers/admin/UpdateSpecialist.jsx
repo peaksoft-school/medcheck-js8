@@ -46,7 +46,7 @@ const UpdateSpecialist = () => {
    const [updatePosition, setUpdatePosition] = useState('')
    const [updateDescription, setUpdateDescription] = useState('')
    const [updateDepartment, setUpdateDepartment] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { notifyCall } = useToast()
 
    const getOneSpecialist = async (id) => {
       try {
@@ -132,7 +132,6 @@ const UpdateSpecialist = () => {
 
    return (
       <MainContainer key={doctor.id}>
-         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink to="/admin/specialists">

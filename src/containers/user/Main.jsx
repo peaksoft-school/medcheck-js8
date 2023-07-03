@@ -17,21 +17,11 @@ import { ApplicationModal } from '../../components/ApplicationModal'
 const Main = () => {
    window.scrollTo({ top: 0 })
    const navigate = useNavigate()
-   // const role = useSelector((state) => state.auth.role)
 
    const [showApplicationModal, setShowApplicationModal] = useState(false)
-   // const [searchParams, setSearchParams] = useSearchParams()
-   // Object.fromEntries(searchParams)
 
-   // const openSignInModal = () => {
-   //    setSearchParams({ openModal: 'sign-in' })
-   // }
    const showModalHandler = () => {
-      // if (role === UserRoles.PATIENT) {
       setShowApplicationModal(true)
-      // } else {
-      //    openSignInModal()
-      // }
    }
 
    const closeModalHandler = () => {

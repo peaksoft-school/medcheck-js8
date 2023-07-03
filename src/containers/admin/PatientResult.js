@@ -10,7 +10,6 @@ function PatientResult() {
    const { id } = useParams()
    const { notify: notifyCall } = useToast()
    const [results, setResults] = useState([])
-   console.log(results, 'resultss')
    const patientGetById = async () => {
       try {
          const { data } = await getAllPatientsById(id)
@@ -35,17 +34,17 @@ function PatientResult() {
                responseType: 'arraybuffer',
                headers: {
                   'Content-Type': 'application/json',
-                  Accept: 'application/pdf',
+                  Accept: 'image/jpg',
                },
             }
          )
          .then((response) => {
             const element = document.createElement('a')
-            const file = new Blob([response.data], {
-               type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            const fileBlob = new Blob([response.data], {
+               type: 'image/jpg',
             })
-            element.href = URL.createObjectURL(file)
-            element.download = 'your-filename.docx'
+            element.href = URL.createObjectURL(fileBlob)
+
             document.body.appendChild(element)
             element.click()
             document.body.removeChild(element)
@@ -89,47 +88,55 @@ function PatientResult() {
                <br />
             </PatientInfoBox>
             <Div>
+               <ServiceBox>
+                  <p>Услуга:</p>
+                  {results.results?.map((el) => (
+                     <StyledContainerForServicer>
+                        <StyledTitleForServicer>
+                           {el.services}
+                        </StyledTitleForServicer>
+                     </StyledContainerForServicer>
+                  ))}
+               </ServiceBox>
                <div>
-                  <Sercvietitle>Услуга:</Sercvietitle>
-                  <p>
-                     {results.results?.map((el) => (
-                        <div>{el.services}</div>
-                     ))}
-                  </p>
+                  <p>Дата и время:</p>
+                  {results.results?.map((el) => (
+                     <div>
+                        <Title>
+                           {el.dateOfIssue}{' '}
+                           <span style={{ color: '#4D4E51' }}>
+                              {el.timeOfIssue}
+                           </span>
+                        </Title>
+                     </div>
+                  ))}{' '}
                </div>
-               <div>
-                  <DateTitle>Дата и время:</DateTitle>
-                  <p>
-                     {results.results?.map((el) => (
-                        <div>
-                           {el.dateOfIssue}
-                           <p style={{ color: '#4D4E51' }}>{el.timeOfIssue}</p>
-                        </div>
-                     ))}{' '}
-                  </p>
-               </div>
-               <div>
-                  <NumberTitle> Номер заказа:</NumberTitle>
+               <ServiceBox>
+                  <p>Номер заказа:</p>
 
-                  <p style={{ color: ' #000000' }}>
+                  {results.results?.map((el) => (
+                     <StyledContainerForOrderNumber>
+                        <StyledTitleForOrderNumber>
+                           {el.orderNumber}
+                        </StyledTitleForOrderNumber>
+                     </StyledContainerForOrderNumber>
+                  ))}
+               </ServiceBox>
+               <ServiceBox>
+                  <p>Загруженный файл:</p>
+                  <div style={{ color: ' #000000' }}>
                      {results.results?.map((el) => (
-                        <div>{el.orderNumber}</div>
+                        <StyledLocalContainerForButton>
+                           <ButtonStyle
+                              type="button"
+                              onClick={(e) => PDFFileHandler(e, el.file)}
+                           >
+                              <FileStyle />
+                           </ButtonStyle>
+                        </StyledLocalContainerForButton>
                      ))}
-                  </p>
-               </div>
-               <div>
-                  <LoadingTitle>Загруженный файл:</LoadingTitle>
-                  <p style={{ color: ' #000000' }}>
-                     {results.results?.map((el) => (
-                        <ButtonStyle
-                           type="button"
-                           onClick={(e) => PDFFileHandler(e, el.file)}
-                        >
-                           <FileStyle />
-                        </ButtonStyle>
-                     ))}
-                  </p>
-               </div>
+                  </div>
+               </ServiceBox>
             </Div>
          </PaperStyled>
       </Container>
@@ -138,8 +145,18 @@ function PatientResult() {
 
 export default PatientResult
 
+const ServiceBox = styled('div')({})
+const Title = styled('p')({
+   width: '100px',
+   padding: '5px',
+})
+
 const PatientInfoBox = styled('div')({
    height: '1374px',
+   h3: {
+      fontWeight: 500,
+      fontSize: '20px',
+   },
 })
 const Container = styled('div')({
    background: 'rgba(245, 245, 245, 0.61)',
@@ -148,8 +165,9 @@ const Container = styled('div')({
 
 const P = styled('h3')({
    fontSize: '22px',
-   marginTop: '40px',
-   marginLeft: '7%',
+   fontFamily: 'Manrope',
+   fontWeight: 400,
+   padding: '20px 0',
 })
 const Div = styled('div')({
    display: 'flex',
@@ -196,15 +214,18 @@ const PaperStyled = styled(Paper)({
    fontFamily: 'Manrope',
 })
 
-const Sercvietitle = styled('div')({
-   marginBottom: '20px',
-})
-const DateTitle = styled('div')({
-   marginBottom: '20px',
-})
-const NumberTitle = styled('div')({
-   marginBottom: '20px',
-})
-const LoadingTitle = styled('div')({
-   marginBottom: '20px',
-})
+const StyledTitleForServicer = styled('p')`
+   padding-bottom: 18px;
+`
+const StyledContainerForServicer = styled('div')`
+   padding-top: 15px;
+`
+const StyledTitleForOrderNumber = styled('p')`
+   padding-bottom: 18px;
+`
+const StyledContainerForOrderNumber = styled('div')`
+   padding-top: 15px;
+`
+const StyledLocalContainerForButton = styled('div')`
+   margin-bottom: 25px;
+`

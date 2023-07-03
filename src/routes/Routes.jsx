@@ -25,12 +25,12 @@ import ChangePassword from '../containers/user/personal-account/profile/ChangePa
 import MyApplications from '../containers/user/personal-account/myApplications/MyApplications'
 import MyApplicationDetails from '../containers/user/personal-account/myApplications/MyApplicationDetails'
 import ApplicationsPage from '../containers/admin/Applications.Page'
-import SchedulePage from '../containers/admin/Schedule.Page'
 import OnlineEntry from '../components/OnlineEntry'
 import AddSpecialist from '../containers/admin/AddSpecialist'
 import UpdateSpecialist from '../containers/admin/UpdateSpecialist'
 import PatientResult from '../containers/admin/PatientResult'
 import PatientDetails from '../containers/admin/PatientDetails'
+import SchedulePage from '../containers/admin/Schedule.Page'
 
 const AppRoutes = () => {
    const role = useSelector((state) => state.auth.role)

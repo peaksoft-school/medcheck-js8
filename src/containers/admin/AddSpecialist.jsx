@@ -36,7 +36,7 @@ const AddSpecialist = () => {
    const [selected, setSelected] = useState('')
    const [photo, setPhoto] = useState('')
    const [imgUrl, setImgUrl] = useState('')
-   const { ToastContainer, notifyCall } = useToast()
+   const { notify } = useToast()
    const handleSelection = (event, newSelected) => {
       setSelected(newSelected)
    }
@@ -64,18 +64,20 @@ const AddSpecialist = () => {
          const imageResponse = await imageSpecialistService(photo)
          const imageUrl = imageResponse.data.link
          setImgUrl(imageUrl)
+
          return imageUrl
       } catch (error) {
-         return notifyCall('error', error.response?.data.message)
+         return notify('error', error.response?.data.message)
       }
    }
    const postSpecialist = async (sendData) => {
       try {
          const { data } = await postSpecialistsService(sendData)
          navigate(-1)
+         notify('success', 'Специалист успешно добавлен!')
          return data
       } catch (error) {
-         return notifyCall('error', 'Что-то пошло не так')
+         return notify('error', 'Что-то пошло не так')
       }
    }
 
@@ -107,7 +109,6 @@ const AddSpecialist = () => {
 
    return (
       <MainContainer>
-         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink to="/admin/specialists">

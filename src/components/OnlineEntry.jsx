@@ -14,6 +14,7 @@ import BasicModal from './UI/ModalUi'
 import Button from './UI/Button'
 import SearchInput from './UI/SeacrchInput'
 import useToast from '../hooks/useToast'
+import Spiner from './UI/Spiner'
 
 const OnlineEntry = () => {
    const { notify } = useToast()
@@ -23,16 +24,21 @@ const OnlineEntry = () => {
    const [confirmationPatient, setConfirmationPatient] = useState({})
    const [inputVal, setInputVal] = useState('')
    const [debouncedQuery] = useDebounce(inputVal, 500)
+   const [isLoading, setIsLoading] = useState(false)
 
    useEffect(() => {
       const getData = async () => {
          try {
             if (debouncedQuery) {
+               setIsLoading(true)
                const { data } = await getAppointmentRequest(inputVal)
                setPatients(data)
+               setIsLoading(false)
             } else {
+               setIsLoading(true)
                const { data } = await getAppointmentRequest()
                setPatients(data)
+               setIsLoading(false)
             }
          } catch (error) {
             notify('error', 'Ошибка')
@@ -246,7 +252,11 @@ const OnlineEntry = () => {
                value={inputVal}
             />
          </SearchInputBox>
-         <AppTable rows={patients} columns={column} />
+         {isLoading ? (
+            <Spiner />
+         ) : (
+            <AppTable rows={patients} columns={column} />
+         )}
          <StyleModal open={isModalOpen} onClose={closeModal}>
             <ModalBoxStyle>
                <ModalTitleStyle>

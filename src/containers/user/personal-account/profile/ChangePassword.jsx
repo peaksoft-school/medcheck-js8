@@ -20,7 +20,7 @@ const ChangePassword = () => {
    const [showPassword, setShowPassword] = useState(false)
    const [showPasswordNew, setShowPasswordCopy] = useState(false)
    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false)
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
    const [backendError, setBackendError] = useState('')
 
    const navigate = useNavigate()
@@ -80,7 +80,6 @@ const ChangePassword = () => {
    return (
       <Container onSubmit={handleSubmit(onSubmit)}>
          <ProfileLayout />
-         {ToastContainer}
          <StyledTitleText>Смена пароля</StyledTitleText>
          <StyledForm>
             <div>

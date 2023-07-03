@@ -13,7 +13,7 @@ import { postDataProfieValid } from '../../../../utlis/helpers/general'
 import ProfileLayout from './ProfileLayout'
 
 const PersonalData = () => {
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
    const navigate = useNavigate()
 
    const postDataProfile = async (dataProfile) => {
@@ -65,7 +65,6 @@ const PersonalData = () => {
    return (
       <Container onSubmit={handleSubmit} noValidate autoComplete="off">
          <ProfileLayout />
-         {ToastContainer}
          <StyledTitleText>Ваши личные данные</StyledTitleText>
          <StyledForm>
             <div>
