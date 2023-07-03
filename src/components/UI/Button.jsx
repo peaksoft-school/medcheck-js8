@@ -16,6 +16,7 @@ const Button = ({ children, variant, disabled, onClick, ...rest }) => {
 }
 
 export default Button
+
 const ButtonStyled = styled(ReusableButton)(() => ({
    '&': {
       fontFamily: 'Manrope,sans-serif',

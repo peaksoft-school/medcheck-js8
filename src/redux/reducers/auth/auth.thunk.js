@@ -8,7 +8,7 @@ export const signIn = createAsyncThunk(
       try {
          const { data } = await signInRequest(values)
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
-         notify('success', 'You have successfuly signed in!')
+         notify('success', 'Вы успешно вошли в аккаунт!')
          return data
       } catch (error) {
          notify('error', error.response?.data.message)
@@ -19,13 +19,12 @@ export const signIn = createAsyncThunk(
 
 export const signUp = createAsyncThunk(
    'auth/signUp',
-   async ({ values, notify, onClose }, { rejectWithValue }) => {
+   async ({ values, notify }, { rejectWithValue }) => {
       try {
          const { data } = await signUpRequest(values)
 
          localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(data))
-         notify('success', 'You have successfuly signed up!')
-         onClose()
+         notify('success', 'Вы успешно зарегистрировались!')
          return data
       } catch (error) {
          notify('error', error.response?.data.message)
@@ -48,7 +47,7 @@ export const signUp = createAsyncThunk(
 // )
 
 export const signOut = createAsyncThunk('auth/signOut', async (notify) => {
-   notify('success', 'You have been logged out!')
+   notify('success', 'Вы вышли из аккаунта!')
 
    return localStorage.removeItem(STORAGE_KEYS.AUTH)
 })
