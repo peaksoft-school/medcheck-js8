@@ -171,7 +171,6 @@ const SignUp = ({ open, onClose, openSignInHandler }) => {
                      ),
                   }}
                />
-               {/* {error} */}
                {errors.copyPassword && (
                   <p className="message">{errors.copyPassword?.message}</p>
                )}

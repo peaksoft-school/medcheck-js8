@@ -2,22 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { Stack } from '@mui/material'
 import styled from '@emotion/styled'
 import { NavLink, useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { Container, StyledNavLink } from '../admin/specialist-style'
 import Button from '../../components/UI/Button'
 import { getDoctorsService } from '../../api/doctors'
 import useToast from '../../hooks/useToast'
-import { departmentName } from '../../utlis/constants/commons'
+import { UserRoles, departmentName } from '../../utlis/constants/commons'
 import { Hr } from './Service'
 
 const Doctors = () => {
    const { notify } = useToast()
+   const role = useSelector((state) => state.auth.role)
    const [departments, setDepartments] = useState([])
    const [showMoreClicked, setShowMoreClicked] = useState(false)
    const [searchParams, setSearchParams] = useSearchParams()
    Object.fromEntries(searchParams)
 
    const openOnlineAppointment = () => {
-      setSearchParams({ openModal: 'online-appointment' })
+      if (role === UserRoles.PATIENT) {
+         setSearchParams({ openModal: 'online-appointment' })
+      } else {
+         setSearchParams({ openModal: 'sign-in' })
+      }
    }
    const fetchDepartments = async (start, end) => {
       try {

@@ -12,8 +12,7 @@ const MyApplicationDetails = () => {
    const getOneAppointment = async (id) => {
       try {
          const { data } = await getOneUserAppoinmentRequest(id)
-         setAppoinment(data)
-         return notify('success', 'успешно')
+         return setAppoinment(data)
       } catch (error) {
          return notify('error', 'Произошла ошибка при загрузке')
       }

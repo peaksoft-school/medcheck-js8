@@ -98,22 +98,12 @@ function PatientResult() {
                   ))}
                </div>
                <div>
-                  <p>Услуга:</p>
-                  {results.results?.map((el) => (
-                     <StyledContainerForServicer>
-                        <StyledTitleForServicer>
-                           {el.services}
-                        </StyledTitleForServicer>
-                     </StyledContainerForServicer>
-                  ))}
-               </div>
-               <div>
+                  <p>Дата и время:</p>
                   {results.results?.map((el) => (
                      <div>
                         <Title>
                            {el.dateOfIssue}
                            <br />
-                           {el.dateOfIssue}{' '}
                            <span style={{ color: '#4D4E51' }}>
                               {el.timeOfIssue}
                            </span>

@@ -12,6 +12,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 import { useLocation, useParams } from 'react-router'
+import { useSelector } from 'react-redux'
 import { serviceDetails } from '../../utlis/helpers/serviceDetails'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 import { Hr } from './Service'
@@ -24,16 +25,23 @@ import {
    PositionStyled,
    StyledButton,
 } from './Doctors'
+import { UserRoles } from '../../utlis/constants/commons'
 
 const ServiceDetails = () => {
+   const role = useSelector((state) => state.auth.role)
    const [deparnmentDoctors, setDeparnmentDoctors] = useState([])
    const { state } = useLocation()
+
    window.scrollTo({ top: 0 })
    const [searchParams, setSearchParams] = useSearchParams()
    Object.fromEntries(searchParams)
 
    const openOnlineAppointment = () => {
-      setSearchParams({ openModal: 'online-appointment' })
+      if (role === UserRoles.PATIENT) {
+         setSearchParams({ openModal: 'online-appointment' })
+      } else {
+         setSearchParams({ openModal: 'sign-in' })
+      }
    }
 
    const { id } = useParams()
@@ -66,7 +74,6 @@ const ServiceDetails = () => {
    useEffect(() => {
       getDeparnmentName()
    }, [state?.departName])
-   console.log(deparnmentDoctors)
 
    return (
       <div>
@@ -177,7 +184,6 @@ const ServiceDetails = () => {
             </StyledDoctorTitle>
             <div style={{ display: 'flex', gap: '1.5rem' }}>
                {deparnmentDoctors.map((doctor) => {
-                  console.log(doctor.id)
                   return (
                      <div key={doctor.id}>
                         <ContainerCard style={{ display: 'flex' }}>

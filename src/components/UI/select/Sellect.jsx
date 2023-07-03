@@ -46,6 +46,7 @@ const TypographyStyle = styled(Typography)(() => ({
    fontWeight: 500,
    fontSize: '20px',
    lineHeight: '27px',
+   cursor: 'pointer',
 }))
 const TypographyTitle = styled(Typography)(() => ({
    fontFamily: 'Manrope',

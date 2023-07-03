@@ -109,6 +109,7 @@ const ChooseCard = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    cursor: 'pointer',
+   fontFamily: 'Manrope',
 }))
 
 const SpecialistIcon = styled(ChooseSpecialistIcon)(() => ({

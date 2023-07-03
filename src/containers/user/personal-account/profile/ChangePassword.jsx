@@ -27,15 +27,15 @@ const ChangePassword = () => {
    const postPassword = async (password) => {
       try {
          const { data } = await postChangePassword(password)
-         if (data.message === 'Wrong old password.') {
+         if (data.message === 'Неверный старый пароль') {
             return notify('error', 'Неверный пароль')
          }
          navigate('/')
-         notify('success', 'Успешно')
+         notify('success', 'Пароль успешно изменен!')
          return data
       } catch (error) {
          setBackendError(error.response.data.message)
-         return notify('error', 'не правильный пароль')
+         return notify('error', 'Не правильный пароль')
       }
    }
 

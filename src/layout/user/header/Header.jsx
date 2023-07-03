@@ -100,11 +100,7 @@ const Header = () => {
    }
 
    const navigateResultHandler = () => {
-      if (role === UserRoles.PATIENT) {
-         navigate('/getResults')
-      } else {
-         openSignInModal()
-      }
+      navigate('/getResults')
    }
 
    const signOutHandler = () => {

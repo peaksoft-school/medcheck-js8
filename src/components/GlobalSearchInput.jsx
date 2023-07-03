@@ -16,6 +16,7 @@ const GlobalSearchInput = ({ openModal }) => {
    const [menuData, setMenuData] = useState([])
    const [debouncedQuery] = useDebounce(searchInput, 400)
    const [menuItem, setMenuItem] = useState(false)
+   console.log(menuData)
    useEffect(() => {
       const getSearchData = async () => {
          try {
@@ -60,23 +61,23 @@ const GlobalSearchInput = ({ openModal }) => {
                               <NavLinkStyle
                                  to={`doctors/${item.doctorId}/details/`}
                               >
-                                 <StyledP>{item.doctorFirstName}</StyledP>
+                                 <Box>
+                                    <DoctorImage
+                                       src={item.image}
+                                       alt={item.doctorFirstName}
+                                    />
+                                    <div>
+                                       <StyledP>
+                                          <span>{item.doctorFirstName}</span>
+                                          {item.doctorLastName}
+                                       </StyledP>
+                                       <DoctorPositionStyle>
+                                          {item.doctorPosition}
+                                       </DoctorPositionStyle>
+                                    </div>
+                                 </Box>
                               </NavLinkStyle>{' '}
                            </MenuBox>
-                           <MenuBox2>
-                              <NavLinkStyle
-                                 to={`doctors/${item.doctorId}/details/`}
-                              >
-                                 <StyledP>{item.doctorLastName}</StyledP>
-                              </NavLinkStyle>
-                           </MenuBox2>
-                           <MenuBox2>
-                              <NavLinkStyle
-                                 to={`doctors/${item.doctorId}/details/`}
-                              >
-                                 <StyledP>{item.departmentName}</StyledP>
-                              </NavLinkStyle>
-                           </MenuBox2>
                         </StyledInsideContainer>
                      ))
                   )}
@@ -89,12 +90,28 @@ const GlobalSearchInput = ({ openModal }) => {
 
 export default GlobalSearchInput
 
+const Box = styled('div')`
+   display: flex;
+`
+const DoctorImage = styled('img')`
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   margin-right: 15px;
+`
+const DoctorPositionStyle = styled('span')`
+   font-size: 14px;
+   font-weight: 500;
+   font-family: Manrope;
+   color: #4d4e51;
+`
+
 const Title = styled('p')`
    font-size: 16px;
    font-weight: 500;
    padding: 10px 0 0 40px;
    font-family: Manrope;
-   color: #4d4e51;
+   color: #222222;
 `
 
 const NavLinkStyle = styled(NavLink)`
@@ -124,20 +141,13 @@ const MenuBox = styled('div')`
    display: flex;
    width: 50px;
 `
-const MenuBox2 = styled('div')`
-   display: flex;
-   font-family: Manrope;
-   font-size: 16px;
-   font-weight: 500;
-   margin-left: 80px;
-   width: 50px;
-`
 
 const StyledP = styled('p')`
    text-align: start;
-   display: flex;
-   align-items: start;
-   justify-content: start;
+
+   span {
+      margin-right: 10px;
+   }
 `
 const StyledInsideContainer = styled('div')`
    display: flex;

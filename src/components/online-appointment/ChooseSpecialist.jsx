@@ -43,6 +43,9 @@ const FreeSpecialistCard = styled('div')(() => ({
    display: 'flex',
    alignItems: 'center',
    cursor: 'pointer',
+   p: {
+      fontFamily: 'Manrope',
+   },
 }))
 
 const SpecialistIcon = styled(ChooseSpecialistIcon)(() => ({

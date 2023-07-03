@@ -74,7 +74,7 @@ const GetResults = () => {
             </LogoBox>
             <UiBox>
                <InputStyle
-                  placeholder="Введите номер заказа..."
+                  placeholder="Введите номер результата..."
                   onChange={getResultInputChangeHandler}
                   value={resultInputValue}
                />

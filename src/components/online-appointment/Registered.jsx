@@ -7,6 +7,7 @@ import { ReactComponent as Rating } from '../../assets/online-appoinment-icons/s
 import Button from '../UI/Button'
 import { months } from '../../utlis/constants/commons'
 import useToast from '../../hooks/useToast'
+import plus from '../../assets/icons/plus.svg'
 
 const Registered = ({ goBack }) => {
    const appointment = useSelector((state) => state.appointment.appointment)
@@ -67,7 +68,10 @@ const Registered = ({ goBack }) => {
             </About>
          </Profile>
          <Cancel onClick={cancelAppointmentHandler}>Отменить запись</Cancel>
-         <StyledButton onClick={goBack}>+ Записаться еще</StyledButton>
+         <StyledButton onClick={goBack}>
+            <img src={plus} alt="plus" />
+            Записаться еще
+         </StyledButton>
       </Container>
    )
 }
@@ -82,6 +86,10 @@ const Container = styled('div')(() => ({
    display: 'flex',
    flexDirection: 'column',
    alignItems: 'center',
+   fontFamily: 'Manrope',
+   p: {
+      fontWeight: 500,
+   },
 }))
 
 const Submited = styled('p')(() => ({
@@ -146,6 +154,10 @@ const StyledButton = styled(Button)(() => ({
    fontFamily: 'Manrope',
    marginTop: '24px',
    width: '100%',
+   img: {
+      marginRight: '5px',
+      width: '12px',
+   },
 }))
 const Cancel = styled('p')(() => ({
    fontFamily: 'Manrope',

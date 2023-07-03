@@ -3,21 +3,29 @@ import { useParams } from 'react-router'
 import styled from '@emotion/styled'
 import { NavLink, useSearchParams } from 'react-router-dom'
 import { Breadcrumbs, Stack } from '@mui/material'
+import { useSelector } from 'react-redux'
 import { getOneDoctorService } from '../../api/doctors'
 import { StyledButton, Title } from './Doctors'
 import { ReactComponent as Strelka } from '../../assets/icons/стрелка.svg'
 import { FeedbackSlider } from '../../components/feedback-slider/FeedbackSlider'
 import { Hr } from './Service'
 import useToast from '../../hooks/useToast'
+import { UserRoles } from '../../utlis/constants/commons'
 
 const DoctorDetails = () => {
    const [oneSpecialist, setOneSpecialist] = useState({})
    const { notify } = useToast()
+   const role = useSelector((state) => state.auth.role)
+
    const [searchParams, setSearchParams] = useSearchParams()
    Object.fromEntries(searchParams)
 
    const openOnlineAppointment = () => {
-      setSearchParams({ openModal: 'online-appointment' })
+      if (role === UserRoles.PATIENT) {
+         setSearchParams({ openModal: 'online-appointment' })
+      } else {
+         setSearchParams({ openModal: 'sign-in' })
+      }
    }
    const getOneDoctor = async (id) => {
       try {

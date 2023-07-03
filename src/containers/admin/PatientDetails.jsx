@@ -4,7 +4,6 @@ import { FormLabel, IconButton, Paper, styled } from '@mui/material'
 import { format, isValid } from 'date-fns'
 import { useDispatch } from 'react-redux'
 import Button from '../../components/UI/Button'
-import { SelectUi } from '../../components/UI/SelectUi'
 import { MED_SERVICE } from '../../utlis/services/img_service'
 import { ReactComponent as CloseIcon } from '../../assets/login/CloseIcon.svg'
 import { getAllPatientsById } from '../../api/patientsService'
@@ -15,6 +14,7 @@ import { fileInstance } from '../../api/instanses'
 import DatePicker from '../../components/UI/DatePicker'
 import BasicModal from '../../components/UI/ModalUi'
 import buttonPlusIcon from '../../assets/icons/ButtonPlusIcon.svg'
+import { PatientSelect } from '../../components/PatientSelect'
 
 const PatientDetails = () => {
    const { id } = useParams()
@@ -214,7 +214,7 @@ const BasicModalStyle = styled(BasicModal)({
       borderRadius: '15px',
    },
 })
-const SelectUiStyle = styled(SelectUi)({
+const SelectUiStyle = styled(PatientSelect)({
    width: '270px',
    height: '37px',
 })
