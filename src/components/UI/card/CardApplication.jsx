@@ -21,7 +21,7 @@ export const CardApplication = ({ openSignInModal }) => {
 
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
-   const { ToastContainer, notify: notifyCall } = useToast()
+   const { notify: notifyCall } = useToast()
 
    const disabled = name && number
    const nameChangeHandler = (e) => {
@@ -53,7 +53,6 @@ export const CardApplication = ({ openSignInModal }) => {
 
    return (
       <div>
-         {ToastContainer}
          <ModalContainer>
             <div className="container">
                <DialogTitleStyled>Оставьте заявку</DialogTitleStyled>
@@ -110,7 +109,8 @@ export const CardApplication = ({ openSignInModal }) => {
                   variant="outlined"
                   onClick={submitHandler}
                >
-                  <span>ОТПРАВИТЬ ЗАЯВКУ</span> <ButtonIcon />{' '}
+                  <span>ОТПРАВИТЬ ЗАЯВКУ</span>{' '}
+                  <ButtonIconStyle disabled={disabled} />{' '}
                </ButtonBox>
             </div>
             <PhotoContent>
@@ -121,6 +121,13 @@ export const CardApplication = ({ openSignInModal }) => {
    )
 }
 
+const ButtonIconStyle = styled(ButtonIcon)(({ disabled }) => ({
+   '&': {
+      ellipse: {
+         fill: disabled ? '#13AF5B' : 'gray',
+      },
+   },
+}))
 const Input1 = styled('div')(() => ({
    '&': {
       marginLeft: '61px',

@@ -238,14 +238,23 @@ const UiBox = styledMui('div')({
    gap: '10px',
 })
 const InputStyle = styledMui(TextField)({
-   '&': {
+   paddingTop: '10px',
+   '& .MuiOutlinedInput-root': {
       width: '300px',
-      paddingTop: '10px',
+      borderRadius: '10px',
+      '& fieldset': {
+         border: '1px solid #909CB5',
+      },
+      '&:hover fieldset': {
+         borderColor: '#909CB5',
+      },
+      '&.Mui-focused fieldset': {
+         borderColor: '#909CB5',
+      },
       input: {
          fontFamily: 'Manrope',
-      },
-      fieldset: {
-         borderRadius: '10px',
+         fontWeight: 400,
+         color: '#222222',
       },
    },
 })
@@ -297,7 +306,7 @@ const InfoBoxStyle = styledMui('div')({
 const ReferenceBoxStyle = styledMui('div')({
    background: '#FFFF',
    width: '53vw',
-   padding: '30px',
+   padding: '23px',
    fontFamily: 'Manrope',
    marginLeft: '20px',
    marginTop: '20px',

@@ -27,6 +27,7 @@ const PatientDetails = () => {
    const [inputDate, setInputDate] = useState('')
    const [selectedFile, setSelectedFile] = useState(null)
 
+   const disabledValue = name && inputDate && selectedFile
    const getAllPatients = async () => {
       try {
          const { data } = await getAllPatientsById(id)
@@ -59,7 +60,7 @@ const PatientDetails = () => {
       if (currentDate > new Date(e)) {
          setInputDate(e)
       } else {
-         notifyCall('warning', 'choose correct date!')
+         notifyCall('warning', 'Выберите правильную дату!')
       }
    }
 
@@ -89,13 +90,11 @@ const PatientDetails = () => {
             }
 
             dispatch(putDatas(datasOfPatient))
-            notifyCall('success', 'The data has successfully sent!')
+            notifyCall('success', 'Данные успешно отправлены!')
             navigate(`${patients?.patientId}/results`)
-         } else {
-            notifyCall('error', 'This is uncorrect message')
          }
       } catch (error) {
-         notifyCall('error', 'This is error message ')
+         notifyCall('error', 'Данные не отправлены!')
       }
    }
 
@@ -109,7 +108,7 @@ const PatientDetails = () => {
             <ButtonStyled onClick={handleOpen}>
                <span>
                   <img src={buttonPlusIcon} alt="plus" />
-               </span>{' '}
+               </span>
                добавить результаты
             </ButtonStyled>
          </HeaderPart>
@@ -149,7 +148,11 @@ const PatientDetails = () => {
                   <Button className="cancel" onClick={cancelHandler}>
                      Отменить
                   </Button>
-                  <Button className="add" onClick={submitHandler}>
+                  <Button
+                     className="add"
+                     onClick={submitHandler}
+                     disabled={!disabledValue}
+                  >
                      добавить
                   </Button>
                </ButtonContainer>

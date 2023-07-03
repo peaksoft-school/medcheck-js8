@@ -8,7 +8,7 @@ import useToast from '../../../../hooks/useToast'
 const MyApplicationDetails = () => {
    const [appoinment, setAppoinment] = useState({})
    const { id } = useParams()
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
    const getOneAppointment = async (id) => {
       try {
          const { data } = await getOneUserAppoinmentRequest(id)
@@ -24,7 +24,6 @@ const MyApplicationDetails = () => {
    }, [id])
    return (
       <StyledMyNotesContainer>
-         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink>

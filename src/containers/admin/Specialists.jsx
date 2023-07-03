@@ -35,7 +35,7 @@ const Specialists = () => {
       keyWord: null,
    })
    const [searchTerm, setSearchTerm] = useState('')
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
 
    const getAllSpecialists = async (queryParams) => {
       try {
@@ -216,7 +216,6 @@ const Specialists = () => {
 
    return (
       <MainContainer>
-         {ToastContainer}
          <BoxTitleAndButton>
             <Title>Специалисты</Title>
             <StyledContainerButton

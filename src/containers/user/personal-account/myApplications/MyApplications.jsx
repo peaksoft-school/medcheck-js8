@@ -12,15 +12,14 @@ import useToast from '../../../../hooks/useToast'
 
 const MyApplications = () => {
    const [patients, setPatients] = useState([])
-   const { ToastContainer, notify } = useToast()
+   const { notify } = useToast()
 
    const fetchPatients = async () => {
       try {
          const { data } = await getUserAppointmentRequest()
          setPatients(data)
-         return notify('success', 'успешно')
       } catch (error) {
-         return notify('error', 'произошло ошибка при загрузке')
+         notify('error', 'Произошло ошибка при загрузке')
       }
    }
    useEffect(() => {
@@ -31,15 +30,14 @@ const MyApplications = () => {
       try {
          await deleteUserAppointmentRequest()
          fetchPatients('')
-         return notify('success', 'успешно удалено')
+         return notify('success', 'Успешно очищено!')
       } catch (error) {
-         return notify('error', 'произошло ошибка при загрузке')
+         return notify('error', 'Произошло ошибка при загрузке')
       }
    }
 
    return (
       <StyledMyNotesContainer>
-         {ToastContainer}
          <Stack spacing={2}>
             <Container separator="›" aria-label="breadcrumb">
                <StyledNavLink>
