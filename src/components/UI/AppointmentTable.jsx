@@ -80,7 +80,7 @@ const AppointmentTable = ({ appointmentData, getStatusTitleChangeHandler }) => {
 export default AppointmentTable
 
 const getStatusColorChangeHandler = (statusColor) => {
-   if (statusColor === 'CANCELLED') {
+   if (statusColor === 'CANCELED') {
       return '#F91515'
    }
    if (statusColor === 'CONFIRMED') {
