@@ -18,7 +18,6 @@ function PatientResult() {
          notifyCall('error', error.message)
       }
    }
-
    useEffect(() => {
       patientGetById()
    }, [])
@@ -69,22 +68,22 @@ function PatientResult() {
                <br />
                <p>
                   имя: <br /> {results?.firstName}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   фамиля: <br />
                   {results?.lastName}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   номер телефона: <br />
                   {results?.phoneNumber}
-               </p>{' '}
+               </p>
                <br />
                <p>
                   email: <br />
                   {results?.email}
-               </p>{' '}
+               </p>
                <br />
             </PatientInfoBox>
             <Div>
@@ -99,16 +98,30 @@ function PatientResult() {
                   ))}
                </ServiceBox>
                <div>
-                  <p>Дата и время:</p>
+                  <p>Услуга:</p>
+                  {results.results?.map((el) => (
+                     <StyledContainerForServicer>
+                        <StyledTitleForServicer>
+                           {el.services}
+                        </StyledTitleForServicer>
+                     </StyledContainerForServicer>
+                  ))}
+               </div>
+               <div>
                   {results.results?.map((el) => (
                      <div>
                         <Title>
+                           {el.dateOfIssue}
+                           <br />
                            {el.dateOfIssue}{' '}
                            <span style={{ color: '#4D4E51' }}>
                               {el.timeOfIssue}
                            </span>
                         </Title>
                      </div>
+                  ))}
+               </div>
+               <div>
                   ))}{' '}
                </div>
                <ServiceBox>
@@ -121,6 +134,8 @@ function PatientResult() {
                         </StyledTitleForOrderNumber>
                      </StyledContainerForOrderNumber>
                   ))}
+               </div>
+               <div>
                </ServiceBox>
                <ServiceBox>
                   <p>Загруженный файл:</p>
@@ -136,6 +151,7 @@ function PatientResult() {
                         </StyledLocalContainerForButton>
                      ))}
                   </div>
+               </div>
                </ServiceBox>
             </Div>
          </PaperStyled>
@@ -145,7 +161,6 @@ function PatientResult() {
 
 export default PatientResult
 
-const ServiceBox = styled('div')({})
 const Title = styled('p')({
    width: '100px',
    padding: '5px',
